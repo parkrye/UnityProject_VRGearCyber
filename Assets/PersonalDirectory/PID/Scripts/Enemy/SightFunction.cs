@@ -7,7 +7,7 @@ namespace ildoo
         [SerializeField] LayerMask targetMask;
         Transform PlayerInSight;
         float presenceTimer;
-        const float maxTimer = 3f; 
+        const float maxTimer = 3f;
         public bool TargetFound
         {
             get;
@@ -25,17 +25,17 @@ namespace ildoo
         {
             if (!targetMask.Contain(other.gameObject.layer))
             {
-                return; 
+                return;
             }
             else
             {
-                presenceTimer += Time.deltaTime; 
+                presenceTimer += Time.deltaTime;
                 if (presenceTimer > maxTimer)
                 {
                     TargetFound = true;
-                    PlayerInSight = other.transform; 
+                    PlayerInSight = other.transform;
                     presenceTimer = Mathf.Clamp(presenceTimer, 0, maxTimer);
-                    return; 
+                    return;
                 }
             }
             presenceTimer -= Time.deltaTime;
@@ -59,24 +59,20 @@ namespace ildoo
                 dirTarget.y = 0f;
                 dirTarget.Normalize();
                 // IF Player is found on a given Range, 
-                if (Vector3.Dot(transform.forward, dirTarget) < Mathf.Cos(sightAngle * 0.5f * Mathf.Deg2Rad))
+                if (Vector3.Dot(transform.forward, dirTarget) > Mathf.Cos(sightAngle * 0.5f * Mathf.Deg2Rad))
                 {
-                    PlayerInSight = collider.transform;
-                }
-                else
                     continue;
+                }
                 Vector2 distToTarget = (Vector2)collider.transform.position - (Vector2)transform.position;
                 float distance = Vector2.SqrMagnitude(distToTarget);
                 if (Physics.Raycast(transform.position, dirTarget, out obstacleHit, distance))
                 {
-                    if (obstacleHit.collider.gameObject.layer.Contains)
+                    if (!targetMask.Contain(obstacleHit.collider.gameObject.layer))
+                        break;
+                    PlayerInSight = obstacleHit.transform;
+                    TargetFound = true;
                 }
-                SetTarget(collider.transform);
-                return true;
             }
-            return false;
         }
-
     }
-
-
+}

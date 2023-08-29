@@ -13,6 +13,7 @@ public class GuardEnemy : BaseEnemy
         Patrol,
         Alert,
         Assault, 
+        Trace, 
         Death,
         Size
             //Possibly extending beyond for Gathering Abilities. 
@@ -23,10 +24,12 @@ public class GuardEnemy : BaseEnemy
     NavMeshAgent agent;
     SightFunction guardSight;
     StateMachine <State, GuardEnemy> stateMachine;
+    bool notified; 
 
     protected void Awake()
     {
-        enemyStat = GameManager.Resource.Instantiate<EnemyStat>("Data/Guard"); 
+        enemyStat = GameManager.Resource.Instantiate<EnemyStat>("Data/Guard");
+        notified = false; 
         base.SetUp(enemyStat);
         stateMachine = new StateMachine<State, GuardEnemy>(this);
 
@@ -210,7 +213,53 @@ public class GuardEnemy : BaseEnemy
     }
     #endregion
 
-    #region AttackAssault 
+    #region Trace State 
+    // Given an Enemy previously 'Founnd' the enemy, but temporaily have the player gone missing, for a certain interval, Enemy will Search for the Player Under 2 Conditions. 
+    // 1. Timer Runs out => Returns to the Patrol or Look Around State
+    // 2. Player Dies. 
+    public class TraceState : GuardState
+    {
+        const float maxTraceTime = 3f;
+        float trackTimer; 
+
+        public TraceState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
+        {
+        }
+
+        public override void Enter()
+        {
+            trackTimer = 0f; 
+        }
+
+        public override void Exit()
+        {
+            trackTimer = 0f; 
+        }
+
+        public override void Setup()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Transition()
+        {
+            if (trackTimer > maxTraceTime)
+            {
+                stateMachine.ChangeState(State.Patrol);
+                return; 
+            }
+            if (owner.guardSight.TargetFound)
+            {
+                stateMachine.ChangeState(State.Assault); 
+            }
+
+        }
+
+        public override void Update()
+        {
+            trackTimer += Time.deltaTime; 
+        }
+    }
     #endregion
 
     #region Death 
