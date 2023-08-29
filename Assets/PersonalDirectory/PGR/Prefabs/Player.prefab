@@ -2041,7 +2041,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   isStop: 0
-  isRight: 0
+  isRight: 1
+  isRayCasted: 0
+  wallNormalVector: {x: 0, y: 0, z: 0}
+  handLookPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &6126190809258089540
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4750,6 +4753,9 @@ MonoBehaviour:
     m_Bits: 128
   isStop: 0
   isRight: 0
+  isRayCasted: 0
+  wallNormalVector: {x: 0, y: 0, z: 0}
+  handLookPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &3377810152381454033
 SphereCollider:
   m_ObjectHideFlags: 0
