@@ -1038,6 +1038,7 @@ GameObject:
   m_Component:
   - component: {fileID: 460391278}
   - component: {fileID: 460391279}
+  - component: {fileID: 460391280}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1074,12 +1075,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a2f7a55479a10b46997ca42e3dba2ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerDataModel: {fileID: 460391280}
   moveType: 1
-  turnType: 1
-  continuousMoveProvider: {fileID: 0}
-  teleportationProvider: {fileID: 0}
+  turnType: 0
+  continuousMoveProvider: {fileID: 1119945457}
+  teleportationProvider: {fileID: 1119945458}
   continuousTurnProvider: {fileID: 1899314037}
   snapTurnProvider: {fileID: 1899314038}
+--- !u!114 &460391280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460391277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f2260a66ce9f794498c0c60d71ede60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 0
+  nowHP: 0
+  accessLevel: 0
 --- !u!1 &489066620
 GameObject:
   m_ObjectHideFlags: 0
@@ -5218,7 +5235,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1899314035}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 919e39492806b334982b6b84c90dd927, type: 3}
   m_Name: 
@@ -5257,7 +5274,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1899314035}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2213c36610e3b1c4bbf886810ed9db12, type: 3}
   m_Name: 

@@ -3,30 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class PlayerController : MonoBehaviour
+namespace PGR
 {
-    [SerializeField] bool moveType, turnType;
-    public bool MoveType { get { return moveType; } }
-    public bool TurnType { get { return turnType; } }
-
-    [SerializeField] ActionBasedContinuousMoveProvider continuousMoveProvider;
-    [SerializeField] TeleportationProvider teleportationProvider;
-
-    [SerializeField] ActionBasedContinuousTurnProvider continuousTurnProvider;
-    [SerializeField] ActionBasedSnapTurnProvider snapTurnProvider;
-
-    public void ChangeMoveType(bool isSmooth)
+    public class PlayerController : MonoBehaviour
     {
-        moveType = isSmooth;
-        continuousMoveProvider.enabled = isSmooth;
-        teleportationProvider.enabled = !isSmooth;
+        [SerializeField] PlayerDataModel playerDataModel;
+        public PlayerDataModel Data { get { return playerDataModel; } }
+
+        [SerializeField] bool moveType, turnType;
+        public bool MoveType { get { return moveType; } set{ ChangeMoveType(value); } }
+        public bool TurnType { get { return turnType; } set { ChangeTurnType(value); } }
+
+        [SerializeField] ActionBasedContinuousMoveProvider continuousMoveProvider;
+        [SerializeField] TeleportationProvider teleportationProvider;
+
+        [SerializeField] ActionBasedContinuousTurnProvider continuousTurnProvider;
+        [SerializeField] ActionBasedSnapTurnProvider snapTurnProvider;
+
+        void ChangeMoveType(bool isSmooth)
+        {
+            moveType = isSmooth;
+            continuousMoveProvider.enabled = isSmooth;
+            teleportationProvider.enabled = !isSmooth;
+        }
+
+        void ChangeTurnType(bool isSmooth)
+        {
+            turnType = isSmooth;
+
+            continuousTurnProvider.enabled = isSmooth;
+            snapTurnProvider.enabled = !isSmooth;
+        }
     }
 
-    public void ChangeTurnType(bool isSmooth)
-    {
-        turnType = isSmooth;
-
-        continuousTurnProvider.enabled = isSmooth;
-        snapTurnProvider.enabled = !isSmooth;
-    }
 }
