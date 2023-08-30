@@ -13,8 +13,8 @@ public class GuardEnemy : BaseEnemy
         Patrol,
         Alert,
         Assault, 
-        Trace, 
-        Death,
+        Trace,
+        Neutralized,
         Size
             //Possibly extending beyond for Gathering Abilities. 
     }
@@ -37,7 +37,7 @@ public class GuardEnemy : BaseEnemy
         stateMachine.AddState(State.Patrol, new PatrolState(this, stateMachine)); 
         stateMachine.AddState(State.Alert, new AlertState(this, stateMachine));
         stateMachine.AddState(State.Assault, new AssaultState(this, stateMachine));
-        stateMachine.AddState(State.Death, new DeathState(this, stateMachine); 
+        stateMachine.AddState(State.Neutralized, new NeutralizedState(this, stateMachine)); 
     }
     private void Start()
     {
@@ -50,12 +50,26 @@ public class GuardEnemy : BaseEnemy
         base.TakeDamage(damage, hitPoint, hitNormal);
         if (currentHealth <= 0) 
         {
-            DeathState unitDeath; 
-            if (stateMachine.RetrieveState(State.Death, out unitDeath)) 
+            NeutralizedState neutralizeReason; 
+            if (stateMachine.CheckState(State.Neutralized)) 
             {
-                unitDeath.SetDeathReason(DeathState.DeathType.Health); 
+                neutralizeReason = stateMachine.RetrieveState(State.Neutralized) as NeutralizedState;
             }
-            stateMachine.ChangeState(State.Death); 
+            stateMachine.ChangeState(State.Neutralized); 
+        }
+    }
+
+    public void Notified(int index, Vector3 centrePoint)
+    {
+        if (stateMachine.curStateName == State.Neutralized)
+        {
+            return; 
+        }
+        AlertState alertState; 
+        if (stateMachine.CheckState(State.Alert))
+        {
+            alertState = stateMachine.RetrieveState(State.Alert) as AlertState;
+            alertState.SetDestination(centrePoint);
         }
     }
 
@@ -147,6 +161,7 @@ public class GuardEnemy : BaseEnemy
     public class AlertState : GuardState
     {
         SightFunction guardSight;
+        Vector3 destPoint; 
         float distDelta;
         const float distThreshhold = 3.5f; 
         public AlertState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
@@ -160,12 +175,17 @@ public class GuardEnemy : BaseEnemy
 
         public override void Exit()
         {
-            throw new System.NotImplementedException();
+            owner.notified = false;
         }
 
         public override void Setup()
         {
             guardSight = owner.guardSight;
+        }
+
+        public void SetDestination(Vector3 location)
+        {
+            destPoint = location;
         }
 
         public override void Transition()
@@ -280,8 +300,8 @@ public class GuardEnemy : BaseEnemy
     }
     #endregion
 
-    #region Death 
-    public class DeathState : GuardState
+    #region Neutralized 
+    public class NeutralizedState : GuardState
     {
         public enum DeathType 
         { 
@@ -290,7 +310,7 @@ public class GuardEnemy : BaseEnemy
             None
         }
         DeathType deathReason; 
-        public DeathState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
+        public NeutralizedState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
         {
         }
 
@@ -301,27 +321,21 @@ public class GuardEnemy : BaseEnemy
         public override void Enter()
         {
             //Should Notify CCTV to erase from the list 
-            //owner.anim.SetTrigger("")
+            owner.anim.SetTrigger(""); 
         }
-
         public override void Exit()
         {
             owner.anim.Rebind(); 
             deathReason = DeathType.None; 
         }
-
         public override void Setup()
         {
             //Should consider placing in other effects for further interactable elements. 
         }
-
         public override void Transition()
-        {
-        }
-
+        {}
         public override void Update()
-        {
-        }
+        {}
     }
     #endregion
 }
