@@ -43,6 +43,24 @@ public class GuardEnemy : BaseEnemy
     {
         
     }
+    #region  Combat Interaction 
+
+    public override void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
+    {
+        base.TakeDamage(damage, hitPoint, hitNormal);
+        if (currentHealth <= 0) 
+        {
+            DeathState unitDeath; 
+            if (stateMachine.RetrieveState(State.Death, out unitDeath)) 
+            {
+                unitDeath.SetDeathReason(DeathState.DeathType.Health); 
+            }
+            stateMachine.ChangeState(State.Death); 
+        }
+    }
+
+    //Hackable Component. 
+    #endregion
 
     public abstract class GuardState : StateBase<State, GuardEnemy>
     {
@@ -265,34 +283,44 @@ public class GuardEnemy : BaseEnemy
     #region Death 
     public class DeathState : GuardState
     {
+        public enum DeathType 
+        { 
+            Health, 
+            Hacked, 
+            None
+        }
+        DeathType deathReason; 
         public DeathState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
         {
         }
 
+        public void SetDeathReason(DeathType type) 
+        {
+            deathReason = type; 
+        }
         public override void Enter()
         {
             //Should Notify CCTV to erase from the list 
-
+            //owner.anim.SetTrigger("")
         }
 
         public override void Exit()
         {
-            throw new System.NotImplementedException();
+            owner.anim.Rebind(); 
+            deathReason = DeathType.None; 
         }
 
         public override void Setup()
         {
-            throw new System.NotImplementedException();
+            //Should consider placing in other effects for further interactable elements. 
         }
 
         public override void Transition()
         {
-            throw new System.NotImplementedException();
         }
 
         public override void Update()
         {
-            throw new System.NotImplementedException();
         }
     }
     #endregion

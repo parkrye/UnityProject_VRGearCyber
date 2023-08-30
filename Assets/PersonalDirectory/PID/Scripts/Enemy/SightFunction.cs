@@ -74,5 +74,10 @@ namespace ildoo
                 }
             }
         }
+
+        public bool TargetInValidRange() 
+        {
+            return false; 
+        }
     }
 }

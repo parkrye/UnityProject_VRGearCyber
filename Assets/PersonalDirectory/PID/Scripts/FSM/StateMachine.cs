@@ -14,6 +14,15 @@ public class StateMachine<TState, TOwner> where TOwner : MonoBehaviour
         this.states = new Dictionary<TState, StateBase<TState, TOwner>>();
     }
 
+    public bool RetrieveState(TState state, out StateBase<TState, TOwner> stateClass) 
+    {
+        if (states.ContainsKey(state)) { 
+            stateClass = states[state]; 
+            return true; 
+        }
+        return false; 
+    }
+
     public void AddState(TState state, StateBase<TState, TOwner> stateBase)
     {
         states.Add(state, stateBase);
