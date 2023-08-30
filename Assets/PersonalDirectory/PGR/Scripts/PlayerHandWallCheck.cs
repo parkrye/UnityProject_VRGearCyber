@@ -11,6 +11,7 @@ namespace PGR
         [SerializeField] bool isStop, isRight, isRayCasted;
 
         [SerializeField] Vector3 wallNormalVector, handLookPosition;
+        [SerializeField] GameObject handPrefab;
 
         void LateUpdate()
         {
@@ -22,9 +23,12 @@ namespace PGR
             if (!isRayCasted)
                 return;
 
-            handLookPosition = lastPosition + Vector3.ProjectOnPlane((transform.position - lastPosition), wallNormalVector).normalized;
-            //handTransform.LookAt(handLookPosition);
-            handTransform.rotation = Quaternion.LookRotation(handLookPosition, lastPosition + wallNormalVector);
+            handLookPosition = Vector3.ProjectOnPlane((transform.position - lastPosition), wallNormalVector).normalized;
+            //handTransform.LookAt(handTransform.position + handLookPosition);
+            if(isRight)
+                handTransform.rotation = Quaternion.LookRotation(handLookPosition, wallNormalVector);
+            else
+                handTransform.rotation = Quaternion.LookRotation(handLookPosition, -wallNormalVector);
         }
 
         void OnTriggerEnter(Collider other)
@@ -50,6 +54,7 @@ namespace PGR
                 isStop = false;
                 isRayCasted = false;
                 playerController.HandMotion.WallCheck(isRight, isStop);
+                handTransform.localRotation = handPrefab.transform.localRotation;
             }
         }
     }

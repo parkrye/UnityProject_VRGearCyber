@@ -5,22 +5,23 @@ namespace PGR
     public class CableObject : PlayerInteractable
     {
         [Header ("Cable Object Parameters")]
-        [SerializeField] Rigidbody rb;
         [SerializeField] Light pointLight;
         [SerializeField] bool isFixed;
 
         protected override void Awake()
         {
             base.Awake();
-            rb = GetComponent<Rigidbody>();
             pointLight = GetComponent<Light>();
-            Priority = 1;
 
-            FixExit();
+            Priority = 10;
+            pointLight.enabled = false;
+            rb.isKinematic = false;
+            isFixed = false;
         }
 
         public void FixEnter()
         {
+            rb.isKinematic = true;
             isFixed = true;
         }
 
@@ -54,10 +55,9 @@ namespace PGR
                 return;
 
             // Start Hacking Puzzle
-
+            Debug.Log("OnCollisionEnter");
             transform.LookAt(transform.position - collision.contacts[0].normal);
-            rb.isKinematic = true;
-            FixEnter();
+            //FixEnter();
         }
     }
 }

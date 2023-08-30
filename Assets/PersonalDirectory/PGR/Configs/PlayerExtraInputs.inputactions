@@ -46,6 +46,17 @@
                     "action": "LeftSecondaryButton",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c3631d2f-7436-479a-97a7-5310bce1f55c",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftSecondaryButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

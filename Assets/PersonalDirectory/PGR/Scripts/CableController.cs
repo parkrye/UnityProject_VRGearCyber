@@ -18,8 +18,10 @@ namespace PGR
             cableObject.transform.position = transform.position;
         }
 
-        public void OnSelectEnterEvent(SelectEnterEventArgs args)
+        protected override void OnSelectEntered(SelectEnterEventArgs args)
         {
+            base.OnSelectEntered(args);
+
             isSelectClicked = true;
 
             GameObject target = args.interactableObject.transform.gameObject;
@@ -30,8 +32,10 @@ namespace PGR
             cableObject.ReadyToShot();
         }
 
-        public void OnSelectExitEvent(SelectExitEventArgs args)
+        protected override void OnSelectExited(SelectExitEventArgs args)
         {
+            base.OnSelectExited(args);
+
             isSelectClicked = false;
 
             if (!isCableLoaded)

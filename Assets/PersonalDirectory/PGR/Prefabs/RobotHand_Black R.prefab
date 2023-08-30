@@ -24,16 +24,18 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1068225418551794}
-  m_LocalRotation: {x: 0.15038373, y: 0.08682408, z: -0.4924039, w: 0.85286856}
-  m_LocalPosition: {x: 0, y: 0, z: -0.08}
+  m_LocalRotation: {x: -0.06537236, y: -0.04645772, z: -0.5774152, w: 0.8125022}
+  m_LocalPosition: {x: 0, y: 0, z: -0.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4366447247417104}
   - {fileID: 4211898229804674}
+  - {fileID: 2057681299967709393}
+  - {fileID: 8200921522354844763}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 20, y: 0, z: -60}
+  m_LocalEulerAnglesHint: {x: -9.2, y: 0, z: -70.8}
 --- !u!95 &2618290010250829585
 Animator:
   serializedVersion: 5
@@ -699,3 +701,65 @@ Transform:
   m_Father: {fileID: 4211898229804674}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &456360981034733000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2057681299967709393}
+  m_Layer: 0
+  m_Name: Right Controller Stabilized Attach
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2057681299967709393
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456360981034733000}
+  m_LocalRotation: {x: -0.077338, y: -0.15547514, z: -0.061028063, w: 0.98291504}
+  m_LocalPosition: {x: -0.034071192, y: 0.0028123818, z: 0.09399588}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4046218325000304}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -67.106}
+--- !u!1 &893584149630804972
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8200921522354844763}
+  m_Layer: 0
+  m_Name: Poke Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8200921522354844763
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893584149630804972}
+  m_LocalRotation: {x: 0.042603508, y: -0.18371281, z: 0.07707214, w: 0.9790273}
+  m_LocalPosition: {x: -0.089489326, y: 0.03977327, z: 0.19739625}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.010000002}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4046218325000304}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 4.749, y: -15.919, z: -54.461}

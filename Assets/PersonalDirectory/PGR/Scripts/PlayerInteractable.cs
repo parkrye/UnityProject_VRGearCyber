@@ -7,6 +7,8 @@ namespace PGR
     {
         [Header("Player Interactable Parameters")]
         [SerializeField][Range(1, 10)] uint grabPriority;
+        [SerializeField] protected Rigidbody rb;
+
         public uint Priority 
         { 
             get 
@@ -22,6 +24,25 @@ namespace PGR
                 else
                     grabPriority = value; 
             } 
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            rb = GetComponent<Rigidbody>();
+            rb.isKinematic = true;
+        }
+
+        protected override void OnSelectEntered(SelectEnterEventArgs args)
+        {
+            base.OnSelectEntered(args);
+            rb.isKinematic = false;
+        }
+
+        protected override void OnSelectExited(SelectExitEventArgs args)
+        {
+            base.OnSelectExited(args);
+            rb.isKinematic = false;
         }
     }
 
