@@ -8,6 +8,8 @@ namespace PGR
         [Header("Player Interactable Parameters")]
         [SerializeField][Range(1, 10)] uint grabPriority;
         [SerializeField] protected Rigidbody rb;
+        [SerializeField] GameData.InteractableType interactableType;
+        public GameData.InteractableType InteractableType { get { return interactableType; } }
 
         public uint Priority 
         { 

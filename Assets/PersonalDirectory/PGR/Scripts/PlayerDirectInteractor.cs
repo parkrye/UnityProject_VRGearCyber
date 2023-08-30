@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -9,7 +10,7 @@ namespace PGR
         [Header("Player Direct Interactor Parameters")]
         [SerializeField] List<IXRInteractable> customSortedValidTargets;
 
-        public override void GetValidTargets(List<IXRInteractable> targets)
+        public override void GetValidTargets(List<XRBaseInteractable> targets)
         {
             targets.Clear();
 
@@ -22,19 +23,19 @@ namespace PGR
             else
             {
                 customSortedValidTargets = new List<IXRInteractable>();
-                PriorityQueue<IXRInteractable, ulong> pq = new();
-                foreach(var target in unsortedValidTargets)
+                PriorityQueue<IXRInteractable, long> pq = new();
+                foreach (var target in unsortedValidTargets)
                 {
-                    ulong priority = 5;
+                    long priority = 5;
                     if (target is PlayerInteractable)
                         priority = (target as PlayerInteractable).Priority;
 
-                    priority *= (ulong)(Vector3.SqrMagnitude(target.transform.position - transform.position));
+                    priority *= (long)(Vector3.SqrMagnitude(target.transform.position - transform.position));
 
                     pq.Enqueue(target, priority);
                 }
 
-                while(pq.Count > 0)
+                while (pq.Count > 0)
                     customSortedValidTargets.Add(pq.Dequeue());
 
                 targets.AddRange(customSortedValidTargets);

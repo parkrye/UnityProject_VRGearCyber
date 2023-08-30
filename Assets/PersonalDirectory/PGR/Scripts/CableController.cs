@@ -1,10 +1,11 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace PGR
 {
-    public class CableController : XRSocketInteractor
+    public class CableController : XRExclusiveSocketInteractor
     {
         [Header("Cable Controller Parameters")]
         [SerializeField] CableObject cableObject;
@@ -15,13 +16,17 @@ namespace PGR
         protected override void OnEnable()
         {
             base.OnEnable();
+            StartCoroutine(EnableRoutine());
+        }
+
+        IEnumerator EnableRoutine()
+        {
+            yield return new WaitForSeconds(1f);
             cableObject.transform.position = transform.position;
         }
 
-        protected override void OnSelectEntered(SelectEnterEventArgs args)
+        public void OnSelectEnteredEvent(SelectEnterEventArgs args)
         {
-            base.OnSelectEntered(args);
-
             isSelectClicked = true;
 
             GameObject target = args.interactableObject.transform.gameObject;
@@ -32,15 +37,9 @@ namespace PGR
             cableObject.ReadyToShot();
         }
 
-        protected override void OnSelectExited(SelectExitEventArgs args)
+        public void OnSelectExitedEvent(SelectExitEventArgs args)
         {
-            base.OnSelectExited(args);
-
             isSelectClicked = false;
-
-            if (!isCableLoaded)
-                return;
-
             isCableLoaded = false;
         }
 
@@ -57,7 +56,6 @@ namespace PGR
 
             isSelectClicked = false;
             isCableLoaded = false;
-
             cableObject.ShotCable(transform.forward, cableShotPower);
         }
     }

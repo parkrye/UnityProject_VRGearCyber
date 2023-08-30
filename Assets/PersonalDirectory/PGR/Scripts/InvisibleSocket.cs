@@ -3,7 +3,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 namespace PGR
 {
-    public class InvisibleSocket : XRSocketInteractor
+    public class InvisibleSocket : XRExclusiveSocketInteractor
     {
         [Header("Invisible Socket Parameters")]
         [SerializeField] bool isInvisible;

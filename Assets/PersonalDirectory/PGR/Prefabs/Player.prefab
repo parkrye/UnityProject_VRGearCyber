@@ -75,9 +75,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 785334362}
-  m_LocalRotation: {x: -0.009521474, y: 0.0065011857, z: 0.49793595, w: 0.86713725}
+  m_LocalRotation: {x: -0.009521463, y: 0.006501182, z: 0.49793595, w: 0.86713725}
   m_LocalPosition: {x: -0.2064, y: 2.38794, z: -0.0506}
-  m_LocalScale: {x: 0.04999999, y: 0.050000004, z: 0.049999993}
+  m_LocalScale: {x: 0.04999999, y: 0.050000004, z: 0.04999999}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6549267104392139614}
@@ -316,8 +316,8 @@ MonoBehaviour:
   m_AddDefaultGrabTransformers: 1
   grabPriority: 10
   rb: {fileID: 785334367}
+  interactableType: 0
   pointLight: {fileID: 785334372}
-  isFixed: 0
 --- !u!108 &785334372
 Light:
   m_ObjectHideFlags: 0
@@ -400,6 +400,138 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!1 &1133495962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1133495963}
+  - component: {fileID: 1133495965}
+  - component: {fileID: 1133495964}
+  m_Layer: 0
+  m_Name: RightEquipSocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1133495963
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133495962}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.3, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7438900048275394738}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1133495965
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133495962}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1133495964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133495962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93a8e15abd5902e418b5bd56f4da03df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InteractionManager: {fileID: 0}
+  m_InteractionLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_InteractionLayers:
+    m_Bits: 4294967295
+  m_AttachTransform: {fileID: 0}
+  m_KeepSelectedTargetValid: 1
+  m_DisableVisualsWhenBlockedInGroup: 1
+  m_StartingSelectedInteractable: {fileID: 0}
+  m_StartingTargetFilter: {fileID: 0}
+  m_HoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SelectEntered:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1133495964}
+        m_TargetAssemblyTypeName: PGR.InvisibleSocket, Assembly-CSharp
+        m_MethodName: OnSelectEnterEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_SelectExited:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1133495964}
+        m_TargetAssemblyTypeName: PGR.InvisibleSocket, Assembly-CSharp
+        m_MethodName: OnSelectExitEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
+  m_OnHoverEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnHoverExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ShowInteractableHoverMeshes: 1
+  m_InteractableHoverMeshMaterial: {fileID: 0}
+  m_InteractableCantHoverMeshMaterial: {fileID: 0}
+  m_SocketActive: 1
+  m_InteractableHoverScale: 1
+  m_RecycleDelayTime: 1
+  m_HoverSocketSnapping: 0
+  m_SocketSnappingRadius: 0.1
+  m_SocketScaleMode: 0
+  m_FixedScale: {x: 1, y: 1, z: 1}
+  m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  acceptedType: 1
+  isInvisible: 0
 --- !u!1 &71137442047540068
 GameObject:
   m_ObjectHideFlags: 0
@@ -1161,7 +1293,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 223
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -3123,7 +3255,7 @@ GameObject:
   - component: {fileID: 2505220681865003135}
   - component: {fileID: 9189197889663118745}
   m_Layer: 0
-  m_Name: CloseWeaponSocket
+  m_Name: BackEquipSocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3241,6 +3373,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  acceptedType: 1
   isInvisible: 1
 --- !u!1 &4929564120811189151
 GameObject:
@@ -3536,7 +3669,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5539207217844939191}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.08}
+  m_LocalPosition: {x: 0, y: 0.0003, z: 0.0076}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3587,10 +3720,34 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 54626233835228762}
+        m_TargetAssemblyTypeName: PGR.CableController, Assembly-CSharp
+        m_MethodName: OnSelectEnteredEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 54626233835228762}
+        m_TargetAssemblyTypeName: PGR.CableController, Assembly-CSharp
+        m_MethodName: OnSelectExitedEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_OnHoverEntered:
@@ -4357,7 +4514,7 @@ MonoBehaviour:
   m_AllowHoverHapticsWhileSelecting: 0
   m_LineType: 0
   m_BlendVisualLinePoints: 1
-  m_MaxRaycastDistance: 3
+  m_MaxRaycastDistance: 5
   m_RayOriginTransform: {fileID: 7378717412365169005}
   m_ReferenceFrame: {fileID: 0}
   m_Velocity: 12
@@ -4759,7 +4916,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2382794758377083642}
   - component: {fileID: 3680481829646756845}
-  - component: {fileID: 8105673769190507247}
   - component: {fileID: 4856467635258275991}
   m_Layer: 0
   m_Name: Overay Camera
@@ -4826,14 +4982,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &8105673769190507247
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7062499697804643036}
-  m_Enabled: 1
 --- !u!114 &4856467635258275991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4989,7 +5137,7 @@ MonoBehaviour:
   m_AllowHoverHapticsWhileSelecting: 0
   m_LineType: 0
   m_BlendVisualLinePoints: 1
-  m_MaxRaycastDistance: 3
+  m_MaxRaycastDistance: 5
   m_RayOriginTransform: {fileID: 1686931696557854685}
   m_ReferenceFrame: {fileID: 0}
   m_Velocity: 12
@@ -5323,6 +5471,7 @@ Transform:
   m_Children:
   - {fileID: 3183979125910731590}
   - {fileID: 2966571175972701792}
+  - {fileID: 1133495963}
   m_Father: {fileID: 2205595612276924537}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5371,7 +5520,7 @@ GameObject:
   - component: {fileID: 1296719917787212340}
   - component: {fileID: 8325601194161497484}
   m_Layer: 0
-  m_Name: GunWeaponSocket
+  m_Name: LeftEquipSocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5489,6 +5638,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+  acceptedType: 1
   isInvisible: 0
 --- !u!1001 &4240727074483448184
 PrefabInstance:
@@ -5638,6 +5788,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RobotHand_Black L
       objectReference: {fileID: 0}
+    - target: {fileID: 5674446548845650804, guid: 8a90b67b548121c418bbb8cfa417e586,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.03
+      objectReference: {fileID: 0}
     - target: {fileID: 5674446548845650805, guid: 8a90b67b548121c418bbb8cfa417e586,
         type: 3}
       propertyPath: cableObject
@@ -5650,6 +5805,18 @@ PrefabInstance:
       objectReference: {fileID: 785334369}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a90b67b548121c418bbb8cfa417e586, type: 3}
+--- !u!114 &54626233835228762 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5674446548845650805, guid: 8a90b67b548121c418bbb8cfa417e586,
+    type: 3}
+  m_PrefabInstance: {fileID: 5655884890416639279}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c695dfd3b691dd34583e4407877b628c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &259353372894504467 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5612846141204155196, guid: 8a90b67b548121c418bbb8cfa417e586,
