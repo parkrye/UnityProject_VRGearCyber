@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 
 namespace PGR
 {
-    public class CableObject : XRGrabInteractable
+    public class CableObject : PlayerInteractable
     {
         [Header ("Cable Object Parameters")]
         [SerializeField] Rigidbody rb;
@@ -15,6 +14,7 @@ namespace PGR
             base.Awake();
             rb = GetComponent<Rigidbody>();
             pointLight = GetComponent<Light>();
+            Priority = 1;
 
             FixExit();
         }
