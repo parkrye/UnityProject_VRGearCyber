@@ -294,30 +294,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: beb4e2871579447497fe41dfb108e2cd, type: 3}
---- !u!114 &239439471 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 669625223960962604, guid: d647cce6dc2e5704e912094854aad6aa,
-    type: 3}
-  m_PrefabInstance: {fileID: 5674446548532103604}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b6599be27f315841b371a92307620ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &267180719 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 267180719, guid: d647cce6dc2e5704e912094854aad6aa,
-    type: 3}
-  m_PrefabInstance: {fileID: 5674446548532103604}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b6599be27f315841b371a92307620ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &361821096
 GameObject:
   m_ObjectHideFlags: 0
@@ -925,18 +901,6 @@ MonoBehaviour:
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
   grabPriority: 1
---- !u!114 &715386364 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2222634995847638950, guid: d647cce6dc2e5704e912094854aad6aa,
-    type: 3}
-  m_PrefabInstance: {fileID: 5674446548532103604}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6803edce0201f574f923fd9d10e5b30a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &781440864
 GameObject:
   m_ObjectHideFlags: 0
@@ -1646,18 +1610,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1851744898 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2120687119546889005, guid: d647cce6dc2e5704e912094854aad6aa,
-    type: 3}
-  m_PrefabInstance: {fileID: 5674446548532103604}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6803edce0201f574f923fd9d10e5b30a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1853356054
 GameObject:
   m_ObjectHideFlags: 0
@@ -2369,77 +2321,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 670120537221899524, guid: d647cce6dc2e5704e912094854aad6aa,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1409152598364344215, guid: d647cce6dc2e5704e912094854aad6aa,
-        type: 3}
-      propertyPath: m_StartingInteractionOverridesMap.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1409152598364344215, guid: d647cce6dc2e5704e912094854aad6aa,
-        type: 3}
-      propertyPath: m_StartingInteractionOverridesMap.Array.data[1].groupMember
-      value: 
-      objectReference: {fileID: 1851744898}
-    - target: {fileID: 1409152598364344215, guid: d647cce6dc2e5704e912094854aad6aa,
-        type: 3}
-      propertyPath: m_StartingInteractionOverridesMap.Array.data[0].overrideGroupMembers.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1409152598364344215, guid: d647cce6dc2e5704e912094854aad6aa,
-        type: 3}
-      propertyPath: m_StartingInteractionOverridesMap.Array.data[1].overrideGroupMembers.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1409152598364344215, guid: d647cce6dc2e5704e912094854aad6aa,
-        type: 3}
-      propertyPath: m_StartingInteractionOverridesMap.Array.data[0].overrideGroupMembers.Array.data[0]
-      value: 
-      objectReference: {fileID: 4563140325822286091, guid: d647cce6dc2e5704e912094854aad6aa,
-        type: 3}
-    - target: {fileID: 1409152598364344215, guid: d647cce6dc2e5704e912094854aad6aa,
-        type: 3}
-      propertyPath: m_StartingInteractionOverridesMap.Array.data[1].overrideGroupMembers.Array.data[0]
-      value: 
-      objectReference: {fileID: 267180719}
-    - target: {fileID: 4770733924111903381, guid: d647cce6dc2e5704e912094854aad6aa,
-        type: 3}
-      propertyPath: m_StartingInteractionOverridesMap.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4770733924111903381, guid: d647cce6dc2e5704e912094854aad6aa,
-        type: 3}
-      propertyPath: m_StartingInteractionOverridesMap.Array.data[1].groupMember
-      value: 
-      objectReference: {fileID: 715386364}
-    - target: {fileID: 4770733924111903381, guid: d647cce6dc2e5704e912094854aad6aa,
-        type: 3}
-      propertyPath: m_StartingInteractionOverridesMap.Array.data[0].overrideGroupMembers.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4770733924111903381, guid: d647cce6dc2e5704e912094854aad6aa,
-        type: 3}
-      propertyPath: m_StartingInteractionOverridesMap.Array.data[1].overrideGroupMembers.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4770733924111903381, guid: d647cce6dc2e5704e912094854aad6aa,
-        type: 3}
-      propertyPath: m_StartingInteractionOverridesMap.Array.data[0].overrideGroupMembers.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4770733924111903381, guid: d647cce6dc2e5704e912094854aad6aa,
-        type: 3}
-      propertyPath: m_StartingInteractionOverridesMap.Array.data[1].overrideGroupMembers.Array.data[0]
-      value: 
-      objectReference: {fileID: 239439471}
-    - target: {fileID: 5765144962483690592, guid: d647cce6dc2e5704e912094854aad6aa,
-        type: 3}
-      propertyPath: m_DirectInteractor
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6549267104392139614, guid: d647cce6dc2e5704e912094854aad6aa,
         type: 3}

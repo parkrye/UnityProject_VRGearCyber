@@ -9,7 +9,6 @@ namespace PGR
         [Header("Player Direct Interactor Parameters")]
         [SerializeField] List<IXRInteractable> customSortedValidTargets;
 
-        /// <inheritdoc />
         public override void GetValidTargets(List<IXRInteractable> targets)
         {
             targets.Clear();
