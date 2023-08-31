@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace PGR
@@ -9,6 +10,7 @@ namespace PGR
         [SerializeField][Range(1, 10)] int grabPriority;
         [SerializeField] protected Rigidbody rb;
         [SerializeField] GameData.InteractableType interactableType;
+        [SerializeField] int defaultLayer, ignoreColliderLayer;
         public GameData.InteractableType InteractableType { get { return interactableType; } }
 
         public int Priority 
@@ -32,17 +34,26 @@ namespace PGR
         {
             base.Awake();
             rb = GetComponent<Rigidbody>();
+            defaultLayer = gameObject.layer;
+            ignoreColliderLayer = Mathf.RoundToInt(Mathf.Log(LayerMask.GetMask("Ignore Collider"), 2));
         }
 
         protected override void OnSelectEntered(SelectEnterEventArgs args)
         {
             base.OnSelectEntered(args);
+            foreach (Transform go in GetComponentsInChildren<Transform>())
+            {
+                go.gameObject.layer = ignoreColliderLayer;
+            }
         }
 
         protected override void OnSelectExited(SelectExitEventArgs args)
         {
             base.OnSelectExited(args);
+            foreach (Transform go in GetComponentsInChildren<Transform>())
+            {
+                go.gameObject.layer = defaultLayer;
+            }
         }
     }
-
 }
