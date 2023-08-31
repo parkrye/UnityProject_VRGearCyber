@@ -4,12 +4,12 @@ namespace PGR
 {
     public class IrisSystemDevice : MonoBehaviour
     {
-        [SerializeField] bool isHandOnArea, isRight, isOn;
-        [SerializeField] GameObject irisSystemCanvas;
+        [SerializeField] bool isHandOnArea, isRight, isLeft, isOn;
+        [SerializeField] GameObject irisSystemCamera;
 
         void OnEnable()
         {
-            irisSystemCanvas.SetActive(false);
+            irisSystemCamera.SetActive(false);
         }
 
         void OnTriggerEnter(Collider other)
@@ -19,7 +19,10 @@ namespace PGR
                 return;
 
             isHandOnArea = true;
-            isRight = controller.IsRight;
+            if(controller.IsRight)
+                isRight = true;
+            else
+                isLeft = true;
         }
 
         void OnTriggerExit(Collider other)
@@ -29,7 +32,10 @@ namespace PGR
                 return;
 
             isHandOnArea = false;
-            isRight = !controller.IsRight;
+            if (controller.IsRight)
+                isRight = false;
+            else
+                isLeft = false;
         }
 
         public void OnTriggerEnterEvent(bool _isRight)
@@ -37,11 +43,11 @@ namespace PGR
             if (!isHandOnArea)
                 return;
 
-            if (isRight != _isRight)
+            if (isRight != _isRight && isLeft != _isRight)
                 return;
 
             isOn = !isOn;
-            irisSystemCanvas.SetActive(isOn);
+            irisSystemCamera.SetActive(isOn);
         }
     }
 }
