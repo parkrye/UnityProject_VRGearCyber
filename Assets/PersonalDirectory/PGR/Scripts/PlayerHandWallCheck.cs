@@ -5,8 +5,7 @@ namespace PGR
     public class PlayerHandWallCheck : MonoBehaviour
     {
         [SerializeField] PlayerController playerController;
-        [SerializeField] Transform handTransform;
-        [SerializeField] Vector3 lastPosition;
+        [SerializeField] Transform handTransform, spineTransform;
         [SerializeField] LayerMask wallLayer;
         [SerializeField] bool isStop, isRight, isRayCasted;
 
@@ -18,28 +17,26 @@ namespace PGR
             if (!isStop)
                 return;
 
-            handTransform.position = lastPosition;
-
             if (!isRayCasted)
                 return;
 
-            handLookPosition = Vector3.ProjectOnPlane((transform.position - lastPosition), wallNormalVector).normalized;
+            handLookPosition = Vector3.ProjectOnPlane((transform.position - handTransform.position), wallNormalVector).normalized;
 
             if(isRight)
-                handTransform.rotation = Quaternion.LookRotation(handLookPosition, wallNormalVector);
+                handTransform.rotation = Quaternion.Lerp(handTransform.rotation, Quaternion.LookRotation(handLookPosition, wallNormalVector), 0.1f);
             else
-                handTransform.rotation = Quaternion.LookRotation(handLookPosition, -wallNormalVector);
+                handTransform.rotation = Quaternion.Lerp(handTransform.rotation, Quaternion.LookRotation(handLookPosition, -wallNormalVector), 0.1f);
 
             // 손이 벽에 닿았을때 움직이는 것 추가
-            //handTransform.position += handLookPosition;
-            //lastPosition = handTransform.position;
+            if (Physics.Raycast(spineTransform.position, transform.position - spineTransform.position, out RaycastHit hit, 3f, wallLayer))
+                handTransform.position = hit.point;
         }
 
         void OnTriggerEnter(Collider other)
         {
             if(!isStop && 1 << other.gameObject.layer == wallLayer)
             {
-                lastPosition = transform.position;
+                handTransform.position = transform.position;
                 //handTransform.position = lastPosition;
                 isStop = true;
                 playerController.HandMotion.WallCheck(isRight, isStop);
@@ -59,6 +56,7 @@ namespace PGR
                 isStop = false;
                 isRayCasted = false;
                 playerController.HandMotion.WallCheck(isRight, isStop);
+                handTransform.localPosition = handPrefab.transform.localPosition;
                 handTransform.localRotation = handPrefab.transform.localRotation;
             }
         }
