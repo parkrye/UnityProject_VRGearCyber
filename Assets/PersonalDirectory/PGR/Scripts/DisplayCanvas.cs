@@ -12,14 +12,12 @@ namespace PGR
         [SerializeField] float maxDistance;
         [SerializeField] bool isVisible;
 
-        void OnEnable()
-        {
-            if (overayCamera == null)
-                overayCamera = Camera.main.transform.parent.GetComponentsInChildren<Camera>()[1];
-        }
-
         void LateUpdate()
         {
+            if (overayCamera == null)
+                return;
+            if (!overayCamera.isActiveAndEnabled)
+                return;
             if(Vector3.SqrMagnitude(overayCamera.transform.position - transform.position) > maxDistance)
             {
                 if (isVisible)
