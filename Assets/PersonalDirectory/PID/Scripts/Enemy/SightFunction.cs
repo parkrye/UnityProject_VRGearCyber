@@ -2,11 +2,12 @@ using PID;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace ildoo
+namespace PID
 {
     public class SightFunction : MonoBehaviour
     {
         [SerializeField] LayerMask targetMask;
+        [SerializeField] LayerMask obstacleMask; 
         [SerializeField] Transform targetEye; 
         Transform PlayerInSight;
         //Should Be Declared by using Robot
@@ -22,23 +23,40 @@ namespace ildoo
             get;
             private set;
         }
+        bool playerContact = false; 
         float enemyDetectRange;
         float sightAngle;
+
+        [SerializeField] bool debug; 
 
         private void Update()
         {
             FindTarget();
+            if (!playerContact)
+            {
+                presenceTimer -= Time.deltaTime;
+                presenceTimer = Mathf.Clamp(presenceTimer, 0, maxTimer);
+            }
+        }
+
+        public void SyncSightStat(EnemyStat robotStat)
+        {
+            this.sightAngle = robotStat.maxSightAngle;
+            this.enemyDetectRange = robotStat.maxSightRange; 
         }
 
         private void OnTriggerEnter(Collider other)
         {
             if (!targetMask.Contain(other.gameObject.layer))
             {
+                playerContact = false; 
                 return;
             }
             else
             {
+                playerContact = true; 
                 presenceTimer += Time.deltaTime;
+                Debug.Log(presenceTimer); 
                 if (presenceTimer > maxTimer)
                 {
                     TargetFound = true;
@@ -48,6 +66,7 @@ namespace ildoo
                     presenceTimer = Mathf.Clamp(presenceTimer, 0, maxTimer);
                     return;
                 }
+                return; 
             }
             presenceTimer -= Time.deltaTime;
             presenceTimer = Mathf.Clamp(presenceTimer, 0, maxTimer);
@@ -70,27 +89,58 @@ namespace ildoo
                 dirTarget.y = 0f;
                 dirTarget.Normalize();
                 // IF Player is found on a given Range, 
-                if (Vector3.Dot(transform.forward, dirTarget) > Mathf.Cos(sightAngle * 0.5f * Mathf.Deg2Rad))
+                if (Vector3.Dot(transform.forward, dirTarget) < Mathf.Cos(sightAngle * 0.5f * Mathf.Deg2Rad))
                 {
                     continue;
                 }
                 //Start Coroutine for hiding activities. 
-
-                Vector2 distToTarget = (Vector2)collider.transform.position - (Vector2)transform.position;
-                float distance = Vector2.SqrMagnitude(distToTarget);
-                if (Physics.Raycast(transform.position, dirTarget, out obstacleHit, distance))
+;
+                //Vector3 distToTarget = collider.transform.position - transform.position;
+                float distance = Vector3.Distance(collider.transform.position, transform.position);//Vector2.SqrMagnitude(distToTarget);
+                if (Physics.Raycast(transform.position, dirTarget, out obstacleHit, distance, obstacleMask))
                 {
-                    if (!targetMask.Contain(obstacleHit.collider.gameObject.layer))
-                        break;
-                    PlayerInSight = obstacleHit.transform;
-                    TargetFound = true;
-                    PlayerFound?.Invoke(obstacleHit.transform); 
+                    break; 
+                    //if (!targetMask.Contain(obstacleHit.collider.gameObject.layer))
+                    //    continue;
+                    //PlayerInSight = obstacleHit.transform;
+                    //TargetFound = true; 
+                    //PlayerFound?.Invoke(obstacleHit.transform);
+                    //return; 
+                }
+                else
+                {
+                    PlayerInSight = collider.transform;
+                    PlayerFound?.Invoke(collider.transform);
+                    return;
                 }
             }
+            PlayerLost?.Invoke();
         }
         public bool TargetInValidRange() 
         {
             return false; 
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (!debug) return;
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(targetEye.position, sightAngle);
+
+            Vector3 rightDir = AngleToDir(transform.eulerAngles.y + sightAngle * 0.5f);
+            // where .eulerAngle.y returns rotation angle from the y-axis in a Space.World 
+            Vector3 leftDir = AngleToDir(transform.eulerAngles.y - sightAngle * 0.5f);
+            // 
+            Gizmos.color = Color.blue;
+            Gizmos.DrawRay(transform.position, rightDir * enemyDetectRange);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawRay(transform.position, leftDir * enemyDetectRange);
+        }
+
+        private Vector3 AngleToDir(float angle)
+        {
+            float radian = angle * Mathf.Deg2Rad;
+            return new Vector3(Mathf.Sin(radian), 0, Mathf.Cos(radian));
         }
     }
 }

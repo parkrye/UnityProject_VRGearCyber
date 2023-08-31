@@ -10,18 +10,18 @@ namespace PID
         protected float maxSightRange;
         protected float maxSightAngle;
         protected int attackDamage;
+        protected int attackRange; 
         protected EnemyStat enemyStat;
         protected int currentHealth
         {
             get;
             private set;
         }
+
         protected virtual void SetUp(EnemyStat stat)
         {
             moveSpeed = stat.moveSpeed;
             maxHealth = stat.maxHealth;
-            maxSightAngle = stat.maxSightAngle;
-            maxSightRange = stat.maxSightRange;
             attackDamage = stat.attackDamage;
             currentHealth = maxHealth;
         }

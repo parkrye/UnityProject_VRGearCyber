@@ -1,10 +1,13 @@
-using ildoo;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using PID;
+using static PID.RobotHelper; 
+
 namespace PID
 {
     [RequireComponent(typeof(NavMeshAgent), typeof(SightFunction))]
@@ -37,18 +40,21 @@ namespace PID
         bool notified;
 
         //Combat Extra Properties
-
+        [SerializeField] Transform muzzlePoint; 
+        
         [SerializeField] float fireInterval_s;
         [SerializeField] float randomShotRadius;
         public Transform playerBody; 
         WaitForSeconds fireInterval;
-
+        public Vector3 focusDir; 
         //Debugging 
         public TMP_Text debugText; 
         #endregion
         protected void Awake()
         {
             enemyStat = GameManager.Resource.Load<EnemyStat>("Data/Guard");
+            base.SetUp(enemyStat);
+
             guardSight = GetComponent<SightFunction>(); 
             obstacle = GetComponent<NavMeshObstacle>();
             agent = GetComponent<NavMeshAgent>();
@@ -64,12 +70,14 @@ namespace PID
             stateMachine.AddState(State.Patrol, new PatrolState(this, stateMachine));
             stateMachine.AddState(State.Alert, new AlertState(this, stateMachine));
             stateMachine.AddState(State.Assault, new AssaultState(this, stateMachine));
+            stateMachine.AddState(State.Trace, new TraceState(this, stateMachine));
             stateMachine.AddState(State.LookAround, new LookAroundState(this, stateMachine));
             stateMachine.AddState(State.Neutralized, new NeutralizedState(this, stateMachine));
         }
         #region MACHINE RUNNING 
         private void Start()
         {
+            guardSight.SyncSightStat(enemyStat); 
             guardSight.PlayerFound += DetectPlayer; 
             guardSight.PlayerLost += TempPlayerLost;
             stateMachine.SetUp(State.Idle);
@@ -84,6 +92,12 @@ namespace PID
             stateMachine.Update();
         }
 
+        private void LateUpdate()
+        {
+            if (focusDir == Vector3.zero)
+                return; 
+            RobotBody.transform.localRotation = Quaternion.Slerp(RobotBody.transform.localRotation, Quaternion.LookRotation(focusDir), .1f); 
+        }
         protected override void Die()
         {
             NeutralizedState neutralizeReason;
@@ -107,22 +121,35 @@ namespace PID
             if (fireCoroutine != null)
                 StopCoroutine(fireCoroutine);
         }
+        Vector3 shotAttempt;
+        RaycastHit hitAttempt; 
         IEnumerator FireRoutine()
         {
             while (true)
             {
+                anim.SetTrigger("GunFire"); 
+                shotAttempt = FinalShotDir(muzzlePoint.position, playerBody.position, attackRange, randomShotRadius); 
+                if (Physics.Raycast(muzzlePoint.position, shotAttempt, out hitAttempt, attackRange))
+                {
+                    IHitable hitable =  hitAttempt.collider.GetComponent<IHitable>();
+                    hitable?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal); 
+                }
                 yield return fireInterval;
             }
         }
 
         public void DetectPlayer(Transform player)
         {
-            playerBody = player; 
+            if (stateMachine.curStateName == State.Neutralized)
+                return; 
+            playerBody = player;
+            stateMachine.ChangeState(State.Assault); 
         }
 
         public void TempPlayerLost()
         {
-            stateMachine.ChangeState(State.Trace); 
+            if (stateMachine.curStateName == State.Assault)
+                stateMachine.ChangeState(State.Trace); 
         }
 
         public override void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
@@ -140,7 +167,7 @@ namespace PID
             }
         }
 
-        public void Notified(int index, Vector3 centrePoint)
+        public void Notified(Vector3 centrePoint, int size, int index)
         {
             if (stateMachine.curStateName == State.Neutralized)
             {
@@ -150,7 +177,9 @@ namespace PID
             if (stateMachine.CheckState(State.Alert))
             {
                 alertState = stateMachine.RetrieveState(State.Alert) as AlertState;
-                alertState.SetDestination(centrePoint);
+                Vector3 gatherPos = RobotHelper.GroupPositionAllocator(centrePoint, size, index); 
+                alertState.SetDestination(gatherPos);
+                stateMachine.ChangeState(State.Alert); 
             }
         }
 
@@ -179,7 +208,6 @@ namespace PID
 
         public abstract class GuardState : StateBase<State, GuardEnemy>
         {
-            public Animator anim => owner.anim;
             public GuardState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
             {
             }
@@ -237,7 +265,7 @@ namespace PID
             public override void Enter()
             {
                 owner.debugText.text = "Patrol";
-                if (patrolDestination != null)
+                if (patrolDestination != Vector3.zero)
                     return;
                 //Compute to find nearest patrol starting point based on robot's current position, get the nearest 
                 for (int i = 0; i < owner.patrolPoints.Length; i++)
@@ -314,22 +342,26 @@ namespace PID
                 owner.debugText.text = "LookAround";
                 owner.agent.isStopped = true;
                 owner.anim.SetBool("Walking", false); 
-                Vector3 nextLookDir = UnityEngine.Random.insideUnitCircle.normalized; 
-                previousRotation = owner.transform.rotation;
-                searchRotation = Quaternion.LookRotation(nextLookDir, owner.transform.up); 
+                Vector2 nextLookRandom = UnityEngine.Random.insideUnitCircle.normalized;
+                Vector3 nextLookDir = new Vector3(nextLookRandom.x, owner.transform.position.y, nextLookRandom.y); 
+                owner.focusDir = nextLookDir;
+                //previousRotation = owner.transform.rotation;
+                //searchRotation = Quaternion.LookRotation(nextLookDir, owner.transform.up); 
                 //TODO: Add Method to check if the next search rotation is too close to current rotation; 
             }
 
             public override void Exit()
             {
                 timer = 0f;
-                owner.playerBody.rotation = owner.transform.rotation;
+                owner.focusDir = Vector3.zero; 
+                owner.RobotBody.rotation = owner.transform.rotation;
                 owner.agent.isStopped = false; 
             }
 
             public override void Setup()
             {
                 //Set Next Random Pointer to Look At, 
+                owner.focusDir = Vector3.zero; 
             }
 
             public override void Transition()
@@ -340,7 +372,7 @@ namespace PID
 
             public override void Update()
             {
-                owner.playerBody.rotation = Quaternion.Slerp(owner.playerBody.rotation, searchRotation, rotateInterval);
+                //owner.RobotBody.localRotation = Quaternion.Slerp(owner.RobotBody.rotation, searchRotation, rotateInterval);
                 timer += Time.deltaTime; 
                 //Make a look around? 
             }
@@ -406,13 +438,16 @@ namespace PID
                 owner.debugText.text = "Assault";
                 owner.agent.isStopped = true;
                 owner.anim.SetBool("Walking", false);
+                if (owner.playerBody != null)
+                    owner.focusDir = (owner.playerBody.transform.position - owner.transform.position).normalized; 
+                owner.Fire(); 
             }
 
             public override void Exit()
             {
-                owner.agent.isStopped = false;
-                owner.anim.SetBool("Walking", true);
+                owner.focusDir = Vector3.zero;
                 //Perhaps for now, but should consider reasons for movement 
+                owner.StopFire(); 
             }
 
             public override void Setup()
@@ -427,11 +462,12 @@ namespace PID
 
             public override void Update()
             {
+                owner.focusDir = (owner.playerBody.transform.position - owner.transform.position).normalized;
             }
         }
         #endregion
         #region Trace State 
-        // Given an Enemy previously 'Founnd' the enemy, but temporaily have the player gone missing, for a certain interval, Enemy will Search for the Player Under 2 Conditions. 
+        // Given an Enemy previously 'Found' the enemy, but temporaily have the player gone missing, for a certain interval, Enemy will Search for the Player Under 2 Conditions. 
         // 1. Timer Runs out => Returns to the Patrol or Look Around State
         // 2. Player Dies. 
         public class TraceState : GuardState
@@ -445,6 +481,8 @@ namespace PID
 
             public override void Enter()
             {
+                owner.agent.isStopped = false;
+                owner.anim.SetBool("Walking", true);
                 owner.debugText.text = "Trace";
                 trackTimer = 0f;
                 if (owner.playerBody == null)
@@ -455,7 +493,6 @@ namespace PID
             public override void Exit()
             {
                 trackTimer = 0f;
-                owner.playerBody = null; 
             }
 
             public override void Setup()
@@ -467,6 +504,7 @@ namespace PID
             {
                 if (trackTimer >= maxTraceTime)
                 {
+                    owner.playerBody = null;
                     stateMachine.ChangeState(State.LookAround);
                     return;
                 }
