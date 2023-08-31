@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface Hitable
 {
-    public void Hit(int damage);
-    protected void Die();
+    IEnumerator Hit(int damage);
+    IEnumerator Break();
 }
