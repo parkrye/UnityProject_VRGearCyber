@@ -11,7 +11,7 @@ namespace PGR
 
         public override bool CanSelect(IXRSelectInteractable interactable)
         {
-            PlayerInteractable socketTarget = interactable.transform.GetComponent<PlayerInteractable>();
+            CustomGrabInteractable socketTarget = interactable.transform.GetComponent<CustomGrabInteractable>();
 
             if (socketTarget == null)
                 return false;

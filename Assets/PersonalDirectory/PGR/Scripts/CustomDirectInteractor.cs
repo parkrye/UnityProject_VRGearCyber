@@ -4,9 +4,9 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 namespace PGR
 {
-    public class PlayerDirectInteractor : XRDirectInteractor
+    public class CustomDirectInteractor : XRDirectInteractor
     {
-        [Header("Player Direct Interactor Parameters")]
+        [Header("Custom Direct Interactor Parameters")]
         [SerializeField] List<IXRInteractable> customSortedValidTargets;
 
         public override void GetValidTargets(List<IXRInteractable> targets)
@@ -26,8 +26,8 @@ namespace PGR
                 foreach (var target in unsortedValidTargets)
                 {
                     int priority = 5;
-                    if (target is PlayerInteractable)
-                        priority = (target as PlayerInteractable).Priority;
+                    if (target is CustomGrabInteractable)
+                        priority = (target as CustomGrabInteractable).Priority;
 
                     pq.Enqueue(target, priority);
                 }

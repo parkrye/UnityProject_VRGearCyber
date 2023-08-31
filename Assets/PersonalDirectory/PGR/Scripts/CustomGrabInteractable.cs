@@ -3,9 +3,9 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 namespace PGR
 {
-    public class PlayerInteractable : XRGrabInteractable
+    public class CustomGrabInteractable : XRGrabInteractable
     {
-        [Header("Player Interactable Parameters")]
+        [Header("Custom Grab Interactable Parameters")]
         [SerializeField][Range(1, 10)] int grabPriority;
         [SerializeField] protected Rigidbody rb;
         [SerializeField] GameData.InteractableType interactableType;

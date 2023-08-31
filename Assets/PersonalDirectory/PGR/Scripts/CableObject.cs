@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace PGR
 {
-    public class CableObject : PlayerInteractable
+    public class CableObject : CustomGrabInteractable
     {
         [Header ("Cable Object Parameters")]
         [SerializeField] Light pointLight;
