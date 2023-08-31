@@ -1,41 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace PGR
 {
-    public class CableObject : MonoBehaviour
+    public class CableObject : CustomGrabInteractable
     {
-        [SerializeField] Vector3 fixTranPosotion;
-        [SerializeField] Rigidbody rb;
-        [SerializeField] bool isFixed;
+        [Header ("Cable Object Parameters")]
+        [SerializeField] Light pointLight;
 
-        void Awake()
+        protected override void Awake()
         {
-            rb = GetComponent<Rigidbody>();
+            base.Awake();
+            pointLight = GetComponent<Light>();
+
+            Priority = 10;
+            pointLight.enabled = false;
+            rb.isKinematic = false;
         }
 
-        void LateUpdate()
+        public void FixEnter()
         {
-            if (!isFixed)
-                return;
-
-            transform.position = fixTranPosotion;
+            rb.isKinematic = true;
         }
 
-        void FixEnter()
+        public void FixExit()
         {
-            isFixed = true;
+            pointLight.enabled = false;
+            rb.isKinematic = false;
         }
 
-        void FixExit()
+        public void ReadyToShot()
         {
-            isFixed = false;
+            pointLight.enabled = true;
         }
 
         public void ShotCable(Vector3 shotDirection, float shotPower)
         {
-            FixExit();
+            rb.isKinematic = false;
             gameObject.SetActive(false);
             gameObject.SetActive(true);
             rb.AddForce(shotDirection * shotPower, ForceMode.Impulse);
@@ -47,18 +47,9 @@ namespace PGR
             if (hackable == null)
                 return;
 
-            fixTranPosotion = transform.position;
+            // Start Hacking Puzzle
+            transform.LookAt(transform.position - collision.contacts[0].normal);
             FixEnter();
-        }
-
-        void OnCollisionExit(Collision collision)
-        {
-            IHackable hackable = collision.gameObject.GetComponent<IHackable>();
-            if (hackable == null)
-                return;
-
-            fixTranPosotion = Vector3.zero;
-            FixExit();
         }
     }
 }
