@@ -32,19 +32,16 @@ namespace PGR
         {
             base.Awake();
             rb = GetComponent<Rigidbody>();
-            rb.isKinematic = true;
         }
 
         protected override void OnSelectEntered(SelectEnterEventArgs args)
         {
             base.OnSelectEntered(args);
-            rb.isKinematic = false;
         }
 
         protected override void OnSelectExited(SelectExitEventArgs args)
         {
             base.OnSelectExited(args);
-            rb.isKinematic = false;
         }
     }
 

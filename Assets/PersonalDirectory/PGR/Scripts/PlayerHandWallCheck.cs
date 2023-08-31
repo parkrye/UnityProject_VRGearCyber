@@ -24,11 +24,15 @@ namespace PGR
                 return;
 
             handLookPosition = Vector3.ProjectOnPlane((transform.position - lastPosition), wallNormalVector).normalized;
-            //handTransform.LookAt(handTransform.position + handLookPosition);
+
             if(isRight)
                 handTransform.rotation = Quaternion.LookRotation(handLookPosition, wallNormalVector);
             else
                 handTransform.rotation = Quaternion.LookRotation(handLookPosition, -wallNormalVector);
+
+            // 손이 벽에 닿았을때 움직이는 것 추가
+            //handTransform.position += handLookPosition;
+            //lastPosition = handTransform.position;
         }
 
         void OnTriggerEnter(Collider other)
@@ -36,6 +40,7 @@ namespace PGR
             if(!isStop && 1 << other.gameObject.layer == wallLayer)
             {
                 lastPosition = transform.position;
+                //handTransform.position = lastPosition;
                 isStop = true;
                 playerController.HandMotion.WallCheck(isRight, isStop);
 
