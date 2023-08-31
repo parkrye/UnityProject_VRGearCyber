@@ -2,63 +2,66 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateMachine<TState, TOwner> where TOwner : MonoBehaviour
+namespace PID
 {
-    private TOwner owner;
-    private Dictionary<TState, StateBase<TState, TOwner>> states;
-    private StateBase<TState, TOwner> curState;
-    public TState curStateName; 
-    public StateMachine(TOwner owner)
+    public class StateMachine<TState, TOwner> where TOwner : MonoBehaviour
     {
-        this.owner = owner;
-        this.states = new Dictionary<TState, StateBase<TState, TOwner>>();
-    }
-
-    public bool CheckState(TState state) 
-    {
-        if (states.ContainsKey(state)) 
-        { 
-            return true; 
-        }
-        else
+        private TOwner owner;
+        private Dictionary<TState, StateBase<TState, TOwner>> states;
+        private StateBase<TState, TOwner> curState;
+        public TState curStateName;
+        public StateMachine(TOwner owner)
         {
-            return false; 
+            this.owner = owner;
+            this.states = new Dictionary<TState, StateBase<TState, TOwner>>();
         }
-    }
 
-    public StateBase<TState, TOwner> RetrieveState(TState state)
-    {
-        return states[state];
-    }
-    
-    public void AddState(TState state, StateBase<TState, TOwner> stateBase)
-    {
-        states.Add(state, stateBase);
-    }
-
-    public void SetUp(TState startState)
-    {
-        foreach (StateBase<TState, TOwner> state in states.Values)
+        public bool CheckState(TState state)
         {
-            state.Setup();
+            if (states.ContainsKey(state))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        curState = states[startState];
-        curStateName = startState; 
-        curState.Enter();
-    }
+        public StateBase<TState, TOwner> RetrieveState(TState state)
+        {
+            return states[state];
+        }
 
-    public void Update()
-    {
-        curState.Update();
-        curState.Transition();
-    }
+        public void AddState(TState state, StateBase<TState, TOwner> stateBase)
+        {
+            states.Add(state, stateBase);
+        }
 
-    public void ChangeState(TState newState)
-    {
-        curState.Exit();
-        curState = states[newState];
-        curStateName = newState; 
-        curState.Enter();
+        public void SetUp(TState startState)
+        {
+            foreach (StateBase<TState, TOwner> state in states.Values)
+            {
+                state.Setup();
+            }
+
+            curState = states[startState];
+            curStateName = startState;
+            curState.Enter();
+        }
+
+        public void Update()
+        {
+            curState.Update();
+            curState.Transition();
+        }
+
+        public void ChangeState(TState newState)
+        {
+            curState.Exit();
+            curState = states[newState];
+            curStateName = newState;
+            curState.Enter();
+        }
     }
 }

@@ -1,11 +1,20 @@
+using PID;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace ildoo
 {
     public class SightFunction : MonoBehaviour
     {
         [SerializeField] LayerMask targetMask;
+        [SerializeField] Transform targetEye; 
         Transform PlayerInSight;
+        //Should Be Declared by using Robot
+        public UnityEvent<Transform> PlayerFound;
+        //Should be leading to Assualt State 
+        public UnityEvent PlayerLost;
+        //Shoudl be leading to Tracing State 
+
         float presenceTimer;
         const float maxTimer = 3f;
         public bool TargetFound
@@ -33,6 +42,8 @@ namespace ildoo
                 if (presenceTimer > maxTimer)
                 {
                     TargetFound = true;
+                    //Should be replaced by the state changing event; 
+                    PlayerFound?.Invoke(other.transform); 
                     PlayerInSight = other.transform;
                     presenceTimer = Mathf.Clamp(presenceTimer, 0, maxTimer);
                     return;
@@ -63,6 +74,7 @@ namespace ildoo
                 {
                     continue;
                 }
+                //Start Coroutine for hiding activities. 
                 Vector2 distToTarget = (Vector2)collider.transform.position - (Vector2)transform.position;
                 float distance = Vector2.SqrMagnitude(distToTarget);
                 if (Physics.Raycast(transform.position, dirTarget, out obstacleHit, distance))
@@ -74,7 +86,6 @@ namespace ildoo
                 }
             }
         }
-
         public bool TargetInValidRange() 
         {
             return false; 

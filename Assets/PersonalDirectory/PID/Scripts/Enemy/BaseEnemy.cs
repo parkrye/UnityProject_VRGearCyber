@@ -1,34 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 
-public class BaseEnemy : MonoBehaviour, IHitable, IHackable
+namespace PID
 {
-    //SetUp Base States 
-    protected float moveSpeed;
-    protected int maxHealth;
-    protected float maxSightRange;
-    protected float maxSightAngle;
-    protected int attackDamage;
-    protected EnemyStat enemyStat; 
-    protected int currentHealth
+    public class BaseEnemy : MonoBehaviour, IHitable, IHackable
     {
-        get;
-        private set;
-    }
-    protected virtual void SetUp(EnemyStat stat)
-    {
-        moveSpeed = stat.moveSpeed;
-        maxHealth = stat.maxHealth;
-        maxSightAngle = stat.maxSightAngle;
-        maxSightRange = stat.maxSightRange; 
-        attackDamage = stat.attackDamage;
-        currentHealth = maxHealth; 
-    }
+        //SetUp Base States 
+        protected float moveSpeed;
+        protected int maxHealth;
+        protected float maxSightRange;
+        protected float maxSightAngle;
+        protected int attackDamage;
+        protected EnemyStat enemyStat;
+        protected int currentHealth
+        {
+            get;
+            private set;
+        }
+        protected virtual void SetUp(EnemyStat stat)
+        {
+            moveSpeed = stat.moveSpeed;
+            maxHealth = stat.maxHealth;
+            maxSightAngle = stat.maxSightAngle;
+            maxSightRange = stat.maxSightRange;
+            attackDamage = stat.attackDamage;
+            currentHealth = maxHealth;
+        }
 
-    public virtual void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
-    {
-        currentHealth -= damage;
+        public virtual void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
+        {
+            currentHealth -= damage;
+        }
+
+        protected virtual void Die()
+        {
+        }
     }
 }

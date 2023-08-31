@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace ildoo
 {
+    
     public static class Extension
     {
         public static bool Contain(this LayerMask layerMask, int layer)
@@ -21,7 +22,7 @@ namespace ildoo
         {
             return component != null && component.gameObject.activeInHierarchy;
         }
-
+        public const int eqaulDestThreshold = 1;
         //Should apply to Advanced Zombie 
         public static Vector3 GetDestinationPoint(Vector3[] paths)
         {
