@@ -10,9 +10,9 @@ namespace ildoo
         [SerializeField] Transform targetEye; 
         Transform PlayerInSight;
         //Should Be Declared by using Robot
-        public UnityEvent<Transform> PlayerFound;
+        public UnityAction<Transform> PlayerFound;
         //Should be leading to Assualt State 
-        public UnityEvent PlayerLost;
+        public UnityAction PlayerLost;
         //Shoudl be leading to Tracing State 
 
         float presenceTimer;
@@ -75,6 +75,7 @@ namespace ildoo
                     continue;
                 }
                 //Start Coroutine for hiding activities. 
+
                 Vector2 distToTarget = (Vector2)collider.transform.position - (Vector2)transform.position;
                 float distance = Vector2.SqrMagnitude(distToTarget);
                 if (Physics.Raycast(transform.position, dirTarget, out obstacleHit, distance))
@@ -83,6 +84,7 @@ namespace ildoo
                         break;
                     PlayerInSight = obstacleHit.transform;
                     TargetFound = true;
+                    PlayerFound?.Invoke(obstacleHit.transform); 
                 }
             }
         }

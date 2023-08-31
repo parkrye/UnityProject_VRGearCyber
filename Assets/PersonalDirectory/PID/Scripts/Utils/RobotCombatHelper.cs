@@ -35,8 +35,8 @@ namespace PID
     /// </summary>
     public struct DestinationPoint : IComparable<DestinationPoint>
     {
-        Vector3 destinationVectorPoint;
-        float distanceToPoint; 
+        public Vector3 destinationVectorPoint;
+        public float distanceToPoint; 
 
         public DestinationPoint (Vector3 dVP, float dTP)
         {

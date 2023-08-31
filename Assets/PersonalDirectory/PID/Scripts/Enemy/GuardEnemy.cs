@@ -2,6 +2,7 @@ using ildoo;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 namespace PID
@@ -21,10 +22,13 @@ namespace PID
             Size
             //Possibly extending beyond for Gathering Abilities. 
         }
+        #region Machine Properties 
+
         //Base Properties 
         Animator anim;
         Rigidbody rigid;
         NavMeshAgent agent;
+        NavMeshObstacle obstacle; 
         SightFunction guardSight;
         StateMachine<State, GuardEnemy> stateMachine;
         [SerializeField] Transform robotBody; 
@@ -33,13 +37,24 @@ namespace PID
         bool notified;
 
         //Combat Extra Properties
+
         [SerializeField] float fireInterval_s;
         [SerializeField] float randomShotRadius;
+        public Transform playerBody; 
         WaitForSeconds fireInterval;
 
+        //Debugging 
+        public TMP_Text debugText; 
+        #endregion
         protected void Awake()
         {
-            enemyStat = GameManager.Resource.Instantiate<EnemyStat>("Data/Guard");
+            enemyStat = GameManager.Resource.Load<EnemyStat>("Data/Guard");
+            guardSight = GetComponent<SightFunction>(); 
+            obstacle = GetComponent<NavMeshObstacle>();
+            agent = GetComponent<NavMeshAgent>();
+            rigid = GetComponent<Rigidbody>();
+            anim = GetComponent<Animator>();
+            debugText = GetComponentInChildren<TMP_Text>();  
             notified = false;
 
             base.SetUp(enemyStat);
@@ -49,12 +64,20 @@ namespace PID
             stateMachine.AddState(State.Patrol, new PatrolState(this, stateMachine));
             stateMachine.AddState(State.Alert, new AlertState(this, stateMachine));
             stateMachine.AddState(State.Assault, new AssaultState(this, stateMachine));
+            stateMachine.AddState(State.LookAround, new LookAroundState(this, stateMachine));
             stateMachine.AddState(State.Neutralized, new NeutralizedState(this, stateMachine));
         }
         #region MACHINE RUNNING 
         private void Start()
         {
+            guardSight.PlayerFound += DetectPlayer; 
+            guardSight.PlayerLost += TempPlayerLost;
             stateMachine.SetUp(State.Idle);
+        }
+        private void OnDisable()
+        {
+            guardSight.PlayerFound -= DetectPlayer;
+            guardSight.PlayerLost -= TempPlayerLost;
         }
         private void Update()
         {
@@ -81,7 +104,8 @@ namespace PID
 
         public void StopFire()
         {
-
+            if (fireCoroutine != null)
+                StopCoroutine(fireCoroutine);
         }
         IEnumerator FireRoutine()
         {
@@ -91,7 +115,15 @@ namespace PID
             }
         }
 
+        public void DetectPlayer(Transform player)
+        {
+            playerBody = player; 
+        }
 
+        public void TempPlayerLost()
+        {
+            stateMachine.ChangeState(State.Trace); 
+        }
 
         public override void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
         {
@@ -164,6 +196,9 @@ namespace PID
             {
                 //Game Started, Robots are Initialized. 
                 // Depending on the Start Up notion, this should determine type of States this should switch to. 
+                owner.debugText.text = "Idle";
+
+                stateMachine.ChangeState(State.Patrol);
             }
 
             public override void Exit()
@@ -172,6 +207,7 @@ namespace PID
 
             public override void Setup()
             {
+                //Could Be Random, LookAround First, and then Patrol State. 
             }
 
             public override void Transition()
@@ -183,13 +219,15 @@ namespace PID
             }
         }
         #endregion
-
         #region Patrol State 
         public class PatrolState : GuardState
         {
             int lastPatrolPoint;
             int nextPatrolPoint;
             int patrolCount;
+            float distDelta;
+            bool patrolFinished;
+            const float distThreshold = 2.5f; 
             Vector3 patrolDestination; 
             PriorityQueue<DestinationPoint> patrolQueue; 
             public PatrolState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
@@ -198,16 +236,32 @@ namespace PID
 
             public override void Enter()
             {
+                owner.debugText.text = "Patrol";
+                if (patrolDestination != null)
+                    return;
                 //Compute to find nearest patrol starting point based on robot's current position, get the nearest 
+                for (int i = 0; i < owner.patrolPoints.Length; i++)
+                {
+                    float tempDist = Vector3.SqrMagnitude(owner.patrolPoints[i].position - owner.transform.position);
+                    DestinationPoint tempPoint = new DestinationPoint(owner.patrolPoints[i].position, tempDist);
+                    patrolQueue.Enqueue(tempPoint);
+                }
+                owner.anim.SetBool("Walking", true);
+                patrolDestination = patrolQueue.Dequeue().destinationVectorPoint;
             }
 
             public override void Exit()
             {
-                patrolCount = 0; 
+                patrolCount = 0;
+                patrolFinished = false; 
+                patrolDestination = Vector3.zero; 
             }
 
             public override void Setup()
             {
+                patrolFinished = false; 
+                patrolCount = 0; 
+                distDelta = 0f; 
                 lastPatrolPoint = 0;
                 patrolQueue = new PriorityQueue<DestinationPoint> ();
                 for (int i = 0; i < owner.patrolPoints.Length; i++)
@@ -216,28 +270,38 @@ namespace PID
                     DestinationPoint tempPoint = new DestinationPoint(owner.patrolPoints[i].position, tempDist); 
                     patrolQueue.Enqueue(tempPoint);
                 }
+                patrolDestination = patrolQueue.Dequeue().destinationVectorPoint; 
             }
 
             public override void Transition()
             {
-                if (patrolCount >= owner.patrolPoints.Length)
+                if (patrolFinished)
                 {
-
+                    stateMachine.ChangeState(State.LookAround); 
                 }
-
             }
 
             public override void Update()
             {
-                throw new System.NotImplementedException();
+                distDelta = Vector3.SqrMagnitude(patrolDestination - owner.transform.position); 
+                owner.agent.SetDestination(patrolDestination);
+                if (distDelta <= distThreshold && patrolQueue.Count >= 1)
+                {
+                    patrolDestination = patrolQueue.Dequeue().destinationVectorPoint;
+                    patrolCount++;
+                }
+                else if (distDelta <= distThreshold && patrolQueue.Count == 0)
+                {
+                    patrolFinished = true; 
+                }
             }
         }
         #endregion
-
         #region LookAround State 
         public class LookAroundState : GuardState
         {
             public const float lookAroundTime = 5f;
+            const float rotateInterval = .35f; 
             Quaternion previousRotation;
             Quaternion searchRotation; 
             public float timer; 
@@ -247,7 +311,9 @@ namespace PID
 
             public override void Enter()
             {
-                owner.agent.isStopped = true; 
+                owner.debugText.text = "LookAround";
+                owner.agent.isStopped = true;
+                owner.anim.SetBool("Walking", false); 
                 Vector3 nextLookDir = UnityEngine.Random.insideUnitCircle.normalized; 
                 previousRotation = owner.transform.rotation;
                 searchRotation = Quaternion.LookRotation(nextLookDir, owner.transform.up); 
@@ -257,6 +323,7 @@ namespace PID
             public override void Exit()
             {
                 timer = 0f;
+                owner.playerBody.rotation = owner.transform.rotation;
                 owner.agent.isStopped = false; 
             }
 
@@ -273,7 +340,9 @@ namespace PID
 
             public override void Update()
             {
-
+                owner.playerBody.rotation = Quaternion.Slerp(owner.playerBody.rotation, searchRotation, rotateInterval);
+                timer += Time.deltaTime; 
+                //Make a look around? 
             }
         }
         #endregion
@@ -285,14 +354,17 @@ namespace PID
             SightFunction guardSight;
             Vector3 destPoint;
             float distDelta;
-            const float distThreshhold = 3.5f;
+            const float holdPeriod = 5f; 
+            const float distThreshold = 3.5f;
             public AlertState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
             {
             }
 
             public override void Enter()
             {
-                throw new System.NotImplementedException();
+                owner.debugText.text = "Alert";
+                owner.agent.isStopped = false;
+                owner.anim.SetBool("Walking", true); 
             }
 
             public override void Exit()
@@ -312,32 +384,16 @@ namespace PID
 
             public override void Transition()
             {
-                switch (guardSight.TargetFound)
-                {
-                    case true:
-                        break;
-                    case false:
-                        stateMachine.ChangeState(State.Assault);
-                        break;
-                }
-                if (guardSight.TargetFound)
-                {
-
-                }
-                else if (!guardSight.TargetFound)
-                {
-
-                }
+                if (distDelta <= distThreshold)
+                    stateMachine.ChangeState(State.LookAround); 
             }
 
             public override void Update()
             {
-                if (distDelta > distThreshhold)
-                    return;
+                distDelta = Vector3.SqrMagnitude(owner.agent.destination - owner.transform.position); 
             }
         }
         #endregion
-
         #region Assault 
         public class AssaultState : GuardState
         {
@@ -347,19 +403,21 @@ namespace PID
 
             public override void Enter()
             {
+                owner.debugText.text = "Assault";
                 owner.agent.isStopped = true;
-                
+                owner.anim.SetBool("Walking", false);
             }
 
             public override void Exit()
             {
                 owner.agent.isStopped = false;
+                owner.anim.SetBool("Walking", true);
                 //Perhaps for now, but should consider reasons for movement 
             }
 
             public override void Setup()
             {
-                throw new System.NotImplementedException();
+
             }
 
             public override void Transition()
@@ -372,7 +430,6 @@ namespace PID
             }
         }
         #endregion
-
         #region Trace State 
         // Given an Enemy previously 'Founnd' the enemy, but temporaily have the player gone missing, for a certain interval, Enemy will Search for the Player Under 2 Conditions. 
         // 1. Timer Runs out => Returns to the Patrol or Look Around State
@@ -388,17 +445,22 @@ namespace PID
 
             public override void Enter()
             {
+                owner.debugText.text = "Trace";
                 trackTimer = 0f;
+                if (owner.playerBody == null)
+                    return;
+                owner.agent.SetDestination(owner.playerBody.position); 
             }
 
             public override void Exit()
             {
                 trackTimer = 0f;
+                owner.playerBody = null; 
             }
 
             public override void Setup()
             {
-                throw new System.NotImplementedException();
+                trackTimer = 0f; 
             }
 
             public override void Transition()
@@ -413,10 +475,11 @@ namespace PID
             public override void Update()
             {
                 trackTimer += Time.deltaTime;
+                if (owner.playerBody != null)
+                    owner.agent.SetDestination(owner.playerBody.position);
             }
         }
         #endregion
-
         #region Neutralized 
         public class NeutralizedState : GuardState
         {
@@ -438,8 +501,12 @@ namespace PID
             }
             public override void Enter()
             {
+                owner.debugText.text = "Neutralized";
                 //Should Notify CCTV to erase from the list 
-                owner.anim.SetTrigger("");
+                if (deathReason == DeathType.Health)
+                    owner.anim.SetBool("HealthDown", true);
+                else
+                    owner.anim.SetBool("Hacked", true); 
             }
             public override void Exit()
             {
