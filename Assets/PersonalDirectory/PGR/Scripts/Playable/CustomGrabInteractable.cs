@@ -1,9 +1,10 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.XR.Content.Interaction;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace PGR
 {
+    [RequireComponent(typeof(RayAttachModifier))]
     public class CustomGrabInteractable : XRGrabInteractable
     {
         [Header("Custom Grab Interactable Parameters")]
