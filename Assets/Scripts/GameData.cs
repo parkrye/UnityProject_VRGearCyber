@@ -4,5 +4,5 @@ using UnityEngine;
 
 public static class GameData
 {
-
+    public enum InteractableType { Cable, Equip, Other }
 }
