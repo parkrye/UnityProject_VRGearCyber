@@ -20,7 +20,7 @@ namespace PGR
             if (!isRayCasted)
                 return;
 
-            handLookPosition = Vector3.ProjectOnPlane((transform.position - handTransform.position), wallNormalVector).normalized;
+            handLookPosition = Vector3.ProjectOnPlane((transform.position - handTransform.position), wallNormalVector);
 
             if(isRight)
                 handTransform.rotation = Quaternion.Lerp(handTransform.rotation, Quaternion.LookRotation(handLookPosition, wallNormalVector), 0.1f);

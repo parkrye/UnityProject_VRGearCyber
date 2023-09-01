@@ -1945,7 +1945,7 @@ MonoBehaviour:
   m_GroupName: Right
   m_InteractionManager: {fileID: 0}
   m_StartingGroupMembers:
-  - {fileID: 0}
+  - {fileID: 6600351526055226483}
   - {fileID: 669625223960962604}
   - {fileID: 2222634995847638950}
   m_StartingInteractionOverridesMap:
@@ -2272,12 +2272,10 @@ MonoBehaviour:
   m_GroupName: Left
   m_InteractionManager: {fileID: 0}
   m_StartingGroupMembers:
-  - {fileID: 0}
+  - {fileID: 5839377796474897123}
   - {fileID: 267180719}
   - {fileID: 2120687119546889005}
   m_StartingInteractionOverridesMap:
-  - groupMember: {fileID: 0}
-    overrideGroupMembers: []
   - groupMember: {fileID: 2120687119546889005}
     overrideGroupMembers:
     - {fileID: 267180719}
@@ -3023,12 +3021,12 @@ MonoBehaviour:
   m_ControlPointDistance: 10
   m_ControlPointHeight: 5
   m_SampleFrequency: 50
-  m_HitDetectionType: 0
-  m_SphereCastRadius: 0.1
+  m_HitDetectionType: 1
+  m_SphereCastRadius: 0.25
   m_ConeCastAngle: 6
   m_RaycastMask:
     serializedVersion: 2
-    m_Bits: 2147483681
+    m_Bits: 2147483777
   m_RaycastTriggerInteraction: 1
   m_RaycastSnapVolumeInteraction: 1
   m_HitClosestOnly: 0
@@ -5010,12 +5008,12 @@ MonoBehaviour:
   m_ControlPointDistance: 10
   m_ControlPointHeight: 5
   m_SampleFrequency: 60
-  m_HitDetectionType: 0
-  m_SphereCastRadius: 0.1
+  m_HitDetectionType: 1
+  m_SphereCastRadius: 0.25
   m_ConeCastAngle: 6
   m_RaycastMask:
     serializedVersion: 2
-    m_Bits: 2147483681
+    m_Bits: 2147483649
   m_RaycastTriggerInteraction: 1
   m_RaycastSnapVolumeInteraction: 1
   m_HitClosestOnly: 0
@@ -5658,12 +5656,12 @@ MonoBehaviour:
   m_ControlPointDistance: 10
   m_ControlPointHeight: 5
   m_SampleFrequency: 60
-  m_HitDetectionType: 0
-  m_SphereCastRadius: 0.1
+  m_HitDetectionType: 1
+  m_SphereCastRadius: 0.25
   m_ConeCastAngle: 6
   m_RaycastMask:
     serializedVersion: 2
-    m_Bits: 2147483681
+    m_Bits: 2147483649
   m_RaycastTriggerInteraction: 1
   m_RaycastSnapVolumeInteraction: 1
   m_HitClosestOnly: 0
