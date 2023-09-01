@@ -9,6 +9,7 @@ TagManager:
   - Flame
   - Destroyer
   - Door
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -21,8 +22,8 @@ TagManager:
   - Ignore Collider
   - Player Hand
   - 
-  - 
-  - 
+  - Enemy
+  - EnemyHead
   - 
   - 
   - 
