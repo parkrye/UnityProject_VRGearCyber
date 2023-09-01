@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace PGR
@@ -40,8 +41,7 @@ namespace PGR
             if (hackingTarget == null)
                 return;
 
-            // Start Hacking Puzzle
-            transform.LookAt(transform.position - collision.contacts[0].normal);
+            hackingTarget.Hack();
         }
     }
 }

@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace PGR
 {
-    public class HakableForTest : MonoBehaviour, IHackable
+    public class LightFixedPoint : HackingPoint
     {
 
     }
+
 }

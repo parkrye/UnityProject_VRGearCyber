@@ -578,7 +578,7 @@ namespace PID
                 if (deathReason == DeathType.Health)
                     owner.anim.SetBool("Destroyed", true);
                 else
-                    owner.anim.SetBool("Hacked", true); 
+                    owner.anim.SetBool("Hack", true); 
             }
             public override void Exit()
             {
