@@ -57,6 +57,7 @@ namespace PID
             curState.Transition();
         }
 
+        //Physics or LateUpdate Function should and could be made. 
         public void ChangeState(TState newState)
         {
             curState.Exit();
