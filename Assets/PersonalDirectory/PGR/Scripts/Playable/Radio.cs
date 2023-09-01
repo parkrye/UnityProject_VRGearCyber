@@ -2,15 +2,10 @@ using UnityEngine;
 
 namespace PGR
 {
+    [RequireComponent(typeof(AudioSource))]
     public class Radio : PlayableObject
     {
-        [SerializeField] float volume;
         [SerializeField] AudioSource audioSource;
-
-        void Start()
-        {
-            volume = audioSource.volume;
-        }
 
         public void OnVolumeChanged(float value)
         {

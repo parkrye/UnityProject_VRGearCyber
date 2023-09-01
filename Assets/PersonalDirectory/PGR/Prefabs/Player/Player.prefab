@@ -2458,7 +2458,6 @@ MonoBehaviour:
     m_Bits: 128
   isStop: 0
   isRight: 1
-  isRayCasted: 0
   wallNormalVector: {x: 0, y: 0, z: 0}
   handLookPosition: {x: 0, y: 0, z: 0}
   handPrefab: {fileID: 1068225418551794, guid: 7ac3489945bc44e4ca315f726c2cd94b, type: 3}
@@ -2790,7 +2789,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 1
+    m_Bits: 1073741825
   m_AttachTransform: {fileID: 2761917081510066601}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
@@ -4141,10 +4140,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 1
+    m_Bits: 1073741825
   m_AttachTransform: {fileID: 2160771995605719795}
   m_KeepSelectedTargetValid: 1
-  m_DisableVisualsWhenBlockedInGroup: 1
+  m_DisableVisualsWhenBlockedInGroup: 0
   m_StartingSelectedInteractable: {fileID: 0}
   m_StartingTargetFilter: {fileID: 0}
   m_HoverEntered:
@@ -5355,7 +5354,6 @@ MonoBehaviour:
     m_Bits: 128
   isStop: 0
   isRight: 0
-  isRayCasted: 0
   wallNormalVector: {x: 0, y: 0, z: 0}
   handLookPosition: {x: 0, y: 0, z: 0}
   handPrefab: {fileID: 5614157343157365438, guid: 8a90b67b548121c418bbb8cfa417e586,
@@ -6435,7 +6433,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 1073741824
+    m_Bits: 1073741825
   m_AttachTransform: {fileID: 5410389281512840483}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
@@ -6778,7 +6776,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 1073741824
+    m_Bits: 1073741825
   m_AttachTransform: {fileID: 2183506469416467821}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1

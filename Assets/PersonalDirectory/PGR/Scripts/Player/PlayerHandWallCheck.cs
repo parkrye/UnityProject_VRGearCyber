@@ -7,7 +7,7 @@ namespace PGR
         [SerializeField] PlayerController playerController;
         [SerializeField] Transform handTransform, spineTransform;
         [SerializeField] LayerMask wallLayer;
-        [SerializeField] bool isStop, isRight, isRayCasted;
+        [SerializeField] bool isStop, isRight;
 
         [SerializeField] Vector3 wallNormalVector, handLookPosition;
         [SerializeField] GameObject handPrefab;
@@ -15,9 +15,6 @@ namespace PGR
         void LateUpdate()
         {
             if (!isStop)
-                return;
-
-            if (!isRayCasted)
                 return;
 
             handLookPosition = Vector3.ProjectOnPlane((transform.position - handTransform.position), wallNormalVector);
@@ -38,12 +35,10 @@ namespace PGR
         {
             if(!isStop && 1 << other.gameObject.layer == wallLayer)
             {
-                isStop = true;
-                playerController.HandMotion.WallCheck(isRight, isStop);
-
                 if (Physics.Raycast(transform.position, other.transform.position - transform.position, out RaycastHit hit))
                 {
-                    isRayCasted = true;
+                    isStop = true;
+                    playerController.HandMotion.WallCheck(isRight, isStop);
                     wallNormalVector = hit.normal.normalized;
                 }
             }
@@ -54,7 +49,6 @@ namespace PGR
             if (1 << other.gameObject.layer == wallLayer)
             {
                 isStop = false;
-                isRayCasted = false;
                 playerController.HandMotion.WallCheck(isRight, isStop);
                 handTransform.localPosition = handPrefab.transform.localPosition;
                 handTransform.localRotation = handPrefab.transform.localRotation;
