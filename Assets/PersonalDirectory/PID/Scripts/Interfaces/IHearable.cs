@@ -7,6 +7,5 @@ namespace PID
     public interface IHearable
     {
         public void Heard(Vector3 soundPoint, bool hasWall);
-
     }
 }
