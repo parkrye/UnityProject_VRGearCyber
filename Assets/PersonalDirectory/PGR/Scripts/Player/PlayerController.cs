@@ -8,10 +8,12 @@ namespace PGR
         [SerializeField] PlayerDataModel playerDataModel;
         [SerializeField] PlayerHandMotion playerHandMotion;
         [SerializeField] PlayerHandWallCheck playerLeftWallCheck, playerRightWallCheck;
+        [SerializeField] Camera irisSystemCamera;
         public PlayerDataModel Data { get { return playerDataModel; } }
         public PlayerHandMotion HandMotion { get { return playerHandMotion; } }
         public PlayerHandWallCheck LeftWall { get {  return playerLeftWallCheck; } }
         public PlayerHandWallCheck RightWall {  get { return playerRightWallCheck; } }
+        public Camera IrisSystem { get { return irisSystemCamera; } }
 
         [SerializeField] bool turnType;
         public bool TurnType { get { return turnType; } set { ChangeTurnType(value); } }

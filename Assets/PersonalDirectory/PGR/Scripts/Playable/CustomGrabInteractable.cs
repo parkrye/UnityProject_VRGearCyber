@@ -44,6 +44,8 @@ namespace PGR
             base.OnSelectEntered(args);
             foreach (Transform go in GetComponentsInChildren<Transform>())
             {
+                if (1 << go.gameObject.layer == LayerMask.GetMask("DisplayUI"))
+                    continue;
                 go.gameObject.layer = ignoreColliderLayer;
             }
         }
@@ -53,6 +55,8 @@ namespace PGR
             base.OnSelectExited(args);
             foreach (Transform go in GetComponentsInChildren<Transform>())
             {
+                if (1 << go.gameObject.layer == LayerMask.GetMask("DisplayUI"))
+                    continue;
                 go.gameObject.layer = defaultLayer;
             }
         }

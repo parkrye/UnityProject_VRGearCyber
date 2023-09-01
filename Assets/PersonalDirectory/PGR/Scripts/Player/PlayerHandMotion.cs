@@ -37,22 +37,34 @@ namespace PGR
             rAnim.SetBool("Thumb", inputValue.isPressed);
         }
 
-        public void GrabAboutGun(bool isGrab)
+        public void GrabOnGunRight(bool isGrab)
         {
             rAnim.SetBool("Gun", isGrab);
         }
 
-        public void TriggerGun(bool isTrigger)
+        public void GrabOnGunLeft(bool isGrab)
+        {
+            lAnim.SetBool("Gun", isGrab);
+        }
+
+        public void TriggerGunRight(bool isTrigger)
         {
             rAnim.SetBool("Shot", isTrigger);
         }
 
-        public void GrabOnBat(bool isRight, bool isGrab)
+        public void TriggerGunLeft(bool isTrigger)
         {
-            if (isRight)
-                rAnim.SetBool("Bat", isGrab);
-            else
-                lAnim.SetBool("Bat", isGrab);
+            lAnim.SetBool("Shot", isTrigger);
+        }
+
+        public void GrabOnCloseWeaponRight(bool isGrab)
+        {
+            rAnim.SetBool("CloseWeapon", isGrab);
+        }
+
+        public void GrabOnCloseWeaponLeft(bool isGrab)
+        {
+            lAnim.SetBool("CloseWeapon", isGrab);
         }
 
         public void WallCheck(bool isRight, bool isCheck)
@@ -61,6 +73,16 @@ namespace PGR
                 rAnim.SetBool("Wall", isCheck);
             else
                 lAnim.SetBool("Wall", isCheck);
+        }
+
+        public void CatchObjectRight(bool isGrab)
+        {
+            rAnim.SetBool("Catch", isGrab);
+        }
+
+        public void CatchObjectLeft(bool isGrab)
+        {
+            lAnim.SetBool("Catch", isGrab);
         }
     }
 }

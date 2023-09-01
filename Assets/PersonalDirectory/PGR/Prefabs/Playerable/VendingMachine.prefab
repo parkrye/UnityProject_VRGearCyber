@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 1113224697165687832}
   - component: {fileID: 1105156552972679668}
   - component: {fileID: 7069963993361636024}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: VendingMachine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1081948521357092534}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.00000010430811}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0.207, y: 0, z: 4.457}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -133,7 +133,7 @@ Transform:
   - {fileID: 7800771040688035181}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!33 &1113224697165687832
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 8449054931949903886}
   - component: {fileID: 5545599395742546738}
   - component: {fileID: 6638771582847384625}
+  - component: {fileID: 1356463207}
   m_Layer: 0
   m_Name: Control Pad
   m_TagString: Untagged
@@ -238,7 +239,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4458223844502423863}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.1, y: 0.5, z: 0.1}
@@ -256,12 +257,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
-  m_Colliders: []
+  m_Colliders:
+  - {fileID: 5545599395742546738}
   m_InteractionLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 1
+    m_Bits: 4294967295
   m_DistanceCalculationMode: 1
   m_SelectMode: 0
   m_FocusMode: 1
@@ -275,7 +277,19 @@ MonoBehaviour:
   m_AllowGazeAssistance: 0
   m_FirstHoverEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6638771582847384625}
+        m_TargetAssemblyTypeName: PGR.VendingMachine, Assembly-CSharp
+        m_MethodName: OnHoverEnterEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_LastHoverExited:
     m_PersistentCalls:
       m_Calls: []
@@ -347,6 +361,7 @@ MonoBehaviour:
       m_Calls: []
   maxHP: 5
   nowHP: 0
+  least: 0
   products:
   - {fileID: 8249261569474581741, guid: b7e8b8863b96d6048a19aebb13ebd5a9, type: 3}
   - {fileID: 6750874318817985099, guid: 826f17b7e5f69854c9de25f128044fdd, type: 3}
@@ -355,6 +370,22 @@ MonoBehaviour:
   - {fileID: 6307138302981012439, guid: 973f09e98acae19419c0c8ca29509d4f, type: 3}
   - {fileID: 3589983676111529318, guid: 24e808ddbff675148a49249b44a4e4de, type: 3}
   productOutTransform: {fileID: 7800771040688035181}
+--- !u!54 &1356463207
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4458223844502423863}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &4704977295781087163
 GameObject:
   m_ObjectHideFlags: 0

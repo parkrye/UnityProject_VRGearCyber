@@ -29,8 +29,7 @@ namespace PGR
 
         public void OnHoverEnterEvent(HoverEnterEventArgs args)
         {
-            // Ray는 막도록 개선 필요
-            if (args.interactorObject.transform.GetComponent<CustomDirectInteractor>() != null)
+            if (args.interactorObject.transform.TryGetComponent(out LineRenderer _))
                 return;
             if (nowHP <= 0 || least <= 0)
                 return;
@@ -39,7 +38,7 @@ namespace PGR
 
         public void GiveProduct()
         {
-            int productNum = Random.Range(0, products.Length * 2);
+            int productNum = Random.Range(0, products.Length * 5);
             if (productNum >= products.Length)
                 return;
 
