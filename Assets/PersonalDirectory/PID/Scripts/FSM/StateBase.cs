@@ -18,6 +18,7 @@ namespace PID
         public abstract void Setup();
         public abstract void Enter();
         public abstract void Update();
+        //Physics or LateUpdate Function should and/or could be made. 
         public abstract void Transition();
         public abstract void Exit();
     }

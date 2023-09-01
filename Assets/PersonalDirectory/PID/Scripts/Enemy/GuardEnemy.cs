@@ -74,7 +74,12 @@ namespace PID
             stateMachine.AddState(State.LookAround, new LookAroundState(this, stateMachine));
             stateMachine.AddState(State.Neutralized, new NeutralizedState(this, stateMachine));
         }
-        #region MACHINE RUNNING 
+
+        public void AgentSetUp(EnemyStat robotStat)
+        {
+            //Takes the General stat values, implement it on the nav_agent level. 
+        }
+        #region MACHINE UPDATES 
         private void Start()
         {
             guardSight.SyncSightStat(enemyStat); 
@@ -109,7 +114,7 @@ namespace PID
         }
         #endregion
 
-        #region  Combat Interaction 
+        #region  COMBAT INTERACTIONS 
         Coroutine fireCoroutine; 
         public void Fire()
         {
@@ -155,6 +160,7 @@ namespace PID
         public override void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
         {
             base.TakeDamage(damage, hitPoint, hitNormal);
+            anim.SetTrigger("TakeHit"); 
             if (currentHealth <= 0)
             {
                 NeutralizedState neutralizeReason;
@@ -212,7 +218,6 @@ namespace PID
             {
             }
         }
-
         #region Idle State 
         public class IdleState : GuardState
         {
@@ -548,6 +553,7 @@ namespace PID
             }
             public override void Exit()
             {
+                //Called when reactivated through EnemyManager. 
                 owner.anim.Rebind();
                 deathReason = DeathType.None;
             }

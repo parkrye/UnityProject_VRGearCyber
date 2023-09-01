@@ -28,6 +28,7 @@ namespace PID
 
         public virtual void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
         {
+            GameManager.Resource.Instantiate<ParticleSystem>("Enemy/TakeDamage", hitPoint, Quaternion.LookRotation(hitNormal), true);
             currentHealth -= damage;
         }
 

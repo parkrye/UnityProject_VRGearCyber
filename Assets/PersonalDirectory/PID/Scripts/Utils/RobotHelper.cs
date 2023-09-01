@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace PID
 {
@@ -39,6 +40,21 @@ namespace PID
             position.z += centrePoint.z;
             return position;
         }
+
+        //public static bool TraversableSound()
+        //{
+        //    Vector3 prev = startingPoint.transform.position;
+        //    float threshHold = 2 * Vector3.SqrMagnitude(destinationPoint - startingPoint.transform.position);
+        //    float accumDist = 0f;
+        //    foreach (Vector3 point in soundPath.corners)
+        //    {
+        //        //Calculate distance between each points. 
+        //        float distance = Vector3.SqrMagnitude(point - prev);
+        //        accumDist += distance;
+        //        prev = point;
+        //    }
+        //    return (accumDist <= threshHold);
+        //}
     }
 
     /// <summary>
@@ -64,6 +80,32 @@ namespace PID
                 return 1;
             else 
                 return 0;
+        }
+    }
+
+    public struct SoundValidityCheckSlip
+    {
+        public NavMeshAgent startingPoint;
+        public Vector3 destinationPoint;
+        public NavMeshPath soundPath;
+        public bool isValid; 
+
+        public SoundValidityCheckSlip(NavMeshAgent startPoint, Vector3 destination, NavMeshPath soundPath)
+        {
+            this.startingPoint = startPoint;
+            this.destinationPoint = destination;
+            this.soundPath = soundPath;
+            this.isValid = false;
+
+            if (NavMesh.FindClosestEdge(destination, out NavMeshHit hitInfo, startPoint.areaMask))
+            {
+                this.isValid = true; 
+            }
+            else
+            {
+                Debug.Log("Hit Point not under valid navmesh region");
+                isValid = false; 
+            }
         }
     }
 }

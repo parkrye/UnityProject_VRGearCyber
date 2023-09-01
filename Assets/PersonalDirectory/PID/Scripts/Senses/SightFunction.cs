@@ -9,7 +9,7 @@ namespace PID
         [SerializeField] LayerMask targetMask;
         [SerializeField] LayerMask obstacleMask; 
         [SerializeField] Transform targetEye; 
-        Transform PlayerInSight;
+        Transform playerInSight;
         //Should Be Declared by using Robot
         public UnityAction<Transform> PlayerFound;
         //Should be leading to Assualt State 
@@ -23,7 +23,7 @@ namespace PID
             get;
             private set;
         }
-        bool playerContact = false; 
+        bool playerPresence = false; 
         float enemyDetectRange;
         float sightAngle;
 
@@ -32,10 +32,22 @@ namespace PID
         private void Update()
         {
             FindTarget();
-            if (!playerContact)
+            if (!playerPresence)
             {
                 presenceTimer -= Time.deltaTime;
                 presenceTimer = Mathf.Clamp(presenceTimer, 0, maxTimer);
+            }
+            else if (playerPresence)
+            {
+                presenceTimer += Time.deltaTime;
+                if (presenceTimer > maxTimer)
+                {
+                    TargetFound = true;
+                    //Should be replaced by the state changing event; 
+                    PlayerFound?.Invoke(playerInSight);
+                }
+                presenceTimer = Mathf.Clamp(presenceTimer, 0, maxTimer);
+
             }
         }
 
@@ -44,34 +56,6 @@ namespace PID
             this.sightAngle = robotStat.maxSightAngle;
             this.enemyDetectRange = robotStat.maxSightRange; 
         }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (!targetMask.Contain(other.gameObject.layer))
-            {
-                playerContact = false; 
-                return;
-            }
-            else
-            {
-                playerContact = true; 
-                presenceTimer += Time.deltaTime;
-                Debug.Log(presenceTimer); 
-                if (presenceTimer > maxTimer)
-                {
-                    TargetFound = true;
-                    //Should be replaced by the state changing event; 
-                    PlayerFound?.Invoke(other.transform); 
-                    PlayerInSight = other.transform;
-                    presenceTimer = Mathf.Clamp(presenceTimer, 0, maxTimer);
-                    return;
-                }
-                return; 
-            }
-            presenceTimer -= Time.deltaTime;
-            presenceTimer = Mathf.Clamp(presenceTimer, 0, maxTimer);
-        }
-
         Vector3 dirTarget;
         RaycastHit obstacleHit;
         public void FindTarget()
@@ -79,8 +63,9 @@ namespace PID
             Collider[] colliders = Physics.OverlapSphere(transform.position, enemyDetectRange, targetMask);
             if (colliders.Length == 0)
             {
-                PlayerInSight = null;
+                playerInSight = null;
                 TargetFound = false;
+                playerPresence = false; 
                 return;
             }
             foreach (Collider collider in colliders)
@@ -91,6 +76,7 @@ namespace PID
                 // IF Player is found on a given Range, 
                 if (Vector3.Dot(transform.forward, dirTarget) < Mathf.Cos(sightAngle * 0.5f * Mathf.Deg2Rad))
                 {
+                    playerPresence = true; 
                     continue;
                 }
                 //Start Coroutine for hiding activities. 
@@ -109,7 +95,7 @@ namespace PID
                 }
                 else
                 {
-                    PlayerInSight = collider.transform;
+                    playerInSight = collider.transform;
                     PlayerFound?.Invoke(collider.transform);
                     return;
                 }
@@ -142,5 +128,47 @@ namespace PID
             float radian = angle * Mathf.Deg2Rad;
             return new Vector3(Mathf.Sin(radian), 0, Mathf.Cos(radian));
         }
+
+        public void UnderPlayerPresence(Transform player)
+        {
+            presenceTimer += Time.deltaTime;
+            Debug.Log(presenceTimer);
+            if (presenceTimer > maxTimer)
+            {
+                TargetFound = true;
+                //Should be replaced by the state changing event; 
+                PlayerFound?.Invoke(player);
+            }
+        }
     }
+    #region DEPRECATED
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    //Massive error with this. 
+    //    if (!targetMask.Contain(other.gameObject.layer))
+    //    {
+    //        playerContact = false;
+    //        return;
+    //    }
+    //    else
+    //    {
+    //        playerContact = true;
+    //        presenceTimer += Time.deltaTime;
+    //        Debug.Log(presenceTimer);
+    //        if (presenceTimer > maxTimer)
+    //        {
+    //            TargetFound = true;
+    //            //Should be replaced by the state changing event; 
+    //            PlayerFound?.Invoke(other.transform);
+    //            PlayerInSight = other.transform;
+    //            presenceTimer = Mathf.Clamp(presenceTimer, 0, maxTimer);
+    //            return;
+    //        }
+    //        return;
+    //    }
+    //    presenceTimer -= Time.deltaTime;
+    //    presenceTimer = Mathf.Clamp(presenceTimer, 0, maxTimer);
+    //}
+
+    #endregion
 }
