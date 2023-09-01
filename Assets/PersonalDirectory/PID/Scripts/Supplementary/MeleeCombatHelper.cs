@@ -9,7 +9,7 @@ namespace PID
         {
             Vector3 playerAttackDir = target.position - attacker.position;
             playerAttackDir.y = 0;
-            playerAttackDir.Normalize(); 
+            playerAttackDir.Normalize();
             Vector3 enemyLookDir = target.transform.forward;
             if (Vector3.Dot(enemyLookDir, playerAttackDir) > flankThreshold)
             {
@@ -53,35 +53,36 @@ namespace PID
         //    {
         //        if ()
         //    }
-        }
-
-        //public static void SearchForComponent(this GameObject gameObject)
-        //{
-        //    if (gameObject == null)
-        //    {
-        //        return;
-        //    }
-
-        //    // Check if the current GameObject has the desired component
-        //    Component component = gameObject.GetComponent(componentNameToSearchFor);
-
-        //    if (component != null)
-        //    {
-        //        // Do something with the component, e.g., print its name
-        //        Debug.Log("Found " + componentNameToSearchFor + " in GameObject: " + gameObject.name);
-        //    }
-
-        //    // Recursively search through children using the foreach loop
-        //    foreach (Transform child in gameObject.transform)
-        //    {
-        //        SearchForComponent(child.gameObject);
-        //    }
-
-        //    // Recursively search through the parent
-        //    if (gameObject.transform.parent != null)
-        //    {
-        //        SearchForComponent(gameObject.transform.parent.gameObject);
-        //    }
-        //}
     }
+
+    //public static void SearchForComponent(this GameObject gameObject)
+    //{
+    //    if (gameObject == null)
+    //    {
+    //        return;
+    //    }
+
+    //    // Check if the current GameObject has the desired component
+    //    Component component = gameObject.GetComponent(componentNameToSearchFor);
+
+    //    if (component != null)
+    //    {
+    //        // Do something with the component, e.g., print its name
+    //        Debug.Log("Found " + componentNameToSearchFor + " in GameObject: " + gameObject.name);
+    //    }
+
+    //    // Recursively search through children using the foreach loop
+    //    foreach (Transform child in gameObject.transform)
+    //    {
+    //        SearchForComponent(child.gameObject);
+    //    }
+
+    //    // Recursively search through the parent
+    //    if (gameObject.transform.parent != null)
+    //    {
+    //        SearchForComponent(gameObject.transform.parent.gameObject);
+    //    }
+    //}
+    
 }
+    
