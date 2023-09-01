@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace PID
@@ -39,5 +35,53 @@ namespace PID
                 hittable?.TakeDamage(0, Vector3.zero, Vector3.zero);
             }
         }
+
+        //public void FindComponentThroughParent(GameObject gameObject)
+        //{
+        //    Transform currentTransform = gameObject.transform;
+
+        //    while (currentTransform.parent != null)
+        //    {
+        //        currentTransform = currentTransform.parent;
+        //    }
+
+        //    return currentTransform.gameObject;
+        //}
+        //private GameObject FindComponentThroughChildren(GameObject obj)
+        //{
+        //    for (int i = 0; i < obj.transform.childCount; i++)
+        //    {
+        //        if ()
+        //    }
+        }
+
+        //public static void SearchForComponent(this GameObject gameObject)
+        //{
+        //    if (gameObject == null)
+        //    {
+        //        return;
+        //    }
+
+        //    // Check if the current GameObject has the desired component
+        //    Component component = gameObject.GetComponent(componentNameToSearchFor);
+
+        //    if (component != null)
+        //    {
+        //        // Do something with the component, e.g., print its name
+        //        Debug.Log("Found " + componentNameToSearchFor + " in GameObject: " + gameObject.name);
+        //    }
+
+        //    // Recursively search through children using the foreach loop
+        //    foreach (Transform child in gameObject.transform)
+        //    {
+        //        SearchForComponent(child.gameObject);
+        //    }
+
+        //    // Recursively search through the parent
+        //    if (gameObject.transform.parent != null)
+        //    {
+        //        SearchForComponent(gameObject.transform.parent.gameObject);
+        //    }
+        //}
     }
 }
