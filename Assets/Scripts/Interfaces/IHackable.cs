@@ -5,14 +5,18 @@ using UnityEngine;
 public interface IHackable
 {
     //[SerializeField] GameData.HackProgressState state;
-    // public GameData.HackProgressState State { get { return state; } set { state = value; } }
 
     /// <summary>
     /// Call by Hacking Cable
     /// </summary>
-    public virtual void Hacked()
+    public virtual void Hack()
     {
         // StartCoroutine(WaitingHackResultRoutine());
+    }
+
+    public virtual void ChangeProgressState(GameData.HackProgressState value)
+    {
+        // state = value;
     }
 
     /// <summary>
