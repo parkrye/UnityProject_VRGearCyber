@@ -6,6 +6,7 @@ namespace PGR
     {
         [Header ("Cable Object Parameters")]
         [SerializeField] Light pointLight;
+        [SerializeField] IHackable hackingTarget;
 
         protected override void Awake()
         {
@@ -14,18 +15,11 @@ namespace PGR
 
             Priority = 10;
             pointLight.enabled = false;
-            rb.isKinematic = false;
-        }
-
-        public void FixEnter()
-        {
-            rb.isKinematic = true;
         }
 
         public void FixExit()
         {
             pointLight.enabled = false;
-            rb.isKinematic = false;
         }
 
         public void ReadyToShot()
@@ -35,7 +29,6 @@ namespace PGR
 
         public void ShotCable(Vector3 shotDirection, float shotPower)
         {
-            rb.isKinematic = false;
             gameObject.SetActive(false);
             gameObject.SetActive(true);
             rb.AddForce(shotDirection * shotPower, ForceMode.Impulse);
@@ -43,13 +36,12 @@ namespace PGR
 
         void OnCollisionEnter(Collision collision)
         {
-            IHackable hackable = collision.gameObject.GetComponent<IHackable>();
-            if (hackable == null)
+            hackingTarget = collision.gameObject.GetComponent<IHackable>();
+            if (hackingTarget == null)
                 return;
 
             // Start Hacking Puzzle
             transform.LookAt(transform.position - collision.contacts[0].normal);
-            FixEnter();
         }
     }
 }
