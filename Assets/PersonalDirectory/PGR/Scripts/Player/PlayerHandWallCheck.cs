@@ -29,15 +29,15 @@ namespace PGR
 
             // 손이 벽에 닿았을때 움직이는 것 추가
             if (Physics.Raycast(spineTransform.position, transform.position - spineTransform.position, out RaycastHit hit, 3f, wallLayer))
-                handTransform.position = hit.point;
+            {
+                handTransform.position = Vector3.Lerp(handTransform.position, hit.point, 0.1f);
+            }
         }
 
         void OnTriggerEnter(Collider other)
         {
             if(!isStop && 1 << other.gameObject.layer == wallLayer)
             {
-                handTransform.position = transform.position;
-                //handTransform.position = lastPosition;
                 isStop = true;
                 playerController.HandMotion.WallCheck(isRight, isStop);
 

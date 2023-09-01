@@ -57,14 +57,14 @@ namespace PGR
             lAnim.SetBool("Shot", isTrigger);
         }
 
-        public void GrabOnBatRight(bool isGrab)
+        public void GrabOnCloseWeaponRight(bool isGrab)
         {
-            rAnim.SetBool("Bat", isGrab);
+            rAnim.SetBool("CloseWeapon", isGrab);
         }
 
-        public void GrabOnBatLeft(bool isGrab)
+        public void GrabOnCloseWeaponLeft(bool isGrab)
         {
-            lAnim.SetBool("Bat", isGrab);
+            lAnim.SetBool("CloseWeapon", isGrab);
         }
 
         public void WallCheck(bool isRight, bool isCheck)

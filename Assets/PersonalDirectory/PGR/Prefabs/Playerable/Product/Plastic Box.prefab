@@ -450,7 +450,7 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
-  grabPriority: 10
+  grabPriority: 9
   rb: {fileID: 0}
   interactableType: 2
   defaultLayer: 0
