@@ -29,11 +29,13 @@ namespace PID
             if (contestSuccess)
             {
                 IHitable hittable = target.GetComponent<IHitable>();
+                //Insert Damage Here 
                 hittable?.TakeDamage(0, Vector3.zero, Vector3.zero);
             }
             else
             {
                 IHitable hittable = target.GetComponent<IHitable>();
+                //Insert Damage Here 
                 hittable?.TakeDamage(0, Vector3.zero, Vector3.zero);
             }
         }

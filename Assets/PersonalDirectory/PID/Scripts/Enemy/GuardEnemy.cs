@@ -6,12 +6,13 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using PID;
-using static PID.RobotHelper; 
+using static PID.RobotHelper;
+using UnityEngine.EventSystems;
 
 namespace PID
 {
     [RequireComponent(typeof(NavMeshAgent), typeof(SightFunction))]
-    public class GuardEnemy : BaseEnemy
+    public class GuardEnemy : BaseEnemy, IPointerClickHandler, Hackingable
     {
         public enum State
         {
@@ -28,7 +29,7 @@ namespace PID
         #region Machine Properties 
 
         //Base Properties 
-        Animator anim;
+        public Animator anim;
         Rigidbody rigid;
         NavMeshAgent agent;
         NavMeshObstacle obstacle; 
@@ -39,19 +40,20 @@ namespace PID
         [SerializeField] Transform[] patrolPoints; 
         bool notified;
 
-        //Combat Extra Properties
-        [SerializeField] Transform muzzlePoint; 
-        
-        [SerializeField] float fireInterval_s;
-        [SerializeField] float randomShotRadius;
+        //Combat Properties
+
+        [SerializeField] Transform muzzlePoint;
+        [SerializeField] LayerMask headRegion;
+        [SerializeField] LayerMask bodyRegion; 
+        RobotGun robotGun; 
         public Transform playerBody; 
-        WaitForSeconds fireInterval;
         public Vector3 focusDir; 
         //Debugging 
-        public TMP_Text debugText; 
+        public TMP_Text debugText;
         #endregion
         protected void Awake()
         {
+            //DEBUGGING 
             enemyStat = GameManager.Resource.Load<EnemyStat>("Data/Guard");
             base.SetUp(enemyStat);
 
@@ -60,12 +62,12 @@ namespace PID
             agent = GetComponent<NavMeshAgent>();
             rigid = GetComponent<Rigidbody>();
             anim = GetComponent<Animator>();
+            robotGun = GetComponentInChildren<RobotGun>();
             debugText = GetComponentInChildren<TMP_Text>();  
             notified = false;
 
             base.SetUp(enemyStat);
             stateMachine = new StateMachine<State, GuardEnemy>(this);
-            fireInterval = new WaitForSeconds(fireInterval_s);
             stateMachine.AddState(State.Idle, new IdleState(this, stateMachine));
             stateMachine.AddState(State.Patrol, new PatrolState(this, stateMachine));
             stateMachine.AddState(State.Alert, new AlertState(this, stateMachine));
@@ -75,17 +77,21 @@ namespace PID
             stateMachine.AddState(State.Neutralized, new NeutralizedState(this, stateMachine));
         }
 
-        public void AgentSetUp(EnemyStat robotStat)
-        {
-            //Takes the General stat values, implement it on the nav_agent level. 
-        }
+        
         #region MACHINE UPDATES 
         private void Start()
         {
+            AgentSetUp(enemyStat); 
+            robotGun.SyncStatData(enemyStat);
             guardSight.SyncSightStat(enemyStat); 
             guardSight.PlayerFound += DetectPlayer; 
             guardSight.PlayerLost += TempPlayerLost;
             stateMachine.SetUp(State.Idle);
+        }
+        public void AgentSetUp(EnemyStat robotStat)
+        {
+            agent.speed = moveSpeed;
+            //Takes the General stat values, implement it on the nav_agent level. 
         }
         private void OnDisable()
         {
@@ -99,9 +105,9 @@ namespace PID
 
         private void LateUpdate()
         {
-            if (focusDir == Vector3.zero)
-                return; 
-            RobotBody.transform.localRotation = Quaternion.Slerp(RobotBody.transform.localRotation, Quaternion.LookRotation(focusDir), .1f); 
+            //if (focusDir == Vector3.zero)
+            //    return; 
+            //RobotBody.transform.localRotation = Quaternion.Slerp(RobotBody.transform.localRotation, Quaternion.LookRotation(focusDir), .1f); 
         }
         protected override void Die()
         {
@@ -115,33 +121,6 @@ namespace PID
         #endregion
 
         #region  COMBAT INTERACTIONS 
-        Coroutine fireCoroutine; 
-        public void Fire()
-        {
-            fireCoroutine = StartCoroutine(FireRoutine());
-        }
-
-        public void StopFire()
-        {
-            if (fireCoroutine != null)
-                StopCoroutine(fireCoroutine);
-        }
-        Vector3 shotAttempt;
-        RaycastHit hitAttempt; 
-        IEnumerator FireRoutine()
-        {
-            while (true)
-            {
-                anim.SetTrigger("GunFire"); 
-                shotAttempt = FinalShotDir(muzzlePoint.position, playerBody.position, attackRange, randomShotRadius); 
-                if (Physics.Raycast(muzzlePoint.position, shotAttempt, out hitAttempt, attackRange))
-                {
-                    IHitable hitable =  hitAttempt.collider.GetComponent<IHitable>();
-                    hitable?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal); 
-                }
-                yield return fireInterval;
-            }
-        }
 
         public void DetectPlayer(Transform player)
         {
@@ -156,10 +135,14 @@ namespace PID
             if (stateMachine.curStateName == State.Assault)
                 stateMachine.ChangeState(State.Trace); 
         }
-
+        int incomingDamage; 
         public override void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
         {
-            base.TakeDamage(damage, hitPoint, hitNormal);
+            if (stateMachine.curStateName == State.Neutralized)
+                return;
+            //GameManager.Resource.Instantiate<ParticleSystem>("Enemy/TakeDamage", hitPoint, Quaternion.LookRotation(hitNormal), true);
+            //incomingDamage = AssessDamage()
+            base.TakeDamage(damage, hitPoint, hitNormal); 
             anim.SetTrigger("TakeHit"); 
             if (currentHealth <= 0)
             {
@@ -171,6 +154,32 @@ namespace PID
                 }
                 stateMachine.ChangeState(State.Neutralized);
             }
+        }
+        public int AssessDamage(RaycastHit hit, int damage)
+        {
+            if (headRegion.Contain(hit.collider.gameObject.layer))
+            {
+                return damage * 3;
+            }
+            else
+                return damage;
+        }
+
+        public void Hacked()
+        {
+            NeutralizedState neutralizeReason;
+            if (stateMachine.CheckState(State.Neutralized))
+            {
+                neutralizeReason = stateMachine.RetrieveState(State.Neutralized) as NeutralizedState;
+                neutralizeReason.SetDeathReason(NeutralizedState.DeathType.Hacked);
+            }
+            stateMachine.ChangeState(State.Neutralized);
+        }
+
+        public IEnumerator HackingCheck(bool success)
+        {
+            Hacked(); 
+            yield return null;
         }
 
         public void Notified(Vector3 centrePoint, int size, int index)
@@ -208,6 +217,15 @@ namespace PID
             }
 
         }
+        #region DEBUGGING ISSUES 
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            TakeDamage(50, eventData.pointerPressRaycast.worldPosition, eventData.pointerPressRaycast.worldNormal);
+            Debug.Log(currentHealth); 
+        }
+
+        
+        #endregion
 
         //Hackable Component. 
         #endregion
@@ -434,6 +452,7 @@ namespace PID
         #region Assault 
         public class AssaultState : GuardState
         {
+            RobotGun robotGun; 
             public AssaultState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
             {
             }
@@ -441,23 +460,24 @@ namespace PID
             public override void Enter()
             {
                 owner.debugText.text = "Assault";
+                //owner.agent.updateRotation = false;
                 owner.agent.isStopped = true;
                 owner.anim.SetBool("Walking", false);
-                if (owner.playerBody != null)
-                    owner.focusDir = (owner.playerBody.transform.position - owner.transform.position).normalized; 
-                owner.Fire(); 
+                //if (owner.playerBody != null)
+                //    owner.focusDir = (owner.playerBody.transform.position - owner.transform.position).normalized; 
             }
 
             public override void Exit()
             {
-                owner.focusDir = Vector3.zero;
-                //Perhaps for now, but should consider reasons for movement 
-                owner.StopFire(); 
+                //owner.focusDir = Vector3.zero;
+                ////Perhaps for now, but should consider reasons for movement 
+                //owner.StopFire(); 
+                //owner.agent.updateRotation = true; 
             }
 
             public override void Setup()
             {
-
+                robotGun = owner.robotGun;
             }
 
             public override void Transition()
@@ -467,7 +487,15 @@ namespace PID
 
             public override void Update()
             {
-                owner.focusDir = (owner.playerBody.transform.position - owner.transform.position).normalized;
+                //owner.focusDir = (owner.playerBody.transform.position - owner.transform.position).normalized;
+                robotGun.AttemptFire(owner.playerBody);
+                RotateTowardPlayer(); 
+            }
+
+            public void RotateTowardPlayer()
+            {
+                Vector3 lookDir = (owner.playerBody.transform.position - owner.transform.position).normalized; 
+                owner.agent.SetDestination(lookDir);
             }
         }
         #endregion
@@ -544,10 +572,11 @@ namespace PID
             }
             public override void Enter()
             {
+                owner.agent.isStopped = true;
                 owner.debugText.text = "Neutralized";
                 //Should Notify CCTV to erase from the list 
                 if (deathReason == DeathType.Health)
-                    owner.anim.SetBool("HealthDown", true);
+                    owner.anim.SetBool("Destroyed", true);
                 else
                     owner.anim.SetBool("Hacked", true); 
             }
@@ -565,7 +594,12 @@ namespace PID
             public override void Transition()
             { }
             public override void Update()
-            { }
+            {
+               
+            }
+
+            
+
         }
         #endregion
     }

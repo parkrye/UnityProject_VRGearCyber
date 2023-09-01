@@ -20,6 +20,7 @@ namespace PID
 
         protected virtual void SetUp(EnemyStat stat)
         {
+            attackRange = stat.attackRange;
             moveSpeed = stat.moveSpeed;
             maxHealth = stat.maxHealth;
             attackDamage = stat.attackDamage;
