@@ -81,6 +81,13 @@ public class RobotGun : MonoBehaviour
             }
             else
             {
+                IHitable hitable = hitAttempt.collider.GetComponent<IHitable>(); 
+                if (hitable != null)
+                {
+                    hitable?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal);
+                    return;
+                }
+
                 appropriateObj = SearchForComponentInParent(hitAttempt.collider.gameObject); 
                 if (appropriateObj != null)
                 {
