@@ -47,7 +47,6 @@ namespace PID
                     PlayerFound?.Invoke(playerInSight);
                 }
                 presenceTimer = Mathf.Clamp(presenceTimer, 0, maxTimer);
-
             }
         }
 
@@ -65,7 +64,8 @@ namespace PID
             {
                 playerInSight = null;
                 TargetFound = false;
-                playerPresence = false; 
+                playerPresence = false;
+                PlayerLost?.Invoke();
                 return;
             }
             foreach (Collider collider in colliders)
@@ -76,7 +76,8 @@ namespace PID
                 // IF Player is found on a given Range, 
                 if (Vector3.Dot(transform.forward, dirTarget) < Mathf.Cos(sightAngle * 0.5f * Mathf.Deg2Rad))
                 {
-                    playerPresence = true; 
+                    playerInSight = collider.transform;
+                    playerPresence = true;
                     continue;
                 }
                 //Start Coroutine for hiding activities. 

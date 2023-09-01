@@ -13,7 +13,19 @@ public class FireController : MonoBehaviour
 
 	private float elapsedTime;
 
-	public void Shoot()
+	private void Update()
+	{
+		elapsedTime += Time.deltaTime;
+
+		if (Input.GetMouseButtonDown(1))
+		{
+			Shoot();
+
+			elapsedTime = 0;
+		}
+	}
+
+	private void Shoot()
 	{
 		GameObject gameObject = Instantiate(bulletPrefab, muzzlePointTransform.position, Quaternion.Euler(0, 0, 0));
 		gameObject.transform.forward = muzzlePointTransform.forward;

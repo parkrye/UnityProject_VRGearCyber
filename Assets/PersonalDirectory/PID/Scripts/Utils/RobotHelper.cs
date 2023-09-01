@@ -22,11 +22,11 @@ namespace PID
 
         public static Vector3 FinalShotDir(Vector3 muzzlePoint, Vector3 targetPoint, float distance, float randomPercentage)
         {
-            Vector3 initialPoint = ShotCentrePoint(muzzlePoint, targetPoint, distance);
+            //Vector3 initialPoint = ShotCentrePoint(muzzlePoint, targetPoint, distance);
             Vector3 newPointer = UnityEngine.Random.insideUnitCircle * randomPercentage;
-            newPointer.z = initialPoint.z;
-            newPointer.y += initialPoint.y;
-            newPointer.x += initialPoint.x;
+            newPointer.z = targetPoint.z;
+            newPointer.y += targetPoint.y;
+            newPointer.x += targetPoint.x;
             return (newPointer - muzzlePoint).normalized;
         }
 
