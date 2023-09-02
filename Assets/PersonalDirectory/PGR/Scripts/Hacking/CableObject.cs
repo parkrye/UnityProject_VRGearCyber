@@ -5,7 +5,8 @@ namespace PGR
 {
     public class CableObject : CustomGrabInteractable
     {
-        [Header ("Cable Object Parameters")]
+        [Header("Cable Object Parameters")]
+        [SerializeField] Transform playerTransform;
         [SerializeField] Light pointLight;
         [SerializeField] IHackable hackingTarget;
 
@@ -35,13 +36,18 @@ namespace PGR
             rb.AddForce(shotDirection * shotPower, ForceMode.Impulse);
         }
 
-        void OnCollisionEnter(Collision collision)
+        void OnTriggerEnter(Collider other)
         {
-            hackingTarget = collision.gameObject.GetComponent<IHackable>();
+            if (hackingTarget != null)
+                return;
+
+            hackingTarget = other.GetComponent<IHackable>();
             if (hackingTarget == null)
                 return;
 
             hackingTarget.Hack();
+            HackingPuzzle puzzle = GameManager.Resource.Instantiate<HackingPuzzle>("Hacking/HackingPuzzle", playerTransform.position, Quaternion.identity);
+            puzzle.InitialPuzzle(hackingTarget, 2, 3);
         }
     }
 }
