@@ -994,6 +994,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   muzzleFlash: {fileID: 0}
   bulletTrail: {fileID: 0}
+  fireInterval: 0
+  randomShotRadius: 0
+  reloadInterval: 0
+  muzzlePoint: {fileID: 0}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  targetTag: 
 --- !u!1 &8635811954085553172
 GameObject:
   m_ObjectHideFlags: 0
@@ -2538,14 +2546,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c10bd64ae789f9d4ea1be5d2a67f23a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
   robotBody: {fileID: 8634014095515387638}
   patrolPoints:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   muzzlePoint: {fileID: 8632534137903029692}
-  fireInterval_s: 1.5
-  randomShotRadius: 0.01
+  headRegion:
+    serializedVersion: 2
+    m_Bits: 0
+  bodyRegion:
+    serializedVersion: 2
+    m_Bits: 0
   playerBody: {fileID: 0}
   focusDir: {x: 0, y: 0, z: 0}
   debugText: {fileID: 0}
