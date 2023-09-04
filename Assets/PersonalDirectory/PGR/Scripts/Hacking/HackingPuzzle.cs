@@ -13,7 +13,7 @@ namespace PGR
 
         public void InitialPuzzle(IHackable _target, int _pairCount, int _fixedPointPerPairCount)
         {
-            Debug.Log("InitialPuzzle");
+            GameManager.Data.TimeState = GameData.GameTimeState.Slow;
             target = _target;
             pairCount = _pairCount;
             fixedPointPerPairCount = _fixedPointPerPairCount;
@@ -85,7 +85,7 @@ namespace PGR
         public void StopPuzzle(GameData.HackProgressState result)
         {
             target.ChangeProgressState(result);
-            //Time.timeScale = 1f;
+            GameManager.Data.TimeState = GameData.GameTimeState.Default;
             GameManager.Resource.Destroy(gameObject);
         }
     }
