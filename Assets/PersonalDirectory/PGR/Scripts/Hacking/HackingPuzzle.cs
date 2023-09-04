@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace PGR
 {
@@ -10,11 +11,15 @@ namespace PGR
         [SerializeField] int lightCount, lightTotal;
         [SerializeField] float puzzleScale;
         [SerializeField] IHackable target;
+        [SerializeField] XRExclusiveSocketInteractor socketInteractor;
+        [SerializeField] CableObject cable;
+        public UnityEvent SelfDestroy;
 
-        public void InitialPuzzle(IHackable _target, int _pairCount, int _fixedPointPerPairCount)
+        public void InitialPuzzle(IHackable _target, XRExclusiveSocketInteractor _socketInteractor, CableObject _cable, int _pairCount, int _fixedPointPerPairCount)
         {
-            GameManager.Data.TimeState = 0.01f;
             target = _target;
+            socketInteractor = _socketInteractor;
+            cable = _cable;
             pairCount = _pairCount;
             fixedPointPerPairCount = _fixedPointPerPairCount;
 
@@ -25,13 +30,16 @@ namespace PGR
             {
                 randomPosition = transform.position + new Vector3(Random.Range(-puzzleScale, puzzleScale), Random.Range(-puzzleScale, puzzleScale), Random.Range(-puzzleScale, puzzleScale));
                 MovablePoint insMP = GameManager.Resource.Instantiate<MovablePoint>("Hacking/MovablePoint", randomPosition, Quaternion.identity, transform);
-                
+                SelfDestroy.AddListener(insMP.SelfDestroy);
+
                 randomPosition = transform.position + new Vector3(Random.Range(-puzzleScale, puzzleScale), Random.Range(-puzzleScale, puzzleScale), Random.Range(-puzzleScale, puzzleScale));
                 LightFixedPoint insLFP1 = GameManager.Resource.Instantiate<LightFixedPoint>("Hacking/LightFixedPoint", randomPosition, Quaternion.identity, transform);
+                SelfDestroy.AddListener(insLFP1.SelfDestroy);
                 insLFP1.SetLine(insMP.transform);
                 
                 randomPosition = transform.position + new Vector3(Random.Range(-puzzleScale, puzzleScale), Random.Range(-puzzleScale, puzzleScale), Random.Range(-puzzleScale, puzzleScale));
                 LightFixedPoint insLFP2 = GameManager.Resource.Instantiate<LightFixedPoint>("Hacking/LightFixedPoint", randomPosition, Quaternion.identity, transform);
+                SelfDestroy.AddListener(insLFP2.SelfDestroy);
                 insLFP2.SetLine(insMP.transform);
 
                 Vector3 route1 = insMP.transform.position - insLFP1.transform.position;
@@ -52,13 +60,14 @@ namespace PGR
                     {
                         insFP = GameManager.Resource.Instantiate<FixedPoint>("Hacking/FixedPoint", insLFP2.transform.position + route2 * distacne, Quaternion.identity, transform);
                     }
+                    SelfDestroy.AddListener(insFP.SelfDestroy);
                     insFP.SetLight(this, insMP.transform, insLFP1.transform, insLFP2.transform);
                     lightOnDict.Add(insFP, false);
                     lightTotal++;
                 }
             }
 
-            //Time.timeScale = 0.001f;
+            GameManager.Data.TimeScale = 0.01f;
         }
 
         public void TurnOn(FixedPoint fixedPoint)
@@ -70,7 +79,7 @@ namespace PGR
 
             if(lightCount == lightTotal)
             {
-                //StopPuzzle(GameData.HackProgressState.Success);
+                StopPuzzle(GameData.HackProgressState.Success);
             }
         }
 
@@ -84,8 +93,11 @@ namespace PGR
 
         public void StopPuzzle(GameData.HackProgressState result)
         {
+            GameManager.Data.TimeScale = 1f;
             target.ChangeProgressState(result);
-            GameManager.Data.TimeState = 1f;
+            socketInteractor.ChangeSocketUnusable();
+            cable.FixExit();
+            SelfDestroy?.Invoke();
             GameManager.Resource.Destroy(gameObject);
         }
     }

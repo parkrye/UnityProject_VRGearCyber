@@ -9,6 +9,9 @@ namespace PGR
         [SerializeField] Transform playerTransform;
         [SerializeField] Light pointLight;
         [SerializeField] IHackable hackingTarget;
+        [SerializeField] bool state;
+        public bool State { get { return state; } }
+        [SerializeField] HackingPuzzle puzzle;
 
         protected override void Awake()
         {
@@ -17,11 +20,25 @@ namespace PGR
 
             Priority = 10;
             pointLight.enabled = false;
+            state = false;
         }
 
         public void FixExit()
         {
+            gameObject.SetActive(false);
+            gameObject.SetActive(true);
             pointLight.enabled = false;
+            state = false;
+            hackingTarget = null;
+            puzzle = null;
+        }
+
+        public void ExitPuzzle()
+        {
+            if (hackingTarget == null || puzzle == null)
+                return;
+
+            puzzle.StopPuzzle(GameData.HackProgressState.Failure);
         }
 
         public void ReadyToShot()
@@ -38,16 +55,21 @@ namespace PGR
 
         void OnTriggerEnter(Collider other)
         {
-            if (hackingTarget != null)
+            if (state)
                 return;
 
             hackingTarget = other.GetComponent<IHackable>();
             if (hackingTarget == null)
                 return;
 
+            XRExclusiveSocketInteractor socketInteractor = other.GetComponent<XRExclusiveSocketInteractor>();
+            if (socketInteractor == null)
+                return;
+
+            state = true;
             hackingTarget.Hack();
-            HackingPuzzle puzzle = GameManager.Resource.Instantiate<HackingPuzzle>("Hacking/HackingPuzzle", playerTransform.position, Quaternion.identity);
-            puzzle.InitialPuzzle(hackingTarget, 2, 3);
+            puzzle = GameManager.Resource.Instantiate<HackingPuzzle>("Hacking/HackingPuzzle", playerTransform.position, Quaternion.identity);
+            puzzle.InitialPuzzle(hackingTarget, socketInteractor, this, 2, 3);
         }
     }
 }

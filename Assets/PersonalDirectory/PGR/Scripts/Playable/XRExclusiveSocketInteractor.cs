@@ -23,5 +23,10 @@ namespace PGR
         {
             return CanSelect(interactable as IXRSelectInteractable);
         }
+
+        public void ChangeSocketUnusable()
+        {
+            acceptedType = GameData.InteractableType.None;
+        }
     }
 }

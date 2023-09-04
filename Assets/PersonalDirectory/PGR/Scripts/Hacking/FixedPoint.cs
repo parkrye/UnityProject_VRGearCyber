@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace PGR
 {
-    public class FixedPoint : MonoBehaviour
+    public class FixedPoint : HackingPointBase
     {
         [SerializeField] HackingPuzzle hackingPuzzle;
         [SerializeField] Transform mpTransform, lfpTransform1, lfpTransform2;
