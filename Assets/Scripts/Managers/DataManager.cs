@@ -1,16 +1,18 @@
 using PGR;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class DataManager : MonoBehaviour
 {
     [SerializeField] PlayerController playerController;
     public PlayerController Player {  get { return playerController; } }
     [SerializeField] float timeScale;
-    public float TimeState { get {  return timeScale; } set { timeScale = value; } }
+    public float TimeScale { get {  return timeScale; } set { timeScale = value; } }
 
     void OnEnable()
     {
+        timeScale = 1f;
         StartCoroutine(FindPlayerRoutine());
     }
 

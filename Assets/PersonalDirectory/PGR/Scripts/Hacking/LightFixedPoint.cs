@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace PGR
 {
-    public class LightFixedPoint : MonoBehaviour
+    public class LightFixedPoint : HackingPointBase
     {
         [SerializeField] LineRenderer lineRenderer;
         [SerializeField] Transform movablePoint;
