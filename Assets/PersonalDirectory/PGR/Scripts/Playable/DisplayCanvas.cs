@@ -15,7 +15,7 @@ namespace PGR
         void LateUpdate()
         {
             if (overayCamera == null)
-                return;
+                overayCamera = GameManager.Data.Player.IrisSystem;
             if (!overayCamera.isActiveAndEnabled)
                 return;
             if(Vector3.SqrMagnitude(overayCamera.transform.position - transform.position) > maxDistance)

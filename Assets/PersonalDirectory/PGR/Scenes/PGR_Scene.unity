@@ -1779,12 +1779,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1356463204}
   m_PrefabAsset: {fileID: 0}
---- !u!20 &2069482446 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 2205595612187098205, guid: d647cce6dc2e5704e912094854aad6aa,
-    type: 3}
-  m_PrefabInstance: {fileID: 5674446548532103604}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2098633168 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5407667824072403775, guid: 0a0d0f06068c8174db9786d922d05da1,
@@ -1846,11 +1840,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5622163068222487156, guid: c03580229dd1ac64c8eebe8250ae0120,
-        type: 3}
-      propertyPath: m_Volume
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c03580229dd1ac64c8eebe8250ae0120, type: 3}
 --- !u!1 &2146274488
@@ -1900,6 +1889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3040cdcadceb00f409f4019425ed8d90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
 --- !u!65 &2146274491
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1997,16 +1987,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1810374939}
     m_Modifications:
-    - target: {fileID: 3233219504203208351, guid: 65ee2956fb6c2be41a25b5336fe0a382,
-        type: 3}
-      propertyPath: m_Volume
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3233219504203208544, guid: 65ee2956fb6c2be41a25b5336fe0a382,
-        type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 2069482446}
     - target: {fileID: 3233219504203208545, guid: 65ee2956fb6c2be41a25b5336fe0a382,
         type: 3}
       propertyPath: m_Pivot.x

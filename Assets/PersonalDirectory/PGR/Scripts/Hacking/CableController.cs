@@ -45,6 +45,12 @@ namespace PGR
 
         public void OnLeftPrimaryButton(InputValue inputValue)
         {
+            if (cableObject.State)
+            {
+                cableObject.ExitPuzzle();
+                return;
+            }
+
             if (!isCableLoaded)
             {
                 cableObject.FixExit();
