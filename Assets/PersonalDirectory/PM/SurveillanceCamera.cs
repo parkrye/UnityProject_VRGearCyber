@@ -8,8 +8,9 @@ using static UnityEditor.PlayerSettings;
 
 namespace PM
 {
-    public class SurveillanceCamera : MonoBehaviour, Hitable, Hackingable
+    public class SurveillanceCamera : MonoBehaviour, IHitable, IHackable
     {
+        [SerializeField] GameData.HackProgressState state;
         [SerializeField]
         GameObject[] securities;
         private float range;
@@ -20,6 +21,7 @@ namespace PM
         private float angle;
         private float cos;
         private float sin;
+        public GameObject player;
 
         private void Start()
         {
@@ -29,6 +31,43 @@ namespace PM
             StartCoroutine(Checking());
         }
 
+        public virtual void Hack()
+        {
+            StartCoroutine(WaitingHackResultRoutine());
+        }
+
+        public virtual void ChangeProgressState(GameData.HackProgressState value)
+        {
+            state = value;
+        }
+
+        public virtual void Failure()
+        {
+            RaycastHit hitData;
+            Physics.Raycast(ray, out hitData);
+            StartCoroutine(CallSecurity(hitData.point));
+        }
+
+        public virtual void Success()
+        {
+            StartCoroutine(Break());
+        }
+
+        public virtual IEnumerator WaitingHackResultRoutine()
+        {
+            yield return null;
+           state = GameData.HackProgressState.Progress;
+           yield return new WaitUntil(() => state != GameData.HackProgressState.Progress );
+           switch(state)
+           {
+                case GameData.HackProgressState.Failure:
+                    Failure();
+                    break;
+                case GameData.HackProgressState.Success:
+                    Success();
+                    break;
+           }
+        }
         IEnumerator RangeSetting()
         {
             angle = SpotLight.GetComponent<Light>().spotAngle;
@@ -52,6 +91,8 @@ namespace PM
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(lightPosition, range);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawRay(lightPosition, (player.transform.position - lightPosition));
         }
         IEnumerator Checking()
         {
@@ -66,12 +107,20 @@ namespace PM
                         Vector3 dirTarget = (collider.transform.position - lightPosition).normalized;
                         if (Vector3.Dot(transform.forward, dirTarget) < Mathf.Cos(angle * 0.5f * Mathf.Deg2Rad))
                             continue;
-                        Debug.Log("player");
-                        StartCoroutine(CallSecurity(collider.transform.position));
-
+                        // 다시 레이를쏴 카메라와 플레이어 사이에 장애물이 없으면 실행
+                        Ray ray = new Ray(lightPosition, (collider.transform.position - lightPosition));
+                        RaycastHit hitData;
+                        Physics.Raycast(ray, out hitData);
+                        Debug.Log(hitData.collider.tag);
+                        if (hitData.collider.tag == "Player")
+                        {
+                            Debug.Log("player!!!!");
+                            StartCoroutine(CallSecurity(collider.transform.position));
+                        }
                     }
                     yield return null;
                 }
+                yield return new WaitUntil(() => GameManager.Data.TimeState != 1);
                 yield return new WaitForSeconds(0.3f);
             }
         }
@@ -86,14 +135,6 @@ namespace PM
             yield return null;
         }
 
-        public IEnumerator Hit(int damage)
-        {
-            hp -= damage;
-            if (hp <= 0)
-                StartCoroutine(Break());
-            yield return null;
-        }
-
         public IEnumerator Break()
         {
             SpotLight.gameObject.SetActive(false);
@@ -101,19 +142,11 @@ namespace PM
             yield return null;
         }
 
-        // 플레이어가 해킹에 성공하면 함수를 호출 성공하면 true 틀리면 false로 호출
-        // 플레이어가 해킹에 실패하면 경비로봇들을 호출
-        public IEnumerator HackingCheck(bool success)
+        public void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
         {
-            if (success)
+            hp -= damage;
+            if (hp <= 0)
                 StartCoroutine(Break());
-            else
-            {
-                RaycastHit hitData;
-                Physics.Raycast(ray, out hitData);
-                StartCoroutine(CallSecurity(hitData.point));
-            }
-            yield return null;
         }
     }
 }
