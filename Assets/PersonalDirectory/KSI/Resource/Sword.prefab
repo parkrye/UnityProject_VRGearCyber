@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 3250643919417751304}
   - component: {fileID: 2879957295717000628}
   m_Layer: 0
-  m_Name: Lightsaber
+  m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
   m_Colliders:
-  - {fileID: 0}
+  - {fileID: 5273110232104347438}
   m_InteractionLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295

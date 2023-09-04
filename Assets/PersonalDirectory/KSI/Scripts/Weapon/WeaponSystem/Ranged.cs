@@ -5,27 +5,24 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class FireController : MonoBehaviour
+public class Ranged : MonoBehaviour
 {
 	public float fireRate = 0.1f;
 	public GameObject bulletPrefab;
 	public Transform muzzlePointTransform;
+	public Animator animator;
 
-	private float elapsedTime;
-
-	private void Update()
+	public void Start()
 	{
-		elapsedTime += Time.deltaTime;
-
-		if (Input.GetMouseButtonDown(1))
-		{
-			Shoot();
-
-			elapsedTime = 0;
-		}
+		animator = GetComponent<Animator>();
 	}
 
-	private void Shoot()
+	public void PullTheTrigger()
+	{
+		animator.SetTrigger("Fire");
+	}
+
+	public void Shoot()
 	{
 		GameObject gameObject = Instantiate(bulletPrefab, muzzlePointTransform.position, Quaternion.Euler(0, 0, 0));
 		gameObject.transform.forward = muzzlePointTransform.forward;

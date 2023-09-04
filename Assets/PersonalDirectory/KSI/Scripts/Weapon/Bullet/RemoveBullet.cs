@@ -18,7 +18,6 @@ public class RemoveBullet : MonoBehaviour
 
 	IEnumerator CheckIfDestroyed(GameObject obj)
 	{
-		// 1초의 딜레이를 줍니다.
 		yield return new WaitForSeconds(1f);
 
 		if (obj == null)
@@ -27,7 +26,7 @@ public class RemoveBullet : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("Bullet was NOT destroyed.");
+			Debug.Log("Bullet was Not destroyed.");
 		}
 	}
 }
