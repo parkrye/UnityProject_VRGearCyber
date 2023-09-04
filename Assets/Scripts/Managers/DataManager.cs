@@ -6,6 +6,8 @@ public class DataManager : MonoBehaviour
 {
     [SerializeField] PlayerController playerController;
     public PlayerController Player {  get { return playerController; } }
+    [SerializeField] GameData.GameTimeState timeState;
+    public GameData.GameTimeState TimeState { get {  return timeState; } set { timeState = value; } }
 
     void OnEnable()
     {

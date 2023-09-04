@@ -44,9 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913a799e4f10fde4287754326a19dc71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movablePoint: {fileID: 1016090575698481926, guid: 4baf0b807b80ad146a28a50ec11b4ebf,
-    type: 3}
-  lightFixedPoint: {fileID: 1510597069302263576, guid: 6f44c724dee77ba43ba5fd26e2bb582f,
-    type: 3}
-  fixedPoint: {fileID: 6503366041179089542, guid: b471c4f39f359e949aefa33c3f9fc951,
-    type: 3}
+  pairCount: 0
+  fixedPointPerPairCount: 0
+  lightCount: 0
+  lightTotal: 0
+  puzzleScale: 0.5
