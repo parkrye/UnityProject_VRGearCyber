@@ -5,4 +5,6 @@ using UnityEngine;
 public static class GameData
 {
     public enum InteractableType { Cable, Equip, Other }
+    public enum HackProgressState { None, Progress, Failure, Success }
+    public enum GameTimeState { Default, Slow, Fast, Pause}
 }

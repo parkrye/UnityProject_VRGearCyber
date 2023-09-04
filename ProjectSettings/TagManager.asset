@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Projectile
+  - Water
+  - Flame
+  - Destroyer
+  - Door
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -13,11 +19,11 @@ TagManager:
   - UI
   - DisplayUI
   - Wall
+  - Ignore Collider
+  - Player Hand
   - 
-  - 
-  - 
-  - 
-  - 
+  - Enemy
+  - EnemyHead
   - 
   - 
   - 
