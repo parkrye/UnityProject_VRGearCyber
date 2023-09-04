@@ -822,6 +822,7 @@ MonoBehaviour:
   playerLeftWallCheck: {fileID: 5509386707415782559}
   playerRightWallCheck: {fileID: 1591787785050843944}
   irisSystemCamera: {fileID: 3680481829646756845}
+  playerSight: {fileID: 0}
   turnType: 0
   continuousTurnProvider: {fileID: 3763292446324776208}
   snapTurnProvider: {fileID: 5069962009611534593}
@@ -1395,6 +1396,7 @@ Transform:
   - {fileID: 5674446548595564069}
   - {fileID: 496803284}
   - {fileID: 2382794758377083642}
+  - {fileID: 3491604496591750872}
   m_Father: {fileID: 2205595612276924537}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1570,7 +1572,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -4822,6 +4824,69 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Timeout: 10
   m_XROrigin: {fileID: 1062903466718028934}
+--- !u!1 &6585020808452292160
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3491604496591750872}
+  - component: {fileID: 3051301580296827479}
+  - component: {fileID: 6011439138042723579}
+  m_Layer: 0
+  m_Name: PlayerSight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3491604496591750872
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6585020808452292160}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2205595612187098200}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3051301580296827479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6585020808452292160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f74ae141cc412e74abda608db606ccfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volume: {fileID: 6011439138042723579}
+--- !u!114 &6011439138042723579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6585020808452292160}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: a5768b98309939b4bb6d2feaebc070c4, type: 2}
 --- !u!1 &6743655242838390253
 GameObject:
   m_ObjectHideFlags: 0
@@ -5401,6 +5466,7 @@ GameObject:
   - component: {fileID: 2382794758377083642}
   - component: {fileID: 3680481829646756845}
   - component: {fileID: 4856467635258275991}
+  - component: {fileID: 4950943731604812404}
   m_Layer: 0
   m_Name: Overay Camera
   m_TagString: Player
@@ -5490,7 +5556,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -5500,6 +5566,23 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &4950943731604812404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7062499697804643036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 11dca79a3cdbf994ca9a2cedd34f43c7, type: 2}
 --- !u!1 &7075900792634374771
 GameObject:
   m_ObjectHideFlags: 0
