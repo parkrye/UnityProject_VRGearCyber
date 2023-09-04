@@ -1,13 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace PGR
 {
 
-    public class TestHackable : MonoBehaviour, IHackable
+    public class TestHackableDoor : XRExclusiveSocketInteractor, IHackable
     {
         [SerializeField] GameData.HackProgressState state;
+        [SerializeField] AudioSource successAudio, failAudio;
 
         /// <summary>
         /// Call by Hacking Cable
@@ -27,8 +27,8 @@ namespace PGR
         /// </summary>
         public virtual void Failure()
         {
-            Debug.Log("Failure");
-            Destroy(this);
+            failAudio.Play();
+            StartCoroutine(OpenRoutine());
         }
 
         /// <summary>
@@ -36,8 +36,8 @@ namespace PGR
         /// </summary>
         public virtual void Success()
         {
-            Debug.Log("Success");
-            Destroy(this);
+            successAudio.Play();
+            StartCoroutine (OpenRoutine());
         }
 
         /// <summary>
@@ -57,6 +57,12 @@ namespace PGR
                     Success();
                     break;
             }
+        }
+
+        IEnumerator OpenRoutine()
+        {
+            yield return new WaitForSeconds(3f);
+            acceptedType = GameData.InteractableType.Cable;
         }
     }
 

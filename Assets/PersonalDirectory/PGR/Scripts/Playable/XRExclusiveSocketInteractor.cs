@@ -6,7 +6,7 @@ namespace PGR
     public class XRExclusiveSocketInteractor : XRSocketInteractor
     {
         [Header("Exclusive Socket Interactor Parameters")]
-        [SerializeField] GameData.InteractableType acceptedType;
+        [SerializeField] protected GameData.InteractableType acceptedType;
         public GameData.InteractableType AcceptedType { get { return acceptedType; } }
 
         public override bool CanSelect(IXRSelectInteractable interactable)
