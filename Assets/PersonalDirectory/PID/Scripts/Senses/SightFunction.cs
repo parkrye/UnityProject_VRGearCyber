@@ -87,12 +87,6 @@ namespace PID
                 if (Physics.Raycast(transform.position, dirTarget, out obstacleHit, distance, obstacleMask))
                 {
                     break; 
-                    //if (!targetMask.Contain(obstacleHit.collider.gameObject.layer))
-                    //    continue;
-                    //PlayerInSight = obstacleHit.transform;
-                    //TargetFound = true; 
-                    //PlayerFound?.Invoke(obstacleHit.transform);
-                    //return; 
                 }
                 else
                 {
