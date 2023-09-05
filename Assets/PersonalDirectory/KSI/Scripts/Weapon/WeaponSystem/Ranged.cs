@@ -10,7 +10,8 @@ public class Ranged : MonoBehaviour
 	public float fireRate = 0.1f;
 	public GameObject bulletPrefab;
 	public Transform muzzlePointTransform;
-	public Animator animator;
+	
+	private Animator animator;
 
 	public void Start()
 	{
