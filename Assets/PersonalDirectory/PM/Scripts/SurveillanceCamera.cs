@@ -120,7 +120,6 @@ namespace PM
                     }
                     yield return null;
                 }
-                yield return new WaitUntil(() => GameManager.Data.TimeState != 1);
                 yield return new WaitForSeconds(0.3f);
             }
         }

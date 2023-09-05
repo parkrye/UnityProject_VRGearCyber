@@ -12,6 +12,7 @@ namespace PM
         private void Start()
         {
             animator = GetComponent<Animator>();
+            GameManager.Data.timeScaleEvent.AddListener(TimeScale);
         }
 
         public virtual void Hack()
@@ -34,9 +35,6 @@ namespace PM
             StartCoroutine(OpenDoor());
         }
 
-        /// <summary>
-        /// Wait until hack progress state be failure or success
-        /// </summary>
         public virtual IEnumerator WaitingHackResultRoutine()
         {
             yield return null;
@@ -55,6 +53,7 @@ namespace PM
 
         public IEnumerator Break()
         {
+            GameManager.Data.timeScaleEvent.RemoveListener(TimeScale);
             Destroy(gameObject);
             yield return null;
         }
@@ -72,5 +71,9 @@ namespace PM
             yield return null;
         }
 
+        public void TimeScale()
+        {
+            animator.speed = GameManager.Data.TimeScale;
+        }
     }
 }
