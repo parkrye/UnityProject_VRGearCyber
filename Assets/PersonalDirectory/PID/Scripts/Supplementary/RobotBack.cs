@@ -3,22 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using PID; 
 
-public class RobotBack : MonoBehaviour, IHitable, IStrikable
+namespace PID
 {
-    GuardEnemy enemy; 
-    public void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
+    public class RobotBack : MonoBehaviour, IHitable, IStrikable
     {
-        enemy.TakeDamage(damage, hitPoint, hitNormal);
-    }
+        GuardEnemy enemy;
+        public void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
+        {
+            enemy.TakeDamage(damage, hitPoint, hitNormal);
+        }
 
-    public void TakeStrike(Transform hitter, float damage, Vector3 hitPoint, Vector3 hitNormal)
-    {
-        enemy.TakeStrike(hitter, damage, hitPoint, hitNormal);
-    }
+        public void TakeStrike(Transform hitter, float damage, Vector3 hitPoint, Vector3 hitNormal)
+        {
+            enemy.TakeStrike(hitter, damage, hitPoint, hitNormal);
+        }
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        enemy = GetComponentInParent<GuardEnemy>();
+        // Start is called before the first frame update
+        void Awake()
+        {
+            enemy = GetComponentInParent<GuardEnemy>();
+        }
     }
 }
+
