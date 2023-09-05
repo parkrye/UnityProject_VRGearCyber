@@ -1,12 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using PID;
-using static PID.RobotHelper;
 using UnityEngine.EventSystems;
 
 namespace PID
@@ -76,8 +71,6 @@ namespace PID
             stateMachine.AddState(State.LookAround, new LookAroundState(this, stateMachine));
             stateMachine.AddState(State.Neutralized, new NeutralizedState(this, stateMachine));
         }
-
-        
         #region MACHINE UPDATES 
         private void Start()
         {
