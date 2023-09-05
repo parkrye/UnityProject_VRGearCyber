@@ -1,6 +1,7 @@
 using PGR;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SocialPlatforms;
 
 public class DataManager : MonoBehaviour
@@ -9,6 +10,7 @@ public class DataManager : MonoBehaviour
     public PlayerController Player {  get { return playerController; } }
     [SerializeField] float timeScale;
     public float TimeScale { get {  return timeScale; } set { timeScale = value; } }
+    public UnityEvent timeScaleEvent;
 
     void OnEnable()
     {
