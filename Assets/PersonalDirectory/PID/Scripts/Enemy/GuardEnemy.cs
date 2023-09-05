@@ -3,15 +3,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using UnityEngine.SocialPlatforms;
 
 namespace PID
 {
     [RequireComponent(typeof(NavMeshAgent), typeof(SightFunction))]
-    public class GuardEnemy : BaseEnemy, IPointerClickHandler, Hackingable
+    public class GuardEnemy : BaseEnemy, IPointerClickHandler, IHitable
     {
         public enum State
         {
             Idle,
+            Infiltrated,
             Patrol,
             LookAround, 
             Alert,
@@ -21,7 +23,7 @@ namespace PID
             Size
             //Possibly extending beyond for Gathering Abilities. 
         }
-        #region Machine Properties 
+        #region MACHINE PROPERTIES 
 
         //Base Properties 
         public Animator anim;
@@ -36,34 +38,36 @@ namespace PID
         bool notified;
 
         //Combat Properties
-
         [SerializeField] Transform muzzlePoint;
         [SerializeField] LayerMask headRegion;
         [SerializeField] LayerMask bodyRegion; 
         RobotGun robotGun; 
         public Transform playerBody; 
-        public Vector3 focusDir; 
+        public Vector3 focusDir;
+
+        //Hack Properties 
+        public State curState => stateMachine.curStateName; 
         //Debugging 
         public TMP_Text debugText;
-        #endregion
         protected void Awake()
         {
             //DEBUGGING 
             enemyStat = GameManager.Resource.Load<EnemyStat>("Data/Guard");
             base.SetUp(enemyStat);
 
-            guardSight = GetComponent<SightFunction>(); 
+            guardSight = GetComponent<SightFunction>();
             obstacle = GetComponent<NavMeshObstacle>();
             agent = GetComponent<NavMeshAgent>();
             rigid = GetComponent<Rigidbody>();
             anim = GetComponent<Animator>();
             robotGun = GetComponentInChildren<RobotGun>();
-            debugText = GetComponentInChildren<TMP_Text>();  
+            debugText = GetComponentInChildren<TMP_Text>();
             notified = false;
 
             base.SetUp(enemyStat);
             stateMachine = new StateMachine<State, GuardEnemy>(this);
             stateMachine.AddState(State.Idle, new IdleState(this, stateMachine));
+            stateMachine.AddState(State.Infiltrated, new InfiltratedState(this, stateMachine));
             stateMachine.AddState(State.Patrol, new PatrolState(this, stateMachine));
             stateMachine.AddState(State.Alert, new AlertState(this, stateMachine));
             stateMachine.AddState(State.Assault, new AssaultState(this, stateMachine));
@@ -71,16 +75,18 @@ namespace PID
             stateMachine.AddState(State.LookAround, new LookAroundState(this, stateMachine));
             stateMachine.AddState(State.Neutralized, new NeutralizedState(this, stateMachine));
         }
-        #region MACHINE UPDATES 
         private void Start()
         {
-            AgentSetUp(enemyStat); 
+            AgentSetUp(enemyStat);
             robotGun.SyncStatData(enemyStat);
-            guardSight.SyncSightStat(enemyStat); 
-            guardSight.PlayerFound += DetectPlayer; 
+            guardSight.SyncSightStat(enemyStat);
+            guardSight.PlayerFound += DetectPlayer;
             guardSight.PlayerLost += TempPlayerLost;
             stateMachine.SetUp(State.Idle);
+            GameManager.Data.timeScaleEvent?.AddListener(TimeScale);
         }
+        #endregion
+        #region MACHINE UPDATES 
         public void AgentSetUp(EnemyStat robotStat)
         {
             agent.speed = moveSpeed;
@@ -90,6 +96,7 @@ namespace PID
         {
             guardSight.PlayerFound -= DetectPlayer;
             guardSight.PlayerLost -= TempPlayerLost;
+            GameManager.Data.timeScaleEvent?.RemoveListener(TimeScale);
         }
         private void Update()
         {
@@ -112,69 +119,45 @@ namespace PID
             stateMachine.ChangeState(State.Neutralized);
         }
         #endregion
-
         #region  COMBAT INTERACTIONS 
-
+        public void TimeScale()
+        {
+            anim.speed = GameManager.Data.TimeScale; 
+            agent.speed = GameManager.Data.TimeScale;
+        }
         public void DetectPlayer(Transform player)
         {
-            if (stateMachine.curStateName == State.Neutralized)
+            if (stateMachine.curStateName == State.Neutralized || 
+                stateMachine.curStateName == State.Infiltrated)
                 return; 
             playerBody = player;
             stateMachine.ChangeState(State.Assault); 
         }
-
         public void TempPlayerLost()
         {
             if (stateMachine.curStateName == State.Assault)
                 stateMachine.ChangeState(State.Trace); 
         }
-        int incomingDamage; 
+        int incomingDamage;
         public override void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
         {
             if (stateMachine.curStateName == State.Neutralized)
                 return;
             //GameManager.Resource.Instantiate<ParticleSystem>("Enemy/TakeDamage", hitPoint, Quaternion.LookRotation(hitNormal), true);
             //incomingDamage = AssessDamage()
-            base.TakeDamage(damage, hitPoint, hitNormal); 
-            anim.SetTrigger("TakeHit"); 
+            base.TakeDamage(damage, hitPoint, hitNormal);
+            anim.SetTrigger("TakeHit");
             if (currentHealth <= 0)
             {
                 NeutralizedState neutralizeReason;
                 if (stateMachine.CheckState(State.Neutralized))
                 {
                     neutralizeReason = stateMachine.RetrieveState(State.Neutralized) as NeutralizedState;
-                    neutralizeReason.SetDeathReason(NeutralizedState.DeathType.Health); 
+                    neutralizeReason.SetDeathReason(NeutralizedState.DeathType.Health);
                 }
                 stateMachine.ChangeState(State.Neutralized);
             }
         }
-        public int AssessDamage(RaycastHit hit, int damage)
-        {
-            if (headRegion.Contain(hit.collider.gameObject.layer))
-            {
-                return damage * 3;
-            }
-            else
-                return damage;
-        }
-
-        public void Hacked()
-        {
-            NeutralizedState neutralizeReason;
-            if (stateMachine.CheckState(State.Neutralized))
-            {
-                neutralizeReason = stateMachine.RetrieveState(State.Neutralized) as NeutralizedState;
-                neutralizeReason.SetDeathReason(NeutralizedState.DeathType.Hacked);
-            }
-            stateMachine.ChangeState(State.Neutralized);
-        }
-
-        public IEnumerator HackingCheck(bool success)
-        {
-            Hacked(); 
-            yield return null;
-        }
-
         public void Notified(Vector3 centrePoint, int size, int index)
         {
             if (stateMachine.curStateName == State.Neutralized)
@@ -190,7 +173,6 @@ namespace PID
                 stateMachine.ChangeState(State.Alert); 
             }
         }
-
         public void Reactivate()
         {
             NeutralizedState.DeathType deathState; 
@@ -208,7 +190,6 @@ namespace PID
                     stateMachine.ChangeState(State.Idle); 
                 }
             }
-
         }
         #region DEBUGGING ISSUES 
         public void OnPointerClick(PointerEventData eventData)
@@ -216,11 +197,32 @@ namespace PID
             TakeDamage(50, eventData.pointerPressRaycast.worldPosition, eventData.pointerPressRaycast.worldNormal);
             Debug.Log(currentHealth); 
         }
-
+        /// <summary>
+        /// IStrikable Component, later should be merged onto IHitable. 
+        /// </summary>
+        /// <param name="hitter"></param>
+        /// <param name="damage"></param>
+        /// <param name="hitPoint"></param>
+        /// <param name="hitNormal"></param>
         
         #endregion
-
         //Hackable Component. 
+        public void Hacked()
+        {
+            NeutralizedState neutralizeReason;
+            if (stateMachine.CheckState(State.Neutralized))
+            {
+                neutralizeReason = stateMachine.RetrieveState(State.Neutralized) as NeutralizedState;
+                neutralizeReason.SetDeathReason(NeutralizedState.DeathType.Hacked);
+            }
+            stateMachine.ChangeState(State.Neutralized);
+        }
+
+        public void HackFailed(State prevState)
+        {
+            if (stateMachine.curStateName != State.Neutralized)
+                stateMachine.ChangeState(prevState); 
+        }
         #endregion
 
         public abstract class GuardState : StateBase<State, GuardEnemy>
@@ -252,6 +254,38 @@ namespace PID
             public override void Setup()
             {
                 //Could Be Random, LookAround First, and then Patrol State. 
+            }
+
+            public override void Transition()
+            {
+            }
+
+            public override void Update()
+            {
+            }
+        }
+        #endregion
+        #region Infiltrated State 
+        public class InfiltratedState : GuardState
+        {
+            public InfiltratedState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
+            {
+            }
+
+            public override void Enter()
+            {
+                owner.agent.isStopped = true;
+                //owner.anim.speed = GameManager.Data.TimeScale; 
+                //owner.anim.SetBool("Walking", false); 
+            }
+
+            public override void Exit()
+            {
+                owner.agent.isStopped = false; 
+            }
+
+            public override void Setup()
+            {
             }
 
             public override void Transition()
@@ -443,6 +477,11 @@ namespace PID
         }
         #endregion
         #region Assault 
+        /// <summary>
+        /// Precedent state to a 'Combat' State, where depending on robot's attack range,
+        /// Charges toward found target. 
+        /// Also manages target's transform information. 
+        /// </summary>
         public class AssaultState : GuardState
         {
             RobotGun robotGun; 
