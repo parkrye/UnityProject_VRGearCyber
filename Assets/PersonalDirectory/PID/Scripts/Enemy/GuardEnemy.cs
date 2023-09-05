@@ -71,8 +71,6 @@ namespace PID
             stateMachine.AddState(State.LookAround, new LookAroundState(this, stateMachine));
             stateMachine.AddState(State.Neutralized, new NeutralizedState(this, stateMachine));
         }
-
-        
         #region MACHINE UPDATES 
         private void Start()
         {
