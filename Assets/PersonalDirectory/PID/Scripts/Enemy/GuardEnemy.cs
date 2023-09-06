@@ -19,6 +19,7 @@ namespace PID
             Alert,
             Assault,
             Trace,
+            SoundReact,
             Neutralized,
             Size
             //Possibly extending beyond for Gathering Abilities. 
@@ -32,8 +33,6 @@ namespace PID
         NavMeshObstacle obstacle; 
         SightFunction guardSight;
         StateMachine<State, GuardEnemy> stateMachine;
-        [SerializeField] Transform robotBody; 
-        public Transform RobotBody => robotBody;
         [SerializeField] Transform[] patrolPoints; 
         bool notified;
 
@@ -73,6 +72,7 @@ namespace PID
             stateMachine.AddState(State.Assault, new AssaultState(this, stateMachine));
             stateMachine.AddState(State.Trace, new TraceState(this, stateMachine));
             stateMachine.AddState(State.LookAround, new LookAroundState(this, stateMachine));
+            stateMachine.AddState(State.SoundReact, new SoundReactState(this, stateMachine));
             stateMachine.AddState(State.Neutralized, new NeutralizedState(this, stateMachine));
         }
         private void Start()
@@ -305,6 +305,7 @@ namespace PID
             int patrolCount;
             float distDelta;
             bool patrolFinished;
+            bool hasPatrolPath;
             const float distThreshold = 2.5f; 
             Vector3 patrolDestination; 
             PriorityQueue<DestinationPoint> patrolQueue; 
@@ -315,7 +316,7 @@ namespace PID
             public override void Enter()
             {
                 owner.debugText.text = "Patrol";
-                if (patrolDestination != Vector3.zero)
+                if (patrolDestination != Vector3.zero || !hasPatrolPath)
                     return;
                 //Compute to find nearest patrol starting point based on robot's current position, get the nearest 
                 for (int i = 0; i < owner.patrolPoints.Length; i++)
@@ -337,6 +338,13 @@ namespace PID
 
             public override void Setup()
             {
+                if (owner.patrolPoints == null || owner.patrolPoints.Length <= 0)
+                {
+                    hasPatrolPath = false;
+                    patrolFinished = true;
+                    return;
+                }
+                hasPatrolPath = true;
                 patrolFinished = false; 
                 patrolCount = 0; 
                 distDelta = 0f; 
@@ -361,6 +369,8 @@ namespace PID
 
             public override void Update()
             {
+                if (!hasPatrolPath)
+                    return;
                 distDelta = Vector3.SqrMagnitude(patrolDestination - owner.transform.position); 
                 owner.agent.SetDestination(patrolDestination);
                 if (distDelta <= distThreshold && patrolQueue.Count >= 1)
@@ -381,7 +391,9 @@ namespace PID
             public const float lookAroundTime = 5f;
             const float rotateInterval = .35f; 
             Quaternion previousRotation;
-            Quaternion searchRotation; 
+            Quaternion searchRotation;
+            Vector3 focusDir;
+            float rotationTime = .45f;
             public float timer; 
             public LookAroundState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
             {
@@ -391,10 +403,7 @@ namespace PID
             {
                 owner.debugText.text = "LookAround";
                 owner.agent.isStopped = true;
-                owner.anim.SetBool("Walking", false); 
-                Vector2 nextLookRandom = UnityEngine.Random.insideUnitCircle.normalized;
-                Vector3 nextLookDir = new Vector3(nextLookRandom.x, owner.transform.position.y, nextLookRandom.y); 
-                owner.focusDir = nextLookDir;
+                NextLookDir(); 
                 //previousRotation = owner.transform.rotation;
                 //searchRotation = Quaternion.LookRotation(nextLookDir, owner.transform.up); 
                 //TODO: Add Method to check if the next search rotation is too close to current rotation; 
@@ -403,9 +412,9 @@ namespace PID
             public override void Exit()
             {
                 timer = 0f;
-                owner.focusDir = Vector3.zero; 
-                owner.RobotBody.rotation = owner.transform.rotation;
-                owner.agent.isStopped = false; 
+                owner.focusDir = Vector3.zero;
+                owner.agent.isStopped = false;
+                owner.agent.updateRotation = true;
             }
 
             public override void Setup()
@@ -423,8 +432,19 @@ namespace PID
             public override void Update()
             {
                 //owner.RobotBody.localRotation = Quaternion.Slerp(owner.RobotBody.rotation, searchRotation, rotateInterval);
-                timer += Time.deltaTime; 
+                timer += Time.deltaTime;
+                owner.transform.rotation = Quaternion.Lerp(owner.transform.rotation, searchRotation, rotationTime);
+                if (RobotHelper.DirectionIntersect(owner.transform.forward, focusDir))
+                    NextLookDir();
                 //Make a look around? 
+            }
+
+            private void NextLookDir()
+            {
+                Vector2 nextLookRandom = UnityEngine.Random.insideUnitCircle.normalized;
+                Vector3 nextLookDir = new Vector3(nextLookRandom.x, 0, nextLookRandom.y);
+                focusDir = nextLookDir;
+                searchRotation = Quaternion.LookRotation(focusDir);
             }
         }
         #endregion
@@ -580,6 +600,34 @@ namespace PID
                 trackTimer += Time.deltaTime;
                 if (owner.playerBody != null)
                     owner.agent.SetDestination(owner.playerBody.position);
+            }
+        }
+        #endregion
+        #region SoundReact State 
+        public class SoundReactState : GuardState
+        {
+            public SoundReactState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
+            {
+            }
+
+            public override void Enter()
+            {
+            }
+
+            public override void Exit()
+            {
+            }
+
+            public override void Setup()
+            {
+            }
+
+            public override void Transition()
+            {
+            }
+
+            public override void Update()
+            {
             }
         }
         #endregion

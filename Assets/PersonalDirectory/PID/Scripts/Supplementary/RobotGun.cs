@@ -20,10 +20,10 @@ namespace PID
         int attackDamage;
 
         [SerializeField] float fireInterval;
-        [SerializeField] float randomShotRadius;
+        [SerializeField] float missChance;
         [SerializeField] float reloadInterval;
         WaitForSeconds reloadWaitInterval;
-        LineRenderer debugLine;
+        //LineRenderer debugLine;
         [SerializeField] Transform muzzlePoint;
         [SerializeField] LayerMask targetMask;
         [SerializeField] string targetTag;
@@ -34,7 +34,7 @@ namespace PID
         private void Awake()
         {
             reloading = false;
-            debugLine = GetComponent<LineRenderer>();
+            //debugLine = GetComponent<LineRenderer>();
             gunOwner = GetComponentInParent<GuardEnemy>();
             reloadWaitInterval = new WaitForSeconds(reloadInterval);
         }
@@ -64,10 +64,10 @@ namespace PID
         {
             struck = false;
             gunOwner.anim.SetTrigger("GunFire");
-            debugLine.SetPosition(0, muzzlePoint.position);
-            //shotAttempt = FinalShotDir(muzzlePoint.positionempt.norma, playerBody.position, attackRange, randomShotRadius);
+            //debugLine.SetPosition(0, muzzlePoint.position);
+            shotAttempt = RobotHelper.FinalShotPoint(muzzlePoint.position, target.position, attackRange, missChance);
             shotAttempt = (target.position - muzzlePoint.position).normalized;
-            debugLine.SetPosition(1, target.position);
+            //debugLine.SetPosition(1, target.position);
             //RaycastHit[] queries;
             //queries = Physics.RaycastAll(muzzlePoint.position, shotAttempt, attackRange);
 
