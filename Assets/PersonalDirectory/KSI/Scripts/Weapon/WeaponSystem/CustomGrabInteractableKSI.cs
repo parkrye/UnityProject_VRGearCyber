@@ -13,7 +13,7 @@ namespace KSI
 		[SerializeField] GameData.InteractableType interactableType;
 		[SerializeField] int defaultLayer, ignoreColliderLayer;
 
-		[SerializeField] bool oneHandGrabOnly;
+		[SerializeField] bool onlyOneHandGrab;
 
 		public GameData.InteractableType InteractableType { get { return interactableType; } }
 
@@ -42,9 +42,10 @@ namespace KSI
 			ignoreColliderLayer = Mathf.RoundToInt(Mathf.Log(LayerMask.GetMask("Ignore Collider"), 2));
 		}
 
+		// 한 쪽 손에서 잡고 있는 중에는 다른 손에서는 잡지 못하게 함
 		public override bool IsSelectableBy(IXRSelectInteractor interactor)
 		{
-			if (!oneHandGrabOnly)
+			if (!onlyOneHandGrab)
 				return base.IsSelectableBy(interactor);
 
 			if (isSelected && !ReferenceEquals(interactor.transform, firstInteractorSelecting.transform))

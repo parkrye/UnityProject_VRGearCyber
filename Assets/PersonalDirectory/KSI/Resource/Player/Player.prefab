@@ -822,6 +822,7 @@ MonoBehaviour:
   playerLeftWallCheck: {fileID: 5509386707415782559}
   playerRightWallCheck: {fileID: 1591787785050843944}
   irisSystemCamera: {fileID: 0}
+  playerSight: {fileID: 0}
   turnType: 0
   continuousTurnProvider: {fileID: 3763292446324776208}
   snapTurnProvider: {fileID: 5069962009611534593}
