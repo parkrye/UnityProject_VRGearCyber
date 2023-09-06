@@ -79,20 +79,20 @@ namespace PM
             range = hitData.distance;
             yield return null;
         }
-        //private void Update()
-        //{
-        //    Debug.DrawRay(lightPosition, SpotLight.forward*10, Color.red);
-        //    Debug.DrawRay(lightPosition, (SpotLight.forward * cos + SpotLight.right*sin) * 10, Color.red);
-        //    Debug.DrawRay(lightPosition, (SpotLight.forward * cos - SpotLight.right * sin) * 10, Color.red);
-        //    Debug.DrawRay(lightPosition, (SpotLight.forward * cos + SpotLight.up * sin) * 10, Color.red);
-        //    Debug.DrawRay(lightPosition, (SpotLight.forward * cos - SpotLight.up * sin) * 10, Color.red);
-        //}
+        private void Update()
+        {
+            Debug.DrawRay(lightPosition, SpotLight.forward*10, Color.red);
+            Debug.DrawRay(lightPosition, (SpotLight.forward * cos + SpotLight.right*sin) * 10, Color.red);
+            Debug.DrawRay(lightPosition, (SpotLight.forward * cos - SpotLight.right * sin) * 10, Color.red);
+            Debug.DrawRay(lightPosition, (SpotLight.forward * cos + SpotLight.up * sin) * 10, Color.red);
+            Debug.DrawRay(lightPosition, (SpotLight.forward * cos - SpotLight.up * sin) * 10, Color.red);
+        }
         void OnDrawGizmos()
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(lightPosition, range);
             Gizmos.color = Color.blue;
-            Gizmos.DrawRay(lightPosition, (player.transform.position - lightPosition));
+            //Gizmos.DrawRay(lightPosition, (player.transform.position - lightPosition));
         }
         IEnumerator Checking()
         {
