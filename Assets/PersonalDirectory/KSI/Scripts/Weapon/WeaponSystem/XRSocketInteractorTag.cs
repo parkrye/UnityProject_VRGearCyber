@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class XRSocketInteractorTag : XRSocketInteractor
+namespace KSI
 {
-    public string targetTag;
+	// Tag¿¡ ¸Â´Â MagazineÀ¸·Î¸¸ ÀåÂøµÊ
+	public class XRSocketInteractorTag : XRSocketInteractor
+	{
+		[SerializeField] private string targetTag;
 
-	public override bool CanSelect(XRBaseInteractable interactable)
-	{ 
-		return base.CanSelect(interactable) && interactable.CompareTag(targetTag);
+		public override bool CanSelect(IXRSelectInteractable interactable)
+		{
+			GameObject gameObject = interactable.transform.gameObject;
+
+			if (targetTag == null)
+				return false;
+
+			return base.CanSelect(interactable) && gameObject.CompareTag(targetTag);
+		}
 	}
 }

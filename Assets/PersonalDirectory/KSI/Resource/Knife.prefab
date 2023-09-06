@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3082484736368243942}
   - component: {fileID: 334748601441497748}
   - component: {fileID: 5067223328709723437}
+  - component: {fileID: 8957126009913529473}
   m_Layer: 0
   m_Name: Knife
   m_TagString: Untagged
@@ -287,6 +288,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62fb9fb1177925e4b8a383be2b9db66c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8957126009913529473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3971764593443699142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4807337e4a031c2419b3976926ad1221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkRate: 0.1
+  maxPositions: 10
+  maxDamage: 100
+  minDamage: 10
+  minDistanceForMaxDamage: 1
+  minDistanceForMinDamage: 0.2
+  coll: {fileID: 7278484003193080083}
 --- !u!1 &6960996029236989795
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,11 +330,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6960996029236989795}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0258, y: 0, z: 0}
+  m_LocalRotation: {x: 0.19255085, y: -0, z: -0.000000014901159, w: 0.98128706}
+  m_LocalPosition: {x: 0.0199, y: 0.0003, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3969668464381455658}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 22.203, y: 0, z: 0}
