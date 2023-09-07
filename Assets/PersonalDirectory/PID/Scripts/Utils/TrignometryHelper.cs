@@ -2,10 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PID
+public class TrignometryHelper
 {
-    public class SoundTraceHelper
-    {
-        
-    }
 }

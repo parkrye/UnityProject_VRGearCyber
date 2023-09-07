@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace PID
 {
-    
     public static class Extension
     {
         public static bool Contain(this LayerMask layerMask, int layer)
@@ -27,14 +26,6 @@ namespace PID
         public static Vector3 GetDestinationPoint(Vector3[] paths)
         {
             return paths[paths.Length - 1];
-        }
-
-        public struct ParallelTester : IJobParallelFor
-        {
-            public void Execute(int index)
-            {
-
-            }
         }
     }
 }

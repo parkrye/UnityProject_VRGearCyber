@@ -21,7 +21,7 @@ namespace PID
             return shotCentrePointWithDistance;
         }
 
-        public static Vector3 FinalShotPoint(Vector3 muzzlePoint, Vector3 targetPoint, float distance, float randomPercentage)
+        public static Vector3 FinalShotPoint(Vector3 targetPoint, float distance, float randomPercentage)
         {
             targetPoint += UnityEngine.Random.insideUnitSphere * randomPercentage;
             return targetPoint;
@@ -58,6 +58,23 @@ namespace PID
         //    }
         //    return (accumDist <= threshHold);
         //}
+
+        public static Rigidbody NearestHitPart(Rigidbody[] parts, Vector3 hitPoint)
+        {
+            float shortest = 9999999999999999f;  
+            float deltaDist;
+            Rigidbody closest = null;
+            for (int i = 0; i< parts.Length; i++)
+            {
+                deltaDist = Vector3.SqrMagnitude(parts[i].transform.position - hitPoint);
+                if (deltaDist < shortest)
+                {
+                    closest = parts[i];
+                    shortest = deltaDist;
+                }
+            }
+            return closest; 
+        }
     }
 
     /// <summary>

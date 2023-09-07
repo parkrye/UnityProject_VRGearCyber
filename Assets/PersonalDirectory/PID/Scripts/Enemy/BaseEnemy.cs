@@ -1,10 +1,15 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
+using static PID.GuardEnemy;
 using static PID.MeleeCombatHelper; 
 
 namespace PID
 {
     public class BaseEnemy : MonoBehaviour, IHitable, IStrikable
     {
+        public UnityAction<Vector3, Vector3> onDeath;
+        public UnityAction<bool> OnAndOff; 
         //SetUp Base States 
         protected float moveSpeed;
         protected int maxHealth;
@@ -49,10 +54,30 @@ namespace PID
                 currentHealth -= (int)damage; 
             }
         }
+
+        public virtual void Notified(Vector3 centrePoint, int size, int index)
+        {
+            //if (stateMachine.curStateName == State.Neutralized || stateMachine.curStateName == State.Alert)
+            //{
+            //    return;
+            //}
+            //AlertState alertState;
+            //if (stateMachine.CheckState(State.Alert))
+            //{
+            //    alertState = stateMachine.RetrieveState(State.Alert) as AlertState;
+            //    Vector3 gatherPos = RobotHelper.GroupPositionAllocator(centrePoint, size, index);
+            //    alertState.SetGatherPoint(gatherPos);
+            //    stateMachine.ChangeState(State.Alert);
+            //}
+        }
         protected virtual void Die()
         {
         }
 
-        
+        protected IEnumerator DeathCycle(bool deadOrAlive)
+        {
+            yield return new WaitForSeconds(.2f);
+            OnAndOff?.Invoke(deadOrAlive); 
+        }
     }
 }

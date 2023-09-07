@@ -22,8 +22,6 @@ namespace PID
             else
             {
                 trackSound?.Invoke(soundPoint);
-                Ray ray = new Ray();
-
             }
         }
 
