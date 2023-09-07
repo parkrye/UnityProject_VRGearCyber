@@ -6,7 +6,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PistolAnimator
+  m_Name: CrossbowAnimator
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Fire
@@ -96,7 +96,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: bdd993f39c085684fb8f3efc4fa23320, type: 2}
+  m_Motion: {fileID: 7400000, guid: 9adf27c8bc92cce46862be66560dd091, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

@@ -6,6 +6,22 @@ using UnityEngine.XR.Interaction.Toolkit;
 namespace KSI
 {
 	// Tag¿¡ ¸Â´Â MagazineÀ¸·Î¸¸ ÀåÂøµÊ
+	//public class XRSocketInteractorTag : XRSocketInteractor
+	//{
+	//	[SerializeField] private string targetTag;
+
+	//	public override bool CanSelect(IXRSelectInteractable interactable)
+	//	{
+	//		GameObject gameObject = interactable.transform.gameObject;
+
+	//		if (targetTag == null)
+	//			return false;
+
+	//		return base.CanSelect(interactable) && gameObject.CompareTag(targetTag);
+	//	}
+	//}
+
+	// Tag¿¡ ¸Â´Â MagazineÀ¸·Î¸¸ ÀåÂøµÊ
 	public class XRSocketInteractorTag : XRSocketInteractor
 	{
 		[SerializeField] private string targetTag;
@@ -14,10 +30,25 @@ namespace KSI
 		{
 			GameObject gameObject = interactable.transform.gameObject;
 
-			if (targetTag == null)
+			if (string.IsNullOrEmpty(targetTag))
+			{
+				Debug.Log("Target tag is null or empty.");
 				return false;
+			}
 
-			return base.CanSelect(interactable) && gameObject.CompareTag(targetTag);
+			if (!base.CanSelect(interactable))
+			{
+				Debug.Log($"Base CanSelect method returned false for gameObject: {gameObject.name}");
+				return false;
+			}
+
+			if (!gameObject.CompareTag(targetTag))
+			{
+				Debug.Log($"gameObject {gameObject.name} does not have the target tag: {targetTag}");
+				return false;
+			}
+
+			return true;
 		}
 	}
 }
