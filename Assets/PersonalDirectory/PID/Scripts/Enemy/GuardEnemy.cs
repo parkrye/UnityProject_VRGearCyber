@@ -10,6 +10,9 @@ namespace PID
     [RequireComponent(typeof(NavMeshAgent), typeof(SightFunction))]
     public class GuardEnemy : BaseEnemy, IPointerClickHandler, IHitable
     {
+        /// <summary>
+        /// Hide and Clash should be sub-state driven by the Assault state. 
+        /// </summary>
         public enum State
         {
             Idle,
@@ -20,12 +23,13 @@ namespace PID
             Assault,
             Trace,
             SoundReact,
+            Hide, 
+            Clash,
             Neutralized,
             Size
             //Possibly extending beyond for Gathering Abilities. 
         }
         #region MACHINE PROPERTIES 
-
         //Base Properties 
         public Animator anim;
         Rigidbody rigid;
@@ -34,7 +38,6 @@ namespace PID
         SightFunction guardSight;
         StateMachine<State, GuardEnemy> stateMachine;
         [SerializeField] Transform[] patrolPoints; 
-        bool notified;
 
         //Combat Properties
         [SerializeField] Transform muzzlePoint;
@@ -61,7 +64,6 @@ namespace PID
             anim = GetComponent<Animator>();
             robotGun = GetComponentInChildren<RobotGun>();
             debugText = GetComponentInChildren<TMP_Text>();
-            notified = false;
 
             base.SetUp(enemyStat);
             stateMachine = new StateMachine<State, GuardEnemy>(this);
@@ -92,6 +94,29 @@ namespace PID
             agent.speed = moveSpeed;
             //Takes the General stat values, implement it on the nav_agent level. 
         }
+        public void AgentStop()
+        {
+
+        }
+        Vector3 localVel;
+        Vector3 worldVel; 
+        public void UpdateAnim()
+        {
+            localVel = agent.velocity.normalized;
+            worldVel = transform.InverseTransformDirection(localVel);
+            anim.SetFloat("Speed", agent.speed);
+            if (agent.isStopped)
+            {
+                anim.SetFloat("Speed", 0);
+                anim.SetFloat("ZSpeed", 0);
+                anim.SetFloat("XSpeed", 0);
+            }
+            if (agent.speed > .1)
+            {
+                anim.SetFloat("ZSpeed", worldVel.z);
+                anim.SetFloat("XSpeed", worldVel.x);
+            }
+        }
         private void OnDisable()
         {
             guardSight.PlayerFound -= DetectPlayer;
@@ -100,6 +125,7 @@ namespace PID
         }
         private void Update()
         {
+            UpdateAnim(); 
             stateMachine.Update();
         }
 
@@ -160,7 +186,7 @@ namespace PID
         }
         public void Notified(Vector3 centrePoint, int size, int index)
         {
-            if (stateMachine.curStateName == State.Neutralized)
+            if (stateMachine.curStateName == State.Neutralized || stateMachine.curStateName == State.Alert)
             {
                 return;
             }
@@ -169,7 +195,7 @@ namespace PID
             {
                 alertState = stateMachine.RetrieveState(State.Alert) as AlertState;
                 Vector3 gatherPos = RobotHelper.GroupPositionAllocator(centrePoint, size, index); 
-                alertState.SetDestination(gatherPos);
+                alertState.SetGatherPoint(gatherPos);
                 stateMachine.ChangeState(State.Alert); 
             }
         }
@@ -224,7 +250,6 @@ namespace PID
                 stateMachine.ChangeState(prevState); 
         }
         #endregion
-
         public abstract class GuardState : StateBase<State, GuardEnemy>
         {
             public GuardState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
@@ -325,7 +350,6 @@ namespace PID
                     DestinationPoint tempPoint = new DestinationPoint(owner.patrolPoints[i].position, tempDist);
                     patrolQueue.Enqueue(tempPoint);
                 }
-                owner.anim.SetBool("Walking", true);
                 patrolDestination = patrolQueue.Dequeue().destinationVectorPoint;
             }
 
@@ -393,7 +417,7 @@ namespace PID
             Quaternion previousRotation;
             Quaternion searchRotation;
             Vector3 focusDir;
-            float rotationTime = .45f;
+            float rotationTime = .01f;
             public float timer; 
             public LookAroundState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
             {
@@ -454,7 +478,8 @@ namespace PID
         public class AlertState : GuardState
         {
             SightFunction guardSight;
-            Vector3 destPoint;
+            Vector3 destPoint = Vector3.zero;
+            bool abortGather; 
             float distDelta;
             const float holdPeriod = 5f; 
             const float distThreshold = 3.5f;
@@ -466,27 +491,30 @@ namespace PID
             {
                 owner.debugText.text = "Alert";
                 owner.agent.isStopped = false;
-                owner.anim.SetBool("Walking", true); 
+                if (destPoint != Vector3.zero)
+                    owner.agent.SetDestination(destPoint);
+                else
+                    abortGather = true; 
             }
 
             public override void Exit()
             {
-                owner.notified = false;
             }
 
             public override void Setup()
             {
+                abortGather = false;
                 guardSight = owner.guardSight;
             }
 
-            public void SetDestination(Vector3 location)
+            public void SetGatherPoint(Vector3 location)
             {
                 destPoint = location;
             }
 
             public override void Transition()
             {
-                if (distDelta <= distThreshold)
+                if (distDelta <= distThreshold || abortGather)
                     stateMachine.ChangeState(State.LookAround); 
             }
 
@@ -514,7 +542,7 @@ namespace PID
                 owner.debugText.text = "Assault";
                 //owner.agent.updateRotation = false;
                 owner.agent.isStopped = true;
-                owner.anim.SetBool("Walking", false);
+                owner.agent.updateRotation = false; 
                 //if (owner.playerBody != null)
                 //    owner.focusDir = (owner.playerBody.transform.position - owner.transform.position).normalized; 
             }
@@ -524,7 +552,7 @@ namespace PID
                 //owner.focusDir = Vector3.zero;
                 ////Perhaps for now, but should consider reasons for movement 
                 //owner.StopFire(); 
-                //owner.agent.updateRotation = true; 
+                owner.agent.updateRotation = true; 
             }
 
             public override void Setup()
@@ -540,14 +568,15 @@ namespace PID
             public override void Update()
             {
                 //owner.focusDir = (owner.playerBody.transform.position - owner.transform.position).normalized;
+                RotateTowardPlayer();
                 robotGun.AttemptFire(owner.playerBody);
-                RotateTowardPlayer(); 
             }
 
             public void RotateTowardPlayer()
             {
                 Vector3 lookDir = (owner.playerBody.transform.position - owner.transform.position).normalized; 
-                owner.agent.SetDestination(lookDir);
+                lookDir.y = 0;
+                owner.transform.rotation = Quaternion.LookRotation(lookDir);
             }
         }
         #endregion
@@ -567,7 +596,6 @@ namespace PID
             public override void Enter()
             {
                 owner.agent.isStopped = false;
-                owner.anim.SetBool("Walking", true);
                 owner.debugText.text = "Trace";
                 trackTimer = 0f;
                 if (owner.playerBody == null)

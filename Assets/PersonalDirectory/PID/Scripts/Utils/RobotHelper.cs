@@ -21,7 +21,7 @@ namespace PID
             return shotCentrePointWithDistance;
         }
 
-        public static Vector3 FinalShotPoint(Vector3 muzzlePoint, Vector3 targetPoint, float distance, float randomPercentage)
+        public static Vector3 FinalShotPoint(Vector3 targetPoint, float distance, float randomPercentage)
         {
             targetPoint += UnityEngine.Random.insideUnitSphere * randomPercentage;
             return targetPoint;
