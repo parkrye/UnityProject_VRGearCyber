@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6124730947378653682}
   - component: {fileID: 8716701431950636395}
   - component: {fileID: 3951041620262619714}
+  - component: {fileID: 238287945182811691}
   - component: {fileID: 3616493069824431458}
   - component: {fileID: 8541960607584977214}
   - component: {fileID: 1798757361143322973}
@@ -91,6 +92,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &238287945182811691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117895243694500892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb8c66b23899d384188530626ff686f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOn: 0
+  mr: {fileID: 5063694511524832986}
+  onMat: {fileID: 2100000, guid: 136beb9ca8a36994ca60918c49ee2767, type: 2}
+  offMat: {fileID: 2100000, guid: c4401e5b03b52de47b786ae0f6002794, type: 2}
 --- !u!65 &3616493069824431458
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -164,7 +181,19 @@ MonoBehaviour:
   m_AllowGazeAssistance: 0
   m_FirstHoverEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 238287945182811691}
+        m_TargetAssemblyTypeName: PGR.OnableLamp, Assembly-CSharp
+        m_MethodName: OnHoverEntered
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_LastHoverExited:
     m_PersistentCalls:
       m_Calls: []
