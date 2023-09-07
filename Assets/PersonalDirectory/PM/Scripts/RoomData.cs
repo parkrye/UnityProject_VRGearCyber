@@ -5,7 +5,8 @@ using UnityEngine;
 public class RoomData : MonoBehaviour
 {
     public int x;
-    public int y;
+    public int z;
+    public int aggregate;   // 엘러의 알고리즘을 위한 변수
     public bool right;
     public bool left;
     public bool up;
