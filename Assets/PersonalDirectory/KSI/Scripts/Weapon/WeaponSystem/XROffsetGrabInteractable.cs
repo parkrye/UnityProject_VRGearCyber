@@ -3,39 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-// 초기 값 유지
-public class XROffsetGrabInteractable : XRGrabInteractable
+namespace KSI
 {
-	private Vector3 initialAttachLocalPos;
-	private Quaternion initialAttachLocalRot;
-
-	private void Start()
+	// 초기 값 유지
+	public class XROffsetGrabInteractable : XRGrabInteractable
 	{
-		// AttachTransform 생성
-		if (!attachTransform)
+		private Vector3 initialAttachLocalPos;
+		private Quaternion initialAttachLocalRot;
+
+		private void Start()
 		{
-			GameObject grab = new GameObject("Grab Pivot");
-			grab.transform.SetParent(transform, false);
-			attachTransform = grab.transform;
+			// AttachTransform 생성
+			if (!attachTransform)
+			{
+				GameObject grab = new GameObject("Grab Pivot");
+				grab.transform.SetParent(transform, false);
+				attachTransform = grab.transform;
+			}
+
+			initialAttachLocalPos = attachTransform.localPosition;
+			initialAttachLocalRot = attachTransform.localRotation;
 		}
 
-		initialAttachLocalPos = attachTransform.localPosition;
-		initialAttachLocalRot = attachTransform.localRotation;
-	}
-
-	protected override void OnSelectEntered(SelectEnterEventArgs args)
-	{
-		if (args is SelectEnterEventArgs)
+		protected override void OnSelectEntered(SelectEnterEventArgs args)
 		{
-			attachTransform.position = args.interactorObject.transform.position;
-			attachTransform.rotation = args.interactorObject.transform.rotation;
-		}
-		else
-		{
-			attachTransform.localPosition = initialAttachLocalPos;
-			attachTransform.localRotation = initialAttachLocalRot;
-		}
+			if (args is SelectEnterEventArgs)
+			{
+				attachTransform.position = args.interactorObject.transform.position;
+				attachTransform.rotation = args.interactorObject.transform.rotation;
+			}
+			else
+			{
+				attachTransform.localPosition = initialAttachLocalPos;
+				attachTransform.localRotation = initialAttachLocalRot;
+			}
 
-		base.OnSelectEntered(args);
+			base.OnSelectEntered(args);
+		}
 	}
 }

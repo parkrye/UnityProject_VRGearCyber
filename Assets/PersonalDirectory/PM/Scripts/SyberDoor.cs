@@ -12,7 +12,7 @@ namespace PM
         private void Start()
         {
             animator = GetComponent<Animator>();
-            GameManager.Data.timeScaleEvent.AddListener(TimeScale);
+            //GameManager.Data.timeScaleEvent.AddListener(TimeScale);
         }
 
         public virtual void Hack()

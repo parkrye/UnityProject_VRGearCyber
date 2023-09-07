@@ -20,34 +20,37 @@ namespace PID
         int attackDamage;
 
         [SerializeField] float fireInterval;
-        [SerializeField] float randomShotRadius;
+        [SerializeField] float missChance;
         [SerializeField] float reloadInterval;
         WaitForSeconds reloadWaitInterval;
-        LineRenderer debugLine;
         [SerializeField] Transform muzzlePoint;
         [SerializeField] LayerMask targetMask;
         [SerializeField] string targetTag;
         GuardEnemy gunOwner;
+
+        //Debug 
+        LineRenderer debugLine;
 
         public bool Reloading { get => reloading; set => reloading = value; }
 
         private void Awake()
         {
             reloading = false;
-            debugLine = GetComponent<LineRenderer>();
             gunOwner = GetComponentInParent<GuardEnemy>();
             reloadWaitInterval = new WaitForSeconds(reloadInterval);
+            debugLine = GetComponent<LineRenderer>();
         }
         public void UponFire(Vector3 fireDir, float distance)
         {
             muzzleFlash.Play();
-            //BulletTrail Works 
             currentAmmo--;
         }
         Coroutine reloadCoroutine;
+        bool tookHit; 
+        public bool TookHit { get => tookHit; set => tookHit = value; }
         public void AttemptFire(Transform target)
         {
-            if (Time.time < nextFire || reloading)
+            if (Time.time < nextFire || reloading || tookHit)
                 return;
             if (currentAmmo <= 0)
                 reloadCoroutine = StartCoroutine(ReloadRoutine());
@@ -58,16 +61,15 @@ namespace PID
         }
         Vector3 shotAttempt;
         RaycastHit hitAttempt;
-        bool struck;
         GameObject appropriateObj;
         public void Fire(Transform target)
         {
-            struck = false;
+            
             gunOwner.anim.SetTrigger("GunFire");
+            currentAmmo--;
             debugLine.SetPosition(0, muzzlePoint.position);
-            //shotAttempt = FinalShotDir(muzzlePoint.positionempt.norma, playerBody.position, attackRange, randomShotRadius);
-            shotAttempt = (target.position - muzzlePoint.position).normalized;
-            debugLine.SetPosition(1, target.position);
+            shotAttempt = RobotHelper.FinalShotPoint(target.position, attackRange, missChance);
+            shotAttempt = (shotAttempt - muzzlePoint.position).normalized;
             //RaycastHit[] queries;
             //queries = Physics.RaycastAll(muzzlePoint.position, shotAttempt, attackRange);
 
@@ -87,6 +89,7 @@ namespace PID
                     if (hitable != null)
                     {
                         hitable?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal);
+                        debugLine.SetPosition(1, hitAttempt.point);
                         return;
                     }
 
@@ -94,6 +97,7 @@ namespace PID
                     if (appropriateObj != null)
                     {
                         GiveDamage(appropriateObj);
+                        debugLine.SetPosition(1, hitAttempt.point);
                         appropriateObj = null;
                         return;
                     }
@@ -103,6 +107,7 @@ namespace PID
                         if (appropriateObj != null)
                         {
                             GiveDamage(appropriateObj);
+                            debugLine.SetPosition(1, hitAttempt.point);
                             appropriateObj = null;
                             return;
                         }
@@ -116,22 +121,18 @@ namespace PID
             IHitable hitable = hitAttempt.collider.GetComponent<IHitable>();
             hitable?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal);
         }
-
         public GameObject SearchForComponentInParent(GameObject gameObject)
         {
             if (gameObject == null)
             {
                 return null;
             }
-
             // Check if the current GameObject has the desired component
             IHitable hitable = gameObject.GetComponent<IHitable>();
-
             if (hitable != null)
             {
                 return gameObject;
             }
-
             // Recursively search through the parent
             if (gameObject.transform.parent != null)
             {
@@ -142,7 +143,6 @@ namespace PID
                 return null;
             }
         }
-
         public GameObject SearchForComponentInChildren(GameObject gameObject)
         {
             GameObject target = null;
@@ -160,15 +160,16 @@ namespace PID
         IEnumerator ReloadRoutine()
         {
             reloading = true;
+            yield return new WaitForEndOfFrame(); 
+            gunOwner.anim.SetTrigger("Reload"); 
             yield return reloadWaitInterval;
+            currentAmmo = maxAmmo; 
             reloading = false;
         }
-
         IEnumerator TrailRendererRoutine()
         {
             yield return null;
         }
-
         public void SyncStatData(EnemyStat stat)
         {
             attackDamage = stat.attackDamage;
@@ -178,4 +179,3 @@ namespace PID
         }
     }
 }
-

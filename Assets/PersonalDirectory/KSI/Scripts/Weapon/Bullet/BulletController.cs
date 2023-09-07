@@ -2,16 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour
+namespace KSI
 {
-    public float damage;
-    public float force;
-    
-    private Rigidbody rb;
-
-	private void Start()
+	public class BulletController : MonoBehaviour
 	{
-		rb = GetComponent<Rigidbody>();
-		rb.AddForce(transform.forward * force);
+		[SerializeField] private float damage;
+		[SerializeField] private float force;
+
+		private Rigidbody rb;
+
+		private void Start()
+		{
+			rb = GetComponent<Rigidbody>();
+			rb.AddForce(transform.forward * force);
+		}
 	}
 }
