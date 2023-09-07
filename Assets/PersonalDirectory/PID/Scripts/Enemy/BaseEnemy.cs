@@ -1,8 +1,9 @@
 using UnityEngine;
+using static PID.MeleeCombatHelper; 
 
 namespace PID
 {
-    public class BaseEnemy : MonoBehaviour, IHitable, IHackable
+    public class BaseEnemy : MonoBehaviour, IHitable, IStrikable
     {
         //SetUp Base States 
         protected float moveSpeed;
@@ -29,12 +30,29 @@ namespace PID
 
         public virtual void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
         {
-            GameManager.Resource.Instantiate<ParticleSystem>("Enemy/TakeDamage", hitPoint, Quaternion.LookRotation(hitNormal), true);
+            //GameManager.Resource.Instantiate<ParticleSystem>("Enemy/TakeDamage", hitPoint, Quaternion.LookRotation(hitNormal), true);
             currentHealth -= damage;
         }
+        public virtual void TakeStrike(Transform hitter, float damage, Vector3 hitPoint, Vector3 hitNormal)
+        {
+            FlankJudgement(hitter, transform, damage, hitPoint, hitNormal, CheckFlank);
+        }
 
+        public void CheckFlank(float damage, Vector3 hitPoint, Vector3 hitNormal, bool success)
+        {
+            if (success)
+            {
+                currentHealth -= ((int)damage * flankDamageMultiplier); 
+            }
+            else
+            {
+                currentHealth -= (int)damage; 
+            }
+        }
         protected virtual void Die()
         {
         }
+
+        
     }
 }

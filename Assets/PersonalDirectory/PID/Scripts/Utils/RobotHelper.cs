@@ -8,6 +8,7 @@ namespace PID
 {
     public static class RobotHelper
     {
+        const float nearIntersectThreshold = .985f;
         public static Vector3 ShotCentrePoint(Vector3 muzzlePoint, Vector3 targetPoint, float distance)
         {
             // a. Vector3 normalized one 
@@ -20,14 +21,10 @@ namespace PID
             return shotCentrePointWithDistance;
         }
 
-        public static Vector3 FinalShotDir(Vector3 muzzlePoint, Vector3 targetPoint, float distance, float randomPercentage)
+        public static Vector3 FinalShotPoint(Vector3 muzzlePoint, Vector3 targetPoint, float distance, float randomPercentage)
         {
-            //Vector3 initialPoint = ShotCentrePoint(muzzlePoint, targetPoint, distance);
-            Vector3 newPointer = UnityEngine.Random.insideUnitCircle * randomPercentage;
-            newPointer.z = targetPoint.z;
-            newPointer.y += targetPoint.y;
-            newPointer.x += targetPoint.x;
-            return (newPointer - muzzlePoint).normalized;
+            targetPoint += UnityEngine.Random.insideUnitSphere * randomPercentage;
+            return targetPoint;
         }
 
         public static Vector3 GroupPositionAllocator (Vector3 centrePoint, int size, int index)
@@ -39,6 +36,12 @@ namespace PID
             position.x += centrePoint.x; 
             position.z += centrePoint.z;
             return position;
+        }
+        public static bool DirectionIntersect(Vector3 dir_1, Vector3 dir_2)
+        {
+            if (Vector3.Dot(dir_1, dir_2) >= nearIntersectThreshold)
+                return true;
+            return false;
         }
 
         //public static bool TraversableSound()
@@ -72,6 +75,7 @@ namespace PID
             this.destinationVectorPoint = dVP;
             this.distanceToPoint = dTP;
         }
+
         public int CompareTo(DestinationPoint other)
         {
             if (this.distanceToPoint < other.distanceToPoint) 
