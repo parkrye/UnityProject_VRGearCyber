@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using static PID.GuardEnemy;
 using static PID.MeleeCombatHelper; 
 
@@ -6,6 +8,8 @@ namespace PID
 {
     public class BaseEnemy : MonoBehaviour, IHitable, IStrikable
     {
+        public UnityAction<Vector3, Vector3> onDeath;
+        public UnityAction<bool> OnAndOff; 
         //SetUp Base States 
         protected float moveSpeed;
         protected int maxHealth;
@@ -70,6 +74,10 @@ namespace PID
         {
         }
 
-        
+        protected IEnumerator DeathCycle(bool deadOrAlive)
+        {
+            yield return new WaitForSeconds(.2f);
+            OnAndOff?.Invoke(deadOrAlive); 
+        }
     }
 }

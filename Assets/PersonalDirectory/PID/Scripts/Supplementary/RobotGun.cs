@@ -69,7 +69,6 @@ namespace PID
             currentAmmo--;
             debugLine.SetPosition(0, muzzlePoint.position);
             shotAttempt = RobotHelper.FinalShotPoint(target.position, attackRange, missChance);
-            Debug.Log(shotAttempt); 
             shotAttempt = (shotAttempt - muzzlePoint.position).normalized;
             //RaycastHit[] queries;
             //queries = Physics.RaycastAll(muzzlePoint.position, shotAttempt, attackRange);

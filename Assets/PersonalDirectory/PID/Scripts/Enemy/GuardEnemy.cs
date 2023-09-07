@@ -23,7 +23,7 @@ namespace PID
             Assault,
             Trace,
             SoundReact,
-            Hide, 
+            HideAndShoot, 
             Clash,
             Neutralized,
             Size
@@ -153,6 +153,7 @@ namespace PID
         }
         public void DetectPlayer(Transform player)
         {
+            //should Enemy be under hide and shoot, ignore further calls. 
             if (stateMachine.curStateName == State.Neutralized || 
                 stateMachine.curStateName == State.Infiltrated)
                 return; 
@@ -170,7 +171,6 @@ namespace PID
             if (stateMachine.curStateName == State.Neutralized)
                 return;
             //GameManager.Resource.Instantiate<ParticleSystem>("Enemy/TakeDamage", hitPoint, Quaternion.LookRotation(hitNormal), true);
-            //incomingDamage = AssessDamage()
             base.TakeDamage(damage, hitPoint, hitNormal);
             anim.SetTrigger("TakeHit");
             if (currentHealth <= 0)
@@ -182,11 +182,14 @@ namespace PID
                     neutralizeReason.SetDeathReason(NeutralizedState.DeathType.Health);
                 }
                 stateMachine.ChangeState(State.Neutralized);
+                onDeath?.Invoke(hitNormal, hitPoint);
+                StartCoroutine(DeathCycle(false)); 
             }
         }
         public override void Notified(Vector3 centrePoint, int size, int index)
         {
-            if (stateMachine.curStateName == State.Neutralized || stateMachine.curStateName == State.Alert)
+            if (stateMachine.curStateName == State.Neutralized 
+                || stateMachine.curStateName == State.Alert)
             {
                 return;
             }
@@ -223,14 +226,6 @@ namespace PID
             TakeDamage(50, eventData.pointerPressRaycast.worldPosition, eventData.pointerPressRaycast.worldNormal);
             Debug.Log(currentHealth); 
         }
-        /// <summary>
-        /// IStrikable Component, later should be merged onto IHitable. 
-        /// </summary>
-        /// <param name="hitter"></param>
-        /// <param name="damage"></param>
-        /// <param name="hitPoint"></param>
-        /// <param name="hitNormal"></param>
-        
         #endregion
         //Hackable Component. 
         public void Hacked()
@@ -682,10 +677,10 @@ namespace PID
                 owner.agent.isStopped = true;
                 owner.debugText.text = "Neutralized";
                 //Should Notify CCTV to erase from the list 
-                if (deathReason == DeathType.Health)
-                    owner.anim.SetBool("Destroyed", true);
-                else
-                    owner.anim.SetBool("Hack", true); 
+                //if (deathReason == DeathType.Health)
+                //    owner.anim.SetBool("Destroyed", true);
+                //else
+                //    owner.anim.SetBool("Hack", true); 
             }
             public override void Exit()
             {
