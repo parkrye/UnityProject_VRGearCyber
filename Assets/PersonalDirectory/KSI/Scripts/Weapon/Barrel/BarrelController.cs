@@ -7,7 +7,7 @@ namespace KSI
 {
 	public class BarrelController : MonoBehaviour
 	{
-		[SerializeField] private GameObject expBarrelEffect; // 폭발 효과 파티클
+		[SerializeField] private GameObject barrelEffect; // 폭발 효과 파티클
 
 		private Transform tr;
 		private Rigidbody rb;
@@ -32,7 +32,7 @@ namespace KSI
 
 		private void BarrelHP()
 		{
-			GameObject barrelHP = Instantiate(expBarrelEffect, tr.position, Quaternion.identity);
+			GameObject barrelHP = Instantiate(barrelEffect, tr.position, Quaternion.identity);
 
 			Destroy(barrelHP, 5.0f);
 
