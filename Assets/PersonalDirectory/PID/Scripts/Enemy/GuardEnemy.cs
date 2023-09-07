@@ -184,7 +184,7 @@ namespace PID
                 stateMachine.ChangeState(State.Neutralized);
             }
         }
-        public void Notified(Vector3 centrePoint, int size, int index)
+        public override void Notified(Vector3 centrePoint, int size, int index)
         {
             if (stateMachine.curStateName == State.Neutralized || stateMachine.curStateName == State.Alert)
             {
@@ -440,7 +440,6 @@ namespace PID
                 owner.agent.isStopped = false;
                 owner.agent.updateRotation = true;
             }
-
             public override void Setup()
             {
                 //Set Next Random Pointer to Look At, 
