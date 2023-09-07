@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db47539e3852a4342b02e1e58167defb, type: 3}
   m_Name: Guard
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 3.5
   maxHealth: 200
   maxSightRange: 7
   maxSightAngle: 70
