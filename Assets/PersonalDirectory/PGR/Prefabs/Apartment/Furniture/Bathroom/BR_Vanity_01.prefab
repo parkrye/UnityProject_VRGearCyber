@@ -788,7 +788,7 @@ HingeJoint:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4354149087107697062}
-  m_ConnectedBody: {fileID: 0}
+  m_ConnectedBody: {fileID: 3775834386519481994}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0.3793076, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
@@ -940,7 +940,7 @@ HingeJoint:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5592729497134386352}
-  m_ConnectedBody: {fileID: 0}
+  m_ConnectedBody: {fileID: 3775834386519481994}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0.37930754, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
@@ -1065,6 +1065,7 @@ GameObject:
   - component: {fileID: 4844838639084521802}
   - component: {fileID: 6628514127934785095}
   - component: {fileID: 6661250034284431726}
+  - component: {fileID: 3775834386519481994}
   m_Layer: 7
   m_Name: BR_Vanity_01
   m_TagString: Untagged
@@ -1156,6 +1157,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6881359558482230133, guid: 651d77a525480c84e9327ec0894c0da1, type: 3}
+--- !u!54 &3775834386519481994
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6661250034284431727}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &6760445186339857908
 GameObject:
   m_ObjectHideFlags: 0
