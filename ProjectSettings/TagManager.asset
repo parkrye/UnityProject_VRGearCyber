@@ -10,6 +10,9 @@ TagManager:
   - Destroyer
   - Door
   - Bullet
+  - Arrow
+  - AssaultRifleMagazine
+  - PistolMagazine
   layers:
   - Default
   - TransparentFX

@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 667692175}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3001588079524655082}
@@ -609,7 +609,7 @@ MonoBehaviour:
   muzzlePoint: {fileID: 3001588079524655082}
   damage: 0
   magazine: {fileID: 0}
-  socketInteractor: {fileID: 3001588081372053435}
+  socketInteractor: {fileID: 0}
   audioSource: {fileID: 3699612563404501049}
   shootSound: {fileID: 8300000, guid: 4dab368b46fb4a5478bf458680101ae3, type: 3}
   reload: {fileID: 8300000, guid: 10cf50f2ff5009e4793a78592e3c3526, type: 3}
@@ -1358,7 +1358,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3001588079659011631}
   - component: {fileID: 3001588079659011617}
-  - component: {fileID: 3001588081372053435}
+  - component: {fileID: 3252051743757865681}
   m_Layer: 0
   m_Name: SocketAttachPoint
   m_TagString: Untagged
@@ -1395,7 +1395,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.1004082
   m_Center: {x: 0, y: -0.02, z: 0.03213823}
---- !u!114 &3001588081372053435
+--- !u!114 &3252051743757865681
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1404,7 +1404,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3001588079659011630}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bebae2b2e72f5343be467a6fad4978c, type: 3}
+  m_Script: {fileID: 11500000, guid: f6651631be86e474995d5fd6c5b71fa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -1479,8 +1479,7 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
-  acceptedType: 3
-  targetTag: PistolMagazine
+  acceptedType: 4
 --- !u!1 &3001588080314021334
 GameObject:
   m_ObjectHideFlags: 0

@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 5483528048061002489}
   m_Layer: 0
   m_Name: AssaultRifleMagazine
-  m_TagString: AssaultRifleMagazine
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -317,7 +317,7 @@ MonoBehaviour:
   m_AddDefaultGrabTransformers: 1
   grabPriority: 1
   rb: {fileID: 0}
-  interactableType: 3
+  interactableType: 4
   defaultLayer: 0
   ignoreColliderLayer: 0
 --- !u!114 &5483528048061002489
