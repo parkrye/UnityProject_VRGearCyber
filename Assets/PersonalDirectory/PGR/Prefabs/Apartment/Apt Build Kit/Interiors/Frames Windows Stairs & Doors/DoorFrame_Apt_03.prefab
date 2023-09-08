@@ -115,7 +115,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 94
   m_CollisionDetection: 0
 --- !u!59 &6069274406149217962
 HingeJoint:
@@ -132,7 +132,7 @@ HingeJoint:
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   m_UseSpring: 0
   m_Spring:
-    spring: 0
+    spring: 10
     damper: 0
     targetPosition: 0
   m_UseMotor: 0

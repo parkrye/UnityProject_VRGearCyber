@@ -15,12 +15,12 @@ GameObject:
   - component: {fileID: 1522041039376782215}
   - component: {fileID: 1840257938519312009}
   - component: {fileID: 5874712237642396004}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: White King (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &7024573537700266806
 Transform:
@@ -300,12 +300,12 @@ GameObject:
   - component: {fileID: 2724936751376772620}
   - component: {fileID: 7226910448132843509}
   - component: {fileID: 7504416290855832432}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Black Pawn (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061408180004182
 Transform:
@@ -585,12 +585,12 @@ GameObject:
   - component: {fileID: 33334646226789367}
   - component: {fileID: 1946521550619466882}
   - component: {fileID: 2258319278872383972}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: White Pawn (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061408196378829
 Transform:
@@ -870,12 +870,12 @@ GameObject:
   - component: {fileID: 6077215365630110087}
   - component: {fileID: 4498239990957380690}
   - component: {fileID: 7971585071901095656}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: White Pawn (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061408260282747
 Transform:
@@ -1155,12 +1155,12 @@ GameObject:
   - component: {fileID: 2079280903594068697}
   - component: {fileID: 7329474482158392791}
   - component: {fileID: 4187654508046974783}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: White Pawn (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061408316230582
 Transform:
@@ -1440,12 +1440,12 @@ GameObject:
   - component: {fileID: 2868256902399293623}
   - component: {fileID: 8362745537080732801}
   - component: {fileID: 8823413208858413841}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Black Pawn (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061408446458889
 Transform:
@@ -1725,12 +1725,12 @@ GameObject:
   - component: {fileID: 8708560734188743560}
   - component: {fileID: 8405175617135276793}
   - component: {fileID: 1140122338477982476}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Black Pawn (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061408471813897
 Transform:
@@ -2004,12 +2004,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 660061408588378944}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Black
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061408588378944
 Transform:
@@ -2057,12 +2057,12 @@ GameObject:
   - component: {fileID: 5824971250674246674}
   - component: {fileID: 4193711282481251239}
   - component: {fileID: 8523901550313013648}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Black King (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061408633572029
 Transform:
@@ -2342,12 +2342,12 @@ GameObject:
   - component: {fileID: 8135094561515763817}
   - component: {fileID: 2899765969117996934}
   - component: {fileID: 770368339072507487}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Black Knight (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061408765750438
 Transform:
@@ -2627,12 +2627,12 @@ GameObject:
   - component: {fileID: 7587895468554451934}
   - component: {fileID: 1938757041115059963}
   - component: {fileID: 3333139326659759192}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: White Pawn (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061408767270698
 Transform:
@@ -2912,12 +2912,12 @@ GameObject:
   - component: {fileID: 468664226792216660}
   - component: {fileID: 5130394446273909877}
   - component: {fileID: 5126047882212750194}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: White Bishop (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061408861812481
 Transform:
@@ -3197,12 +3197,12 @@ GameObject:
   - component: {fileID: 2130189433416561069}
   - component: {fileID: 4089709245030876414}
   - component: {fileID: 8626597487372305943}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Black Pawn (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061408875263211
 Transform:
@@ -3482,12 +3482,12 @@ GameObject:
   - component: {fileID: 198160756235044426}
   - component: {fileID: 48315193714315933}
   - component: {fileID: 6971134769395926012}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: White Pawn (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061409203002051
 Transform:
@@ -3767,12 +3767,12 @@ GameObject:
   - component: {fileID: 6975016591205925624}
   - component: {fileID: 7612983720923418910}
   - component: {fileID: 2354451230515110103}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Black Pawn (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061409222390325
 Transform:
@@ -4052,12 +4052,12 @@ GameObject:
   - component: {fileID: 7986990503496128536}
   - component: {fileID: 9038611382570959534}
   - component: {fileID: 5280524563383410265}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Black Pawn (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061409281750438
 Transform:
@@ -4337,12 +4337,12 @@ GameObject:
   - component: {fileID: 8387740769728944685}
   - component: {fileID: 3734821731575710916}
   - component: {fileID: 276104960182595482}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: White Pawn (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061409333147185
 Transform:
@@ -4622,12 +4622,12 @@ GameObject:
   - component: {fileID: 1299230076384685689}
   - component: {fileID: 898441073108628711}
   - component: {fileID: 954587422764084395}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: White Pawn (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061409357534406
 Transform:
@@ -4907,12 +4907,12 @@ GameObject:
   - component: {fileID: 8529443831541265340}
   - component: {fileID: 3960634513631496819}
   - component: {fileID: 3485319148488295254}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Black Bishop (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061409373110941
 Transform:
@@ -5192,12 +5192,12 @@ GameObject:
   - component: {fileID: 5628250076249234891}
   - component: {fileID: 2294265860632632581}
   - component: {fileID: 5844965206126636473}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Black Rook (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061409489981680
 Transform:
@@ -5477,12 +5477,12 @@ GameObject:
   - component: {fileID: 193999115544998286}
   - component: {fileID: 5182726443927252511}
   - component: {fileID: 5713531773243599189}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Black Pawn (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061409541315376
 Transform:
@@ -5762,12 +5762,12 @@ GameObject:
   - component: {fileID: 5364842671623954089}
   - component: {fileID: 4299793787932849705}
   - component: {fileID: 8588215938807144912}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: White Knight (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061409575096663
 Transform:
@@ -6047,12 +6047,12 @@ GameObject:
   - component: {fileID: 2514783066141178194}
   - component: {fileID: 7379082617623715290}
   - component: {fileID: 2710187013869370651}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Black Knight (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061409643351498
 Transform:
@@ -6332,12 +6332,12 @@ GameObject:
   - component: {fileID: 7058916195982352303}
   - component: {fileID: 6608231203259592693}
   - component: {fileID: 5929765310495853270}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Black Rook (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061409815928630
 Transform:
@@ -6617,12 +6617,12 @@ GameObject:
   - component: {fileID: 1902245717553551499}
   - component: {fileID: 753983658024302707}
   - component: {fileID: 2587124135932342165}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Black Bishop (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061409852144565
 Transform:
@@ -6902,12 +6902,12 @@ GameObject:
   - component: {fileID: 2305684118816981543}
   - component: {fileID: 2131738564212276481}
   - component: {fileID: 7227572164908183333}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Black Pawn (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061409853322974
 Transform:
@@ -7187,12 +7187,12 @@ GameObject:
   - component: {fileID: 1525081847160901157}
   - component: {fileID: 4725789867538329991}
   - component: {fileID: 4983523289112469174}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Black Queen (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061409854738742
 Transform:
@@ -7466,12 +7466,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 660061409916643829}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: White
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061409916643829
 Transform:
@@ -7519,12 +7519,12 @@ GameObject:
   - component: {fileID: 3036446786867097782}
   - component: {fileID: 8910608738822285755}
   - component: {fileID: 2836500887775125405}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: White Rook (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &660061410184263758
 Transform:
@@ -7804,12 +7804,12 @@ GameObject:
   - component: {fileID: 6550462122564584851}
   - component: {fileID: 5985844540835409077}
   - component: {fileID: 6482038736337630028}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: White Rook (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &6383734049495608254
 Transform:
@@ -8089,12 +8089,12 @@ GameObject:
   - component: {fileID: 4740155516203811309}
   - component: {fileID: 3780591961053312715}
   - component: {fileID: 5387007418793311525}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: White Bishop (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &6377840935763607349
 Transform:
@@ -8371,12 +8371,12 @@ GameObject:
   - component: {fileID: 6536740266349507073}
   - component: {fileID: 6845565546047015411}
   - component: {fileID: 2570282782222747253}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Chess_Board_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &6791023195854448688
 Transform:
@@ -8472,12 +8472,12 @@ GameObject:
   - component: {fileID: 1334569068448127833}
   - component: {fileID: 3073452187566430286}
   - component: {fileID: 5742932908215358645}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: White Queen (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1425597485412341480
 Transform:
@@ -8757,12 +8757,12 @@ GameObject:
   - component: {fileID: 4947996461867797709}
   - component: {fileID: 6845999386608527132}
   - component: {fileID: 685039748927667333}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: White Knight (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1453135014047771649
 Transform:
@@ -9042,12 +9042,12 @@ GameObject:
   - component: {fileID: 8227206268644619468}
   - component: {fileID: 8176170457184416969}
   - component: {fileID: 1404615283174903960}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: White Pawn (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &7103246285287544086
 Transform:
@@ -9324,12 +9324,12 @@ GameObject:
   - component: {fileID: 1634073689624217070}
   - component: {fileID: 5990960991002718759}
   - component: {fileID: 6948459132724606139}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Chess_Board
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &4297946319169975072
 Transform:

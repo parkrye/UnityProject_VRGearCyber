@@ -497,7 +497,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 94
   m_CollisionDetection: 0
 --- !u!59 &850981932450829257
 HingeJoint:
@@ -525,7 +525,7 @@ HingeJoint:
   m_UseLimits: 0
   m_Limits:
     min: -100
-    max: 100
+    max: 0
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -1190,7 +1190,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 94
   m_CollisionDetection: 0
 --- !u!59 &3097790795034296669
 HingeJoint:
@@ -1218,7 +1218,7 @@ HingeJoint:
   m_UseLimits: 0
   m_Limits:
     min: -100
-    max: 100
+    max: 0
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
