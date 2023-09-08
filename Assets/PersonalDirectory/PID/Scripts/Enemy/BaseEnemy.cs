@@ -60,21 +60,31 @@ namespace PID
 
         public virtual void Notified(Vector3 centrePoint, int size, int index)
         {
-            //if (stateMachine.curStateName == State.Neutralized || stateMachine.curStateName == State.Alert)
-            //{
-            //    return;
-            //}
-            //AlertState alertState;
-            //if (stateMachine.CheckState(State.Alert))
-            //{
-            //    alertState = stateMachine.RetrieveState(State.Alert) as AlertState;
-            //    Vector3 gatherPos = RobotHelper.GroupPositionAllocator(centrePoint, size, index);
-            //    alertState.SetGatherPoint(gatherPos);
-            //    stateMachine.ChangeState(State.Alert);
-            //}
+        //    //if (stateMachine.curStateName == State.Neutralized || stateMachine.curStateName == State.Alert)
+        //    //{
+        //    //    return;
+        //    //}
+        //    //AlertState alertState;
+        //    //if (stateMachine.CheckState(State.Alert))
+        //    //{
+        //    //    alertState = stateMachine.RetrieveState(State.Alert) as AlertState;
+        //    //    Vector3 gatherPos = RobotHelper.GroupPositionAllocator(centrePoint, size, index);
+        //    //    alertState.SetGatherPoint(gatherPos);
+        //    //    stateMachine.ChangeState(State.Alert);
+        //    //}
         }
         protected virtual void Die()
         {
+        }
+
+        protected void RunTheCoroutine(IEnumerator routine)
+        {
+            StartCoroutine(routine);
+        }
+
+        protected void StopTheCoroutine(IEnumerator routine)
+        {
+            StopCoroutine(routine);
         }
 
         protected IEnumerator DeathCycle(bool deadOrAlive)

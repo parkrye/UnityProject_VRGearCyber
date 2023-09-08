@@ -23,7 +23,7 @@ namespace PID
             Assault,
             Trace,
             SoundReact,
-            HideAndShoot, 
+            Hide,
             Clash,
             Neutralized,
             Size
@@ -583,6 +583,57 @@ namespace PID
                 Vector3 lookDir = (owner.playerBody.transform.position - owner.transform.position).normalized; 
                 lookDir.y = 0;
                 owner.transform.rotation = Quaternion.LookRotation(lookDir);
+            }
+        }
+        #endregion
+        #region HideState 
+        /// <summary>
+        /// Whenever Enemy needs to reload, it will look for a place to hide. 
+        /// 1. It will evaluate place to hide. 
+        /// 2. once reached, start reloading, but continue 'hiding phase'. 
+        /// 3. if enemy is found, go back to assault state, 
+        /// 4. else, return to the original spot to pre-hidiing. 
+        /// </summary>
+        public class HideState : GuardState
+        {
+            Vector3 preHiding;
+            const float updateFrequency = .5f;
+            WaitForSeconds updateInterval; 
+            public HideState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
+            {
+            }
+
+            public override void Enter()
+            {
+                preHiding = owner.transform.position;
+                owner.RunTheCoroutine(HideRoutine()); 
+            }
+
+            public override void Exit()
+            {
+                owner.StopTheCoroutine(HideRoutine()); 
+            }
+
+            public override void Setup()
+            {
+                updateInterval = new WaitForSeconds(updateFrequency);
+            }
+
+            public override void Transition()
+            {
+            }
+
+            public override void Update()
+            {
+                
+            }
+            IEnumerator HideRoutine()
+            {
+                while (true)
+                {
+                    yield return updateInterval; 
+                }
+                yield return null; 
             }
         }
         #endregion
