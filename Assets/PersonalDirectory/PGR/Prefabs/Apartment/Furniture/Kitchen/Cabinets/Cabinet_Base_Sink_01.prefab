@@ -1753,7 +1753,7 @@ HingeJoint:
   m_Limits:
     min: -100
     max: 0
-    bounciness: 0
+    bounciness: 0.5
     bounceMinVelocity: 0.2
     contactDistance: 0
   m_BreakForce: Infinity

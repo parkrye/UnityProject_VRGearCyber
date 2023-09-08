@@ -13,7 +13,7 @@ namespace PFR
         {
             if (handleRb == null)
                 return;
-            handleRb.AddForce(grabableHandle.transform.position - handleRb.transform.position, ForceMode.Force);
+            handleRb.AddForce((grabableHandle.transform.position - handleRb.transform.position).normalized, ForceMode.Force);
         }
 
         public void EndGrabHandle(HoverExitEventArgs args)
