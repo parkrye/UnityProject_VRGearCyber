@@ -160,10 +160,41 @@ namespace PM
                 }
                 else
                 {
-                    if (roomData[j,i].aggregate != roomData[j,i + 1].aggregate)
+                    // 보스방에 만약 이미 위로 연결 되어있으면 위로 연결된 방중 왼쪽으로 연결된지 확인 후 연결 안되어 있으면
+                    // 위로 연결된 방중 하나를 왼쪽으로 연결
+                    if(i == roomData.GetLength(0) - 2)
                     {
-                        roomData[j, i + 1].aggregate = roomData[j, i].aggregate;
-                        PassageRightCreate(j, i);
+                        if (roomData[j, i + 1].up)
+                        {
+                            for(int m = 1; m <= roomData.GetLength(1); m++)
+                            {
+                                if(roomData[j-m, i + 1].left)
+                                {
+                                    break;
+                                }
+                                else if (!roomData[j-m, i + 1].up)
+                                {
+                                    PassageRightCreate(j - Random.Range(1, m + 1), i);
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (roomData[j, i].aggregate != roomData[j, i + 1].aggregate)
+                            {
+                                roomData[j, i + 1].aggregate = roomData[j, i].aggregate;
+                                PassageRightCreate(j, i);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (roomData[j, i].aggregate != roomData[j, i + 1].aggregate)
+                        {
+                            roomData[j, i + 1].aggregate = roomData[j, i].aggregate;
+                            PassageRightCreate(j, i);
+                        }
                     }
                 }
             }

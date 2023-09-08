@@ -1,0 +1,138 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1321133042107066592
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1321133042107066593}
+  m_Layer: 0
+  m_Name: Rooms
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1321133042107066593
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321133042107066592}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1321133042275595303}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1321133042275595301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1321133042275595303}
+  - component: {fileID: 1321133042275595302}
+  m_Layer: 0
+  m_Name: Map
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1321133042275595303
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321133042275595301}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1321133042107066593}
+  - {fileID: 1321133043928989660}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1321133042275595302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321133042275595301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c9d16ad87c86d8498716fd6ab408880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxXSize: 4
+  maxYSize: 4
+  RoomMaxSize: 4
+  wall: {fileID: 529749548034688102, guid: e009bc27f500d6647a24743e0a4ee96d, type: 3}
+  roomDoor: {fileID: 5832684948404311343, guid: 12a1fa3694fc1b0469957af877f52567,
+    type: 3}
+  passageTile: {fileID: 404097011839228551, guid: 9b1937e26fc907546970f95de1c396eb,
+    type: 3}
+  room0:
+  - {fileID: 2569845810200156604, guid: 46321c90d5e2d0c43b13c5fc095d842d, type: 3}
+  room1:
+  - {fileID: 7757052219229935145, guid: bf8b84a3c97c18540a120df7fdaa81ef, type: 3}
+  room2:
+  - {fileID: 1071022636526158115, guid: 265ca9057feb03d49a63516680f15d6e, type: 3}
+  room3:
+  - {fileID: 2576237619375200320, guid: 5e5a26a1c6eded84c905c561430e6677, type: 3}
+  room4:
+  - {fileID: 5836281518469949522, guid: 347145452f23c5546a57c21ef8f501d1, type: 3}
+  room5:
+  - {fileID: 7705527970433402668, guid: db1c1cc3e96d15f419703d85a54f6b9c, type: 3}
+  room6:
+  - {fileID: 4336813857932061174, guid: 06ada8c5fc269b7479e6f1aaca26ec06, type: 3}
+  room7:
+  - {fileID: 2719881997093393479, guid: 343a64c21a195b94aa8f941ab5101229, type: 3}
+  room8:
+  - {fileID: 2837343350601395401, guid: 09c1854f038ff7c43aad30798a28dd67, type: 3}
+  bossRoom: {fileID: 8710134100302828405, guid: 9d9011365981b9941a202866806bd9cf,
+    type: 3}
+--- !u!1 &1321133043928989651
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1321133043928989660}
+  m_Layer: 0
+  m_Name: Passages
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1321133043928989660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321133043928989651}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1321133042275595303}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
