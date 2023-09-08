@@ -33,9 +33,9 @@ namespace PID
         //Base Properties 
         public Animator anim;
         Rigidbody rigid;
-        NavMeshAgent agent;
         NavMeshObstacle obstacle; 
         SightFunction guardSight;
+        AuditoryFunction guardEars; 
         StateMachine<State, GuardEnemy> stateMachine;
         [SerializeField] Transform[] patrolPoints; 
 
@@ -57,6 +57,7 @@ namespace PID
             enemyStat = GameManager.Resource.Load<EnemyStat>("Data/Guard");
             base.SetUp(enemyStat);
 
+            guardEars = GetComponent<AuditoryFunction>();
             guardSight = GetComponent<SightFunction>();
             obstacle = GetComponent<NavMeshObstacle>();
             agent = GetComponent<NavMeshAgent>();
@@ -84,6 +85,7 @@ namespace PID
             guardSight.SyncSightStat(enemyStat);
             guardSight.PlayerFound += DetectPlayer;
             guardSight.PlayerLost += TempPlayerLost;
+            guardEars.trackSound += DetectSound; 
             stateMachine.SetUp(State.Idle);
             GameManager.Data.timeScaleEvent?.AddListener(TimeScale);
         }
@@ -121,19 +123,13 @@ namespace PID
         {
             guardSight.PlayerFound -= DetectPlayer;
             guardSight.PlayerLost -= TempPlayerLost;
+            guardEars.trackSound -= DetectSound;
             GameManager.Data.timeScaleEvent?.RemoveListener(TimeScale);
         }
         private void Update()
         {
             UpdateAnim(); 
             stateMachine.Update();
-        }
-
-        private void LateUpdate()
-        {
-            //if (focusDir == Vector3.zero)
-            //    return; 
-            //RobotBody.transform.localRotation = Quaternion.Slerp(RobotBody.transform.localRotation, Quaternion.LookRotation(focusDir), .1f); 
         }
         protected override void Die()
         {
@@ -160,6 +156,22 @@ namespace PID
             playerBody = player;
             stateMachine.ChangeState(State.Assault); 
         }
+        public void DetectSound(Vector3 soundPoint)
+        {
+            if (stateMachine.curStateName == State.Infiltrated ||
+                stateMachine.curStateName == State.Neutralized ||
+                stateMachine.curStateName == State.Assault ||
+                stateMachine.curStateName == State.Trace)
+                return; 
+            SoundReactState soundReactState;
+            if (stateMachine.CheckState(State.SoundReact))
+            {
+                soundReactState = stateMachine.RetrieveState(State.SoundReact) as SoundReactState; 
+                soundReactState.SetSearchPoint(soundPoint);
+            }
+            stateMachine.ChangeState(State.SoundReact); 
+        }
+
         public void TempPlayerLost()
         {
             if (stateMachine.curStateName == State.Assault)
@@ -628,28 +640,54 @@ namespace PID
         #region SoundReact State 
         public class SoundReactState : GuardState
         {
+            Vector3 searchPoint;
+            const float distThreshold = 4f;
+            float deltaDist; 
+            bool finishedSearch; 
             public SoundReactState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
             {
             }
 
             public override void Enter()
             {
+                if (searchPoint == Vector3.zero)
+                    return;
+                owner.agent.SetDestination(searchPoint); 
+                deltaDist = Vector3.SqrMagnitude(searchPoint - owner.transform.position);
             }
 
             public override void Exit()
             {
+                finishedSearch = false;
+                deltaDist = 0f; 
             }
 
             public override void Setup()
             {
+                searchPoint = Vector3.zero;
+                finishedSearch = false;
+                deltaDist = 0f; 
             }
 
             public override void Transition()
             {
+                if (finishedSearch)
+                    stateMachine.ChangeState(State.LookAround);
             }
 
             public override void Update()
             {
+                if (searchPoint == Vector3.zero)
+                    finishedSearch = true;
+                else if (deltaDist < distThreshold)
+                    finishedSearch = true; 
+                deltaDist = Vector3.SqrMagnitude(searchPoint - owner.transform.position); 
+            }
+
+            public void SetSearchPoint(Vector3 soundPoint)
+            {
+                searchPoint = soundPoint;
+                finishedSearch = false; 
             }
         }
         #endregion

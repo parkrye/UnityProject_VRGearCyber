@@ -1,7 +1,9 @@
 using PID;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static PID.RobotHelper; 
 using UnityEngine.Events;
 
 namespace PID
@@ -9,36 +11,44 @@ namespace PID
     #region UNDER CONSTRUCTION
     public class AuditoryFunction : MonoBehaviour, IHearable
     {
+        bool UnderRadioSound;
+        BaseEnemy enemyBody; 
         public UnityAction<Vector3> SoundHeard;
         public UnityAction<Vector3> trackSound;
-        public void Heard(Vector3 soundPoint)
+        private void Awake()
         {
-            if (WallIntersect(soundPoint))
-            {
-                Debug.Log("Wall Checked");
+            enemyBody = GetComponent<BaseEnemy>();
+            UnderRadioSound = false; 
+        }
+        Vector3 soundPointOnMesh; 
+        public void Heard(Vector3 soundPoint, bool hasWall)
+        {
+            if (UnderRadioSound)
                 return;
+
+            ValidSoundCheckSlip newSoundSlip = ValidSoundPoint(soundPoint);
+            if (!newSoundSlip.isValid)
+                return;
+            soundPointOnMesh = newSoundSlip.soundPointOnPath; 
+            if (hasWall)
+            {
+                GameManager.traceSound.RequestPath(enemyBody.Agent, soundPoint, SetPath); 
                 //Check for the valid distance 
             }
             else
             {
-                trackSound?.Invoke(soundPoint);
+                trackSound?.Invoke(soundPointOnMesh);
             }
         }
-
-        RaycastHit hitInfo;
-        float sqrDist;
-        private bool WallIntersect(Vector3 destination)
+        public void UnderRadio(bool underRadioSound)
         {
-            Vector3 dir = destination - transform.position;
-            sqrDist = dir.sqrMagnitude;
-            if (Physics.Raycast(transform.position, dir.normalized, out hitInfo, LayerMask.GetMask("Wall")))
-            {
-                if (hitInfo.distance * 2 > sqrDist)
-                    return false;
-                return true;
-            }
-            Debug.Log($"Something is Wrong with the map, {destination} => {transform.position}");
-            return false;
+            UnderRadioSound = underRadioSound;
+        }
+        public void SetPath(Vector3 destination, bool success)
+        {
+            if (!success)
+                return;
+            trackSound?.Invoke(destination);
         }
     }
     //UNDER CONSTRUCTION

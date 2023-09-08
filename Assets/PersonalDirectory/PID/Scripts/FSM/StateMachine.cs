@@ -16,7 +16,11 @@ namespace PID
             this.owner = owner;
             this.states = new Dictionary<TState, StateBase<TState, TOwner>>();
         }
-
+        /// <summary>
+        /// Checks within Dict if State with such enum is registered in the StateMachine. 
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns></returns>
         public bool CheckState(TState state)
         {
             if (states.ContainsKey(state))

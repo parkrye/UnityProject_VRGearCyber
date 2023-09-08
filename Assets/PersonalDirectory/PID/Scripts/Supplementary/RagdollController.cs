@@ -52,6 +52,7 @@ namespace PID
         {
             ragdollColliders = GetComponentsInChildren<CapsuleCollider>();
             ragdollJoints = GetComponentsInChildren<CharacterJoint>();
+            ragdollBox = GetComponentsInChildren<BoxCollider>();
             ragdollBodies = GetComponentsInChildren<Rigidbody>();
         }
 
@@ -83,13 +84,15 @@ namespace PID
             }
             for (int i = 0; i < ragdollColliders.Length; i++)
             {
+                if (i == 0)
+                    ragdollColliders[i].enabled = false; 
                 ragdollColliders[i].enabled = true;
             }
             for (int i = 0; i < ragdollBox.Length; i++)
             {
                 if (ragdollBox[i].isTrigger)
                     continue;
-                ragdollJoints[i].connectedBody = null;
+                ragdollBox[i].enabled = true;
             }
         }
 
@@ -104,9 +107,9 @@ namespace PID
         {
             EnableRagDollProperties();
             yield return new WaitForEndOfFrame();
+            anim.enabled = false;
             impactPoint.AddForceAtPosition(-1 * impactIntensity * hitDir, hitPoint, ForceMode.Impulse);
             //Find the nearest rigidbody with hitpoint 
-
         }
 
 

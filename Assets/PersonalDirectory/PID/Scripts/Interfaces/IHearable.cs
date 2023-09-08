@@ -6,6 +6,12 @@ namespace PID
 {
     public interface IHearable
     {
-        public void Heard(Vector3 soundPoint);
+        /// <summary>
+        /// When Calling for listen
+        /// </summary>
+        /// <param name="soundPoint"></param>
+        /// <param name="hasWall"></param>
+        public void Heard(Vector3 soundPoint, bool hasWall);
+        public void UnderRadio(bool underRadioSound); 
     }
 }
