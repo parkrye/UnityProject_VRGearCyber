@@ -8,12 +8,15 @@ namespace KSI
 	[RequireComponent(typeof(AudioSource))]
 	public class Ranged : MonoBehaviour
 	{
-		[Header("Buleet")]
+		[Header("Bullet")]
 		[SerializeField] private float fireRate;
 		[SerializeField] private GameObject bullet;
-		//[SerializeField] private GameObject casingPrefab;
 		[SerializeField] private Transform muzzlePoint;
+		//[SerializeField] private GameObject casing;
 		//[SerializeField] private Transform casingExitLocation;
+		//[SerializeField] private float destroyTimer = 2f;
+		//[SerializeField] private float shotPower = 500f;
+		//[SerializeField] private float ejectPower = 150f;
 		[SerializeField] private int damage;
 		
 		[Header("Magazine")]
@@ -26,19 +29,13 @@ namespace KSI
 		[SerializeField] private AudioClip reload;
 		[SerializeField] private AudioClip noAmmo;
 
-		//[Header("Settings")]
-		//[SerializeField] private float destroyTimer = 2f;
-		//[SerializeField] private float shotPower = 500f;
-		//[SerializeField] private float ejectPower = 150f;
-
 		private Animator animator;
 		private MeshRenderer muzzleFlash;
 		private bool hasMagazine = false;
 		//private bool hasSlide = false;
-
-		//private RaycastHit hit;
-		//private int layerMask;
-		//private Hitable hitable;
+		private int layerMask;
+		private RaycastHit hit;
+		private IHitable hitable;
 
 		private void Start()
 		{
@@ -50,7 +47,7 @@ namespace KSI
 			muzzleFlash.enabled = false;
 
 			// Enemy 레이어 마스크
-			//layerMask = (1 << 11) | (1 << 12);  
+			layerMask = (1 << 11) | (1 << 12);  
 
 			//if (socketInteractor != null)
 			//{
@@ -112,23 +109,20 @@ namespace KSI
 		{
 			if (hasMagazine && magazine && magazine.numberOfBullet > 0) //&& hasSlide)
 			{
-				// Ray 표시
-				//Debug.DrawRay(muzzlePoint.position, muzzlePoint.forward * 10.0f, Color.red);
-				
+				//Ray 표시
+				Debug.DrawRay(muzzlePoint.position, muzzlePoint.forward * 10.0f, Color.red);
+
 				animator.SetTrigger("Fire");
 				Shoot();
 
 				// Ray 쏘기 
-				//if (Physics.Raycast(muzzlePoint.position, muzzlePoint.forward, out hit, 10.0f, layerMask))
-				//{
-				//	Debug.Log($"Hit={hit.transform.name}");
+				if (Physics.Raycast(muzzlePoint.position, muzzlePoint.forward, out hit, 10.0f, layerMask))
+				{
+					Debug.Log($"Hit={hit.transform.name}");
 
-				//	hitable = hit.transform.GetComponent<Hitable>();
-				//	if (hitable != null)
-				//	{
-				//		StartCoroutine(hitable.Hit(damage));
-				//	}
-				//}
+					hitable = hit.transform.GetComponent<IHitable>();
+					hitable.TakeDamage(damage, Vector3.zero, Vector3.zero);
+				}
 			}
 			//else if (!hasSlide)
 			//{
@@ -148,6 +142,7 @@ namespace KSI
 
 			Instantiate(bullet, muzzlePoint.position, muzzlePoint.rotation);
 			audioSource.PlayOneShot(shootSound, 1.0f);
+
 			StartCoroutine(MuzzleFlashRoutine());
 		}
 
