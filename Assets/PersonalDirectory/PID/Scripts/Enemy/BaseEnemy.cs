@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 using static PID.GuardEnemy;
 using static PID.MeleeCombatHelper; 
@@ -9,8 +10,10 @@ namespace PID
     public class BaseEnemy : MonoBehaviour, IHitable, IStrikable
     {
         public UnityAction<Vector3, Vector3> onDeath;
-        public UnityAction<bool> OnAndOff; 
+        public UnityAction<bool> OnAndOff;
         //SetUp Base States 
+        protected NavMeshAgent agent;
+        public NavMeshAgent Agent => agent;
         protected float moveSpeed;
         protected int maxHealth;
         protected float maxSightRange;

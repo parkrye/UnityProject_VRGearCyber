@@ -174,6 +174,7 @@ namespace PID
         {
             attackDamage = stat.attackDamage;
             attackRange = stat.attackRange;
+            missChance = stat.missChance;
             maxAmmo = stat.maxAmmo;
             currentAmmo = maxAmmo;
         }
