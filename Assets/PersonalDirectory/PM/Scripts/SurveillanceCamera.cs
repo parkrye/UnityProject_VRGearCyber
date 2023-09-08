@@ -1,3 +1,4 @@
+using PID;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -22,6 +23,7 @@ namespace PM
         private float cos;
         private float sin;
         public GameObject player;
+        public GuardEnemy[] guards;
 
         private void Start()
         {
@@ -124,7 +126,7 @@ namespace PM
             }
         }
 
-        IEnumerator CallSecurity(Vector3 destination)
+        public IEnumerator CallSecurity(Vector3 destination)
         {
             foreach (GameObject guard in securities)
             {
