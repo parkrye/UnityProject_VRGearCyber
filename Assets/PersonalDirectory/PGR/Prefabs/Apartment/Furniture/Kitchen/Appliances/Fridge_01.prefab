@@ -2130,7 +2130,7 @@ GameObject:
   - component: {fileID: 1484831071079089512}
   - component: {fileID: 90566548555227095}
   - component: {fileID: 2248507841059683208}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Door.Fridge.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2231,7 +2231,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 94
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!59 &90566548555227095
 HingeJoint:
@@ -3375,7 +3375,7 @@ GameObject:
   - component: {fileID: 473994559884912821}
   - component: {fileID: 8658363844464282815}
   - component: {fileID: 5430741444000288178}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Door.Fridge.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3476,7 +3476,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 94
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!59 &8658363844464282815
 HingeJoint:

@@ -2042,7 +2042,7 @@ GameObject:
   - component: {fileID: 7959316663900353487}
   - component: {fileID: 8159494750126667000}
   - component: {fileID: 1145451867913537313}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Oven_Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2144,7 +2144,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 62
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!59 &8159494750126667000
 HingeJoint:

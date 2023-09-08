@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 1840683731755919608}
   - component: {fileID: 8477757771362383543}
   - component: {fileID: 7455134872284471444}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -249,7 +249,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 94
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!59 &8477757771362383543
 HingeJoint:

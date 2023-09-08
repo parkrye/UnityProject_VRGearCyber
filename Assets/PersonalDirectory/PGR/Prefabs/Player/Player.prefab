@@ -1431,7 +1431,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 7103
+    m_Bits: 8127
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -3689,7 +3689,7 @@ MonoBehaviour:
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
   acceptedType: 1
-  isInvisible: 1
+  isInvisible: 0
 --- !u!1 &4929564120811189151
 GameObject:
   m_ObjectHideFlags: 0
