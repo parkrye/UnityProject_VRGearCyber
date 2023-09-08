@@ -24,8 +24,6 @@ namespace KSI
 		{
 			// 초기에는 콜라이더를 비활성화
 			//coll.enabled = false;
-
-			StartCoroutine(TrackPositionRoutine());
 		}
 
 		// 위치를 추적하는 코루틴
@@ -43,11 +41,6 @@ namespace KSI
 					// 현재 위치를 큐에 추가
 					positionQueue.Enqueue(transform.position);
 				}
-				else
-				{
-					// 휘두르지 않을 때는 큐를 비움
-					positionQueue.Clear();
-				}
 
 				// 다음 체크까지 대기
 				yield return new WaitForSeconds(checkRate); 
@@ -56,21 +49,23 @@ namespace KSI
 
 		public void StartSwing()
 		{
+			StartCoroutine(TrackPositionRoutine());
+
 			isSwinging = true;
-			coll.enabled = true;
 		}
 
 		public void EndSwing()
 		{
+			StopAllCoroutines();
+
 			isSwinging = false;
-			coll.enabled = false;
 		}
 
 		private void OnTriggerEnter(Collider other)
 		{
 			if (isSwinging && positionQueue.Count > 0)
 			{
-				Hitable hitable = other.GetComponent<Hitable>(); 
+				IHitable hitable = other.GetComponent<IHitable>(); 
 				if (hitable != null)
 				{
 					// 가장 오래된 위치 가져오기
@@ -86,7 +81,7 @@ namespace KSI
 					int calculateDamage = Mathf.RoundToInt(Mathf.Lerp(minDamage, maxDamage, calculateDamageRatio));
 
 					// 계신된 데미지 적용
-					StartCoroutine(hitable.Hit(calculateDamage));
+					hitable.TakeDamage(calculateDamage, Vector3.zero, Vector3.zero);
 				}
 			}
 		}
