@@ -15,6 +15,7 @@ namespace PID
         [SerializeField] public float maxSightAngle;
         [SerializeField] public int attackDamage;
         [SerializeField] public int attackRange;
+        [SerializeField] public float missChance; 
         [SerializeField] public int maxAmmo;
     }
 }

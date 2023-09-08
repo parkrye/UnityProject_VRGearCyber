@@ -27,7 +27,11 @@ namespace PID
         float enemyDetectRange;
         float sightAngle;
 
-        [SerializeField] bool debug; 
+        [SerializeField] bool debug;
+        private void Start()
+        {
+            targetEye.transform.forward = transform.forward; 
+        }
 
         private void Update()
         {

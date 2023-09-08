@@ -9,6 +9,8 @@ namespace PID
     public static class RobotHelper
     {
         const float nearIntersectThreshold = .985f;
+        const float validSoundRegion = 2f;
+
         public static Vector3 ShotCentrePoint(Vector3 muzzlePoint, Vector3 targetPoint, float distance)
         {
             // a. Vector3 normalized one 
@@ -21,7 +23,7 @@ namespace PID
             return shotCentrePointWithDistance;
         }
 
-        public static Vector3 FinalShotPoint(Vector3 muzzlePoint, Vector3 targetPoint, float distance, float randomPercentage)
+        public static Vector3 FinalShotPoint(Vector3 targetPoint, float distance, float randomPercentage)
         {
             targetPoint += UnityEngine.Random.insideUnitSphere * randomPercentage;
             return targetPoint;
@@ -44,6 +46,16 @@ namespace PID
             return false;
         }
 
+        public static ValidSoundCheckSlip ValidSoundPoint(Vector3 soundPoint)
+        {
+            ValidSoundCheckSlip checkSlip;
+            if (NavMesh.SamplePosition(soundPoint, out NavMeshHit hit, validSoundRegion, NavMesh.AllAreas))
+            {
+                return checkSlip = new ValidSoundCheckSlip(true, hit.position);
+            }
+            return checkSlip = new ValidSoundCheckSlip(false, Vector3.zero);
+        }
+
         //public static bool TraversableSound()
         //{
         //    Vector3 prev = startingPoint.transform.position;
@@ -58,6 +70,23 @@ namespace PID
         //    }
         //    return (accumDist <= threshHold);
         //}
+
+        public static Rigidbody NearestHitPart(Rigidbody[] parts, Vector3 hitPoint)
+        {
+            float shortest = 9999999999999999f;  
+            float deltaDist;
+            Rigidbody closest = null;
+            for (int i = 0; i< parts.Length; i++)
+            {
+                deltaDist = Vector3.SqrMagnitude(parts[i].transform.position - hitPoint);
+                if (deltaDist < shortest)
+                {
+                    closest = parts[i];
+                    shortest = deltaDist;
+                }
+            }
+            return closest; 
+        }
     }
 
     /// <summary>
@@ -87,29 +116,15 @@ namespace PID
         }
     }
 
-    public struct SoundValidityCheckSlip
+    public struct ValidSoundCheckSlip
     {
-        public NavMeshAgent startingPoint;
-        public Vector3 destinationPoint;
-        public NavMeshPath soundPath;
-        public bool isValid; 
+        public bool isValid;
+        public Vector3 soundPointOnPath;
 
-        public SoundValidityCheckSlip(NavMeshAgent startPoint, Vector3 destination, NavMeshPath soundPath)
+        public ValidSoundCheckSlip(bool isValid, Vector3 soundPointOnPath)
         {
-            this.startingPoint = startPoint;
-            this.destinationPoint = destination;
-            this.soundPath = soundPath;
-            this.isValid = false;
-
-            if (NavMesh.FindClosestEdge(destination, out NavMeshHit hitInfo, startPoint.areaMask))
-            {
-                this.isValid = true; 
-            }
-            else
-            {
-                Debug.Log("Hit Point not under valid navmesh region");
-                isValid = false; 
-            }
+            this.isValid = isValid;
+            this.soundPointOnPath = soundPointOnPath;
         }
     }
 }

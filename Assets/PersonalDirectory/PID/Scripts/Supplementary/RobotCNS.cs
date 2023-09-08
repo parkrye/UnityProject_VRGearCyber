@@ -12,6 +12,7 @@ namespace PID
         GuardEnemy enemy;
         GuardEnemy.State prevState;
 
+        #region Hacking Region 
         private void Awake()
         {
             enemy = GetComponentInParent<GuardEnemy>();
@@ -64,6 +65,6 @@ namespace PID
                     break;
             }
         }
+        #endregion
     }
 }
-
