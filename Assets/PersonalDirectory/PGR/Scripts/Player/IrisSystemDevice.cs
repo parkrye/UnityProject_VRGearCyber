@@ -47,7 +47,12 @@ namespace PGR
                 return;
 
             isOn = !isOn;
-            irisSystemCamera.SetActive(isOn);
+            TurnIrisSystem(isOn);
+        }
+
+        public void TurnIrisSystem(bool value)
+        {
+            irisSystemCamera.SetActive(value);
         }
     }
 }
