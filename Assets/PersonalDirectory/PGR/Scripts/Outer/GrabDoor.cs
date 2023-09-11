@@ -15,7 +15,7 @@ namespace PFR
             if (handleRb == null)
                 return;
             if(isGrabbed)
-                handleRb.AddForce(grabableHandle.transform.position - handleRb.transform.position, ForceMode.Force);
+                handleRb.AddForce((grabableHandle.transform.position - handleRb.transform.position) * 2f, ForceMode.Force);
         }
 
         public void StartGrabHandle(SelectEnterEventArgs args)
