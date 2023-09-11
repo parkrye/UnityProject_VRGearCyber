@@ -4,51 +4,31 @@ using UnityEngine;
 
 namespace PM
 {
-    public class SyberDoor : MonoBehaviour, IHitable, IHackable
+    public class SyberDoor : MonoBehaviour, IHitable
     {
         [SerializeField] int hp;
-        [SerializeField] GameData.HackProgressState state;
         Animator animator;
+        public SyberDoor connetingDoor;
+        public enum Arrow { up, down, right, left }
+        public Arrow arrow;
+        public Vector3 position;
         private void Start()
         {
             animator = GetComponent<Animator>();
-            //GameManager.Data.timeScaleEvent.AddListener(TimeScale);
+            GameManager.Data.timeScaleEvent.AddListener(TimeScale);
+            position = transform.position;
+            DoorConnet();
         }
-
-        public virtual void Hack()
+        private void Update()
         {
-            StartCoroutine(WaitingHackResultRoutine());
+            Debug.DrawRay(transform.position + new Vector3(3, 2, 0), -transform.right * 20f, Color.blue);
         }
-
-        public virtual void ChangeProgressState(GameData.HackProgressState value)
+        public void DoorConnet()
         {
-            state = value;
-        }
-
-        public virtual void Failure()
-        {
-            hp += 5;
-        }
-
-        public virtual void Success()
-        {
-            StartCoroutine(OpenDoor());
-        }
-
-        public virtual IEnumerator WaitingHackResultRoutine()
-        {
-            yield return null;
-            state = GameData.HackProgressState.Progress;
-            yield return new WaitUntil(() =>  state != GameData.HackProgressState.Progress );
-            switch(state)
-            {
-                 case GameData.HackProgressState.Failure:
-                     Failure();
-                     break;
-                 case GameData.HackProgressState.Success:
-                     Success();
-                     break;
-            }
+            Ray ray = new Ray(transform.position + new Vector3(3, 2, 0), -transform.right*20f );
+            RaycastHit hit;
+            Physics.Raycast(ray, out hit);
+            connetingDoor = hit.transform.GetComponent<SyberDoor>();
         }
 
         public IEnumerator Break()
@@ -65,8 +45,9 @@ namespace PM
                 StartCoroutine(Break());
         }
 
-        IEnumerator OpenDoor()
+        public IEnumerator OpenDoor()
         {
+            StartCoroutine(connetingDoor.OpenDoor());
             animator.SetTrigger("Open");
             yield return null;
         }

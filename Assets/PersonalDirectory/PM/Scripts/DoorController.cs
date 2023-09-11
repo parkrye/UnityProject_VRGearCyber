@@ -1,17 +1,21 @@
-using PID;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 
 namespace PM
 {
-    public class Terminal : MonoBehaviour, IHackable, IHitable
+    // 해킹에 성공하면 연결된 문을 열고 실패하면 로봇들을 호출
+    public class DoorController : MonoBehaviour, IHackable
     {
-        [SerializeField] GameData.HackProgressState state;
-        public GuardEnemy[] guards;
         [SerializeField] int hp;
+        [SerializeField] GameData.HackProgressState state;
+        Animator animator;
+        Terminal terminal;
 
+        private void Start()
+        {
+            terminal = transform.parent.GetComponentInChildren<Terminal>();
+        }
         public virtual void Hack()
         {
             StartCoroutine(WaitingHackResultRoutine());
@@ -24,13 +28,15 @@ namespace PM
 
         public virtual void Failure()
         {
-            
-            StartCoroutine(CallSecurity(transform.position));
+            if(terminal != null)
+            {
+                terminal.StartCoroutine(terminal.CallSecurity(transform.position));
+            }
         }
 
         public virtual void Success()
         {
-            StartCoroutine(Break());
+            StartCoroutine(transform.parent.GetComponentInChildren<SyberDoor>().OpenDoor());
         }
 
         public virtual IEnumerator WaitingHackResultRoutine()
@@ -49,15 +55,9 @@ namespace PM
             }
         }
 
-        public IEnumerator CallSecurity(Vector3 destination)
+        public IEnumerator Break()
         {
-            int index = 0;
-            foreach (GuardEnemy guard in guards)
-            {
-                // 로봇의 위치를 추적하는 함수를 가져와서 플레이어의 위치를 변수로 값을 넘겨줌 guard.GetComponent<>
-                guard.Notified(destination, guards.Length, index++);
-                yield return null;
-            }
+            Destroy(gameObject);
             yield return null;
         }
 
@@ -68,11 +68,6 @@ namespace PM
                 StartCoroutine(Break());
         }
 
-        public IEnumerator Break()
-        {
-            Destroy(this.gameObject);
-            yield return null;
-        }
     }
 }
 

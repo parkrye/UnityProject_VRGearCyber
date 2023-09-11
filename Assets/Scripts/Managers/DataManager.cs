@@ -14,6 +14,7 @@ public class DataManager : MonoBehaviour
 
     void OnEnable()
     {
+        timeScaleEvent = new UnityEvent();
         timeScale = 1f;
         StartCoroutine(FindPlayerRoutine());
     }

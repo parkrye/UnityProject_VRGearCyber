@@ -3,19 +3,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lazer : MonoBehaviour
+namespace PM
 {
-    public SurveillanceCamera camera;
+    public class Lazer : MonoBehaviour
+    {
+        Terminal terminal;
 
-    private void Start()
-    {
-        
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "Player")
+        private void Start()
         {
-            StartCoroutine(camera.CallSecurity(other.transform.position));
+            GetTerminal();
+        }
+        private void GetTerminal()
+        {
+            foreach (Transform trans in transform.parent)
+            {
+                if (trans.GetComponent<Terminal>() != null)
+                {
+                    terminal = trans.GetComponent<Terminal>();
+                    break;
+                }
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.tag == "Player")
+            {
+                if (terminal != null)
+                    StartCoroutine(terminal.CallSecurity(other.transform.position));
+            }
         }
     }
+
 }

@@ -81,7 +81,7 @@ namespace PM
                     int x = Random.Range(2, RoomMaxSize + 1);
                     int z = Random.Range(2, RoomMaxSize + 1);
                     // 마지막 배열방에는 보스룸을 생성
-                    if(j == maxYSize-1 &&  i == maxXSize - 1)
+                    if (j == maxYSize - 1 && i == maxXSize - 1)
                     {
                         x = 4;
                         z = 4;
@@ -108,7 +108,7 @@ namespace PM
                         else if (x == 4 && z == 4)
                             array[j, i] = Instantiate(room8[Random.Range(0, 1)], rooms);
                     }
-                    roomData[j, i] = array[j,i].GetComponent<RoomData>();
+                    roomData[j, i] = array[j, i].GetComponent<RoomData>();
                     roomData[j, i].x = x;
                     roomData[j, i].z = z;
                     roomData[j, i].aggregate = maxXSize * j + i;
@@ -130,17 +130,17 @@ namespace PM
 
         private void EllerAlghorithm()
         {
-            for(int j = 0;j < maxYSize; j++)
+            for (int j = 0; j < maxYSize; j++)
             {
                 RightAggregater(j);
                 DownAggregater(j);
             }
         }
-        
+
         // array배열의 열을 매개변수로 받음
         private void RightAggregater(int j)
         {
-            for(int i = 0; i < maxXSize-1; i++)
+            for (int i = 0; i < maxXSize - 1; i++)
             {
                 // j가 roomData의 마지막 행이 아닐때
                 if (j != roomData.GetLength(1) - 1)
@@ -162,17 +162,17 @@ namespace PM
                 {
                     // 보스방에 만약 이미 위로 연결 되어있으면 위로 연결된 방중 왼쪽으로 연결된지 확인 후 연결 안되어 있으면
                     // 위로 연결된 방중 하나를 왼쪽으로 연결
-                    if(i == roomData.GetLength(0) - 2)
+                    if (i == roomData.GetLength(0) - 2)
                     {
                         if (roomData[j, i + 1].up)
                         {
-                            for(int m = 1; m <= roomData.GetLength(1); m++)
+                            for (int m = 1; m <= roomData.GetLength(1); m++)
                             {
-                                if(roomData[j-m, i + 1].left)
+                                if (roomData[j - m, i + 1].left)
                                 {
                                     break;
                                 }
-                                else if (!roomData[j-m, i + 1].up)
+                                else if (!roomData[j - m, i + 1].up)
                                 {
                                     PassageRightCreate(j - Random.Range(1, m + 1), i);
                                     break;
@@ -201,15 +201,15 @@ namespace PM
         }
         private void DownAggregater(int j)
         {
-            if (j == roomData.GetLength(1)-1)
+            if (j == roomData.GetLength(1) - 1)
                 return;
 
             for (int i = 0; i < maxXSize; i++)
             {
                 // i가 roomData 열의 마지막이 아닐때
-                if(i != roomData.GetLength(0)-1)
+                if (i != roomData.GetLength(0) - 1)
                 {
-                    Debug.Log(i+" "+ (roomData.GetLength(0)-1));
+                    Debug.Log(i + " " + (roomData.GetLength(0) - 1));
                     if (Random.Range(0, 2) == 0 || roomData[j, i].aggregate != roomData[j, i + 1].aggregate)
                     {
                         roomData[j + 1, i].aggregate = roomData[j, i].aggregate;
@@ -224,10 +224,10 @@ namespace PM
                         PassageDownCreate(j, i);
                     }
                 }
-                
+
             }
             // 만약 행의 값이 다같을시 아래 통로를 안만들기 때문에 조건문으로 추가
-            int sum=0;
+            int sum = 0;
             for (int i = 0; i < maxXSize; i++)
             {
                 if (roomData[j, i].down)
@@ -236,7 +236,7 @@ namespace PM
                 // 새로 아래로 통로 생성
                 if (i == roomData.GetLength(0) - 1 || roomData[j, i].aggregate != roomData[j, i + 1].aggregate)
                 {
-                    if(sum == 0)
+                    if (sum == 0)
                     {
                         roomData[j + 1, i].aggregate = roomData[j, i].aggregate;
                         PassageDownCreate(j, i);
@@ -268,12 +268,12 @@ namespace PM
             int x = 6;
             while (position[m, n].x + x < position[m, n + 1].x)
             {
-                GameObject tile = Instantiate(passageTile,passages);
+                GameObject tile = Instantiate(passageTile, passages);
                 tile.transform.position = position[m, n] + new Vector3(x, 0, 0);
                 tile.GetComponent<Passage>().arrow = Passage.Arrow.right;
                 x += 6;
             }
-            roomData[m,n].right = true;
+            roomData[m, n].right = true;
             roomData[m, n + 1].left = true;
         }
         private void PassageDownCreate(int m, int n)
@@ -309,7 +309,7 @@ namespace PM
 
         private void ArrowWallCreater(int x, int y, bool door, arrow arrow, Transform room)
         {
-            GameObject leftWall = array[0,0];
+            GameObject leftWall = array[0, 0];
             GameObject rightWall = array[0, 0];
             switch (arrow)
             {
@@ -333,7 +333,7 @@ namespace PM
                     break;
                 case arrow.down:
                     if (door)
-                        Instantiate(roomDoor, room.transform.position + new Vector3(0, 0, -y * 6 * 0.5f), Quaternion.Euler(0, 90, 0), room.GetChild(2));
+                        Instantiate(roomDoor, room.transform.position + new Vector3(0, 0, -y * 6 * 0.5f), Quaternion.Euler(0, 270, 0), room.GetChild(2));
                     else
                         Instantiate(wall, room.transform.position + new Vector3(0, 0, -y * 6 * 0.5f), Quaternion.Euler(0, 90, 0), room.GetChild(2));
                     for (int i = 1; i <= x * 0.5f; i++)
@@ -351,7 +351,7 @@ namespace PM
                     break;
                 case arrow.right:
                     if (door)
-                        Instantiate(roomDoor, room.transform.position + new Vector3(x * 6 * 0.5f, 0, 0), Quaternion.identity, room.GetChild(2));
+                        Instantiate(roomDoor, room.transform.position + new Vector3(x * 6 * 0.5f, 0, 0), Quaternion.Euler(0, 180, 0), room.GetChild(2));
                     else
                         Instantiate(wall, room.transform.position + new Vector3(x * 6 * 0.5f, 0, 0), Quaternion.identity, room.GetChild(2));
                     for (int i = 1; i <= y * 0.5f; i++)
@@ -387,5 +387,26 @@ namespace PM
                     break;
             }
         }
+
+        //private void DoorConnectings()
+        //{
+        //    for (int j = 0; j < maxYSize; j++)
+        //    {
+        //        for (int i = 0; i < maxXSize; i++)
+        //        {
+        //            RoomData roomData = array[j, i].GetComponent<RoomData>();
+                    
+        //            if(roomData.up || roomData.down || roomData.right || roomData.left)
+        //            {
+        //                SyberDoor[] doors = array[j, i].GetComponentsInChildren<SyberDoor>();
+        //                foreach(SyberDoor door in doors)
+        //                {
+        //                    if(door.arrow == SyberDoor.Arrow.up)
+        //                        //door.connetingDoor = array[j-1, i];
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
     }
 }
