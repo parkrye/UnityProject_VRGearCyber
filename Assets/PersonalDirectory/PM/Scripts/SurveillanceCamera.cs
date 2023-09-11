@@ -1,3 +1,4 @@
+using PID;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -8,66 +9,35 @@ using static UnityEditor.PlayerSettings;
 
 namespace PM
 {
-    public class SurveillanceCamera : MonoBehaviour, IHitable, IHackable
+    public class SurveillanceCamera : MonoBehaviour, IHitable
     {
-        [SerializeField] GameData.HackProgressState state;
+        
         [SerializeField]
-        GameObject[] securities;
         private float range;
         [SerializeField] int hp;
         [SerializeField] Transform SpotLight;
+        Terminal terminal;
         Ray ray;
         private Vector3 lightPosition;
         private float angle;
         private float cos;
         private float sin;
-        public GameObject player;
 
         private void Start()
         {
+            GetTerminal();
             lightPosition = SpotLight.transform.position;
             ray = new Ray(lightPosition, SpotLight.forward);
             StartCoroutine(RangeSetting());
             StartCoroutine(Checking());
         }
 
-        public virtual void Hack()
+        private void GetTerminal()
         {
-            StartCoroutine(WaitingHackResultRoutine());
+            terminal = transform.parent.GetComponentInChildren<Terminal>();
         }
 
-        public virtual void ChangeProgressState(GameData.HackProgressState value)
-        {
-            state = value;
-        }
-
-        public virtual void Failure()
-        {
-            RaycastHit hitData;
-            Physics.Raycast(ray, out hitData);
-            StartCoroutine(CallSecurity(hitData.point));
-        }
-
-        public virtual void Success()
-        {
-            StartCoroutine(Break());
-        }
-
-        public virtual IEnumerator WaitingHackResultRoutine()
-        {
-            yield return null;
-           state = GameData.HackProgressState.Progress;
-           yield return new WaitUntil(() => state != GameData.HackProgressState.Progress );
-           switch(state)
-           {
-                case GameData.HackProgressState.Failure:
-                    Failure();
-                    break;
-                case GameData.HackProgressState.Success:
-                    Success();
-                    break;
-           }
-        }
+        
         IEnumerator RangeSetting()
         {
             angle = SpotLight.GetComponent<Light>().spotAngle;
@@ -79,21 +49,21 @@ namespace PM
             range = hitData.distance;
             yield return null;
         }
-        private void Update()
-        {
-            Debug.DrawRay(lightPosition, SpotLight.forward*10, Color.red);
-            Debug.DrawRay(lightPosition, (SpotLight.forward * cos + SpotLight.right*sin) * 10, Color.red);
-            Debug.DrawRay(lightPosition, (SpotLight.forward * cos - SpotLight.right * sin) * 10, Color.red);
-            Debug.DrawRay(lightPosition, (SpotLight.forward * cos + SpotLight.up * sin) * 10, Color.red);
-            Debug.DrawRay(lightPosition, (SpotLight.forward * cos - SpotLight.up * sin) * 10, Color.red);
-        }
-        void OnDrawGizmos()
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(lightPosition, range);
-            Gizmos.color = Color.blue;
-            //Gizmos.DrawRay(lightPosition, (player.transform.position - lightPosition));
-        }
+        //private void Update()
+        //{
+        //    Debug.DrawRay(lightPosition, SpotLight.forward*10, Color.red);
+        //    Debug.DrawRay(lightPosition, (SpotLight.forward * cos + SpotLight.right*sin) * 10, Color.red);
+        //    Debug.DrawRay(lightPosition, (SpotLight.forward * cos - SpotLight.right * sin) * 10, Color.red);
+        //    Debug.DrawRay(lightPosition, (SpotLight.forward * cos + SpotLight.up * sin) * 10, Color.red);
+        //    Debug.DrawRay(lightPosition, (SpotLight.forward * cos - SpotLight.up * sin) * 10, Color.red);
+        //}
+        //void OnDrawGizmos()
+        //{
+        //    Gizmos.color = Color.yellow;
+        //    Gizmos.DrawWireSphere(lightPosition, range);
+        //    Gizmos.color = Color.blue;
+        //    //Gizmos.DrawRay(lightPosition, (player.transform.position - lightPosition));
+        //}
         IEnumerator Checking()
         {
             while (true)
@@ -111,11 +81,9 @@ namespace PM
                         Ray ray = new Ray(lightPosition, (collider.transform.position - lightPosition));
                         RaycastHit hitData;
                         Physics.Raycast(ray, out hitData);
-                        Debug.Log(hitData.collider.tag);
                         if (hitData.collider.tag == "Player")
                         {
-                            Debug.Log("player!!!!");
-                            StartCoroutine(CallSecurity(collider.transform.position));
+                            StartCoroutine(CallSecurity());
                         }
                     }
                     yield return null;
@@ -124,13 +92,12 @@ namespace PM
             }
         }
 
-        IEnumerator CallSecurity(Vector3 destination)
+        public IEnumerator CallSecurity()
         {
-            foreach (GameObject guard in securities)
-            {
-                // 로봇의 위치를 추적하는 함수를 가져와서 플레이어의 위치를 변수로 값을 넘겨줌 guard.GetComponent<>
-                yield return null;
-            }
+            RaycastHit hitData;
+            Physics.Raycast(ray, out hitData);
+            if (terminal != null)
+                terminal.StartCoroutine(terminal.CallSecurity(hitData.point));
             yield return null;
         }
 
