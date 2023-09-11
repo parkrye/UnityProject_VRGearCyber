@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PID;
 
 namespace KSI
 {
@@ -65,8 +66,8 @@ namespace KSI
 		{
 			if (isSwinging && positionQueue.Count > 0)
 			{
-				IHitable hitable = other.GetComponent<IHitable>(); 
-				if (hitable != null)
+				IStrikable iStrikable = other.GetComponent<IStrikable>();
+				if (iStrikable != null)
 				{
 					// 가장 오래된 위치 가져오기
 					Vector3 oldestPosition = positionQueue.Peek();
@@ -81,7 +82,7 @@ namespace KSI
 					int calculateDamage = Mathf.RoundToInt(Mathf.Lerp(minDamage, maxDamage, calculateDamageRatio));
 
 					// 계신된 데미지 적용
-					hitable.TakeDamage(calculateDamage, Vector3.zero, Vector3.zero);
+					iStrikable?.TakeStrike(transform, calculateDamage, Vector3.zero, Vector3.zero);
 				}
 			}
 		}
