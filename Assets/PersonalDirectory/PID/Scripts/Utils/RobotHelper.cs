@@ -56,6 +56,12 @@ namespace PID
             return checkSlip = new ValidSoundCheckSlip(false, Vector3.zero);
         }
 
+        public static void LookDirToPlayer(Vector3 playerLoc, Transform robot, out Vector3 lookDir)
+        {
+            lookDir = (playerLoc - robot.position).normalized;
+            lookDir.y = 0; 
+        }
+
         //public static bool TraversableSound()
         //{
         //    Vector3 prev = startingPoint.transform.position;

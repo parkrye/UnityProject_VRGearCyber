@@ -76,7 +76,20 @@ namespace PID
         protected virtual void Die()
         {
         }
-
+        #region COROUTINE CONTROLLER 
+        public void RunTheCoroutine(IEnumerator routine)
+        {
+            StartCoroutine(routine);
+        }
+        public void StopTheCoroutine(IEnumerator routine)
+        {
+            StopCoroutine(routine);
+        }
+        public void StopAllRegisteredCoroutine()
+        {
+            StopAllCoroutines();
+        }
+        #endregion
         protected IEnumerator DeathCycle(bool deadOrAlive)
         {
             yield return new WaitForSeconds(.2f);
