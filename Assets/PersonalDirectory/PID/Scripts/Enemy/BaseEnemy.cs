@@ -10,9 +10,14 @@ namespace PID
     public class BaseEnemy : MonoBehaviour, IHitable, IStrikable
     {
         public UnityAction<Vector3, Vector3> onDeath;
+        public UnityAction<Vector3, int, int> cctvNotified; 
         public UnityAction<bool> OnAndOff;
+        public Animator anim;
+
         //SetUp Base States 
         protected NavMeshAgent agent;
+        protected SightFunction robotSight;
+        protected AuditoryFunction robotEars;
         public NavMeshAgent Agent => agent;
         protected float moveSpeed;
         protected int maxHealth;
@@ -25,6 +30,15 @@ namespace PID
         {
             get;
             private set;
+        }
+
+        protected virtual void Awake()
+        {
+            anim = GetComponent<Animator>();
+            robotSight = GetComponent<SightFunction>();
+            robotEars = GetComponent<AuditoryFunction>();
+            agent = GetComponent<NavMeshAgent>();
+
         }
 
         protected virtual void SetUp(EnemyStat stat)
@@ -60,40 +74,19 @@ namespace PID
 
         public virtual void Notified(Vector3 centrePoint, int size, int index)
         {
-            //if (stateMachine.curStateName == State.Neutralized || stateMachine.curStateName == State.Alert)
-            //{
-            //    return;
-            //}
-            //AlertState alertState;
-            //if (stateMachine.CheckState(State.Alert))
-            //{
-            //    alertState = stateMachine.RetrieveState(State.Alert) as AlertState;
-            //    Vector3 gatherPos = RobotHelper.GroupPositionAllocator(centrePoint, size, index);
-            //    alertState.SetGatherPoint(gatherPos);
-            //    stateMachine.ChangeState(State.Alert);
-            //}
+            
         }
         protected virtual void Die()
         {
         }
-        #region COROUTINE CONTROLLER 
-        public void RunTheCoroutine(IEnumerator routine)
-        {
-            StartCoroutine(routine);
-        }
-        public void StopTheCoroutine(IEnumerator routine)
-        {
-            StopCoroutine(routine);
-        }
-        public void StopAllRegisteredCoroutine()
-        {
-            StopAllCoroutines();
-        }
-        #endregion
         protected IEnumerator DeathCycle(bool deadOrAlive)
         {
             yield return new WaitForSeconds(.2f);
             OnAndOff?.Invoke(deadOrAlive); 
         }
+
+
+        #region Default General States 
+        #endregion
     }
 }

@@ -1,4 +1,5 @@
 using PID;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,8 +8,12 @@ namespace PID
     public class SightFunction : MonoBehaviour
     {
         [SerializeField] LayerMask targetMask;
+        [SerializeField] string targetTag; 
         [SerializeField] LayerMask obstacleMask; 
-        [SerializeField] Transform targetEye; 
+        [SerializeField] Transform targetEye;
+        [Range(0f, 1f)]
+        float scanFrequency;
+        WaitForSeconds scanInterval; 
         Transform playerInSight;
         //Should Be Declared by using Robot
         public UnityAction<Transform> PlayerFound;
@@ -30,9 +35,10 @@ namespace PID
         [SerializeField] bool debug;
         private void Start()
         {
+            scanInterval = new WaitForSeconds(scanFrequency); 
             targetEye.transform.forward = transform.forward; 
         }
-
+        Vector3 dirToPlayer; 
         private void Update()
         {
             FindTarget();
@@ -46,9 +52,13 @@ namespace PID
                 presenceTimer += Time.deltaTime;
                 if (presenceTimer > maxTimer)
                 {
-                    TargetFound = true;
-                    //Should be replaced by the state changing event; 
-                    PlayerFound?.Invoke(playerInSight);
+                    dirToPlayer = (playerInSight.position - transform.position).normalized; 
+                    if (TargetInValidRange(dirToPlayer))
+                    {
+                        TargetFound = true;
+                        //Should be replaced by the state changing event; 
+                        PlayerFound?.Invoke(playerInSight);
+                    }
                 }
                 presenceTimer = Mathf.Clamp(presenceTimer, 0, maxTimer);
             }
@@ -77,19 +87,19 @@ namespace PID
                 dirTarget = collider.transform.position - transform.position;
                 dirTarget.y = 0f;
                 dirTarget.Normalize();
-                // IF Player is found on a given Range, 
+                playerInSight = collider.transform;
+                playerPresence = true;
+
+                // IF Player is found on a given Range, but not in the 'Sight Angle' 
                 if (Vector3.Dot(transform.forward, dirTarget) < Mathf.Cos(sightAngle * 0.5f * Mathf.Deg2Rad))
                 {
-                    playerInSight = collider.transform;
-                    playerPresence = true;
                     continue;
                 }
-                //Start Coroutine for hiding activities. 
-;
                 //Vector3 distToTarget = collider.transform.position - transform.position;
                 float distance = Vector3.Distance(collider.transform.position, transform.position);//Vector2.SqrMagnitude(distToTarget);
                 if (Physics.Raycast(transform.position, dirTarget, out obstacleHit, distance, obstacleMask))
                 {
+                    PlayerLost?.Invoke();
                     break; 
                 }
                 else
@@ -101,11 +111,38 @@ namespace PID
             }
             PlayerLost?.Invoke();
         }
-        public bool TargetInValidRange() 
+
+        RaycastHit searchHit; 
+        public bool TargetInValidRange(Vector3 direction) 
         {
-            return false; 
+            if (Physics.Raycast(transform.position, direction, out searchHit))
+            {
+                if (searchHit.collider.tag != targetTag)
+                    return false;
+                return true;
+            }
+            else 
+                return false;
         }
 
+        public void StopScanning()
+        {
+            if (scanVariable != null)
+                StopCoroutine(scanVariable); 
+        }
+        Coroutine scanVariable; 
+        public void StartScanning()
+        {
+            scanVariable = StartCoroutine(SightScanning());
+        }
+
+        IEnumerator SightScanning()
+        {
+            while (true)
+            {
+                yield return null; 
+            }
+        }
         private void OnDrawGizmos()
         {
             if (!debug) return;
