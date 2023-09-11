@@ -34,6 +34,7 @@ Transform:
   m_Children:
   - {fileID: 7678794090457686256}
   - {fileID: 4365248694573708122}
+  - {fileID: 929247831554709172}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -117,6 +118,51 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &222182812787855051
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 929247831554709172}
+  - component: {fileID: 1581580142423539233}
+  m_Layer: 7
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &929247831554709172
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222182812787855051}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.026, z: 0}
+  m_LocalScale: {x: 0.9, y: 0.05, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 213771427595585476}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1581580142423539233
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222182812787855051}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1775094876259527916
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,6 +759,7 @@ MonoBehaviour:
   handleOriginTransform: {fileID: 2619290200934469606}
   handleRb: {fileID: 1734435773828941127}
   grabableHandle: {fileID: 6882998264686945573}
+  isGrabbed: 0
 --- !u!1 &6882998264686945573
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,3 +1290,4 @@ MonoBehaviour:
   handleOriginTransform: {fileID: 9061278099581192936}
   handleRb: {fileID: 2164408530355359390}
   grabableHandle: {fileID: 4592306897635688800}
+  isGrabbed: 0
