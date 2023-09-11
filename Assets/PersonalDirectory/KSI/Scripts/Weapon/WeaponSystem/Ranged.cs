@@ -12,11 +12,7 @@ namespace KSI
 		[SerializeField] private float fireRate;
 		[SerializeField] private GameObject bullet;
 		[SerializeField] private Transform muzzlePoint;
-		//[SerializeField] private GameObject casing;
-		//[SerializeField] private Transform casingExitLocation;
-		//[SerializeField] private float destroyTimer = 2f;
-		//[SerializeField] private float shotPower = 500f;
-		//[SerializeField] private float ejectPower = 150f;
+		[SerializeField] private ParticleSystem bulletShell;
 		[SerializeField] private int damage;
 		
 		[Header("Magazine")]
@@ -29,13 +25,13 @@ namespace KSI
 		[SerializeField] private AudioClip reload;
 		[SerializeField] private AudioClip noAmmo;
 
+		[Header("Gizmos")]
+		[SerializeField] private float maxDistance = 10;
+
 		private Animator animator;
 		private MeshRenderer muzzleFlash;
 		private bool hasMagazine = false;
 		//private bool hasSlide = false;
-		private int layerMask;
-		private RaycastHit hit;
-		private IHitable hitable;
 
 		private void Start()
 		{
@@ -45,9 +41,6 @@ namespace KSI
 			// muzzlePoint 하위에 있는 muzzleFlashdml 컴포넌트 추출
 			muzzleFlash = muzzlePoint.GetComponentInChildren<MeshRenderer>();
 			muzzleFlash.enabled = false;
-
-			// Enemy 레이어 마스크
-			layerMask = (1 << 11) | (1 << 12);  
 
 			//if (socketInteractor != null)
 			//{
@@ -109,20 +102,16 @@ namespace KSI
 		{
 			if (hasMagazine && magazine && magazine.numberOfBullet > 0) //&& hasSlide)
 			{
-				//Ray 표시
-				Debug.DrawRay(muzzlePoint.position, muzzlePoint.forward * 10.0f, Color.red);
-
 				animator.SetTrigger("Fire");
 				Shoot();
 
-				// Ray 쏘기 
-				if (Physics.Raycast(muzzlePoint.position, muzzlePoint.forward, out hit, 10.0f, layerMask))
+				if (Physics.Raycast(muzzlePoint.position, muzzlePoint.forward, out RaycastHit hit, maxDistance))
 				{
 					Debug.Log($"Hit={hit.transform.name}");
 
-					hitable = hit.transform.GetComponent<IHitable>();
-					hitable.TakeDamage(damage, Vector3.zero, Vector3.zero);
-				}
+					IHitable hitable = hit.transform.GetComponent<IHitable>();
+					hitable?.TakeDamage(damage, hit.point, hit.normal);
+				}				
 			}
 			//else if (!hasSlide)
 			//{
@@ -135,13 +124,14 @@ namespace KSI
 				audioSource.PlayOneShot(noAmmo);
 			}
 		}
-
+			
 		private void Shoot()
 		{
 			magazine.numberOfBullet--;
 
 			Instantiate(bullet, muzzlePoint.position, muzzlePoint.rotation);
 			audioSource.PlayOneShot(shootSound, 1.0f);
+			bulletShell.Play();
 
 			StartCoroutine(MuzzleFlashRoutine());
 		}
@@ -168,17 +158,10 @@ namespace KSI
 			muzzleFlash.enabled = false;
 		}
 
-		private void CasingRelease()
-		{			
-			//if (!casingExitLocation || !casingPrefab)
-			//	return;
-
-			//GameObject tempCasing;
-			//tempCasing = Instantiate(casingPrefab, casingExitLocation.position, casingExitLocation.rotation) as GameObject;
-			//tempCasing.GetComponent<Rigidbody>().AddExplosionForce(Random.Range(ejectPower * 0.7f, ejectPower), (casingExitLocation.position - casingExitLocation.right * 0.3f - casingExitLocation.up * 0.6f), 1f);
-			//tempCasing.GetComponent<Rigidbody>().AddTorque(new Vector3(0, Random.Range(100f, 500f), Random.Range(100f, 1000f)), ForceMode.Impulse);
-
-			//Destroy(tempCasing, destroyTimer);
+		private void OnDrawGizmos()
+		{
+			Gizmos.color = Color.yellow;
+			Gizmos.DrawRay(muzzlePoint.position, muzzlePoint.forward * maxDistance);
 		}
 	}
 } 
