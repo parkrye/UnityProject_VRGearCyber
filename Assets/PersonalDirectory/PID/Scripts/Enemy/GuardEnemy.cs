@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
-using UnityEngine.SocialPlatforms;
+using static PID.RobotHelper; 
 
 namespace PID
 {
@@ -23,8 +23,8 @@ namespace PID
             Assault,
             Trace,
             SoundReact,
-            HideAndShoot, 
-            Clash,
+            Hide,
+            Return,
             Neutralized,
             Size
             //Possibly extending beyond for Gathering Abilities. 
@@ -73,6 +73,7 @@ namespace PID
             stateMachine.AddState(State.Patrol, new PatrolState(this, stateMachine));
             stateMachine.AddState(State.Alert, new AlertState(this, stateMachine));
             stateMachine.AddState(State.Assault, new AssaultState(this, stateMachine));
+            stateMachine.AddState(State.Hide, new HideState(this, stateMachine));
             stateMachine.AddState(State.Trace, new TraceState(this, stateMachine));
             stateMachine.AddState(State.LookAround, new LookAroundState(this, stateMachine));
             stateMachine.AddState(State.SoundReact, new SoundReactState(this, stateMachine));
@@ -151,7 +152,8 @@ namespace PID
         {
             //should Enemy be under hide and shoot, ignore further calls. 
             if (stateMachine.curStateName == State.Neutralized || 
-                stateMachine.curStateName == State.Infiltrated)
+                stateMachine.curStateName == State.Infiltrated ||
+                stateMachine.curStateName == State.Hide)
                 return; 
             playerBody = player;
             stateMachine.ChangeState(State.Assault); 
@@ -161,7 +163,8 @@ namespace PID
             if (stateMachine.curStateName == State.Infiltrated ||
                 stateMachine.curStateName == State.Neutralized ||
                 stateMachine.curStateName == State.Assault ||
-                stateMachine.curStateName == State.Trace)
+                stateMachine.curStateName == State.Trace ||
+                stateMachine.curStateName == State.Hide)
                 return; 
             SoundReactState soundReactState;
             if (stateMachine.CheckState(State.SoundReact))
@@ -488,7 +491,7 @@ namespace PID
             bool abortGather; 
             float distDelta;
             const float holdPeriod = 5f; 
-            const float distThreshold = 3.5f;
+            const float distThreshold = 2.5f;
             public AlertState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
             {
             }
@@ -497,6 +500,7 @@ namespace PID
             {
                 owner.debugText.text = "Alert";
                 owner.agent.isStopped = false;
+                owner.agent.updateRotation = true; 
                 if (destPoint != Vector3.zero)
                     owner.agent.SetDestination(destPoint);
                 else
@@ -538,7 +542,8 @@ namespace PID
         /// </summary>
         public class AssaultState : GuardState
         {
-            RobotGun robotGun; 
+            RobotGun robotGun;
+            Vector3 lookDir;
             public AssaultState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
             {
             }
@@ -558,17 +563,22 @@ namespace PID
                 //owner.focusDir = Vector3.zero;
                 ////Perhaps for now, but should consider reasons for movement 
                 //owner.StopFire(); 
-                owner.agent.updateRotation = true; 
+                owner.agent.updateRotation = true;
+                owner.agent.isStopped = false;
             }
 
             public override void Setup()
             {
                 robotGun = owner.robotGun;
+                lookDir = Vector3.zero;
             }
 
             public override void Transition()
             {
-
+                if (robotGun.OutOfAmmo)
+                {
+                    stateMachine.ChangeState(State.Hide); 
+                }
             }
 
             public override void Update()
@@ -580,9 +590,223 @@ namespace PID
 
             public void RotateTowardPlayer()
             {
-                Vector3 lookDir = (owner.playerBody.transform.position - owner.transform.position).normalized; 
-                lookDir.y = 0;
+                LookDirToPlayer(owner.playerBody.transform.position, owner.transform, out lookDir); 
                 owner.transform.rotation = Quaternion.LookRotation(lookDir);
+            }
+        }
+        #endregion
+        #region Hide State 
+        /// <summary>
+        /// Upon a Combat or where Enemy is run out of the ammo, 
+        /// Enemy 
+        /// </summary>
+        public class HideState : GuardState
+        {
+            Transform player;
+            //Sake of providing buffers for overlapsphere search. 
+            //Smaller the buffer size, quicker the search shall be. 
+            Collider[] Colliders;
+            const int colliderSize = 10; 
+            const int checkRadius = 8; 
+            const float hideFrequency = .25f; 
+            const float hideSensitivity = -.1f;
+            const float minimumDistFromPlayer = 10f;
+            Vector3 hidePosition; 
+            Vector3 playerLookDir; 
+            Vector3 initialPosition; 
+            WaitForSeconds hideInterval;
+            LayerMask hideableLayer;
+
+            float timeOut;
+            bool searchLocFound; 
+            bool stopCounting; 
+
+            public HideState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
+            {
+            }
+
+            public override void Enter()
+            {
+                if (player == null)
+                    player = owner.playerBody;
+                owner.debugText.text = "Hide";
+                initialPosition = owner.transform.position; 
+                owner.agent.updateRotation = false; 
+                owner.StartCoroutine(HideRoutine(player)); 
+            }
+
+            public override void Exit()
+            {
+                owner.StopTheCoroutine(HideRoutine(player));
+                timeOut = 0f;
+                stopCounting = false; 
+            }
+
+            public override void Setup()
+            {
+                playerLookDir = Vector3.zero; 
+                hideInterval = new WaitForSeconds(hideFrequency);
+                hideableLayer = LayerMask.GetMask("Wall"); 
+                Colliders = new Collider[colliderSize];
+                hidePosition = Vector3.zero;
+                searchLocFound = false; 
+                stopCounting = false; 
+            }
+            public override void Transition()
+            {
+                // If Enemy has finished reloading 
+                // If Enemy has returned to the initial positions. 
+                if (hidePosition != Vector3.zero)
+                {
+                    timeOut = 0f; 
+                    stopCounting = true;
+                    owner.StopAllCoroutines(); 
+                    owner.StopCoroutine(HideRoutine(player));
+                    owner.robotGun.Reload();
+                }
+                if (timeOut > 3f)
+                {
+                    owner.StopAllCoroutines();
+                    owner.StopCoroutine(HideRoutine(player));
+                    owner.robotGun.Reload(); 
+                }
+                if (!owner.robotGun.OutOfAmmo)
+                {
+                    owner.StopAllCoroutines();
+                    owner.StopCoroutine(HideRoutine(player));
+                    stateMachine.ChangeState(State.Trace);
+                }
+            }
+            public override void Update()
+            {
+                LookDirToPlayer(player.position, owner.transform, out playerLookDir); 
+                owner.transform.rotation = Quaternion.LookRotation(playerLookDir);
+                if (searchLocFound)
+                    owner.StopAllCoroutines(); 
+                if (stopCounting)
+                    return;
+                timeOut += Time.deltaTime;
+            }
+            IEnumerator HideRoutine(Transform Target)
+            {
+                while (true)
+                {
+                    for (int i = 0; i < Colliders.Length; i++)
+                    {
+                        Colliders[i] = null;
+                    }
+                    int hits = Physics.OverlapSphereNonAlloc(owner.transform.position, 
+                        checkRadius, Colliders, hideableLayer);
+
+                    int hitReduction = 0;
+                    for (int i = 0; i < hits; i++)
+                    {
+                        if (Vector3.SqrMagnitude(Colliders[i].transform.position - Target.position) < minimumDistFromPlayer)
+                        {
+                            Colliders[i] = null;
+                            hitReduction++;
+                        }
+                    }
+                    hits -= hitReduction;
+
+                    System.Array.Sort(Colliders, ColliderArraySortComparer);
+
+                    for (int i = 0; i < hits; i++)
+                    {
+                        if (NavMesh.SamplePosition(Colliders[i].transform.position, out NavMeshHit hit, 2f, owner.agent.areaMask))
+                        {
+                            if (!NavMesh.FindClosestEdge(hit.position, out hit, owner.agent.areaMask))
+                            {
+                                Debug.LogError($"Unable to find edge close to {hit.position}");
+                                continue; 
+                            }
+
+                            if (Vector3.Dot(hit.normal, (Target.position - hit.position).normalized) < hideSensitivity)
+                            {
+                                owner.agent.SetDestination(hit.position);
+                                searchLocFound = true;
+                                hidePosition = hit.position;
+                                yield break;
+                            }
+                            else
+                            {
+                                // Since the previous spot wasn't facing "away" enough from teh target, we'll try on the other side of the object
+                                if (NavMesh.SamplePosition(Colliders[i].transform.position - 
+                                    (Target.position - hit.position).normalized * 2, 
+                                    out NavMeshHit hit2, 2f, owner.agent.areaMask))
+                                {
+                                    if (!NavMesh.FindClosestEdge(hit2.position, out hit2, owner.agent.areaMask))
+                                    {
+                                        Debug.LogError($"Unable to find edge close to {hit2.position} (second attempt)");
+                                        continue; 
+                                    }
+
+                                    if (Vector3.Dot(hit2.normal, (Target.position - hit2.position).normalized) < hideSensitivity)
+                                    {
+                                        owner.agent.SetDestination(hit2.position);
+                                        hidePosition = hit.position;
+                                        searchLocFound = true; 
+                                        yield break;
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogError($"Unable to find NavMesh near object {Colliders[i].name} at {Colliders[i].transform.position}");
+                        }
+                        yield return hideInterval;
+                    }
+                }
+            }
+            public int ColliderArraySortComparer(Collider A, Collider B)
+            {
+                if (A == null && B != null)
+                {
+                    return 1;
+                }
+                else if (A != null && B == null)
+                {
+                    return -1;
+                }
+                else if (A == null && B == null)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return Vector3.SqrMagnitude(owner.agent.transform.position- A.transform.position).
+                        CompareTo(Vector3.SqrMagnitude(owner.agent.transform.position - B.transform.position));
+                }
+            }
+
+        }
+        #endregion
+        #region Return State
+        public class ReturnState : GuardState
+        {
+            public ReturnState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
+            {
+            }
+
+            public override void Enter()
+            {
+            }
+
+            public override void Exit()
+            {
+            }
+
+            public override void Setup()
+            {
+            }
+
+            public override void Transition()
+            {
+            }
+
+            public override void Update()
+            {
             }
         }
         #endregion

@@ -13,6 +13,8 @@ namespace PID
         [SerializeField] TrailRenderer bulletTrail;
         int currentAmmo;
         public int CurrentAmmo => currentAmmo;
+        bool outofAmmo;
+        public bool OutOfAmmo => outofAmmo;
         int maxAmmo;
         bool reloading;
         float nextFire = 0f;
@@ -36,6 +38,7 @@ namespace PID
         private void Awake()
         {
             reloading = false;
+            outofAmmo = false; 
             gunOwner = GetComponentInParent<GuardEnemy>();
             reloadWaitInterval = new WaitForSeconds(reloadInterval);
             debugLine = GetComponent<LineRenderer>();
@@ -46,14 +49,17 @@ namespace PID
             currentAmmo--;
         }
         Coroutine reloadCoroutine;
-        bool tookHit; 
-        public bool TookHit { get => tookHit; set => tookHit = value; }
+        
         public void AttemptFire(Transform target)
         {
-            if (Time.time < nextFire || reloading || tookHit)
+            if (Time.time < nextFire || reloading || outofAmmo)
                 return;
             if (currentAmmo <= 0)
-                reloadCoroutine = StartCoroutine(ReloadRoutine());
+            {
+                outofAmmo = true;
+                //reloadCoroutine = StartCoroutine(ReloadRoutine());
+                return; 
+            }
             //Reload; 
             nextFire = Time.time + fireInterval;
             Fire(target);
@@ -70,6 +76,7 @@ namespace PID
             debugLine.SetPosition(0, muzzlePoint.position);
             shotAttempt = RobotHelper.FinalShotPoint(target.position, attackRange, missChance);
             shotAttempt = (shotAttempt - muzzlePoint.position).normalized;
+            Debug.Log(shotAttempt); 
             //RaycastHit[] queries;
             //queries = Physics.RaycastAll(muzzlePoint.position, shotAttempt, attackRange);
 
@@ -80,6 +87,7 @@ namespace PID
                 if (hitAttempt.collider.gameObject.tag != targetTag)
                 {
                     //obstacle should take damage; 
+                    debugLine.SetPosition(1, hitAttempt.point);
                     IHitable hitable = hitAttempt.collider.GetComponent<IHitable>();
                     hitable?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal);
                 }
@@ -114,6 +122,11 @@ namespace PID
                     }
                 }
             }
+        }
+
+        public void Reload()
+        {
+            reloadCoroutine = StartCoroutine(ReloadRoutine());
         }
 
         public void GiveDamage(GameObject obj)
@@ -163,7 +176,8 @@ namespace PID
             yield return new WaitForEndOfFrame(); 
             gunOwner.anim.SetTrigger("Reload"); 
             yield return reloadWaitInterval;
-            currentAmmo = maxAmmo; 
+            currentAmmo = maxAmmo;
+            outofAmmo = false; 
             reloading = false;
         }
         IEnumerator TrailRendererRoutine()
