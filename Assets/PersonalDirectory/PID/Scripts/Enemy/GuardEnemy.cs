@@ -31,11 +31,9 @@ namespace PID
         }
         #region MACHINE PROPERTIES 
         //Base Properties 
-        public Animator anim;
         Rigidbody rigid;
         NavMeshObstacle obstacle; 
-        SightFunction guardSight;
-        AuditoryFunction guardEars; 
+         
         StateMachine<State, GuardEnemy> stateMachine;
         [SerializeField] Transform[] patrolPoints; 
 
@@ -51,16 +49,14 @@ namespace PID
         public State curState => stateMachine.curStateName; 
         //Debugging 
         public TMP_Text debugText;
-        protected void Awake()
+        protected override void Awake()
         {
             //DEBUGGING 
             enemyStat = GameManager.Resource.Load<EnemyStat>("Data/Guard");
             base.SetUp(enemyStat);
-
-            guardEars = GetComponent<AuditoryFunction>();
-            guardSight = GetComponent<SightFunction>();
+            base.Awake(); 
+            
             obstacle = GetComponent<NavMeshObstacle>();
-            agent = GetComponent<NavMeshAgent>();
             rigid = GetComponent<Rigidbody>();
             anim = GetComponent<Animator>();
             robotGun = GetComponentInChildren<RobotGun>();
@@ -83,10 +79,10 @@ namespace PID
         {
             AgentSetUp(enemyStat);
             robotGun.SyncStatData(enemyStat);
-            guardSight.SyncSightStat(enemyStat);
-            guardSight.PlayerFound += DetectPlayer;
-            guardSight.PlayerLost += TempPlayerLost;
-            guardEars.trackSound += DetectSound; 
+            robotSight.SyncSightStat(enemyStat);
+            robotSight.PlayerFound += DetectPlayer;
+            robotSight.PlayerLost += TempPlayerLost;
+            robotEars.trackSound += DetectSound; 
             stateMachine.SetUp(State.Idle);
             GameManager.Data.timeScaleEvent?.AddListener(TimeScale);
         }
@@ -122,9 +118,9 @@ namespace PID
         }
         private void OnDisable()
         {
-            guardSight.PlayerFound -= DetectPlayer;
-            guardSight.PlayerLost -= TempPlayerLost;
-            guardEars.trackSound -= DetectSound;
+            robotSight.PlayerFound -= DetectPlayer;
+            robotSight.PlayerLost -= TempPlayerLost;
+            robotEars.trackSound -= DetectSound;
             GameManager.Data.timeScaleEvent?.RemoveListener(TimeScale);
         }
         private void Update()
@@ -486,7 +482,6 @@ namespace PID
         // Main Function being, Each assigned Guard should head back to the designated CCTV regions. 
         public class AlertState : GuardState
         {
-            SightFunction guardSight;
             Vector3 destPoint = Vector3.zero;
             bool abortGather; 
             float distDelta;
@@ -514,7 +509,6 @@ namespace PID
             public override void Setup()
             {
                 abortGather = false;
-                guardSight = owner.guardSight;
             }
 
             public void SetGatherPoint(Vector3 location)
@@ -637,7 +631,7 @@ namespace PID
 
             public override void Exit()
             {
-                owner.StopTheCoroutine(HideRoutine(player));
+                owner.StopCoroutine(HideRoutine(player));
                 timeOut = 0f;
                 stopCounting = false; 
             }
@@ -780,34 +774,6 @@ namespace PID
                 }
             }
 
-        }
-        #endregion
-        #region Return State
-        public class ReturnState : GuardState
-        {
-            public ReturnState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
-            {
-            }
-
-            public override void Enter()
-            {
-            }
-
-            public override void Exit()
-            {
-            }
-
-            public override void Setup()
-            {
-            }
-
-            public override void Transition()
-            {
-            }
-
-            public override void Update()
-            {
-            }
         }
         #endregion
         #region Trace State 
