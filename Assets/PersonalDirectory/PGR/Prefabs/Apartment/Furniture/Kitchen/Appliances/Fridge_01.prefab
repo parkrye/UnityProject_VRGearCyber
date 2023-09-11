@@ -414,19 +414,7 @@ MonoBehaviour:
       m_Calls: []
   m_LastHoverExited:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5430741444000288178}
-        m_TargetAssemblyTypeName: PFR.GrabDoor, Assembly-CSharp
-        m_MethodName: EndGrabHandle
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_HoverEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -441,10 +429,34 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5430741444000288178}
+        m_TargetAssemblyTypeName: PFR.GrabDoor, Assembly-CSharp
+        m_MethodName: StartGrabHandle
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5430741444000288178}
+        m_TargetAssemblyTypeName: PFR.GrabDoor, Assembly-CSharp
+        m_MethodName: EndGrabHandle
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_FirstFocusEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -2226,9 +2238,9 @@ Rigidbody:
   m_GameObject: {fileID: 5341955133804256074}
   serializedVersion: 2
   m_Mass: 3
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_Drag: 1
+  m_AngularDrag: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -2284,6 +2296,7 @@ MonoBehaviour:
   handleOriginTransform: {fileID: 3271920284129323321}
   handleRb: {fileID: 3928790144426473991}
   grabableHandle: {fileID: 8717092038774112942}
+  isGrabbed: 0
 --- !u!1 &5497207318707780203
 GameObject:
   m_ObjectHideFlags: 0
@@ -3471,9 +3484,9 @@ Rigidbody:
   m_GameObject: {fileID: 7334539273898789907}
   serializedVersion: 2
   m_Mass: 3
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_Drag: 1
+  m_AngularDrag: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -3529,6 +3542,7 @@ MonoBehaviour:
   handleOriginTransform: {fileID: 3812084562272646325}
   handleRb: {fileID: 6970910237329804933}
   grabableHandle: {fileID: 608343218740625451}
+  isGrabbed: 0
 --- !u!1 &7630520031127733399
 GameObject:
   m_ObjectHideFlags: 0
@@ -4078,19 +4092,7 @@ MonoBehaviour:
       m_Calls: []
   m_LastHoverExited:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2248507841059683208}
-        m_TargetAssemblyTypeName: PFR.GrabDoor, Assembly-CSharp
-        m_MethodName: EndGrabHandle
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_HoverEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -4105,10 +4107,34 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2248507841059683208}
+        m_TargetAssemblyTypeName: PFR.GrabDoor, Assembly-CSharp
+        m_MethodName: StartGrabHandle
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2248507841059683208}
+        m_TargetAssemblyTypeName: PFR.GrabDoor, Assembly-CSharp
+        m_MethodName: EndGrabHandle
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_FirstFocusEntered:
     m_PersistentCalls:
       m_Calls: []
