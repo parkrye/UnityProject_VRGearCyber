@@ -210,6 +210,8 @@ namespace PID
                 neutralizeReason.SetDeathReason(NeutralizedState.DeathType.Hacked);
             }
             stateMachine.ChangeState(State.Neutralized);
+            onDeath?.Invoke(Vector3.zero, Vector3.zero);
+            StartCoroutine(DeathCycle(false));
         }
         public override void HackFailed(State prevState)
         {
@@ -642,10 +644,6 @@ namespace PID
             {
                 // If Enemy has finished reloading 
                 // If Enemy has returned to the initial positions. 
-                if (searchLocFound)
-                {
-
-                }
                 if (hidePosition != Vector3.zero)
                 {
                     timeOut = 0f; 
@@ -653,15 +651,14 @@ namespace PID
                     owner.StopAllCoroutines(); 
                     owner.StopCoroutine(HideRoutine(player));
                     owner.robotGun.Reload();
-                    return; 
                 }
-                if (timeOut > 3f)
+                else if (!stopCounting && timeOut > 3f)
                 {
                     owner.StopAllCoroutines();
                     owner.StopCoroutine(HideRoutine(player));
                     owner.robotGun.Reload(); 
                 }
-                if (!owner.robotGun.OutOfAmmo)
+                if (!owner.robotGun.Reloading)
                 {
                     owner.StopAllCoroutines();
                     owner.StopCoroutine(HideRoutine(player));
@@ -671,7 +668,8 @@ namespace PID
             public override void Update()
             {
                 LookDirToPlayer(player.position, owner.transform, out playerLookDir); 
-                owner.transform.rotation = Quaternion.LookRotation(playerLookDir);
+                owner.transform.rotation = Quaternion.Lerp(owner.transform.rotation, 
+                    Quaternion.LookRotation(playerLookDir), .3f);
                 if (searchLocFound)
                     owner.StopAllCoroutines(); 
                 if (stopCounting)

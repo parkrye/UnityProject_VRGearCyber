@@ -100,6 +100,8 @@ namespace PID
 
         public static Rigidbody NearestHitPart(Rigidbody[] parts, Vector3 hitPoint)
         {
+            if (hitPoint == Vector3.zero)
+                return null; 
             float shortest = 9999999999999999f;  
             float deltaDist;
             Rigidbody closest = null;
