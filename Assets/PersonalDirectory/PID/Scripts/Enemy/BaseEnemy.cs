@@ -28,10 +28,11 @@ namespace PID
         protected int attackDamage;
         protected int attackRange; 
         protected EnemyStat enemyStat;
-        protected int currentHealth
+        [SerializeField] int currentHealth; 
+        protected int CurrentHealth
         {
-            get;
-            private set;
+            get => currentHealth; 
+            set => currentHealth = value;
         }
 
         protected virtual void Awake()
@@ -57,13 +58,13 @@ namespace PID
             moveSpeed = stat.moveSpeed;
             maxHealth = stat.maxHealth;
             attackDamage = stat.attackDamage;
-            currentHealth = maxHealth;
+            CurrentHealth = maxHealth;
         }
 
         public virtual void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
         {
             //GameManager.Resource.Instantiate<ParticleSystem>("Enemy/TakeDamage", hitPoint, Quaternion.LookRotation(hitNormal), true);
-            currentHealth -= damage;
+            CurrentHealth -= damage;
         }
         public virtual void TakeStrike(Transform hitter, float damage, Vector3 hitPoint, Vector3 hitNormal)
         {
@@ -74,11 +75,11 @@ namespace PID
         {
             if (success)
             {
-                currentHealth -= ((int)damage * flankDamageMultiplier); 
+                CurrentHealth -= ((int)damage * flankDamageMultiplier); 
             }
             else
             {
-                currentHealth -= (int)damage; 
+                CurrentHealth -= (int)damage; 
             }
         }
 

@@ -26,6 +26,7 @@ namespace PID
             if (wearable.IsWearing)
             {
                 wearable.TakeDamage(damage, hitPoint, hitNormal);
+                return; 
             }
             enemy.TakeDamage(damage, hitPoint, hitNormal);
         }
@@ -35,6 +36,7 @@ namespace PID
             if (wearable.IsWearing)
             {
                 wearable.TakeStrike(hitter, damage, hitPoint, hitNormal);
+                return; 
             }
             enemy.TakeStrike(hitter, damage, hitPoint, hitNormal);
         }

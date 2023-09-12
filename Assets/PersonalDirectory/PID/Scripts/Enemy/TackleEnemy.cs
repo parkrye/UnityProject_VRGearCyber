@@ -174,7 +174,26 @@ namespace PID
             //GameManager.Resource.Instantiate<ParticleSystem>("Enemy/TakeDamage", hitPoint, Quaternion.LookRotation(hitNormal), true);
             base.TakeDamage(damage, hitPoint, hitNormal);
             anim.SetTrigger("TakeHit");
-            if (currentHealth <= 0)
+            if (CurrentHealth <= 0)
+            {
+                NeutralizedState neutralizeReason;
+                if (stateMachine.CheckState(State.Neutralized))
+                {
+                    neutralizeReason = stateMachine.RetrieveState(State.Neutralized) as NeutralizedState;
+                    neutralizeReason.SetDeathReason(NeutralizedState.DeathType.Health);
+                }
+                stateMachine.ChangeState(State.Neutralized);
+                onDeath?.Invoke(hitNormal, hitPoint);
+                StartCoroutine(DeathCycle(false));
+            }
+        }
+        public override void TakeStrike(Transform hitter, float damage, Vector3 hitPoint, Vector3 hitNormal)
+        {
+            if (stateMachine.curStateName == State.Neutralized)
+                return;
+            base.TakeStrike(hitter, damage, hitPoint, hitNormal);
+            anim.SetTrigger("TakeHit");
+            if (CurrentHealth <= 0)
             {
                 NeutralizedState neutralizeReason;
                 if (stateMachine.CheckState(State.Neutralized))

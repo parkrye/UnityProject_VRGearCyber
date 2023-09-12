@@ -92,6 +92,7 @@ namespace PID
                 }
                 else
                 {
+                    //IHitable playerDirect = GameManager.Data.Player.Data.GetComponent<IHitable>();
                     IHitable hitable = hitAttempt.collider.GetComponent<IHitable>();
                     if (hitable != null)
                     {
