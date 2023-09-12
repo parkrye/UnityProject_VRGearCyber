@@ -6,8 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/PersonalDirectory/PGR/Scenes/PGR_ApartmentScene.unity
+    guid: 7e14b8a38a71ecd49ab1541bd3368921
+  - enabled: 1
+    path: Assets/PersonalDirectory/PGR/Scenes/PGR_CityScene.unity
+    guid: 69f9dddee0f656147992f46c959e6215
+  - enabled: 1
+    path: Assets/PersonalDirectory/PGR/Scenes/PGR_CompanyScene.unity
+    guid: b83916c431313d649b7e2927dcdd8f20
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 7094158c5fe2cab4a96613a6c9849514,
       type: 2}

@@ -215,7 +215,7 @@ MonoBehaviour:
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
   m_TightenScale: 0.1
-  m_ThrowOnDetach: 1
+  m_ThrowOnDetach: 0
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
     serializedVersion: 2
@@ -240,7 +240,7 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
-  grabPriority: 0
+  grabPriority: 10
   rb: {fileID: 0}
   interactableType: 2
   defaultLayer: 0
@@ -515,7 +515,7 @@ Transform:
   m_GameObject: {fileID: 3103284111105058160}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.06, y: -0.625, z: -1}
-  m_LocalScale: {x: 0.05, y: 1, z: 0.1}
+  m_LocalScale: {x: 0.06, y: 1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5210896708005334538}
@@ -806,7 +806,7 @@ Transform:
   m_GameObject: {fileID: 4718247456762229560}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.225, y: 0, z: -1}
-  m_LocalScale: {x: 0.05, y: 2.25, z: 0.1}
+  m_LocalScale: {x: 0.06, y: 2.25, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5210896708005334538}
@@ -934,7 +934,7 @@ Transform:
   m_GameObject: {fileID: 6095131816095952716}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.225, y: 0, z: 1}
-  m_LocalScale: {x: 0.05, y: 2.25, z: 0.1}
+  m_LocalScale: {x: 0.06, y: 2.25, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5210896708005334538}
@@ -1012,7 +1012,7 @@ Transform:
   m_GameObject: {fileID: 7540313206799898476}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.06, y: -0.625, z: 1}
-  m_LocalScale: {x: 0.05, y: 1, z: 0.1}
+  m_LocalScale: {x: 0.06, y: 1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5210896708005334538}

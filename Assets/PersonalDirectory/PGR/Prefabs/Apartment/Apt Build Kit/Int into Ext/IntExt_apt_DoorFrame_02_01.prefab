@@ -401,6 +401,7 @@ MonoBehaviour:
   handleOriginTransform: {fileID: 4880874782625752714}
   handleRb: {fileID: 7162948845141268218}
   grabableHandle: {fileID: 8744410411894530052}
+  isGrabbed: 0
 --- !u!1 &8744410411894530052
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,7 +618,7 @@ MonoBehaviour:
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
   m_TightenScale: 0.1
-  m_ThrowOnDetach: 1
+  m_ThrowOnDetach: 0
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
     serializedVersion: 2

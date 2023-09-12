@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3233219503383920434}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 3233219503532546989}
   - component: {fileID: 3233219503532546987}
   - component: {fileID: 3233219503532546986}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: SongNameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3233219503824336337}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,7 +220,7 @@ GameObject:
   - component: {fileID: 3233219503890955870}
   - component: {fileID: 3233219503890955868}
   - component: {fileID: 3233219503890955871}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,7 +295,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3233219503979654452}
   - component: {fileID: 3233219503979654453}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -405,7 +405,7 @@ GameObject:
   - component: {fileID: 3233219504203208351}
   - component: {fileID: 3233219504203208349}
   - component: {fileID: 3233219504203208346}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Hologram Radio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -476,7 +476,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &3233219504203208546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -674,7 +674,7 @@ GameObject:
   - component: {fileID: 3233219504273484791}
   - component: {fileID: 3233219504273484789}
   - component: {fileID: 3233219504273484788}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -750,7 +750,7 @@ GameObject:
   - component: {fileID: 3233219504276824831}
   - component: {fileID: 3233219504276824829}
   - component: {fileID: 3233219504276824828}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -826,7 +826,7 @@ GameObject:
   - component: {fileID: 3233219505232307649}
   - component: {fileID: 3233219505232307711}
   - component: {fileID: 3233219505232307710}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}

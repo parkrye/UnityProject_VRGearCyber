@@ -5,11 +5,12 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 namespace PGR
 {
-    public class AccessDoor : MonoBehaviour
+    public class AccessDoor : SceneMover
     {
         [SerializeField] Rigidbody doorRb;
         [SerializeField] Image gaugeImage;
         [SerializeField] float closeTerm, accessGauge;
+        [SerializeField] int locationNum;
         IEnumerator hoverRoutine;
 
         void Awake()
@@ -40,25 +41,10 @@ namespace PGR
             }
             accessGauge = 1f;
             gaugeImage.fillAmount = accessGauge;
-            StartCoroutine(CloseRoutine());
 
-            yield return new WaitForSeconds(1f);
-            accessGauge = 0f;
-            gaugeImage.fillAmount = accessGauge;
+            MoveScene(locationNum);
         }
 
-        IEnumerator CloseRoutine()
-        {
-            doorRb.isKinematic = false;
-            yield return new WaitForSeconds(closeTerm);
-            doorRb.isKinematic = true;
-            for (int i = 0; i < 10; i++)
-            {
-                doorRb.transform.localEulerAngles = Vector3.Lerp(doorRb.transform.localEulerAngles, Vector3.zero, 0.1f);
-                yield return new WaitForSeconds(0.1f);
-            }
-            doorRb.transform.localEulerAngles = Vector3.zero;
-        }
     }
 
 }

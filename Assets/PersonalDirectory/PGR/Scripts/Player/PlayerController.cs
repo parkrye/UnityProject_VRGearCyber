@@ -12,6 +12,7 @@ namespace PGR
         [SerializeField] Camera irisSystemCamera;
         [SerializeField] PlayerSight playerSight;
         [SerializeField] IrisSystemDisplay irisSystemDisplay;
+        [SerializeField] Transform XROriginTransform;
 
         public PlayerDataModel Data { get { return playerDataModel; } }
         public PlayerHandMotion HandMotion { get { return playerHandMotion; } }
@@ -34,12 +35,18 @@ namespace PGR
             yield return new WaitForSeconds(1f);
             Data.HPModifyEvent.AddListener(Display.ModifyHP);
             Display.ModifyText("");
+            DontDestroyOnLoad(gameObject);
         }
 
         public void ChangeTurnType(bool isSmooth)
         {
             continuousTurnProvider.gameObject.SetActive(isSmooth);
             snapTurnProvider.gameObject.SetActive(!isSmooth);
+        }
+
+        public void MoveTransform(Vector3 position)
+        {
+            XROriginTransform.position = position;
         }
     }
 
