@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 64000013931672536}
   - component: {fileID: -4852243029068165435}
   - component: {fileID: -958869453963005349}
+  - component: {fileID: 4921911743678823835}
   m_Layer: 0
   m_Name: ATM_Pink
   m_TagString: Untagged
@@ -176,3 +177,18 @@ MonoBehaviour:
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
   acceptedType: 0
+--- !u!114 &4921911743678823835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013113291574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49aafd62a71262b49bf2482ecf6af29b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hackingMat:
+  - {fileID: 2100000, guid: 313ef4bc07518a14d8fce4c5aba3c0d2, type: 2}
+  - {fileID: 2100000, guid: f357ecea382f94148889179a43317bf1, type: 2}

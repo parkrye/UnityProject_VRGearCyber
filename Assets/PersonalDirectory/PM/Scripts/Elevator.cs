@@ -8,28 +8,50 @@ namespace PM
     {
         Animator animator;
         Transform map;
-        bool close;
+        bool open;
+        int floor=1;
         private void Start()
         {
             animator = GetComponent<Animator>();
-            map = transform.parent.parent.parent;
+            map = GameObject.Find("Map").transform;
             transform.parent = null;
         }
 
         private void Open()
         {
-            animator.SetTrigger("Open");
+            if(!open) 
+            {
+                open = true;
+                animator.SetTrigger("Open");
+            }
+            
         }
 
-        private void Close()
+        public void Close()
         {
-            animator.SetTrigger("Close");
+            if (open)
+            {
+                open = false;
+                animator.SetTrigger("Close");
+            }
+        }
+        public void Up()
+        {
+            if (floor == 1)
+                StartCoroutine(UpMove());
+        }
+
+        public void Down()
+        {
+            if (floor == 2)
+                StartCoroutine (DownMove());
         }
 
         IEnumerator UpMove()
         {
             map.transform.position += new Vector3(0, -9, 0);
             yield return new WaitForSeconds(2);
+            floor = 2;
             Open();
         }
 
@@ -37,6 +59,7 @@ namespace PM
         {
             map.transform.position += new Vector3(0, 9, 0);
             yield return new WaitForSeconds(2);
+            floor = 1;
             Open();
         }
     }

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 64000013640084084}
   - component: {fileID: -1979863745829122557}
   - component: {fileID: 3012253072222209885}
+  - component: {fileID: 108592519929217734}
   m_Layer: 0
   m_Name: ATM_Gray
   m_TagString: Untagged
@@ -176,3 +177,18 @@ MonoBehaviour:
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
   acceptedType: 0
+--- !u!114 &108592519929217734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013720703938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49aafd62a71262b49bf2482ecf6af29b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hackingMat:
+  - {fileID: 2100000, guid: e5c9b732aeebe2341b455d5034f745b3, type: 2}
+  - {fileID: 2100000, guid: f357ecea382f94148889179a43317bf1, type: 2}

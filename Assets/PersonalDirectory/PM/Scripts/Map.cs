@@ -209,7 +209,6 @@ namespace PM
                 // i가 roomData 열의 마지막이 아닐때
                 if (i != roomData.GetLength(0) - 1)
                 {
-                    Debug.Log(i + " " + (roomData.GetLength(0) - 1));
                     if (Random.Range(0, 2) == 0 || roomData[j, i].aggregate != roomData[j, i + 1].aggregate)
                     {
                         roomData[j + 1, i].aggregate = roomData[j, i].aggregate;
