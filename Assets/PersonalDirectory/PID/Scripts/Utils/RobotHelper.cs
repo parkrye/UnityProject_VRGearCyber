@@ -8,6 +8,27 @@ namespace PID
 {
     public static class RobotHelper
     {
+        public enum RobotType
+        {
+            Guard, 
+            Tackler
+        }
+        public enum State
+        {
+            Idle,
+            Infiltrated,
+            Patrol,
+            LookAround,
+            Alert,
+            Assault,
+            Trace,
+            SoundReact,
+            Hide,
+            Retrieve,
+            Neutralized,
+            Size
+            //Possibly extending beyond for Gathering Abilities. 
+        }
         const float nearIntersectThreshold = .985f;
         const float validSoundRegion = 2f;
 
