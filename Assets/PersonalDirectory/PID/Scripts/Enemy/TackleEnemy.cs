@@ -62,6 +62,30 @@ namespace PID
         }
         #endregion
         #region MACHINE UPDATES 
+        Vector3 localVel;
+        Vector3 worldVel;
+        public void UpdateAnim()
+        {
+            localVel = agent.velocity.normalized;
+            worldVel = transform.InverseTransformDirection(localVel);
+            anim.SetFloat("Speed", agent.speed);
+            if (agent.isStopped)
+            {
+                anim.SetFloat("Speed", 0);
+                anim.SetFloat("ZSpeed", 0);
+                anim.SetFloat("XSpeed", 0);
+            }
+            if (agent.speed > .1)
+            {
+                anim.SetFloat("ZSpeed", worldVel.z);
+                anim.SetFloat("XSpeed", worldVel.x);
+            }
+        }
+        private void Update()
+        {
+            UpdateAnim();
+            stateMachine.Update();
+        }
         public void TryStrike()
         {
             attackStick.AttackTiming(); 
