@@ -6,13 +6,23 @@ using UnityEngine;
 
 public class RobotBaton : MonoBehaviour
 {
-    [SerializeField] string targetTag; 
+    [SerializeField] string targetTag = "Player";
+    [SerializeField] float attackInterval;
+    Animator anim;
+    Transform attacker; 
+    float attackTimer; 
     int attackDamage;
     int attackRange;
-    float angle;
+    [SerializeField] float angle;
     float cosValue; 
 
     private void Awake()
+    {
+        anim = GetComponentInParent<Animator>();
+        attacker = anim.gameObject.transform; 
+        attackTimer = 0f; 
+    }
+    private void Start()
     {
         cosValue = Mathf.Cos(angle * .5f * Mathf.Deg2Rad);
     }
@@ -24,31 +34,40 @@ public class RobotBaton : MonoBehaviour
     }
     public void AttackAttempt()
     {
-
+        if (Time.time > attackTimer)
+        {
+            anim.SetTrigger("Strike"); 
+            attackTimer = Time.time + attackInterval;
+        }
     }
 
     public void AttackTiming()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange);
+        Collider[] colliders = Physics.OverlapSphere(attacker.position, attackRange);
         foreach (Collider collider in colliders)
         {
             if (collider.gameObject.tag != targetTag)
-                return; 
-            Vector3 dirToTarget = (collider.transform.position - transform.position).normalized;
-            if (Vector3.Dot(transform.forward, dirToTarget) < cosValue)
+                continue; 
+            Vector3 dirToTarget = (collider.transform.position - attacker.position).normalized;
+            dirToTarget.y = 0f; 
+            if (dirToTarget == Vector3.zero)
+            {
+                IHitable hitable = collider.GetComponent<IHitable>();
+                hitable?.TakeDamage(attackDamage, Vector3.zero, Vector3.zero);
+                break; ; 
+            }
+            if (Vector3.Dot(attacker.forward, dirToTarget) < cosValue)
+            {
+                Debug.Log($"{attacker.forward}: {dirToTarget}: {Vector3.Dot(attacker.forward, dirToTarget) < cosValue}");
                 continue;
+            }
             //Only hits once.  
-            IHitable hittable = collider.GetComponent<IHitable>();
+            IHitable hittable = collider.gameObject.GetComponent<IHitable>();
             if (hittable != null)
             {
                 hittable?.TakeDamage(attackDamage, Vector3.zero, Vector3.zero);
                 break;
             }
         }
-    }
-
-    IEnumerator TryAttack()
-    {
-        yield return null;
     }
 }

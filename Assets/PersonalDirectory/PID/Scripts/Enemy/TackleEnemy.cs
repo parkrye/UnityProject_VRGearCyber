@@ -27,6 +27,7 @@ namespace PID
             rigid = GetComponent<Rigidbody>();
             anim = GetComponent<Animator>();
             attackStick = GetComponentInChildren<RobotBaton>();
+            attackStick.SyncStatData(enemyStat);
 
             stateMachine = new StateMachine<State, TackleEnemy>(this);
             stateMachine.AddState(State.Idle, new IdleState(this, stateMachine));
@@ -44,7 +45,6 @@ namespace PID
         {
             base.Start();
             AgentSetUp(enemyStat);
-            attackStick.SyncStatData(enemyStat);
             robotSight.SyncSightStat(enemyStat);
             robotSight.PlayerFound += DetectPlayer;
             robotSight.PlayerLost += TempPlayerLost;
@@ -88,6 +88,7 @@ namespace PID
         }
         public void TryStrike()
         {
+            Debug.Log("AttackAttempted");
             attackStick.AttackTiming(); 
         }
         public void AgentSetUp(EnemyStat robotStat)
@@ -475,13 +476,14 @@ namespace PID
         {
             RobotBaton attackStick;
             Vector3 lookDir;
+            const float attackDistance = 2.5f;
+            float deltaDist; 
             public AssaultState(TackleEnemy owner, StateMachine<State, TackleEnemy> stateMachine) : base(owner, stateMachine)
             {
             }
 
             public override void Enter()
             {
-                //owner.agent.updateRotation = false;
                 owner.agent.updateRotation = false;
                 //if (owner.playerBody != null)
                 //    owner.focusDir = (owner.playerBody.transform.position - owner.transform.position).normalized; 
@@ -511,12 +513,24 @@ namespace PID
                 owner.focusDir = (owner.playerBody.transform.position - owner.transform.position).normalized;
                 RotateTowardPlayer();
                 //If distance is close enough, 
-                owner.anim.SetTrigger("Strike");
+                deltaDist = Vector3.SqrMagnitude(owner.playerBody.transform.position - owner.transform.position); 
+                if (deltaDist <= attackDistance)
+                {
+                    owner.agent.isStopped = true;
+                    attackStick.AttackAttempt();
+                }
+                else
+                {
+                    owner.agent.isStopped = false;
+                    owner.agent.SetDestination(owner.playerBody.position);
+                }
             }
 
             public void RotateTowardPlayer()
             {
                 LookDirToPlayer(owner.playerBody.transform.position, owner.transform, out lookDir);
+                if (lookDir == Vector3.zero)
+                    return; 
                 owner.transform.rotation = Quaternion.LookRotation(lookDir);
             }
         }

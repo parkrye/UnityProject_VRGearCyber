@@ -125,7 +125,7 @@ namespace PID
 
         public void Reload()
         {
-            if (reloading)
+            if (reloading || !outofAmmo)
                 return; 
             reloadCoroutine = StartCoroutine(ReloadRoutine());
         }
