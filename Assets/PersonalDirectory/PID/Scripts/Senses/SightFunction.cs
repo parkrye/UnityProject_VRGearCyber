@@ -8,7 +8,7 @@ namespace PID
     public class SightFunction : MonoBehaviour
     {
         [SerializeField] LayerMask targetMask;
-        [SerializeField] string targetTag; 
+        [SerializeField] string targetTag = "Player"; 
         [SerializeField] LayerMask obstacleMask; 
         [SerializeField] Transform targetEye;
         [Range(0f, 1f)]
