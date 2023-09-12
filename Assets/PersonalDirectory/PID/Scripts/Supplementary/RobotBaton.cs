@@ -70,6 +70,11 @@ namespace PID
                     hittable?.TakeDamage(attackDamage, Vector3.zero, Vector3.zero);
                     break;
                 }
+                if (collider.gameObject.tag == targetTag)
+                {
+                    IHitable playerDirect = GameManager.Data.Player.Data.GetComponent<IHitable>();
+                    playerDirect?.TakeDamage(attackDamage, Vector3.zero, Vector3.zero); break;
+                }
             }
         }
     }
