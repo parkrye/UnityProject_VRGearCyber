@@ -12,23 +12,32 @@ namespace PM
         public enum Arrow { up, down, right, left }
         public Arrow arrow;
         public Vector3 position;
+        bool open;
+        public bool test;
         private void Start()
         {
             animator = GetComponent<Animator>();
             GameManager.Data.timeScaleEvent.AddListener(TimeScale);
             position = transform.position;
-            DoorConnet();
+            StartCoroutine(DoorConnet());
         }
         private void Update()
         {
-            Debug.DrawRay(transform.position + new Vector3(3, 2, 0), -transform.right * 20f, Color.blue);
+            if (test)
+            {
+                test = false;
+                StartCoroutine(OpenDoor());
+            }
+            Debug.DrawRay(transform.position + transform.forward * 2.5f + transform.up, -transform.right * 20f, Color.blue);
         }
-        public void DoorConnet()
+        IEnumerator DoorConnet()
         {
-            Ray ray = new Ray(transform.position + new Vector3(3, 2, 0), -transform.right*20f );
+            Ray ray = new Ray(transform.position + transform.forward * 2.5f + transform.up, -transform.right * 20f );
             RaycastHit hit;
             Physics.Raycast(ray, out hit);
+            Debug.Log(hit.transform.name);
             connetingDoor = hit.transform.GetComponent<SyberDoor>();
+            yield return null;
         }
 
         public IEnumerator Break()
@@ -47,9 +56,13 @@ namespace PM
 
         public IEnumerator OpenDoor()
         {
-            StartCoroutine(connetingDoor.OpenDoor());
-            animator.SetTrigger("Open");
-            yield return null;
+            if(!open)
+            {
+                open = true;
+                StartCoroutine(connetingDoor.OpenDoor());
+                animator.SetTrigger("Open");
+                yield return null;
+            }
         }
 
         public void TimeScale()
