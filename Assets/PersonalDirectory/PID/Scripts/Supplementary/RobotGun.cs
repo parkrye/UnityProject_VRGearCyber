@@ -76,7 +76,6 @@ namespace PID
             debugLine.SetPosition(0, muzzlePoint.position);
             shotAttempt = RobotHelper.FinalShotPoint(target.position, attackRange, missChance);
             shotAttempt = (shotAttempt - muzzlePoint.position).normalized;
-            Debug.Log(shotAttempt); 
             //RaycastHit[] queries;
             //queries = Physics.RaycastAll(muzzlePoint.position, shotAttempt, attackRange);
 
@@ -126,6 +125,8 @@ namespace PID
 
         public void Reload()
         {
+            if (reloading)
+                return; 
             reloadCoroutine = StartCoroutine(ReloadRoutine());
         }
 

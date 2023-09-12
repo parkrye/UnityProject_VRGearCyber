@@ -623,6 +623,7 @@ namespace PID
             public override void Exit()
             {
                 owner.StopCoroutine(HideRoutine(player));
+                owner.StopAllCoroutines(); 
                 timeOut = 0f;
                 stopCounting = false; 
             }
@@ -641,6 +642,10 @@ namespace PID
             {
                 // If Enemy has finished reloading 
                 // If Enemy has returned to the initial positions. 
+                if (searchLocFound)
+                {
+
+                }
                 if (hidePosition != Vector3.zero)
                 {
                     timeOut = 0f; 
@@ -648,6 +653,7 @@ namespace PID
                     owner.StopAllCoroutines(); 
                     owner.StopCoroutine(HideRoutine(player));
                     owner.robotGun.Reload();
+                    return; 
                 }
                 if (timeOut > 3f)
                 {
