@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using static PID.RobotHelper; 
 using static PID.GuardEnemy;
 using static PID.MeleeCombatHelper; 
 
@@ -9,6 +10,7 @@ namespace PID
 {
     public class BaseEnemy : MonoBehaviour, IHitable, IStrikable
     {
+        public RobotType robotType; 
         public UnityAction<Vector3, Vector3> onDeath;
         public UnityAction<Vector3, int, int> cctvNotified; 
         public UnityAction<bool> OnAndOff;
@@ -38,9 +40,17 @@ namespace PID
             robotSight = GetComponent<SightFunction>();
             robotEars = GetComponent<AuditoryFunction>();
             agent = GetComponent<NavMeshAgent>();
-
         }
 
+        protected virtual void Start()
+        {
+            GameManager.Data.timeScaleEvent?.AddListener(TimeScale);
+        }
+
+        protected virtual void OnDisable()
+        {
+            GameManager.Data.timeScaleEvent?.RemoveListener(TimeScale);
+        }
         protected virtual void SetUp(EnemyStat stat)
         {
             attackRange = stat.attackRange;
@@ -76,9 +86,27 @@ namespace PID
         {
             
         }
+        public void TimeScale()
+        {
+            anim.speed = GameManager.Data.TimeScale;
+            agent.speed = GameManager.Data.TimeScale;
+        }
+
+        public virtual State CurState()
+        {
+            return State.Idle; 
+        }
         protected virtual void Die()
         {
         }
+        public virtual void Hacked()
+        {
+            
+        }
+        public virtual void HackFailed(State prevState)
+        {
+        }
+
         protected IEnumerator DeathCycle(bool deadOrAlive)
         {
             yield return new WaitForSeconds(.2f);

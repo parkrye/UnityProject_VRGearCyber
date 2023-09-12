@@ -13,22 +13,6 @@ namespace PID
         /// <summary>
         /// Hide and Clash should be sub-state driven by the Assault state. 
         /// </summary>
-        public enum State
-        {
-            Idle,
-            Infiltrated,
-            Patrol,
-            LookAround, 
-            Alert,
-            Assault,
-            Trace,
-            SoundReact,
-            Hide,
-            Return,
-            Neutralized,
-            Size
-            //Possibly extending beyond for Gathering Abilities. 
-        }
         #region MACHINE PROPERTIES 
         //Base Properties 
         Rigidbody rigid;
@@ -62,7 +46,6 @@ namespace PID
             robotGun = GetComponentInChildren<RobotGun>();
             debugText = GetComponentInChildren<TMP_Text>();
 
-            base.SetUp(enemyStat);
             stateMachine = new StateMachine<State, GuardEnemy>(this);
             stateMachine.AddState(State.Idle, new IdleState(this, stateMachine));
             stateMachine.AddState(State.Infiltrated, new InfiltratedState(this, stateMachine));
@@ -75,30 +58,31 @@ namespace PID
             stateMachine.AddState(State.SoundReact, new SoundReactState(this, stateMachine));
             stateMachine.AddState(State.Neutralized, new NeutralizedState(this, stateMachine));
         }
-        private void Start()
+        protected override void Start()
         {
+            base.Start(); 
             AgentSetUp(enemyStat);
             robotGun.SyncStatData(enemyStat);
             robotSight.SyncSightStat(enemyStat);
             robotSight.PlayerFound += DetectPlayer;
             robotSight.PlayerLost += TempPlayerLost;
-            robotEars.trackSound += DetectSound; 
+            robotEars.trackSound += DetectSound;
+            cctvNotified += Notified; 
             stateMachine.SetUp(State.Idle);
-            GameManager.Data.timeScaleEvent?.AddListener(TimeScale);
         }
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            robotSight.PlayerFound -= DetectPlayer;
+            robotSight.PlayerLost -= TempPlayerLost;
+            robotEars.trackSound -= DetectSound;
+            cctvNotified -= Notified;
+        }
+
         #endregion
         #region MACHINE UPDATES 
-        public void AgentSetUp(EnemyStat robotStat)
-        {
-            agent.speed = moveSpeed;
-            //Takes the General stat values, implement it on the nav_agent level. 
-        }
-        public void AgentStop()
-        {
-
-        }
         Vector3 localVel;
-        Vector3 worldVel; 
+        Vector3 worldVel;
         public void UpdateAnim()
         {
             localVel = agent.velocity.normalized;
@@ -116,34 +100,25 @@ namespace PID
                 anim.SetFloat("XSpeed", worldVel.x);
             }
         }
-        private void OnDisable()
-        {
-            robotSight.PlayerFound -= DetectPlayer;
-            robotSight.PlayerLost -= TempPlayerLost;
-            robotEars.trackSound -= DetectSound;
-            GameManager.Data.timeScaleEvent?.RemoveListener(TimeScale);
-        }
         private void Update()
         {
-            UpdateAnim(); 
+            UpdateAnim();
             stateMachine.Update();
         }
-        protected override void Die()
+        public void AgentSetUp(EnemyStat robotStat)
         {
-            NeutralizedState neutralizeReason;
-            if (stateMachine.CheckState(State.Neutralized))
-            {
-                neutralizeReason = stateMachine.RetrieveState(State.Neutralized) as NeutralizedState;
-            }
-            stateMachine.ChangeState(State.Neutralized);
+            agent.speed = moveSpeed;
+            //Takes the General stat values, implement it on the nav_agent level. 
         }
+        public void AgentStop()
+        {
+
+        }
+
+
         #endregion
         #region  COMBAT INTERACTIONS 
-        public void TimeScale()
-        {
-            anim.speed = GameManager.Data.TimeScale; 
-            agent.speed = GameManager.Data.TimeScale;
-        }
+        
         public void DetectPlayer(Transform player)
         {
             //should Enemy be under hide and shoot, ignore further calls. 
@@ -177,42 +152,8 @@ namespace PID
                 stateMachine.ChangeState(State.Trace); 
         }
         int incomingDamage;
-        public override void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
-        {
-            if (stateMachine.curStateName == State.Neutralized)
-                return;
-            //GameManager.Resource.Instantiate<ParticleSystem>("Enemy/TakeDamage", hitPoint, Quaternion.LookRotation(hitNormal), true);
-            base.TakeDamage(damage, hitPoint, hitNormal);
-            anim.SetTrigger("TakeHit");
-            if (currentHealth <= 0)
-            {
-                NeutralizedState neutralizeReason;
-                if (stateMachine.CheckState(State.Neutralized))
-                {
-                    neutralizeReason = stateMachine.RetrieveState(State.Neutralized) as NeutralizedState;
-                    neutralizeReason.SetDeathReason(NeutralizedState.DeathType.Health);
-                }
-                stateMachine.ChangeState(State.Neutralized);
-                onDeath?.Invoke(hitNormal, hitPoint);
-                StartCoroutine(DeathCycle(false)); 
-            }
-        }
-        public override void Notified(Vector3 centrePoint, int size, int index)
-        {
-            if (stateMachine.curStateName == State.Neutralized 
-                || stateMachine.curStateName == State.Alert)
-            {
-                return;
-            }
-            AlertState alertState;
-            if (stateMachine.CheckState(State.Alert))
-            {
-                alertState = stateMachine.RetrieveState(State.Alert) as AlertState;
-                Vector3 gatherPos = RobotHelper.GroupPositionAllocator(centrePoint, size, index); 
-                alertState.SetGatherPoint(gatherPos);
-                stateMachine.ChangeState(State.Alert); 
-            }
-        }
+        
+        
         public void Reactivate()
         {
             NeutralizedState.DeathType deathState; 
@@ -238,8 +179,29 @@ namespace PID
             Debug.Log(currentHealth); 
         }
         #endregion
-        //Hackable Component. 
-        public void Hacked()
+        #endregion
+        #region OVERRIDE FUNCTIONS 
+        public override void Notified(Vector3 centrePoint, int size, int index)
+        {
+            if (stateMachine.curStateName == State.Neutralized
+                || stateMachine.curStateName == State.Alert)
+            {
+                return;
+            }
+            AlertState alertState;
+            if (stateMachine.CheckState(State.Alert))
+            {
+                alertState = stateMachine.RetrieveState(State.Alert) as AlertState;
+                Vector3 gatherPos = RobotHelper.GroupPositionAllocator(centrePoint, size, index);
+                alertState.SetGatherPoint(gatherPos);
+                stateMachine.ChangeState(State.Alert);
+            }
+        }
+        public override State CurState()
+        {
+            return curState;
+        }
+        public override void Hacked()
         {
             NeutralizedState neutralizeReason;
             if (stateMachine.CheckState(State.Neutralized))
@@ -249,12 +211,41 @@ namespace PID
             }
             stateMachine.ChangeState(State.Neutralized);
         }
-
-        public void HackFailed(State prevState)
+        public override void HackFailed(State prevState)
         {
             if (stateMachine.curStateName != State.Neutralized)
-                stateMachine.ChangeState(prevState); 
+                stateMachine.ChangeState(prevState);
         }
+        public override void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
+        {
+            if (stateMachine.curStateName == State.Neutralized)
+                return;
+            //GameManager.Resource.Instantiate<ParticleSystem>("Enemy/TakeDamage", hitPoint, Quaternion.LookRotation(hitNormal), true);
+            base.TakeDamage(damage, hitPoint, hitNormal);
+            anim.SetTrigger("TakeHit");
+            if (currentHealth <= 0)
+            {
+                NeutralizedState neutralizeReason;
+                if (stateMachine.CheckState(State.Neutralized))
+                {
+                    neutralizeReason = stateMachine.RetrieveState(State.Neutralized) as NeutralizedState;
+                    neutralizeReason.SetDeathReason(NeutralizedState.DeathType.Health);
+                }
+                stateMachine.ChangeState(State.Neutralized);
+                onDeath?.Invoke(hitNormal, hitPoint);
+                StartCoroutine(DeathCycle(false));
+            }
+        }
+        protected override void Die()
+        {
+            NeutralizedState neutralizeReason;
+            if (stateMachine.CheckState(State.Neutralized))
+            {
+                neutralizeReason = stateMachine.RetrieveState(State.Neutralized) as NeutralizedState;
+            }
+            stateMachine.ChangeState(State.Neutralized);
+        }
+
         #endregion
         public abstract class GuardState : StateBase<State, GuardEnemy>
         {

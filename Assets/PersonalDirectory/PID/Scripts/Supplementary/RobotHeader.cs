@@ -5,17 +5,20 @@ using UnityEngine;
 
 namespace PID
 {
-    public class RobotHeader : MonoBehaviour, IHitable
+    public class RobotHeader : RobotParts
     {
-        GuardEnemy enemy;
+        [TextArea]
+        public string description; 
         [SerializeField] int headShotMultiplier;
-        private void Awake()
+        
+        public override void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
         {
-            enemy = GetComponentInParent<GuardEnemy>();
+            base.TakeDamage(damage * headShotMultiplier, hitPoint, hitNormal);
         }
-        public void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
+
+        public override void TakeStrike(Transform hitter, float damage, Vector3 hitPoint, Vector3 hitNormal)
         {
-            enemy.TakeDamage(damage * headShotMultiplier, hitPoint, hitNormal);
+            base.TakeStrike(hitter, damage * headShotMultiplier, hitPoint, hitNormal);
         }
     }
 }
