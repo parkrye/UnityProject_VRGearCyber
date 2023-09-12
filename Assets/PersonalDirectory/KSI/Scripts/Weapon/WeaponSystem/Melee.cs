@@ -55,8 +55,10 @@ namespace KSI
 		}
 
 		public void StartSwing()
-		{
-			if (isRightHanded == true)
+        {
+            if (playerHandMotion == null)
+                playerHandMotion = GameManager.Data.Player.HandMotion;
+            if (isRightHanded == true)
 			{
 				playerHandMotion.GrabOnCloseWeaponRight(true);
 			}

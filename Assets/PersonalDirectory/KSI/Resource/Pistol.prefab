@@ -5382,9 +5382,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6879758548582890656}
-        m_TargetAssemblyTypeName: Ranged, Assembly-CSharp
+        m_TargetAssemblyTypeName: KSI.Ranged, Assembly-CSharp
         m_MethodName: PullTheTrigger
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5510,7 +5510,7 @@ MonoBehaviour:
   bullet: {fileID: 1561455455814107037, guid: 1397184aae7a2664d99c82877c3283c7, type: 3}
   muzzlePoint: {fileID: 3001588079524655082}
   bulletShell: {fileID: 1188181493}
-  damage: 0
+  damage: 50
   maxDistance: 10
   magazine: {fileID: 0}
   socketInteractor: {fileID: 3252051743757865681}
