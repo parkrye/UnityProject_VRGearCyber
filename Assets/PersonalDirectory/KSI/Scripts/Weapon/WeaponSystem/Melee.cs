@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PID;
+using PGR;
 
 namespace KSI
 {
@@ -15,16 +16,21 @@ namespace KSI
 		[SerializeField] private float minDistanceForMaxDamage = 1.0f; // 최대 데미지를 주기 위한 최소 거리
 		[SerializeField] private float minDistanceForMinDamage = 0.2f; // 최소 데미지를 주기 위한 최소 거리
 		
-
 		[Header("Runtime Data")]
 		[SerializeField] private Collider coll; // 무기의 콜라이더
+
+		private bool isRightHanded; 		
 		private bool isSwinging = false; // 무기가 휘두르고 있는지 여부
-		private Queue<Vector3> positionQueue = new Queue<Vector3>(); // 위치를 저장할 큐
+		private Queue<Vector3> positionQueue = new Queue<Vector3>(); // 위치를 저장할 큐		
+		private PlayerHandMotion playerHandMotion;
 
 		void Start()
 		{
 			// 초기에는 콜라이더를 비활성화
 			//coll.enabled = false;
+
+			if (playerHandMotion == null)
+				playerHandMotion = GetComponent<PlayerHandMotion>();
 		}
 
 		// 위치를 추적하는 코루틴
@@ -50,6 +56,15 @@ namespace KSI
 
 		public void StartSwing()
 		{
+			if (isRightHanded == true)
+			{
+				playerHandMotion.GrabOnCloseWeaponRight(true);
+			}
+			else
+			{
+				playerHandMotion.GrabOnCloseWeaponLeft(true);
+			}
+
 			StartCoroutine(TrackPositionRoutine());
 
 			isSwinging = true;
