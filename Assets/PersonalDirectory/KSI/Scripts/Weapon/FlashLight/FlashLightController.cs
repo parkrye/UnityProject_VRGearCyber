@@ -16,7 +16,8 @@ namespace KSI
 		private void Start()
 		{
 			spotLight = GetComponentInChildren<Light>();
-			audioSource = spotLight.GetComponent<AudioSource>();
+
+			audioSource = GetComponent<AudioSource>();
 		}
 
 		public void LightOn()

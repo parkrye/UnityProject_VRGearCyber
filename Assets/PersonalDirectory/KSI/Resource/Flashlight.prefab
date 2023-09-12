@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 1407422290868234858}
   - component: {fileID: 2605315379150841295}
   - component: {fileID: 271068929360990469}
-  - component: {fileID: 97701345520889758}
+  - component: {fileID: 1847156279260616071}
   - component: {fileID: 7888454166567750699}
   - component: {fileID: 6603807135937836509}
   - component: {fileID: 4999828720717734617}
@@ -122,7 +122,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &97701345520889758
+--- !u!65 &1847156279260616071
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,8 +133,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.042951286, y: 0.16428077, z: 0.04295129}
-  m_Center: {x: 0, y: 0.082164004, z: -0.000000021420425}
+  m_Size: {x: 0.042951286, y: 0.16428074, z: 0.042951282}
+  m_Center: {x: 0, y: 0.08216399, z: -0.0000004982576}
 --- !u!54 &7888454166567750699
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
   m_Colliders:
-  - {fileID: 97701345520889758}
+  - {fileID: 1847156279260616071}
   m_InteractionLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
