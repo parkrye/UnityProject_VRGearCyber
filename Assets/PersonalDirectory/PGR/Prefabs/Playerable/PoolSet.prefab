@@ -300,6 +300,7 @@ GameObject:
   - component: {fileID: 5989303368321097615}
   - component: {fileID: 6650250728053894491}
   - component: {fileID: 7317154813152079716}
+  - component: {fileID: 4313382315094000381}
   m_Layer: 0
   m_Name: PoolCue
   m_TagString: Untagged
@@ -572,6 +573,36 @@ MonoBehaviour:
   interactableType: 2
   defaultLayer: 0
   ignoreColliderLayer: 0
+--- !u!114 &4313382315094000381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529160507826464707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce3c1c8456ea22c4bbdc74f9f880d80a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targets:
+  - {fileID: 3788572486030761472}
+  - {fileID: 7788069835593759069}
+  - {fileID: 5356594658520376524}
+  - {fileID: 7512072482622257307}
+  - {fileID: 1994791925119943234}
+  - {fileID: 6617264203716539821}
+  - {fileID: 8998728268457304001}
+  - {fileID: 5483624698918498807}
+  - {fileID: 2062197525420927211}
+  - {fileID: 2251297363776131981}
+  - {fileID: 6634667214745484793}
+  - {fileID: 1161288280381107081}
+  - {fileID: 3057188021738070071}
+  - {fileID: 1051340085730095042}
+  - {fileID: 5343437099741999024}
+  - {fileID: 4804853525254620033}
+  power: 0.1
 --- !u!1 &903896981913892769
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,8 @@ namespace PGR
     {
         [Header("Custom Direct Interactor Parameters")]
         [SerializeField] List<IXRInteractable> customSortedValidTargets;
+        [SerializeField] bool isRightHand;
+        public bool IsRightHand { get { return isRightHand; } }
 
         public override void GetValidTargets(List<IXRInteractable> targets)
         {

@@ -13,6 +13,7 @@ namespace PGR
 
         void Start()
         {
+            GetComponent<Canvas>().worldCamera = Camera.main;
             if (maxHP <= 0)
                 maxHP = 1;
             nowHP = maxHP;

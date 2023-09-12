@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4130332992823132245}
   - component: {fileID: 6259841853352985491}
   - component: {fileID: 3612051203570492925}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shade_Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 435270035097445054}
   - component: {fileID: 735343927782236806}
   - component: {fileID: 1330031084114231581}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shade.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 5819460629304926127}
   - component: {fileID: 5237038549237473688}
   - component: {fileID: 4186786242023384119}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bulb.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 5236685890331331281}
   - component: {fileID: 1247572848790591050}
   - component: {fileID: 333855075196470148}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BulbBase.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -347,10 +347,9 @@ GameObject:
   - component: {fileID: 2676851923169734585}
   - component: {fileID: 3390700210776061027}
   - component: {fileID: 4251780245859508976}
-  - component: {fileID: -7722240289275082000}
-  - component: {fileID: 6946236083244174394}
-  - component: {fileID: -534343778472001177}
-  m_Layer: 0
+  - component: {fileID: 2292217638942395559}
+  - component: {fileID: 9101981152655355}
+  m_Layer: 7
   m_Name: Lamp_Table_Apt_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -454,19 +453,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.4439494, y: 0.9746733, z: 0.4439494}
   m_Center: {x: 0, y: 0.48733664, z: -8.686797e-16}
---- !u!114 &-7722240289275082000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7936599477366098658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62fb9fb1177925e4b8a383be2b9db66c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!54 &6946236083244174394
+--- !u!54 &2292217638942395559
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -478,11 +465,11 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-534343778472001177
+--- !u!114 &9101981152655355
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -491,11 +478,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7936599477366098658}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63699bfd386fd7b438062c741289856b, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a35f6cfbfba9b548aaa00d52cfe8a50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
-  m_Colliders: []
+  m_Colliders:
+  - {fileID: 4251780245859508976}
   m_InteractionLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -596,61 +584,6 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
-  m_AttachTransform: {fileID: 0}
-  m_SecondaryAttachTransform: {fileID: 0}
-  m_UseDynamicAttach: 0
-  m_MatchAttachPosition: 1
-  m_MatchAttachRotation: 1
-  m_SnapToColliderVolume: 1
-  m_ReinitializeDynamicAttachEverySingleGrab: 1
-  m_AttachEaseInTime: 0.15
-  m_MovementType: 2
-  m_VelocityDamping: 1
-  m_VelocityScale: 1
-  m_AngularVelocityDamping: 1
-  m_AngularVelocityScale: 1
-  m_TrackPosition: 1
-  m_SmoothPosition: 0
-  m_SmoothPositionAmount: 8
-  m_TightenPosition: 0.1
-  m_TrackRotation: 1
-  m_SmoothRotation: 0
-  m_SmoothRotationAmount: 8
-  m_TightenRotation: 0.1
-  m_TrackScale: 1
-  m_SmoothScale: 0
-  m_SmoothScaleAmount: 8
-  m_TightenScale: 0.1
-  m_ThrowOnDetach: 1
-  m_ThrowSmoothingDuration: 0.25
-  m_ThrowSmoothingCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  m_ThrowVelocityScale: 1.5
-  m_ThrowAngularVelocityScale: 1
-  m_ForceGravityOnDetach: 0
-  m_RetainTransformParent: 1
-  m_AttachPointCompatibilityMode: 0
-  m_StartingSingleGrabTransformers: []
-  m_StartingMultipleGrabTransformers: []
-  m_AddDefaultGrabTransformers: 1
-  grabPriority: 10
-  rb: {fileID: 0}
-  interactableType: 2
-  defaultLayer: 0
-  ignoreColliderLayer: 0
 --- !u!1 &9042250104600712484
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,7 +595,7 @@ GameObject:
   - component: {fileID: 3407357877500860401}
   - component: {fileID: 329281912959829300}
   - component: {fileID: 5146105401075562362}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Table_Lamp_Apt_01.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
