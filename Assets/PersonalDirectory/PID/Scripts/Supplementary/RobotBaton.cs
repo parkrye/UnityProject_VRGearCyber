@@ -4,51 +4,74 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class RobotBaton : MonoBehaviour
+namespace PID
 {
-    [SerializeField] string targetTag; 
-    int attackDamage;
-    int attackRange;
-    float angle;
-    float cosValue; 
+    public class RobotBaton : MonoBehaviour
+    {
+        [SerializeField] string targetTag = "Player";
+        [SerializeField] float attackInterval;
+        Animator anim;
+        Transform attacker;
+        float attackTimer;
+        int attackDamage;
+        int attackRange;
+        [SerializeField] float angle;
+        float cosValue;
 
-    private void Awake()
-    {
-        cosValue = Mathf.Cos(angle * .5f * Mathf.Deg2Rad);
-    }
-    public void SyncStatData(EnemyStat stat)
-    {
-        attackDamage = stat.attackDamage;
-        attackRange = stat.attackRange;
-        angle = stat.maxSightAngle; 
-    }
-    public void AttackAttempt()
-    {
-
-    }
-
-    public void AttackTiming()
-    {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange);
-        foreach (Collider collider in colliders)
+        private void Awake()
         {
-            if (collider.gameObject.tag != targetTag)
-                return; 
-            Vector3 dirToTarget = (collider.transform.position - transform.position).normalized;
-            if (Vector3.Dot(transform.forward, dirToTarget) < cosValue)
-                continue;
-            //Only hits once.  
-            IHitable hittable = collider.GetComponent<IHitable>();
-            if (hittable != null)
+            anim = GetComponentInParent<Animator>();
+            attacker = anim.gameObject.transform;
+            attackTimer = 0f;
+        }
+        private void Start()
+        {
+            cosValue = Mathf.Cos(angle * .5f * Mathf.Deg2Rad);
+        }
+        public void SyncStatData(EnemyStat stat)
+        {
+            attackDamage = stat.attackDamage;
+            attackRange = stat.attackRange;
+            angle = stat.maxSightAngle;
+        }
+        public void AttackAttempt()
+        {
+            if (Time.time > attackTimer)
             {
-                hittable?.TakeDamage(attackDamage, Vector3.zero, Vector3.zero);
-                break;
+                anim.SetTrigger("Strike");
+                attackTimer = Time.time + attackInterval;
+            }
+        }
+
+        public void AttackTiming()
+        {
+            Collider[] colliders = Physics.OverlapSphere(attacker.position, attackRange);
+            foreach (Collider collider in colliders)
+            {
+                if (collider.gameObject.tag != targetTag)
+                    continue;
+                Vector3 dirToTarget = (collider.transform.position - attacker.position).normalized;
+                dirToTarget.y = 0f;
+                if (dirToTarget == Vector3.zero)
+                {
+                    IHitable hitable = collider.GetComponent<IHitable>();
+                    hitable?.TakeDamage(attackDamage, Vector3.zero, Vector3.zero);
+                    break; ;
+                }
+                if (Vector3.Dot(attacker.forward, dirToTarget) < cosValue)
+                {
+                    Debug.Log($"{attacker.forward}: {dirToTarget}: {Vector3.Dot(attacker.forward, dirToTarget) < cosValue}");
+                    continue;
+                }
+                //Only hits once.  
+                IHitable hittable = collider.gameObject.GetComponent<IHitable>();
+                if (hittable != null)
+                {
+                    hittable?.TakeDamage(attackDamage, Vector3.zero, Vector3.zero);
+                    break;
+                }
             }
         }
     }
 
-    IEnumerator TryAttack()
-    {
-        yield return null;
-    }
 }
