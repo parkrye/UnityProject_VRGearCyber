@@ -108,6 +108,7 @@ namespace KSI
 			{
 				if (playerHandMotion == null)
 					playerHandMotion = GameManager.Data.Player.HandMotion;
+
 				if (isRightHanded)
 				{
 					playerHandMotion.TriggerGunRight(true);
