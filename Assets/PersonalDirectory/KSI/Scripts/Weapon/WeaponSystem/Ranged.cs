@@ -2,19 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using PGR;
 
 namespace KSI
 {
 	[RequireComponent(typeof(AudioSource))]
 	public class Ranged : MonoBehaviour
 	{
-		[Header("Bullet")]
+		[Header("Gun")]
 		[SerializeField] private float fireRate;
 		[SerializeField] private GameObject bullet;
 		[SerializeField] private Transform muzzlePoint;
 		[SerializeField] private ParticleSystem bulletShell;
 		[SerializeField] private int damage;
-		
+		[SerializeField] private float maxDistance = 10;
+
 		[Header("Magazine")]
 		public Magazine magazine;
 		public XRBaseInteractor socketInteractor;
@@ -25,10 +27,9 @@ namespace KSI
 		[SerializeField] private AudioClip reload;
 		[SerializeField] private AudioClip noAmmo;
 
-		[Header("Gizmos")]
-		[SerializeField] private float maxDistance = 10;
-
 		private Animator animator;
+		private PlayerHandMotion playerHandMotion;
+		private bool isRightHanded;
 		private MeshRenderer muzzleFlash;
 		private bool hasMagazine = false;
 		//private bool hasSlide = false;
@@ -41,6 +42,9 @@ namespace KSI
 			// muzzlePoint 하위에 있는 muzzleFlashdml 컴포넌트 추출
 			muzzleFlash = muzzlePoint.GetComponentInChildren<MeshRenderer>();
 			muzzleFlash.enabled = false;
+
+			if (playerHandMotion == null)
+				playerHandMotion = GetComponent<PlayerHandMotion>();
 
 			//if (socketInteractor != null)
 			//{
@@ -98,10 +102,21 @@ namespace KSI
 		//	//audioSource.PlayOneShot(reload);
 		//}
 
-		public void PullTheTrigger()
+		public void PullTheTrigger(ActivateEventArgs args)
 		{
 			if (hasMagazine && magazine && magazine.numberOfBullet > 0) //&& hasSlide)
 			{
+				if (playerHandMotion == null)
+					playerHandMotion = GameManager.Data.Player.HandMotion;
+				if (isRightHanded)
+				{
+					playerHandMotion.TriggerGunRight(true);
+				}
+				else
+				{
+					playerHandMotion.TriggerGunLeft(true);
+				}
+
 				animator.SetTrigger("Fire");
 				Shoot();
 
@@ -156,6 +171,14 @@ namespace KSI
 			yield return new WaitForSeconds(0.2f);
 
 			muzzleFlash.enabled = false;
+			if (isRightHanded)
+			{
+				playerHandMotion.TriggerGunRight(false);
+			}
+			else
+			{
+				playerHandMotion.TriggerGunLeft(false);
+			}
 		}
 
 		private void OnDrawGizmos()
