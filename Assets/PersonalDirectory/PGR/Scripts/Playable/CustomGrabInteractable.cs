@@ -46,7 +46,8 @@ namespace PGR
             {
                 if (1 << go.gameObject.layer == LayerMask.GetMask("DisplayUI"))
                     continue;
-                go.gameObject.layer = ignoreColliderLayer;
+                if(interactableType == GameData.InteractableType.Other)
+                    go.gameObject.layer = ignoreColliderLayer;
             }
         }
 
@@ -57,7 +58,8 @@ namespace PGR
             {
                 if (1 << go.gameObject.layer == LayerMask.GetMask("DisplayUI"))
                     continue;
-                go.gameObject.layer = defaultLayer;
+                if (interactableType == GameData.InteractableType.Other)
+                    go.gameObject.layer = defaultLayer;
             }
         }
     }
