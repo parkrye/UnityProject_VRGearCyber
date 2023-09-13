@@ -923,7 +923,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerDataModel: {fileID: 503361725078272705}
-  playerHandMotion: {fileID: 0}
+  playerHandMotion: {fileID: 8172712393991313558}
   playerLeftWallCheck: {fileID: 5509386707415782559}
   playerRightWallCheck: {fileID: 1591787785050843944}
   irisSystemCamera: {fileID: 3680481829646756845}
@@ -3100,7 +3100,7 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8172712393991313558}
         m_TargetAssemblyTypeName: PGR.PlayerHandMotion, Assembly-CSharp
         m_MethodName: CatchObjectRight
         m_Mode: 6
@@ -3115,7 +3115,7 @@ MonoBehaviour:
   m_SelectExited:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8172712393991313558}
         m_TargetAssemblyTypeName: PGR.PlayerHandMotion, Assembly-CSharp
         m_MethodName: CatchObjectRight
         m_Mode: 6
@@ -4726,7 +4726,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8172712393991313558}
         m_TargetAssemblyTypeName: PGR.PlayerHandMotion, Assembly-CSharp
         m_MethodName: CatchObjectLeft
         m_Mode: 6
@@ -4753,7 +4753,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8172712393991313558}
         m_TargetAssemblyTypeName: PGR.PlayerHandMotion, Assembly-CSharp
         m_MethodName: CatchObjectLeft
         m_Mode: 6
@@ -5540,7 +5540,7 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8172712393991313558}
         m_TargetAssemblyTypeName: PGR.PlayerHandMotion, Assembly-CSharp
         m_MethodName: CatchObjectRight
         m_Mode: 6
@@ -5555,7 +5555,7 @@ MonoBehaviour:
   m_SelectExited:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8172712393991313558}
         m_TargetAssemblyTypeName: PGR.PlayerHandMotion, Assembly-CSharp
         m_MethodName: CatchObjectRight
         m_Mode: 6
@@ -6204,7 +6204,7 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8172712393991313558}
         m_TargetAssemblyTypeName: PGR.PlayerHandMotion, Assembly-CSharp
         m_MethodName: CatchObjectLeft
         m_Mode: 6
@@ -6219,7 +6219,7 @@ MonoBehaviour:
   m_SelectExited:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8172712393991313558}
         m_TargetAssemblyTypeName: PGR.PlayerHandMotion, Assembly-CSharp
         m_MethodName: CatchObjectLeft
         m_Mode: 6

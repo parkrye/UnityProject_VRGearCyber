@@ -29,6 +29,11 @@ namespace PGR
 
         void Start()
         {
+            if (GameManager.Data.Player != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
             StartCoroutine(AwakeWaitingRoutine());
         }
 
