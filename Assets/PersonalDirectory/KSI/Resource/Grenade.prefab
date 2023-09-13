@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2891378493651686807}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: AttachTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23,14 +23,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3455512602344848795}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.002, y: 0, z: 0}
+  m_LocalRotation: {x: 0.00020980083, y: -0.0001851729, z: 0.70710677, w: -0.70710677}
+  m_LocalPosition: {x: -0.0034, y: 0, z: 0.0204}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7750019770689448873}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.002, y: 0.032, z: 270}
 --- !u!1 &6973341642598297875
 GameObject:
   m_ObjectHideFlags: 0
@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 1967597532263910333}
   - component: {fileID: 3459449728188206166}
   - component: {fileID: 3459449728188206167}
-  m_Layer: 31
+  m_Layer: 0
   m_Name: Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,8 +132,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.08121199
-  m_Center: {x: -0.00032888353, y: 0.01809866, z: 0.007680416}
+  m_Radius: 0.05848095
+  m_Center: {x: -0.00032888353, y: 0.014324933, z: 0.002621889}
 --- !u!54 &4976129724269805810
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -347,7 +347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 3
   destoryDelay: 3
-  damage: 0
+  damage: 50
   ExplosionRadius: 4
   ExplosionForce: 400
   grenadeEffect: {fileID: 1000011797152326, guid: a0f5a7a8fffbd904a816fc14b4c6fa82,

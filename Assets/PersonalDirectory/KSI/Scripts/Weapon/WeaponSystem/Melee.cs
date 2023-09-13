@@ -26,9 +26,6 @@ namespace KSI
 
 		void Start()
 		{
-			// 초기에는 콜라이더를 비활성화
-			//coll.enabled = false;
-
 			if (playerHandMotion == null)
 				playerHandMotion = GetComponent<PlayerHandMotion>();
 		}
@@ -56,8 +53,11 @@ namespace KSI
 
 		public void StartSwing()
         {
-            if (playerHandMotion == null)
+			Debug.Log("StartSwing");
+
+			if (playerHandMotion == null)
                 playerHandMotion = GameManager.Data.Player.HandMotion;
+
             if (isRightHanded == true)
 			{
 				playerHandMotion.GrabOnCloseWeaponRight(true);
@@ -68,19 +68,21 @@ namespace KSI
 			}
 
 			StartCoroutine(TrackPositionRoutine());
-
 			isSwinging = true;
 		}
 
 		public void EndSwing()
 		{
-			StopAllCoroutines();
+			Debug.Log("EndSwing");
 
+			StopAllCoroutines();
 			isSwinging = false;
 		}
 
 		private void OnTriggerEnter(Collider other)
 		{
+			Debug.Log("OnTriggerEnter" + other.gameObject.name);
+
 			if (isSwinging && positionQueue.Count > 0)
 			{
 				IStrikable iStrikable = other.GetComponent<IStrikable>();
@@ -98,8 +100,9 @@ namespace KSI
 					// 실제 데미지 값 계산
 					int calculateDamage = Mathf.RoundToInt(Mathf.Lerp(minDamage, maxDamage, calculateDamageRatio));
 
-					// 계신된 데미지 적용
+					// 계산된 데미지 적용
 					iStrikable?.TakeStrike(transform, calculateDamage, Vector3.zero, Vector3.zero);
+					Debug.Log("Calculated damage: " + calculateDamage);
 				}
 			}
 		}

@@ -1,3 +1,4 @@
+using PGR;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +29,8 @@ namespace KSI
 		[SerializeField] private AudioClip noAmmo;
 
 		private Animator animator;
+		private PlayerHandMotion playerHandMotion;
+		private bool isRightHanded;
 		private MeshRenderer muzzleFlash;
 		private bool hasArrow = false;
 
@@ -83,6 +86,18 @@ namespace KSI
 		{
 			if (hasArrow && arrow && arrowLocation.numberOfArrow > 0)
 			{
+				if (playerHandMotion == null)
+					playerHandMotion = GameManager.Data.Player.HandMotion;
+
+				if (isRightHanded)
+				{
+					playerHandMotion.TriggerGunRight(true);
+				}
+				else
+				{
+					playerHandMotion.TriggerGunLeft(true);
+				}
+
 				animator.SetTrigger("Fire");
 				Shoot();
 
@@ -106,7 +121,15 @@ namespace KSI
 		{
 			arrowLocation.numberOfArrow--;
 
-			Instantiate(arrow, muzzlePoint.position, muzzlePoint.rotation);
+			GameObject newArrow = Instantiate(arrow, muzzlePoint.position, muzzlePoint.rotation);
+
+			ArrowController arrowController = newArrow.GetComponent<ArrowController>();
+
+			if (arrowController != null)
+			{
+				arrowController.FireArrow();
+			}
+
 			audioSource.PlayOneShot(shootSound, 1.0f);
 			StartCoroutine(MuzzleFlashRoutine());
 		}

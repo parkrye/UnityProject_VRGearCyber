@@ -125,8 +125,19 @@ namespace KSI
 				{
 					Debug.Log($"Hit={hit.transform.name}");
 
+					//IHitable hitable = hit.transform.GetComponent<IHitable>();
+					//hitable?.TakeDamage(damage, hit.point, hit.normal);
+
 					IHitable hitable = hit.transform.GetComponent<IHitable>();
-					hitable?.TakeDamage(damage, hit.point, hit.normal);
+					if (hitable != null)
+					{
+						Debug.Log($"Hitable Object: {hitable.ToString()}");
+						hitable.TakeDamage(damage, hit.point, hit.normal);
+					}
+					else
+					{
+						Debug.Log("No hitable component found on hit object.");
+					}
 				}				
 			}
 			//else if (!hasSlide)
@@ -144,6 +155,7 @@ namespace KSI
 		private void Shoot()
 		{
 			magazine.numberOfBullet--;
+			Debug.Log("Bullet used. Remaining bullets: " + magazine.numberOfBullet);
 
 			Instantiate(bullet, muzzlePoint.position, muzzlePoint.rotation);
 			audioSource.PlayOneShot(shootSound, 1.0f);
