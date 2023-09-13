@@ -33,6 +33,24 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "RightPrimaryButton",
+                    "type": "Button",
+                    "id": "f2a60798-03fb-4632-9da5-2390807b2df0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightSecondaryButton",
+                    "type": "Button",
+                    "id": "af7256e3-d595-45d0-a316-ceb3d33a6579",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "RightTriggerGrab",
                     "type": "PassThrough",
                     "id": "ab275c2b-cd4f-4fd5-b7ea-5771a5f3c752",
@@ -73,6 +91,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "LeftTriggerGrab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c66d3832-794d-4037-b660-089d27ed3c45",
+                    "path": "<XRController>{RightHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightPrimaryButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ff311fe1-70e3-4265-86ee-38bd19fde855",
+                    "path": "<XRController>{RightHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightSecondaryButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
