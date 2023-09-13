@@ -2611,7 +2611,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 503361725078272706}
   handTransform: {fileID: 4239143775626438920}
-  spineTransform: {fileID: 7438900048275394738}
+  spineTransform: {fileID: 5674446548595564069}
   wallLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -5971,7 +5971,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 503361725078272706}
   handTransform: {fileID: 259353372894504467}
-  spineTransform: {fileID: 7438900048275394738}
+  spineTransform: {fileID: 5674446548595564069}
   wallLayer:
     serializedVersion: 2
     m_Bits: 128
