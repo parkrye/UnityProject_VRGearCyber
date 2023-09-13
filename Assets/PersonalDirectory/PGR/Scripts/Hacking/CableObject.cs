@@ -85,8 +85,9 @@ namespace PGR
 
             State = true;
             hackingTarget.Hack();
+            (int, int) difficulty = hackingTarget.GetDifficulty();
             puzzle = GameManager.Resource.Instantiate<HackingPuzzle>("Hacking/HackingPuzzle", playerTransform.position, Quaternion.identity);
-            puzzle.InitialPuzzle(hackingTarget, socketInteractor, this, 2, 3);
+            puzzle.InitialPuzzle(hackingTarget, socketInteractor, this, difficulty.Item1, difficulty.Item2);
         }
     }
 }

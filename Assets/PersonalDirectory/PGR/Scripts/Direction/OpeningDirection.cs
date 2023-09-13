@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace PGR
@@ -21,8 +20,8 @@ namespace PGR
         {
             started = true;
             ringAudio.Play();
-            yield return new WaitUntil(() => GameManager.Data.Player.IrisSystem != null);
-            GameManager.Data.Player.Display.ModifyText("Go to 3rd Floor to Prepare or Get Out");
+            yield return new WaitUntil(() => GameManager.Data.Player.IrisSystem.enabled);
+            GameManager.Data.Player.Display.ModifyText("Go to 3rd Floor to Prepare Mission");
             yield return new WaitForSeconds(5f);
             GameManager.Data.Player.Display.ModifyText("");
             Destroy(this);
