@@ -26,13 +26,13 @@ namespace PID
         }
         private void Start()
         {
-            cosValue = Mathf.Cos(angle * .5f * Mathf.Deg2Rad);
         }
         public void SyncStatData(EnemyStat stat)
         {
             attackDamage = stat.attackDamage;
             attackRange = stat.attackRange;
             angle = stat.maxSightAngle;
+            cosValue = Mathf.Cos(angle * .5f * Mathf.Deg2Rad);
         }
         public void AttackAttempt()
         {
@@ -50,8 +50,9 @@ namespace PID
             {
                 if (collider.gameObject.tag != targetTag)
                     continue;
-                Vector3 dirToTarget = (collider.transform.position - attacker.position).normalized;
+                Vector3 dirToTarget = collider.transform.position - attacker.position;
                 dirToTarget.y = 0f;
+                dirToTarget.Normalize(); 
                 if (dirToTarget == Vector3.zero)
                 {
                     IHitable hitable = collider.GetComponent<IHitable>();
@@ -63,6 +64,7 @@ namespace PID
                     Debug.Log($"{attacker.forward}: {dirToTarget}: {Vector3.Dot(attacker.forward, dirToTarget) < cosValue}");
                     continue;
                 }
+                //Access directly to Player's health data; 
                 //Only hits once.  
                 IHitable hittable = collider.gameObject.GetComponent<IHitable>();
                 if (hittable != null)
@@ -73,7 +75,9 @@ namespace PID
                 if (collider.gameObject.tag == targetTag)
                 {
                     IHitable playerDirect = GameManager.Data.Player.Data.GetComponent<IHitable>();
-                    playerDirect?.TakeDamage(attackDamage, Vector3.zero, Vector3.zero); break;
+                    playerDirect?.TakeDamage(attackDamage, Vector3.zero, Vector3.zero);
+                    Debug.Log("TookHit"); 
+                    break;
                 }
             }
         }

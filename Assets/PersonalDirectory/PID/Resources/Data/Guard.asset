@@ -19,4 +19,4 @@ MonoBehaviour:
   attackDamage: 10
   attackRange: 20
   missChance: 0.45
-  maxAmmo: 5
+  maxAmmo: 8

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db47539e3852a4342b02e1e58167defb, type: 3}
   m_Name: Tackler
   m_EditorClassIdentifier: 
-  moveSpeed: 4
+  moveSpeed: 3
   maxHealth: 300
   maxSightRange: 8
   maxSightAngle: 85

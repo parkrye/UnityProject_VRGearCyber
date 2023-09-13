@@ -9,12 +9,17 @@ namespace PID
     public class RobotParts : MonoBehaviour, IHitable, IStrikable
     {
         HittableItem wearable;
+        [SerializeField] bool armorAvailable; 
         protected BaseEnemy enemy; 
         private void Awake()
         {
-            wearable = GetComponent<HittableItem>();
-            if (!wearable)
-                wearable = GetComponentInChildren<HittableItem>();
+            if (armorAvailable) 
+            {
+                wearable = GetComponent<HittableItem>();
+                if (!wearable)
+                    wearable = GetComponentInChildren<HittableItem>();
+            }
+            
             enemy = GetComponentInParent<BaseEnemy>();
             if (enemy.robotType == RobotType.Guard)
                 enemy = enemy as GuardEnemy;
@@ -23,7 +28,7 @@ namespace PID
         }
         public virtual void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
         {
-            if (wearable.IsWearing)
+            if (armorAvailable && wearable.IsWearing)
             {
                 wearable.TakeDamage(damage, hitPoint, hitNormal);
                 return; 
@@ -33,7 +38,7 @@ namespace PID
 
         public virtual void TakeStrike(Transform hitter, float damage, Vector3 hitPoint, Vector3 hitNormal)
         {
-            if (wearable.IsWearing)
+            if (armorAvailable && wearable.IsWearing)
             {
                 wearable.TakeStrike(hitter, damage, hitPoint, hitNormal);
                 return; 
