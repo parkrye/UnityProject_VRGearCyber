@@ -1,41 +1,48 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.XR; 
 
-public class MagazineRemove : MonoBehaviour
+namespace KSI
 {
-	public GameObject magazine; // 제거할 매거진 게임 오브젝트
-	public Transform ejectPosition;
-	public float ejectForce = 10.0f;
-	public XRController controller;
-
-	private Rigidbody rb;
-
-	private void Start()
+	public class MagazineRemove : MonoBehaviour
 	{
-		rb = magazine.GetComponent<Rigidbody>();
-		if (rb == null)
+		public GameObject magazine; // 제거할 매거진 게임 오브젝트
+		public Transform ejectPosition;
+		public float ejectForce = 10.0f;
+
+		private Rigidbody rb;
+
+
+		private void Start()
 		{
-			rb = magazine.AddComponent<Rigidbody>();
+			rb = magazine.GetComponent<Rigidbody>();
+			if (rb == null)
+			{
+				rb = magazine.AddComponent<Rigidbody>();
+			}
+
+			StartCoroutine(WaitRoutine());
 		}
-	}
 
-	void Update()
-	{
-		//if (controller.GetDown(controller.Button.One))
-		//{
-		//	EjectMagazine();
-		//}
-	}
-
-	void EjectMagazine()
-	{
-		if (magazine != null && rb != null)
+		private IEnumerator WaitRoutine()
 		{
-			magazine.transform.SetParent(null);
-			rb.AddForce(ejectPosition.forward * ejectForce, ForceMode.Impulse);
+			yield return new WaitUntil(()=> GameManager.Data != null);
+			yield return new WaitUntil(()=> GameManager.Data.Player != null);
+			yield return new WaitUntil(()=> GameManager.Data.Player.ExtraInput != null);
+
+			GameManager.Data.Player.ExtraInput.RightHandPrimaryButtonEvent.AddListener(EjectMagazine);
+		}
+
+		void EjectMagazine(bool isPressed)
+		{
+			if (magazine != null && rb != null)
+			{
+				magazine.transform.SetParent(null);
+				rb.AddForce(ejectPosition.forward * ejectForce, ForceMode.Impulse);
+			}
 		}
 	}
 }

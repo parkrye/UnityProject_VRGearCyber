@@ -704,10 +704,34 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 510532527483199679}
+        m_TargetAssemblyTypeName: KSI.Ranged, Assembly-CSharp
+        m_MethodName: GrabGun
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 510532527483199679}
+        m_TargetAssemblyTypeName: KSI.Ranged, Assembly-CSharp
+        m_MethodName: GrabOffGun
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_FirstFocusEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -854,6 +878,7 @@ MonoBehaviour:
   bulletShell: {fileID: 0}
   damage: 50
   maxDistance: 10
+  soundIntensity: 0
   magazine: {fileID: 5483528048061002489, guid: d070f3bf3d6f6e041870105aa9cf4c31,
     type: 3}
   socketInteractor: {fileID: 7361970181645325257}

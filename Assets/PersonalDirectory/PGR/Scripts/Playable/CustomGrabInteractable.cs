@@ -12,7 +12,7 @@ namespace PGR
         [SerializeField] protected Rigidbody rb;
         [SerializeField] GameData.InteractableType interactableType;
         [SerializeField] int defaultLayer, ignoreColliderLayer;
-        public GameData.InteractableType InteractableType { get { return interactableType; } }
+        public GameData.InteractableType InteractableType { get { return interactableType; } set { interactableType = value; } }
 
         public int Priority 
         { 
