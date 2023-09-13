@@ -8,6 +8,31 @@ namespace PID
     public class SoundMaker : MonoBehaviour
     {
         [SerializeField] float soundIntensity;
+        [SerializeField] float alarmInterval;
+        Animator anim; 
+        WaitForSeconds alarmWaitForSeconds;
+        bool finishedAlarm; 
+        public bool FinishedAlarm
+        {
+            get => finishedAlarm; 
+            set => finishedAlarm = value;
+        }
+
+        private void Awake()
+        {
+            finishedAlarm = false; 
+            anim = GetComponent<Animator>();
+            alarmWaitForSeconds = new WaitForSeconds(alarmInterval);
+        }
+        Coroutine alertRoutine; 
+        public void Scream(Vector3 soundPos)
+        {
+            if (alertRoutine != null)
+            {
+                StopCoroutine(alertRoutine);
+            }
+            alertRoutine = StartCoroutine(MakeAlarm(soundPos));
+        }
         public void MakeSound(Vector3 pos)
         {
             Collider[] soundHits = Physics.OverlapSphere(pos, soundIntensity);
@@ -20,9 +45,12 @@ namespace PID
             }
         }
 
-        public void HitWall(Vector3 muzzlePoint, Vector3 muzzleDirection)
+        IEnumerator MakeAlarm(Vector3 soundPos)
         {
-            
+            anim.SetTrigger("Alert");
+            MakeSound(soundPos); 
+            yield return alarmWaitForSeconds; 
+            finishedAlarm = true;
         }
     }
 

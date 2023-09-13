@@ -33,6 +33,7 @@ namespace PID
         }
         const float nearIntersectThreshold = .985f;
         const float validSoundRegion = 2f;
+        public const float untoDestThreshold = 1.41f; 
 
         public static Vector3 ShotCentrePoint(Vector3 muzzlePoint, Vector3 targetPoint, float distance)
         {
