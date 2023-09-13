@@ -304,8 +304,8 @@ MonoBehaviour:
   maxPositions: 10
   maxDamage: 100
   minDamage: 10
-  minDistanceForMaxDamage: 1
-  minDistanceForMinDamage: 0.2
+  minDistanceForMaxDamage: 0.5
+  minDistanceForMinDamage: 0.1
   coll: {fileID: 7278484003193080083}
 --- !u!1 &6960996029236989795
 GameObject:

@@ -11,7 +11,7 @@ namespace KSI
 	{
 		[Header("Grenade")]
 		[SerializeField] private float delay =3f;
-		[SerializeField] private float destoryDelay = 3f;
+		[SerializeField] private float destoryDelay = 0.1f;
 		[SerializeField] private int damage;
 		[SerializeField] private int ExplosionRadius = 4;
 		[SerializeField] private int ExplosionForce = 400;
@@ -26,14 +26,17 @@ namespace KSI
 
 		public void TriggerBoom()
 		{
-			//if (isRightHanded == true)
-			//{
-			//	playerHandMotion.GrabOnGunRight(true);
-			//}
-			//else
-			//{
-			//	playerHandMotion.GrabOnGunLeft(true);
-			//}
+			if (playerHandMotion == null)
+				playerHandMotion = GameManager.Data.Player.HandMotion;
+
+			if (isRightHanded)
+			{
+				playerHandMotion.CatchObjectRight(true);
+			}
+			else
+			{
+				playerHandMotion.CatchObjectLeft(true);
+			}
 
 			StartCoroutine(ExplosionWaitCouRoutine());
 		}

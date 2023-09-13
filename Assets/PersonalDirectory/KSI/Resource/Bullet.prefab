@@ -130,6 +130,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 20
   force: 1000
+  bulletSparkEffect: {fileID: 1000011945391522, guid: ac159911ba2d21646883c60bd29878ac,
+    type: 3}
 --- !u!96 &1306886214679024319
 TrailRenderer:
   serializedVersion: 2
