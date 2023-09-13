@@ -73,22 +73,25 @@ namespace PID
             
             gunOwner.anim.SetTrigger("GunFire");
             currentAmmo--;
-            debugLine.SetPosition(0, muzzlePoint.position);
+            muzzleFlash.Play(); 
+            //debugLine.SetPosition(0, muzzlePoint.position);
             shotAttempt = RobotHelper.FinalShotPoint(target.position, attackRange, missChance);
             shotAttempt = (shotAttempt - muzzlePoint.position).normalized;
             //RaycastHit[] queries;
             //queries = Physics.RaycastAll(muzzlePoint.position, shotAttempt, attackRange);
-
             //if (queries.Length > 0)
             //    return;
+            TrailRenderer trail = GameManager.Resource.Instantiate<TrailRenderer>("Enemy/BulletTrail", muzzlePoint.position, Quaternion.identity, true);
             if (Physics.Raycast(muzzlePoint.position, shotAttempt, out hitAttempt, attackRange))
             {
                 if (hitAttempt.collider.gameObject.tag != targetTag)
                 {
                     //obstacle should take damage; 
-                    debugLine.SetPosition(1, hitAttempt.point);
+                    //debugLine.SetPosition(1, hitAttempt.point);
+                    StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point)); 
                     IHitable hitable = hitAttempt.collider.GetComponent<IHitable>();
                     hitable?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal);
+                    return; 
                 }
                 else
                 {
@@ -97,7 +100,8 @@ namespace PID
                     if (hitable != null)
                     {
                         hitable?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal);
-                        debugLine.SetPosition(1, hitAttempt.point);
+                        StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point));
+                        //debugLine.SetPosition(1, hitAttempt.point);
                         return;
                     }
 
@@ -105,7 +109,8 @@ namespace PID
                     if (appropriateObj != null)
                     {
                         GiveDamage(appropriateObj);
-                        debugLine.SetPosition(1, hitAttempt.point);
+                        StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point));
+                        //debugLine.SetPosition(1, hitAttempt.point);
                         appropriateObj = null;
                         return;
                     }
@@ -115,12 +120,19 @@ namespace PID
                         if (appropriateObj != null)
                         {
                             GiveDamage(appropriateObj);
-                            debugLine.SetPosition(1, hitAttempt.point);
+                            StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point));
+                            //debugLine.SetPosition(1, hitAttempt.point);
                             appropriateObj = null;
                             return;
                         }
                     }
                 }
+            }
+            else 
+            {
+                //Trail Renderer effect for the nonHits 
+                StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, shotAttempt * attackRange)); 
+                return; 
             }
         }
 
@@ -182,9 +194,18 @@ namespace PID
             outofAmmo = false; 
             reloading = false;
         }
-        IEnumerator TrailRendererRoutine()
+        const float deltaDistThreshold = 1f; 
+        IEnumerator TrailRendererRoutine(TrailRenderer trail, Vector3 startPos, Vector3 endPos)
         {
-            yield return null;
+            float deltaDist = Vector3.SqrMagnitude(endPos - startPos);
+            trail.Clear();
+            while (deltaDist > deltaDistThreshold)
+            {
+                trail.transform.position = Vector3.Lerp(trail.transform.position, endPos, .075f);
+                deltaDist = Vector3.SqrMagnitude(endPos - startPos);
+                yield return null;
+            }
+            trail.Clear();
         }
         public void SyncStatData(EnemyStat stat)
         {
