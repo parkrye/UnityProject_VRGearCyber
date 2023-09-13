@@ -35,12 +35,13 @@ namespace PID
             isWearing = true; 
             rb = GetComponent<Rigidbody>();
             meshRenderer = GetComponent<MeshRenderer>();
-            usedState = LayerMask.GetMask("ItemUsed"); 
+            usedState = LayerMask.GetMask("WearableUsed"); 
         }
 
         public void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
         {
             durability--;
+            StopAllCoroutine(); 
             StartCoroutine(HitEffect()); 
             if (durability <= 0)
             {
@@ -52,6 +53,9 @@ namespace PID
         }
         public void TakeStrike(Transform hitter, float damage, Vector3 hitPoint, Vector3 hitNormal)
         {
+            if (durability == 0)
+                return; 
+            StopAllCoroutine(); 
             StartCoroutine(HitEffect());
             durability = 0;
             isWearing = false;

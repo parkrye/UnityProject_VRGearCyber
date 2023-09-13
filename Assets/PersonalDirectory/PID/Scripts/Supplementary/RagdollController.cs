@@ -80,6 +80,8 @@ namespace PID
         {
             for (int i = 0; i < ragdollBodies.Length; i++)
             {
+                if (ragdollBodies[i].gameObject.layer == LayerMask.GetMask("Wearable"))
+                    return; 
                 ragdollBodies[i].isKinematic = false;
             }
             for (int i = 0; i < ragdollColliders.Length; i++)
