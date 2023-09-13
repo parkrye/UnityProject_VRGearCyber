@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4414519408081835922}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.432, z: 0.78}
+  m_LocalPosition: {x: 0.91, y: 0.23, z: -1.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -334,8 +334,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfBullet: 13
-  magazineImage: {fileID: 0}
-  magazineText: {fileID: 0}
 --- !u!1 &4414519409296667486
 GameObject:
   m_ObjectHideFlags: 0
