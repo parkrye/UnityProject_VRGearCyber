@@ -9,10 +9,12 @@ namespace PID
 {
     public class RobotCNS : MonoBehaviour, IHackable
     {
-        HackProgressState state;
+        [SerializeField] HackProgressState state;
         BaseEnemy enemy;
         State prevState;
 
+        [SerializeField] int pairCount;
+        [SerializeField] int fixedPointPerPairCount; 
         #region Hacking Region 
         private void Awake()
         {
@@ -73,6 +75,12 @@ namespace PID
                     Success();
                     break;
             }
+        }
+
+        public (int, int) GetDifficulty()
+        {
+            //return (2, 3);
+            return (pairCount, fixedPointPerPairCount);
         }
         #endregion
     }

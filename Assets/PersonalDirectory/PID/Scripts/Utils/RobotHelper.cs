@@ -11,7 +11,8 @@ namespace PID
         public enum RobotType
         {
             Guard, 
-            Tackler
+            Tackler, 
+            Scouter
         }
         public enum State
         {
