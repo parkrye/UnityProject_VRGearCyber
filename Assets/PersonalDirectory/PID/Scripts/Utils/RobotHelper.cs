@@ -19,6 +19,7 @@ namespace PID
             Infiltrated,
             Patrol,
             LookAround,
+            Alarm,
             Alert,
             Assault,
             Trace,

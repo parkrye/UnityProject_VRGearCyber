@@ -55,6 +55,7 @@ namespace PID
         {
             if (durability == 0)
                 return;
+            durability = 0;
             StopAllCoroutines(); 
             StartCoroutine(HitEffect());
             isWearing = false;
