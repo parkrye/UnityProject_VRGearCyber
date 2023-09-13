@@ -38,7 +38,7 @@ namespace PID
             usedState = LayerMask.GetMask("WearableUsed"); 
         }
 
-        public void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
+        public virtual void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
         {
             durability--;
             StopAllCoroutines(); 
@@ -51,13 +51,12 @@ namespace PID
                 rb.AddForceAtPosition(hitNormal * flightForce, hitPoint, ForceMode.Impulse);
             }
         }
-        public void TakeStrike(Transform hitter, float damage, Vector3 hitPoint, Vector3 hitNormal)
+        public virtual void TakeStrike(Transform hitter, float damage, Vector3 hitPoint, Vector3 hitNormal)
         {
             if (durability == 0)
                 return;
             StopAllCoroutines(); 
             StartCoroutine(HitEffect());
-            durability = 0;
             isWearing = false;
             rb.isKinematic = false;
             transform.parent = null;
