@@ -180,7 +180,7 @@ public class PoolManager : MonoBehaviour
             actionOnGet: (GameObject obj) =>
             {
                 obj.gameObject.SetActive(true);
-                if (!obj.GetComponent<RectTransform>())
+                if (!obj.GetComponent<Transform>())
                     obj.transform.parent = SceneTransform();
             },
             actionOnRelease: (GameObject obj) =>
@@ -194,35 +194,5 @@ public class PoolManager : MonoBehaviour
             }
         );
         poolDic.Add(key, pool);
-    }
-
-    public bool ReleaseUI<T>(T instance) where T : Object
-    {
-        if (instance is GameObject)
-        {
-            GameObject go = instance as GameObject;
-            string key = go.name;
-
-            if (!poolDic.ContainsKey(key))
-                return false;
-
-            poolDic[key].Release(go);
-            return true;
-        }
-        else if (instance is Component)
-        {
-            Component component = instance as Component;
-            string key = component.gameObject.name;
-
-            if (!poolDic.ContainsKey(key))
-                return false;
-
-            poolDic[key].Release(component.gameObject);
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 }

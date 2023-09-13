@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
-using static PID.RobotHelper; 
+using static PID.RobotHelper;
 
 namespace PID
 {
@@ -592,6 +592,7 @@ namespace PID
             {
                 //owner.focusDir = (owner.playerBody.transform.position - owner.transform.position).normalized;
                 RotateTowardPlayer();
+                Debug.Log(owner.playerBody); 
                 robotGun.AttemptFire(owner.playerBody);
             }
 

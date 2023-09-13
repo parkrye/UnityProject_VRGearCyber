@@ -31,7 +31,6 @@ namespace PID
         GuardEnemy gunOwner;
 
         //Debug 
-        LineRenderer debugLine;
 
         public bool Reloading { get => reloading; set => reloading = value; }
 
@@ -41,7 +40,6 @@ namespace PID
             outofAmmo = false; 
             gunOwner = GetComponentInParent<GuardEnemy>();
             reloadWaitInterval = new WaitForSeconds(reloadInterval);
-            debugLine = GetComponent<LineRenderer>();
         }
         public void UponFire(Vector3 fireDir, float distance)
         {
@@ -68,6 +66,7 @@ namespace PID
         Vector3 shotAttempt;
         RaycastHit hitAttempt;
         GameObject appropriateObj;
+        const float trailDestroyTime = 1.5f; 
         public void Fire(Transform target)
         {
             
@@ -81,7 +80,8 @@ namespace PID
             //queries = Physics.RaycastAll(muzzlePoint.position, shotAttempt, attackRange);
             //if (queries.Length > 0)
             //    return;
-            TrailRenderer trail = GameManager.Resource.Instantiate<TrailRenderer>("Enemy/BulletTrail", muzzlePoint.position, Quaternion.identity, true);
+            TrailRenderer trail = GameManager.Resource.Instantiate(bulletTrail, muzzlePoint.position, Quaternion.identity, true);
+            GameManager.Resource.Destroy(trail, trailDestroyTime); 
             if (Physics.Raycast(muzzlePoint.position, shotAttempt, out hitAttempt, attackRange))
             {
                 if (hitAttempt.collider.gameObject.tag != targetTag)
@@ -96,6 +96,7 @@ namespace PID
                 else
                 {
                     IHitable playerDirect = GameManager.Data.Player.Data.GetComponent<IHitable>();
+                    Debug.Log(GameManager.Data.Player.Data.gameObject.name); 
                     playerDirect?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal);
                     StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point));
                     return; 
@@ -139,11 +140,12 @@ namespace PID
             trail.Clear();
             while (deltaDist > deltaDistThreshold)
             {
-                trail.transform.position = Vector3.Lerp(trail.transform.position, endPos, .075f);
+                trail.transform.position = Vector3.Lerp(trail.transform.position, endPos, .275f);
                 deltaDist = Vector3.SqrMagnitude(endPos - startPos);
                 yield return null;
             }
             trail.Clear();
+
         }
         public void SyncStatData(EnemyStat stat)
         {
