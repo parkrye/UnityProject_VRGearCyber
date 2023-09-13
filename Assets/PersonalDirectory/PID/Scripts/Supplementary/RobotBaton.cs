@@ -67,7 +67,7 @@ namespace PID
                 //Access directly to Player's health data; 
                 //Only hits once.  
                 IHitable hittable = collider.gameObject.GetComponent<IHitable>();
-                if (hittable)
+                if (hittable != null)
                 {
                     hittable?.TakeDamage(attackDamage, Vector3.zero, Vector3.zero);
                     break;
@@ -75,7 +75,8 @@ namespace PID
                 if (collider.gameObject.tag == targetTag)
                 {
                     IHitable playerDirect = GameManager.Data.Player.Data.GetComponent<IHitable>();
-                    playerDirect?.TakeDamage(attackDamage, Vector3.zero, Vector3.zero); 
+                    playerDirect?.TakeDamage(attackDamage, Vector3.zero, Vector3.zero);
+                    Debug.Log("TookHit"); 
                     break;
                 }
             }

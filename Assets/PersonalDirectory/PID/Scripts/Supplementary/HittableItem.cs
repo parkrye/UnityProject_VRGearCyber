@@ -41,7 +41,7 @@ namespace PID
         public void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
         {
             durability--;
-            StopAllCoroutine(); 
+            StopAllCoroutines(); 
             StartCoroutine(HitEffect()); 
             if (durability <= 0)
             {
@@ -54,8 +54,8 @@ namespace PID
         public void TakeStrike(Transform hitter, float damage, Vector3 hitPoint, Vector3 hitNormal)
         {
             if (durability == 0)
-                return; 
-            StopAllCoroutine(); 
+                return;
+            StopAllCoroutines(); 
             StartCoroutine(HitEffect());
             durability = 0;
             isWearing = false;

@@ -88,44 +88,17 @@ namespace PID
                 {
                     //obstacle should take damage; 
                     //debugLine.SetPosition(1, hitAttempt.point);
-                    StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point)); 
                     IHitable hitable = hitAttempt.collider.GetComponent<IHitable>();
                     hitable?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal);
+                    StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point));
                     return; 
                 }
                 else
                 {
-                    //IHitable playerDirect = GameManager.Data.Player.Data.GetComponent<IHitable>();
-                    IHitable hitable = hitAttempt.collider.GetComponent<IHitable>();
-                    if (hitable != null)
-                    {
-                        hitable?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal);
-                        StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point));
-                        //debugLine.SetPosition(1, hitAttempt.point);
-                        return;
-                    }
-
-                    appropriateObj = SearchForComponentInParent(hitAttempt.collider.gameObject);
-                    if (appropriateObj != null)
-                    {
-                        GiveDamage(appropriateObj);
-                        StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point));
-                        //debugLine.SetPosition(1, hitAttempt.point);
-                        appropriateObj = null;
-                        return;
-                    }
-                    else
-                    {
-                        appropriateObj = SearchForComponentInChildren(hitAttempt.collider.gameObject);
-                        if (appropriateObj != null)
-                        {
-                            GiveDamage(appropriateObj);
-                            StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point));
-                            //debugLine.SetPosition(1, hitAttempt.point);
-                            appropriateObj = null;
-                            return;
-                        }
-                    }
+                    IHitable playerDirect = GameManager.Data.Player.Data.GetComponent<IHitable>();
+                    playerDirect?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal);
+                    StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point));
+                    return; 
                 }
             }
             else 
@@ -148,42 +121,7 @@ namespace PID
             IHitable hitable = hitAttempt.collider.GetComponent<IHitable>();
             hitable?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal);
         }
-        public GameObject SearchForComponentInParent(GameObject gameObject)
-        {
-            if (gameObject == null)
-            {
-                return null;
-            }
-            // Check if the current GameObject has the desired component
-            IHitable hitable = gameObject.GetComponent<IHitable>();
-            if (hitable != null)
-            {
-                return gameObject;
-            }
-            // Recursively search through the parent
-            if (gameObject.transform.parent != null)
-            {
-                return SearchForComponentInParent(gameObject.transform.parent.gameObject);
-            }
-            else
-            {
-                return null;
-            }
-        }
-        public GameObject SearchForComponentInChildren(GameObject gameObject)
-        {
-            GameObject target = null;
-            foreach (Transform child in gameObject.transform)
-            {
-                IHitable hitable = child.GetComponent<IHitable>();
-                if (hitable != null)
-                {
-                    target = child.gameObject;
-                    break;
-                }
-            }
-            return target;
-        }
+       
         IEnumerator ReloadRoutine()
         {
             reloading = true;
@@ -217,3 +155,71 @@ namespace PID
         }
     }
 }
+#region DEPRECATED 
+//IHitable hitable = hitAttempt.collider.GetComponent<IHitable>();
+//if (hitable != null)
+//{
+//    hitable?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal);
+//    StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point));
+//    //debugLine.SetPosition(1, hitAttempt.point);
+//    return;
+//}
+
+//appropriateObj = SearchForComponentInParent(hitAttempt.collider.gameObject);
+//if (appropriateObj != null)
+//{
+//    GiveDamage(appropriateObj);
+//    StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point));
+//    //debugLine.SetPosition(1, hitAttempt.point);
+//    appropriateObj = null;
+//    return;
+//}
+//else
+//{
+//    appropriateObj = SearchForComponentInChildren(hitAttempt.collider.gameObject);
+//    if (appropriateObj != null)
+//    {
+//        GiveDamage(appropriateObj);
+//        StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point));
+//        //debugLine.SetPosition(1, hitAttempt.point);
+//        appropriateObj = null;
+//        return;
+//    }
+//}
+//public GameObject SearchForComponentInParent(GameObject gameObject)
+//{
+//    if (gameObject == null)
+//    {
+//        return null;
+//    }
+//    // Check if the current GameObject has the desired component
+//    IHitable hitable = gameObject.GetComponent<IHitable>();
+//    if (hitable != null)
+//    {
+//        return gameObject;
+//    }
+//    // Recursively search through the parent
+//    if (gameObject.transform.parent != null)
+//    {
+//        return SearchForComponentInParent(gameObject.transform.parent.gameObject);
+//    }
+//    else
+//    {
+//        return null;
+//    }
+//}
+//public GameObject SearchForComponentInChildren(GameObject gameObject)
+//{
+//    GameObject target = null;
+//    foreach (Transform child in gameObject.transform)
+//    {
+//        IHitable hitable = child.GetComponent<IHitable>();
+//        if (hitable != null)
+//        {
+//            target = child.gameObject;
+//            break;
+//        }
+//    }
+//    return target;
+//}
+#endregion

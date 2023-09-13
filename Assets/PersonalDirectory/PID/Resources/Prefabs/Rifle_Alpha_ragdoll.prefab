@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94f16212361347a44a940d3273ad139a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  armorAvailable: 0
 --- !u!65 &1323737057
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1150,6 +1151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fd1dd8fe45c9844db0a1ec1f719196c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  armorAvailable: 0
+  description: 
   headShotMultiplier: 3
 --- !u!1 &4810853655656847450
 GameObject:
@@ -1267,7 +1270,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 555d9be9c4c001b4b9fa740e9e9d63fc, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -1326,6 +1329,7 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 8
+  targetTag: Player
   obstacleMask:
     serializedVersion: 2
     m_Bits: 128
@@ -1343,7 +1347,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c10bd64ae789f9d4ea1be5d2a67f23a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  robotType: 0
   anim: {fileID: 0}
+  currentHealth: 0
   patrolPoints: []
   muzzlePoint: {fileID: 4810853656401482253}
   headRegion:
@@ -2509,6 +2515,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fd1dd8fe45c9844db0a1ec1f719196c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  armorAvailable: 0
+  description: 
   headShotMultiplier: 3
 --- !u!1 &4810853656220955491
 GameObject:
@@ -3281,9 +3289,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4810853656540495840}
+  - component: {fileID: 249356484}
   - component: {fileID: 4810853656540495843}
   - component: {fileID: 4810853656540495841}
   - component: {fileID: 4810853656540495842}
+  - component: {fileID: 249356483}
   m_Layer: 11
   m_Name: Ribs
   m_TagString: Untagged
@@ -3312,6 +3322,19 @@ Transform:
   m_Father: {fileID: 4810853656020104846}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &249356484
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4810853656540495847}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.5974249, z: 0.055572376}
+  m_Center: {x: 0.000000019604682, y: 0.2012869, z: -0.007476479}
 --- !u!65 &4810853656540495843
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3323,8 +3346,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.47372133, y: 0.30685255, z: 0.3511858}
-  m_Center: {x: -0.13534068, y: 0.016944727, z: 0.003988698}
+  m_Size: {x: 0.47372133, y: 0.30176046, z: 0.3511858}
+  m_Center: {x: -0.13534068, y: 0.019490741, z: 0.003988698}
 --- !u!54 &4810853656540495841
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3387,6 +3410,19 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &249356483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4810853656540495847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f757ad6846a9e1b468dccb7de76944e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  armorAvailable: 0
 --- !u!1 &4810853656566376463
 GameObject:
   m_ObjectHideFlags: 0
@@ -3892,6 +3928,10 @@ PrefabInstance:
     - target: {fileID: 1507584485299854, guid: 0024a548e7da3a243b80d0845e3bcd2c, type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1507584485299854, guid: 0024a548e7da3a243b80d0845e3bcd2c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4723751946116284, guid: 0024a548e7da3a243b80d0845e3bcd2c, type: 3}
       propertyPath: m_RootOrder
