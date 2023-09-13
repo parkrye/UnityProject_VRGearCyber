@@ -9,6 +9,7 @@ namespace PGR
     {
         [SerializeField] GameData.HackProgressState state;
         [SerializeField] UnityEvent SuccessEvent, FailEvent;
+        [SerializeField] int pairCount, fixedPointPerPairCount;
 
         /// <summary>
         /// Call by Hacking Cable
@@ -65,6 +66,11 @@ namespace PGR
             acceptedType = GameData.InteractableType.None;
             yield return new WaitForSeconds(3f);
             acceptedType = GameData.InteractableType.Cable;
+        }
+
+        public (int, int) GetDifficulty()
+        {
+            return (pairCount, fixedPointPerPairCount);
         }
     }
 

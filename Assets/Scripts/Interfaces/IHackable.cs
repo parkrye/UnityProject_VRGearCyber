@@ -1,10 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public interface IHackable
 {
     //[SerializeField] GameData.HackProgressState state;
+    //[SerializeField] int pairCount, int fixedPointPerPairCount
 
     /// <summary>
     /// Call by Hacking Cable
@@ -54,4 +53,9 @@ public interface IHackable
         // }
     }
 
+    public (int, int) GetDifficulty()
+    {
+        return (2, 3);
+        // return (pairCount, fixedPointPerPairCount);
+    }
 }
