@@ -16,5 +16,7 @@ namespace KSI
 			rb = GetComponent<Rigidbody>();
 			rb.AddForce(transform.forward * force);
 		}
+
+
 	}
 }
