@@ -8,8 +8,7 @@ namespace KSI
     public class Magazine : MonoBehaviour
     {
         public int numberOfBullet;
-        public Image magazineImage;
-        public Text magazineText;
-
+        //public Image magazineImage;
+        //public Text magazineText;
 	}
 }
