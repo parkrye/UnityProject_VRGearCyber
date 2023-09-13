@@ -17,6 +17,9 @@ namespace KSI
 		[SerializeField] private int damage;
 		[SerializeField] private float maxDistance = 10;
 
+		[Header("Enemy")]
+		[SerializeField] float soundIntensity;
+
 		[Header("Magazine")]
 		public Magazine magazine;
 		public XRBaseInteractor socketInteractor;
@@ -29,10 +32,11 @@ namespace KSI
 
 		private Animator animator;
 		private PlayerHandMotion playerHandMotion;
-		private bool isRightHanded;
+		private CustomDirectInteractor hand;
 		private MeshRenderer muzzleFlash;
 		private bool hasMagazine = false;
 		//private bool hasSlide = false;
+
 
 		private void Start()
 		{
@@ -42,9 +46,6 @@ namespace KSI
 			// muzzlePoint 하위에 있는 muzzleFlashdml 컴포넌트 추출
 			muzzleFlash = muzzlePoint.GetComponentInChildren<MeshRenderer>();
 			muzzleFlash.enabled = false;
-
-			if (playerHandMotion == null)
-				playerHandMotion = GetComponent<PlayerHandMotion>();
 
 			//if (socketInteractor != null)
 			//{
@@ -59,13 +60,16 @@ namespace KSI
 
 		public void AddMagazine(SelectEnterEventArgs args)
 		{
+			if (hand == null)
+				return;
+
 			if (!hasMagazine)
 			{
 				hasMagazine = true;
 				//hasSlide = false;
 
 				magazine = args.interactableObject.transform.GetComponent<Magazine>();
-				XRGrabInteractable magazineGrabInteractable = magazine.GetComponent<XRGrabInteractable>();
+				CustomGrabInteractable magazineGrabInteractable = magazine.GetComponent<CustomGrabInteractable>();
 				XRGrabInteractable pistolGrabInteractable = GetComponent<XRGrabInteractable>();
 
 				foreach (Collider pistolCollider in pistolGrabInteractable.colliders)
@@ -75,6 +79,12 @@ namespace KSI
 						Physics.IgnoreCollision(pistolCollider, magaznineCollider, true);
 					}
 				}
+
+				if(hand.IsRightHand)
+					GameManager.Data.Player.ExtraInput.RightHandPrimaryButtonEvent.AddListener(EjectMagazine);
+				else
+					GameManager.Data.Player.ExtraInput.LeftHandPrimaryButtonEvent.AddListener(EjectMagazine);
+					magazineGrabInteractable.InteractableType = GameData.InteractableType.None;
 			}
 		}
 
@@ -95,28 +105,80 @@ namespace KSI
 			}
 		}
 
+		private void EjectMagazine(bool isPressed)
+		{
+			if (magazine != null && isPressed)
+			{
+				magazine.transform.SetParent(null);
+				magazine = null;
+			}
+		}
+
 		//public void Slide()
 		//{
 		//	Debug.Log("Slided");
 		//	hasSlide = true;
 		//	//audioSource.PlayOneShot(reload);
 		//}
+		
+		public void MakeSound(Vector3 soundPos, Vector3 hitPoint) 
+		{
+			Collider[] soundPoints = Physics.OverlapSphere(soundPos, soundIntensity); 
+			if (soundPoints.Length <= 0 ) {
+				return; 
+			}
+			foreach (Collider soundPoint in soundPoints) 
+			{
+				PID.IHearable soundhearer = soundPoint.gameObject.GetComponent<PID.IHearable>();
+				soundhearer?.Heard(soundPos, GameManager.traceSound.WallIntersect(soundPos, hitPoint));
+			}
+		}
+
+		public void GrabGun(SelectEnterEventArgs args)
+		{
+			hand = args.interactorObject.transform.GetComponent<CustomDirectInteractor>();
+			if (hand == null)
+				return;
+
+			if (playerHandMotion == null)
+				playerHandMotion = GameManager.Data.Player.HandMotion;
+
+			if (hand.IsRightHand)
+			{
+				playerHandMotion.GrabOnGunRight(true);
+			}
+			else
+			{
+				playerHandMotion.GrabOnGunLeft(true);
+			}
+		}
+
+		public void PutDownGun(SelectExitEventArgs args)
+		{
+			hand = args.interactorObject.transform.GetComponent<CustomDirectInteractor>();
+			if (hand == null)
+				return;
+
+			if (playerHandMotion == null)
+				playerHandMotion = GameManager.Data.Player.HandMotion;
+
+			if (hand.IsRightHand)
+			{
+				playerHandMotion.GrabOnGunRight(false);
+			}
+			else
+			{
+				playerHandMotion.GrabOnGunLeft(false);
+			}
+		}
+
 
 		public void PullTheTrigger(ActivateEventArgs args)
 		{
+			StartCoroutine(TriggerGunRoutine());
+
 			if (hasMagazine && magazine && magazine.numberOfBullet > 0) //&& hasSlide)
 			{
-				if (playerHandMotion == null)
-					playerHandMotion = GameManager.Data.Player.HandMotion;
-
-				if (isRightHanded)
-				{
-					playerHandMotion.TriggerGunRight(true);
-				}
-				else
-				{
-					playerHandMotion.TriggerGunLeft(true);
-				}
 
 				animator.SetTrigger("Fire");
 				Shoot();
@@ -132,14 +194,18 @@ namespace KSI
 					if (hitable != null)
 					{
 						Debug.Log($"Hitable Object: {hitable.ToString()}");
+
 						hitable.TakeDamage(damage, hit.point, hit.normal);
 					}
 					else
 					{
 						Debug.Log("No hitable component found on hit object.");
 					}
-				}				
+				}
+				//Make sound for non hits 
+				//Vector3 virtualSoundPoint = Vector3.Dot(muzzlePoint.position, muzzlePoint.forward)
 			}
+			
 			//else if (!hasSlide)
 			//{
 			//	Debug.Log("No Slide");
@@ -149,6 +215,32 @@ namespace KSI
 				Debug.Log($"{gameObject.name} : No Ammo");
 
 				audioSource.PlayOneShot(noAmmo);
+			}
+		}
+
+		IEnumerator TriggerGunRoutine()
+		{
+			if (playerHandMotion == null)
+				playerHandMotion = GameManager.Data.Player.HandMotion;
+
+			if (hand.IsRightHand)
+			{
+				playerHandMotion.TriggerGunRight(true);
+			}
+			else
+			{
+				playerHandMotion.TriggerGunLeft(true);
+			}
+
+			yield return new WaitForSeconds(1f);
+
+			if (hand.IsRightHand)
+			{
+				playerHandMotion.TriggerGunRight(false);
+			}
+			else
+			{
+				playerHandMotion.TriggerGunLeft(false);
 			}
 		}
 			
@@ -184,20 +276,6 @@ namespace KSI
 			yield return new WaitForSeconds(0.2f);
 
 			muzzleFlash.enabled = false;
-			if (isRightHanded)
-			{
-				playerHandMotion.TriggerGunRight(false);
-			}
-			else
-			{
-				playerHandMotion.TriggerGunLeft(false);
-			}
-		}
-
-		private void OnDrawGizmos()
-		{
-			Gizmos.color = Color.yellow;
-			Gizmos.DrawRay(muzzlePoint.position, muzzlePoint.forward * maxDistance);
 		}
 	}
 } 
