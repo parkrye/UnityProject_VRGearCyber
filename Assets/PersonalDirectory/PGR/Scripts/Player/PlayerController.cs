@@ -12,7 +12,8 @@ namespace PGR
         [SerializeField] Camera irisSystemCamera;
         [SerializeField] PlayerSight playerSight;
         [SerializeField] IrisSystemDisplay irisSystemDisplay;
-        [SerializeField] Transform XROriginTransform;
+        [SerializeField] Transform xROriginTransform;
+        [SerializeField] PlayerExtraInput playerExtraInput;
 
         public PlayerDataModel Data { get { return playerDataModel; } }
         public PlayerHandMotion HandMotion { get { return playerHandMotion; } }
@@ -21,6 +22,7 @@ namespace PGR
         public Camera IrisSystem { get { return irisSystemCamera; } }
         public PlayerSight Sight { get { return playerSight; } }
         public IrisSystemDisplay Display { get { return irisSystemDisplay; } }
+        public PlayerExtraInput ExtraInput { get {  return playerExtraInput; } }
 
         [SerializeField] ActionBasedContinuousTurnProvider continuousTurnProvider;
         [SerializeField] ActionBasedSnapTurnProvider snapTurnProvider;
@@ -46,7 +48,7 @@ namespace PGR
 
         public void MoveTransform(Vector3 position)
         {
-            XROriginTransform.position = position;
+            xROriginTransform.position = position;
         }
     }
 

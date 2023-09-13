@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace PGR
@@ -12,6 +11,20 @@ namespace PGR
 
         [SerializeField] bool isCableLoaded, isSelectClicked;
         [SerializeField] float cableShotPower;
+
+        protected override void Start()
+        {
+            base.Start();
+            StartCoroutine(WaitAwakeRoutine());
+        }
+
+        IEnumerator WaitAwakeRoutine()
+        {
+            yield return new WaitUntil(() => GameManager.Data != null);
+            yield return new WaitUntil(() => GameManager.Data.Player != null);
+            yield return new WaitUntil(() => GameManager.Data.Player.ExtraInput != null);
+            GameManager.Data.Player.ExtraInput.LeftHandPrimaryButtonEvent.AddListener(CableAction);
+        }
 
         protected override void OnEnable()
         {
@@ -43,8 +56,11 @@ namespace PGR
             isCableLoaded = false;
         }
 
-        public void OnLeftPrimaryButton(InputValue inputValue)
+        public void CableAction(bool isPressed)
         {
+            if (!isPressed)
+                return;
+
             if (cableObject.State)
             {
                 cableObject.ExitPuzzle();

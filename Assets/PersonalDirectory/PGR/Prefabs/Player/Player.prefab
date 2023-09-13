@@ -923,13 +923,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerDataModel: {fileID: 503361725078272705}
-  playerHandMotion: {fileID: 6952330116887738621}
+  playerHandMotion: {fileID: 0}
   playerLeftWallCheck: {fileID: 5509386707415782559}
   playerRightWallCheck: {fileID: 1591787785050843944}
   irisSystemCamera: {fileID: 3680481829646756845}
   playerSight: {fileID: 3051301580296827479}
   irisSystemDisplay: {fileID: 1422354747192335270}
-  XROriginTransform: {fileID: 670120537221899524}
+  xROriginTransform: {fileID: 670120537221899524}
+  playerExtraInput: {fileID: 1015129548464004693}
   continuousTurnProvider: {fileID: 3763292446324776208}
   snapTurnProvider: {fileID: 5069962009611534593}
 --- !u!114 &503361725078272705
@@ -1269,8 +1270,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4969485645765496667}
-  - component: {fileID: 4598586783409654310}
-  - component: {fileID: 6952330116887738621}
   m_Layer: 9
   m_Name: Hands
   m_TagString: Player
@@ -1290,6 +1289,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7521519943023461737}
+  - {fileID: 433453461105675166}
   - {fileID: 2205595613750926394}
   - {fileID: 1686931696557854685}
   - {fileID: 2205595612282969307}
@@ -1297,51 +1298,6 @@ Transform:
   m_Father: {fileID: 2205595612276924537}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4598586783409654310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1255559520268682464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 58ff8608a9c60c841b292b81b628e2f0,
-    type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: 6fe9373a-6523-42a0-91f4-7ef98ccddd9c
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
---- !u!114 &6952330116887738621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1255559520268682464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c711e73b082f78e4fa0c3766aa4b8c76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lAnim: {fileID: 2864571265210612082}
-  rAnim: {fileID: 2201167483950593641}
 --- !u!1 &2012874153896176793
 GameObject:
   m_ObjectHideFlags: 0
@@ -1862,7 +1818,7 @@ Transform:
   - {fileID: 4567984749781685302}
   - {fileID: 3579559589235336879}
   m_Father: {fileID: 4969485645765496667}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5765144962483690592
 MonoBehaviour:
@@ -2192,7 +2148,7 @@ Transform:
   - {fileID: 3118267987533227698}
   - {fileID: 2364056536455757662}
   m_Father: {fileID: 4969485645765496667}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6689050230669611083
 MonoBehaviour:
@@ -2859,7 +2815,7 @@ Transform:
   m_Children:
   - {fileID: 4239143775626438920}
   m_Father: {fileID: 4969485645765496667}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &547769414713215653
 MonoBehaviour:
@@ -3144,7 +3100,7 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6952330116887738621}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PGR.PlayerHandMotion, Assembly-CSharp
         m_MethodName: CatchObjectRight
         m_Mode: 6
@@ -3159,7 +3115,7 @@ MonoBehaviour:
   m_SelectExited:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6952330116887738621}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PGR.PlayerHandMotion, Assembly-CSharp
         m_MethodName: CatchObjectRight
         m_Mode: 6
@@ -4770,7 +4726,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 6952330116887738621}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PGR.PlayerHandMotion, Assembly-CSharp
         m_MethodName: CatchObjectLeft
         m_Mode: 6
@@ -4797,7 +4753,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 6952330116887738621}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PGR.PlayerHandMotion, Assembly-CSharp
         m_MethodName: CatchObjectLeft
         m_Mode: 6
@@ -5354,7 +5310,7 @@ Transform:
   m_Children:
   - {fileID: 259353372894504467}
   m_Father: {fileID: 4969485645765496667}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 60}
 --- !u!114 &3065161616919315587
 MonoBehaviour:
@@ -5584,7 +5540,7 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6952330116887738621}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PGR.PlayerHandMotion, Assembly-CSharp
         m_MethodName: CatchObjectRight
         m_Mode: 6
@@ -5599,7 +5555,7 @@ MonoBehaviour:
   m_SelectExited:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6952330116887738621}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PGR.PlayerHandMotion, Assembly-CSharp
         m_MethodName: CatchObjectRight
         m_Mode: 6
@@ -5689,7 +5645,7 @@ MonoBehaviour:
   m_AutoDeselect: 0
   m_TimeToAutoDeselect: 1
   m_EnableUIInteraction: 1
-  m_AllowAnchorControl: 1
+  m_AllowAnchorControl: 0
   m_UseForceGrab: 0
   m_RotateSpeed: 180
   m_TranslateSpeed: 1
@@ -6248,7 +6204,7 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6952330116887738621}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PGR.PlayerHandMotion, Assembly-CSharp
         m_MethodName: CatchObjectLeft
         m_Mode: 6
@@ -6263,7 +6219,7 @@ MonoBehaviour:
   m_SelectExited:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6952330116887738621}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PGR.PlayerHandMotion, Assembly-CSharp
         m_MethodName: CatchObjectLeft
         m_Mode: 6
@@ -6353,7 +6309,7 @@ MonoBehaviour:
   m_AutoDeselect: 0
   m_TimeToAutoDeselect: 1
   m_EnableUIInteraction: 1
-  m_AllowAnchorControl: 1
+  m_AllowAnchorControl: 0
   m_UseForceGrab: 0
   m_RotateSpeed: 180
   m_TranslateSpeed: 1
@@ -6982,6 +6938,178 @@ MonoBehaviour:
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
   acceptedType: 1
   isInvisible: 0
+--- !u!1 &8833218486091010809
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7521519943023461737}
+  - component: {fileID: 4829271057042558835}
+  - component: {fileID: 8172712393991313558}
+  m_Layer: 9
+  m_Name: Motion Input
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7521519943023461737
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8833218486091010809}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4969485645765496667}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4829271057042558835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8833218486091010809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 58ff8608a9c60c841b292b81b628e2f0,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Motions
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &8172712393991313558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8833218486091010809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c711e73b082f78e4fa0c3766aa4b8c76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lAnim: {fileID: 2864571265210612082}
+  rAnim: {fileID: 2201167483950593641}
+--- !u!1 &8972710373915841343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 433453461105675166}
+  - component: {fileID: 20372638743524691}
+  - component: {fileID: 1015129548464004693}
+  m_Layer: 9
+  m_Name: Extra Input
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &433453461105675166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8972710373915841343}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4969485645765496667}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &20372638743524691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8972710373915841343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: c5417951f30881e478cc40a139e9cd27,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: ExtraButtons
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &1015129548464004693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8972710373915841343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01238867f08336e43a8c33e34bc1a363, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LeftHandPrimaryButtonEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  LeftHandSecondaryButtonEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  LeftHandTriggerGrabEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  RightHandPrimaryButtonEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  RightHandSecondaryButtonEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  RightHandTriggerGrabEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &4240727074483448184
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7658,7 +7786,8 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.2293
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5674446548845650698, guid: 8a90b67b548121c418bbb8cfa417e586, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8a90b67b548121c418bbb8cfa417e586, type: 3}
 --- !u!114 &54626233835228762 stripped
 MonoBehaviour:
