@@ -19,6 +19,9 @@ namespace PGR
             GameManager.Data.Player.Display.ModifyText("Mission : Heist or Crack Data of the Company");
             yield return new WaitUntil(() => GameManager.Data.Player.IrisSystem.isActiveAndEnabled);
             yield return new WaitForSeconds(5f);
+            GameManager.Data.Player.Display.ModifyText("Hint : Use Back Door");
+            yield return new WaitUntil(() => GameManager.Data.Player.IrisSystem.isActiveAndEnabled);
+            yield return new WaitForSeconds(5f);
             GameManager.Data.Player.Display.ModifyText("");
             Destroy(this);
         }
