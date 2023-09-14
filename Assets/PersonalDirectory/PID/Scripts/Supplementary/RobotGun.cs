@@ -96,7 +96,6 @@ namespace PID
                 else
                 {
                     IHitable playerDirect = GameManager.Data.Player.Data.GetComponent<IHitable>();
-                    Debug.Log(GameManager.Data.Player.Data.gameObject.name); 
                     playerDirect?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal);
                     StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point));
                     return; 
