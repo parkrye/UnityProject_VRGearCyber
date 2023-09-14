@@ -11,6 +11,7 @@ namespace PGR
 
         [SerializeField] bool isCableLoaded, isSelectClicked;
         [SerializeField] float cableShotPower;
+        [SerializeField] AudioSource shotAudio;
 
         protected override void Start()
         {
@@ -64,6 +65,8 @@ namespace PGR
             if (cableObject.State)
             {
                 cableObject.ExitPuzzle();
+                cableObject.FixExit();
+                cableObject.transform.position = transform.position;
                 return;
             }
 
@@ -76,9 +79,19 @@ namespace PGR
             if (!isSelectClicked)
                 return;
 
+            StartCoroutine(ShotRoutine());
+        }
+
+        IEnumerator ShotRoutine()
+        {
             isSelectClicked = false;
             isCableLoaded = false;
+            ChangeSocketType();
+
+            shotAudio.Play();
             cableObject.ShotCable(transform.forward, cableShotPower);
+            yield return new WaitForSeconds(1f);
+            ChangeSocketType(GameData.InteractableType.Cable);
         }
     }
 }
