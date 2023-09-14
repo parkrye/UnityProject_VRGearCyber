@@ -17,7 +17,7 @@ namespace PGR
 
         void OnTriggerEnter(Collider other)
         {
-            if (other.GetComponent<XRPokeInteractor>() != null)
+            if (other.GetComponent<XRPokeInteractor>() == null)
                 return;
 
             m_Renderer.enabled = true;
