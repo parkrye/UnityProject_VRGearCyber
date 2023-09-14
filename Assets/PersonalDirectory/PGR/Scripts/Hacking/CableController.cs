@@ -79,10 +79,19 @@ namespace PGR
             if (!isSelectClicked)
                 return;
 
+            StartCoroutine(ShotRoutine());
+        }
+
+        IEnumerator ShotRoutine()
+        {
             isSelectClicked = false;
             isCableLoaded = false;
+            ChangeSocketType();
+
             shotAudio.Play();
             cableObject.ShotCable(transform.forward, cableShotPower);
+            yield return new WaitForSeconds(1f);
+            ChangeSocketType(GameData.InteractableType.Cable);
         }
     }
 }

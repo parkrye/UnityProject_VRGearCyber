@@ -100,7 +100,7 @@ namespace PGR
         {
             GameManager.Data.TimeScale = 1f;
             target.ChangeProgressState(result);
-            socketInteractor.ChangeSocketUnusable();
+            socketInteractor.ChangeSocketType();
             cable.FixExit();
             SelfDestroy?.Invoke();
             StopAllCoroutines();
