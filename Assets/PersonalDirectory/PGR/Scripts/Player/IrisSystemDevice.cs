@@ -6,6 +6,7 @@ namespace PGR
     {
         [SerializeField] bool isHandOnArea, isRight, isLeft, isOn;
         [SerializeField] GameObject irisSystemCamera;
+        [SerializeField] AudioSource onAudio, offAudio;
 
         void OnEnable()
         {
@@ -54,6 +55,10 @@ namespace PGR
 
         public void TurnIrisSystem(bool value)
         {
+            if(value)
+                onAudio.Play();
+            else
+                offAudio.Play();
             irisSystemCamera.SetActive(value);
         }
     }
