@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using PGR;
+using PID;
 
 namespace KSI
 {
@@ -172,7 +173,6 @@ namespace KSI
 			}
 		}
 
-
 		public void PullTheTrigger(ActivateEventArgs args)
 		{
 			StartCoroutine(TriggerGunRoutine());
@@ -194,18 +194,22 @@ namespace KSI
 					if (hitable != null)
 					{
 						Debug.Log($"Hitable Object: {hitable.ToString()}");
-
+						MakeSound(hit.point);
 						hitable.TakeDamage(damage, hit.point, hit.normal);
 					}
 					else
 					{
-						Debug.Log("No hitable component found on hit object.");
+						MakeSound(hit.point);
 					}
 				}
-				//Make sound for non hits 
-				//Vector3 virtualSoundPoint = Vector3.Dot(muzzlePoint.position, muzzlePoint.forward)
-			}
-			
+				else 
+				{
+					if (Physics.Raycast(muzzlePoint.position, muzzlePoint.forward, out RaycastHit hit_2)) 
+					{
+						MakeSound(hit_2.point);
+					}
+				}
+			}			
 			//else if (!hasSlide)
 			//{
 			//	Debug.Log("No Slide");
@@ -215,6 +219,17 @@ namespace KSI
 				Debug.Log($"{gameObject.name} : No Ammo");
 
 				audioSource.PlayOneShot(noAmmo);
+			}
+		}
+		public void MakeSound(Vector3 pos)
+		{
+			Collider[] soundHits = Physics.OverlapSphere(pos, soundIntensity);
+			if (soundHits.Length <= 0)
+				return;
+			foreach (Collider collider in soundHits)
+			{
+				IHearable hearable = collider.gameObject.GetComponent<IHearable>();
+				hearable?.Heard(pos, GameManager.traceSound.WallIntersect(pos, collider.transform.position));
 			}
 		}
 
@@ -232,7 +247,7 @@ namespace KSI
 				playerHandMotion.TriggerGunLeft(true);
 			}
 
-			yield return new WaitForSeconds(1f);
+			yield return new WaitForSeconds(0.2f);
 
 			if (hand.IsRightHand)
 			{
@@ -254,6 +269,27 @@ namespace KSI
 			bulletShell.Play();
 
 			StartCoroutine(MuzzleFlashRoutine());
+
+			//if (magazine.numberOfBullet > 0 && magazine.bullets.Count > 0)
+			//{
+			//	magazine.numberOfBullet--;
+
+			//	GameObject bulletToRemove = magazine.bullets[0];
+			//	magazine.bullets.RemoveAt(0);
+			//	Destroy(bulletToRemove);
+
+			//	Instantiate(bullet, muzzlePoint.position, muzzlePoint.rotation);
+			//	audioSource.PlayOneShot(shootSound, 1.0f);
+			//	bulletShell.Play();
+			//	StartCoroutine(MuzzleFlashRoutine());
+
+			//	Debug.Log("Bullet used. Remaining bullets: " + magazine.numberOfBullet);
+			//}
+			//else
+			//{
+			//	Debug.Log($"{gameObject.name} : No Ammo");
+			//	audioSource.PlayOneShot(noAmmo);
+			//}
 		}
 
 		IEnumerator MuzzleFlashRoutine()

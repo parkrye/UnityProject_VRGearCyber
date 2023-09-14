@@ -239,7 +239,6 @@ GameObject:
   - component: {fileID: 3775317532160163710}
   - component: {fileID: 3775317532160163709}
   - component: {fileID: 3775317532160163708}
-  - component: {fileID: 3775317532160163711}
   - component: {fileID: 1307637491}
   m_Layer: 0
   m_Name: Plane (1)
@@ -313,20 +312,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3775317532160163711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3775317532160163682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 911c2abd54621a7438c533f9df8a2d93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletSparkEffect: {fileID: 1000011945391522, guid: ac159911ba2d21646883c60bd29878ac,
-    type: 3}
 --- !u!65 &1307637491
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -938,7 +923,6 @@ GameObject:
   - component: {fileID: 3775317533706356683}
   - component: {fileID: 3775317533706356682}
   - component: {fileID: 3775317533706356681}
-  - component: {fileID: 3775317533706356676}
   - component: {fileID: 1934549919}
   m_Layer: 0
   m_Name: Plane (3)
@@ -955,7 +939,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3775317533706356687}
   m_LocalRotation: {x: -0.50000197, y: 0.4999995, z: 0.49999774, w: 0.50000083}
-  m_LocalPosition: {x: 10.960833, y: 0.28987122, z: 0.16349144}
+  m_LocalPosition: {x: 10.96, y: 0.36, z: -0.35}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1012,20 +996,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3775317533706356676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3775317533706356687}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 911c2abd54621a7438c533f9df8a2d93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletSparkEffect: {fileID: 1000011945391522, guid: ac159911ba2d21646883c60bd29878ac,
-    type: 3}
 --- !u!65 &1934549919
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1164,7 +1134,6 @@ GameObject:
   - component: {fileID: 3775317534182295149}
   - component: {fileID: 3775317534182295148}
   - component: {fileID: 3775317534182295123}
-  - component: {fileID: 3775317534182295150}
   - component: {fileID: 1214870801}
   m_Layer: 0
   m_Name: Plane (2)
@@ -1238,20 +1207,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3775317534182295150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3775317534182295121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 911c2abd54621a7438c533f9df8a2d93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletSparkEffect: {fileID: 1000011945391522, guid: ac159911ba2d21646883c60bd29878ac,
-    type: 3}
 --- !u!65 &1214870801
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1312,7 +1267,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 398656752896854786}
-  - component: {fileID: 1916123868}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -1339,20 +1293,6 @@ Transform:
   m_Father: {fileID: 3775317533664735098}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1916123868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7759723492769169186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 911c2abd54621a7438c533f9df8a2d93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletSparkEffect: {fileID: 1000011945391522, guid: ac159911ba2d21646883c60bd29878ac,
-    type: 3}
 --- !u!1001 &1250410499962289576
 PrefabInstance:
   m_ObjectHideFlags: 0
