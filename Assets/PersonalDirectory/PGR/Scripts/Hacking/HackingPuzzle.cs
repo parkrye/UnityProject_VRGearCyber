@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -14,9 +15,12 @@ namespace PGR
         [SerializeField] XRExclusiveSocketInteractor socketInteractor;
         [SerializeField] CableObject cable;
         public UnityEvent SelfDestroy;
+        [SerializeField] float timeLimit;
 
         public void InitialPuzzle(IHackable _target, XRExclusiveSocketInteractor _socketInteractor, CableObject _cable, int _pairCount, int _fixedPointPerPairCount)
         {
+            if (timeLimit <= 10f)
+                timeLimit = 60f;
             target = _target;
             socketInteractor = _socketInteractor;
             cable = _cable;
@@ -68,6 +72,7 @@ namespace PGR
             }
 
             GameManager.Data.TimeScale = 0.01f;
+            StartCoroutine(TimeRoutine());
         }
 
         public void TurnOn(FixedPoint fixedPoint)
@@ -98,7 +103,21 @@ namespace PGR
             socketInteractor.ChangeSocketUnusable();
             cable.FixExit();
             SelfDestroy?.Invoke();
+            StopAllCoroutines();
+            GameManager.Data.Player.Display.ModifyText("");
             GameManager.Resource.Destroy(gameObject);
+        }
+
+        IEnumerator TimeRoutine()
+        {
+            while(timeLimit > 0)
+            {
+                timeLimit -= Time.deltaTime;
+                GameManager.Data.Player.Display.ModifyText($"{timeLimit:##.##}");
+                yield return null;
+            }
+            GameManager.Data.Player.Display.ModifyText("");
+            StopPuzzle(GameData.HackProgressState.Failure);
         }
     }
 
