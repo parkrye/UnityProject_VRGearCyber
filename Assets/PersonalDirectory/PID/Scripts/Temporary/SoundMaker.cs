@@ -47,7 +47,7 @@ namespace PID
 
         IEnumerator MakeAlarm(Vector3 soundPos)
         {
-            anim.SetTrigger("Alert");
+            anim.SetTrigger("Scream");
             MakeSound(soundPos); 
             yield return alarmWaitForSeconds; 
             finishedAlarm = true;

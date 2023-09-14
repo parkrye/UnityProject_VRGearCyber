@@ -118,7 +118,6 @@ namespace PID
 
         #endregion
         #region  COMBAT INTERACTIONS 
-        
         public void DetectPlayer(Transform player)
         {
             //should Enemy be under hide and shoot, ignore further calls. 
@@ -145,15 +144,11 @@ namespace PID
             }
             stateMachine.ChangeState(State.SoundReact); 
         }
-
         public void TempPlayerLost()
         {
             if (stateMachine.curStateName == State.Assault)
                 stateMachine.ChangeState(State.Trace); 
         }
-        int incomingDamage;
-        
-        
         public void Reactivate()
         {
             NeutralizedState.DeathType deathState; 
@@ -592,7 +587,6 @@ namespace PID
             {
                 //owner.focusDir = (owner.playerBody.transform.position - owner.transform.position).normalized;
                 RotateTowardPlayer();
-                Debug.Log(owner.playerBody); 
                 robotGun.AttemptFire(owner.playerBody);
             }
 
