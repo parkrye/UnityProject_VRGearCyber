@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3962304595111299448}
   - component: {fileID: 3962304595112266680}
   - component: {fileID: 8452115124885462335}
+  - component: {fileID: -2576261672252447454}
   m_Layer: 0
   m_Name: Pallet Variation 01
   m_TagString: Untagged
@@ -99,6 +100,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.561902, y: 0.19838908, z: 1.5239612}
   m_Center: {x: 0.7777127, y: 0.09919457, z: 0.75671333}
+--- !u!208 &-2576261672252447454
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3962304595114464632}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.781, y: 0.09900001, z: 0.762}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.77800006, y: 0.09900001, z: 0.757}
+  m_TimeToStationary: 0.5
 --- !u!1001 &3962304595387601302
 PrefabInstance:
   m_ObjectHideFlags: 0

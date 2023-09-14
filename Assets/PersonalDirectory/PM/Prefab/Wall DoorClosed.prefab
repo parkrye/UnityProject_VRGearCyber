@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 516655650}
   - component: {fileID: 516655649}
   - component: {fileID: 705454084}
+  - component: {fileID: 1732353015906783979}
   m_Layer: 0
   m_Name: LP_Door_snaps
   m_TagString: Untagged
@@ -120,7 +121,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 0
-  state: 0
+  connetingDoor: {fileID: 0}
+  arrow: 0
+  position: {x: 0, y: 0, z: 0}
+  test: 0
 --- !u!65 &705454084
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -134,6 +138,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.27971685, y: 2.052752, z: 1.4714353}
   m_Center: {x: 0.0069100335, y: 1.0237606, z: 3.0000067}
+--- !u!208 &1732353015906783979
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2548886027165798336}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.14, y: 3, z: 3}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.007, y: 2, z: 3.0000002}
+  m_TimeToStationary: 0.5
 --- !u!1 &2548886027165798338
 GameObject:
   m_ObjectHideFlags: 0

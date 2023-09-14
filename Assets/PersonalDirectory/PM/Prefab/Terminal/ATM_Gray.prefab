@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 64000013640084084}
   - component: {fileID: -1979863745829122557}
   - component: {fileID: 3012253072222209885}
-  - component: {fileID: 108592519929217734}
+  - component: {fileID: -5319409809230291203}
+  - component: {fileID: -2767542942079826511}
   m_Layer: 0
   m_Name: ATM_Gray
   m_TagString: Untagged
@@ -177,7 +178,23 @@ MonoBehaviour:
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
   acceptedType: 0
---- !u!114 &108592519929217734
+--- !u!208 &-5319409809230291203
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013720703938}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.9250001, z: 0.44300002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.9250001, z: -0.007}
+  m_TimeToStationary: 0.5
+--- !u!114 &-2767542942079826511
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

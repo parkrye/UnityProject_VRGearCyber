@@ -9,12 +9,11 @@ namespace PM
     {
         [SerializeField] int hp;
         [SerializeField] GameData.HackProgressState state;
-        Animator animator;
         Terminal terminal;
 
         private void Start()
         {
-            terminal = transform.parent.GetComponentInChildren<Terminal>();
+            terminal = transform.parent.parent.parent.GetComponentInChildren<Terminal>();
         }
         public virtual void Hack()
         {

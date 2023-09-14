@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: -4852243029068165435}
   - component: {fileID: -958869453963005349}
   - component: {fileID: 4921911743678823835}
+  - component: {fileID: 2471652640615737717}
+  - component: {fileID: -5283501033475814548}
   m_Layer: 0
   m_Name: ATM_Pink
   m_TagString: Untagged
@@ -190,5 +192,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hackingMat:
-  - {fileID: 2100000, guid: 313ef4bc07518a14d8fce4c5aba3c0d2, type: 2}
-  - {fileID: 2100000, guid: f357ecea382f94148889179a43317bf1, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!208 &2471652640615737717
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013113291574}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.9250001, z: 0.44300002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.9250001, z: -0.007}
+  m_TimeToStationary: 0.5
+--- !u!114 &-5283501033475814548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013113291574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49aafd62a71262b49bf2482ecf6af29b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hackingMat: []

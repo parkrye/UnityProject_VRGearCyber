@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
 
 namespace PM
 {
@@ -8,6 +10,7 @@ namespace PM
     {
         [SerializeField] int hp;
         Animator animator;
+        NavMeshObstacle obstacle;
         public SyberDoor connetingDoor;
         public enum Arrow { up, down, right, left }
         public Arrow arrow;
@@ -19,6 +22,7 @@ namespace PM
             animator = GetComponent<Animator>();
             GameManager.Data.timeScaleEvent.AddListener(TimeScale);
             position = transform.position;
+            obstacle = GetComponent<NavMeshObstacle>();
             StartCoroutine(DoorConnet());
         }
         private void Update()
@@ -60,6 +64,7 @@ namespace PM
             {
                 open = true;
                 StartCoroutine(connetingDoor.OpenDoor());
+                obstacle.gameObject.SetActive(false);
                 animator.SetTrigger("Open");
                 yield return null;
             }

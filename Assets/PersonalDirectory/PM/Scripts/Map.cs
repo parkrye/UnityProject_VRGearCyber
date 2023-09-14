@@ -50,7 +50,6 @@ namespace PM
 
             PositionSetting();
             RandomPrefab();
-            SpawnPrefab();
             EllerAlghorithm();
             WallCreate();
         }
@@ -73,57 +72,45 @@ namespace PM
         {
             array = new GameObject[maxYSize, maxXSize];
             roomData = new RoomData[maxYSize, maxXSize];
-            // 초기에는 x,y 2~4으로 설정
+            // 초기에는 x,y 3~4으로 설정
             for (int j = 0; j < maxYSize; j++)
             {
                 for (int i = 0; i < maxXSize; i++)
                 {
-                    int x = Random.Range(2, RoomMaxSize + 1);
-                    int z = Random.Range(2, RoomMaxSize + 1);
+                    int x = Random.Range(3, RoomMaxSize + 1);
+                    int z = Random.Range(3, RoomMaxSize + 1);
                     // 마지막 배열방에는 보스룸을 생성
                     if (j == maxYSize - 1 && i == maxXSize - 1)
                     {
                         x = 4;
                         z = 4;
-                        array[j, i] = Instantiate(bossRoom, rooms);
+                        array[j, i] = Instantiate(bossRoom, position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                     }
                     else
                     {
                         if (x == 2 && z == 2)
-                            array[j, i] = Instantiate(room0[Random.Range(0, 1)], rooms);
+                            array[j, i] = Instantiate(room0[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                         else if (x == 2 && z == 3)
-                            array[j, i] = Instantiate(room1[Random.Range(0, 1)], rooms);
+                            array[j, i] = Instantiate(room1[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                         else if (x == 3 && z == 2)
-                            array[j, i] = Instantiate(room2[Random.Range(0, 1)], rooms);
+                            array[j, i] = Instantiate(room2[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                         else if (x == 3 && z == 3)
-                            array[j, i] = Instantiate(room3[Random.Range(0, 1)], rooms);
+                            array[j, i] = Instantiate(room3[Random.Range(0, 2)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                         else if (x == 2 && z == 4)
-                            array[j, i] = Instantiate(room4[Random.Range(0, 1)], rooms);
+                            array[j, i] = Instantiate(room4[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                         else if (x == 4 && z == 2)
-                            array[j, i] = Instantiate(room5[Random.Range(0, 1)], rooms);
+                            array[j, i] = Instantiate(room5[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                         else if (x == 3 && z == 4)
-                            array[j, i] = Instantiate(room6[Random.Range(0, 1)], rooms);
+                            array[j, i] = Instantiate(room6[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                         else if (x == 4 && z == 3)
-                            array[j, i] = Instantiate(room7[Random.Range(0, 1)], rooms);
-                        else if (x == 4 && z == 4)
-                            array[j, i] = Instantiate(room8[Random.Range(0, 1)], rooms);
+                            array[j, i] = Instantiate(room7[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
+                            else if (x == 4 && z == 4)
+                                array[j, i] = Instantiate(room8[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                     }
                     roomData[j, i] = array[j, i].GetComponent<RoomData>();
                     roomData[j, i].x = x;
                     roomData[j, i].z = z;
                     roomData[j, i].aggregate = maxXSize * j + i;
-                }
-            }
-        }
-
-        // 프리팹을 position 위치에 생성
-        private void SpawnPrefab()
-        {
-            for (int j = 0; j < maxYSize; j++)
-            {
-                for (int i = 0; i < maxXSize; i++)
-                {
-                    array[j, i].transform.position = position[j, i] + new Vector3(0, 0.1f, 0);
                 }
             }
         }

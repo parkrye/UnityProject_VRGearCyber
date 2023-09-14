@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3755525877519136243}
   - component: {fileID: 3763598069229814069}
   - component: {fileID: 9028527009096287445}
+  - component: {fileID: 488687015054024573}
   m_Layer: 0
   m_Name: Screen
   m_TagString: Untagged
@@ -148,6 +149,20 @@ MonoBehaviour:
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
   acceptedType: 0
+--- !u!114 &488687015054024573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3777501897747443625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b2e7b2945016c2418842f51970fb285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  state: 0
 --- !u!1 &3777660975341705051
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4110069752730219007}
   - component: {fileID: 2436349192932585485}
   - component: {fileID: 4105616075620483467}
+  - component: {fileID: -4499317374632799441}
   m_Layer: 0
   m_Name: LP_shelf
   m_TagString: Untagged
@@ -112,6 +113,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.4, y: 1.6798439, z: 6.3690186}
   m_Center: {x: -7.26, y: -0.00003492833, z: 3.162754}
+--- !u!208 &-4499317374632799441
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8407942712343074815}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 3.7640002, y: 1.036, z: 3.1850002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -3.637, y: 0.001, z: 3.163}
+  m_TimeToStationary: 0.5
 --- !u!1001 &3964407730261639823
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -119,6 +136,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8707345180681866380}
     m_Modifications:
+    - target: {fileID: -1037900862999526287, guid: 884fe6c3208ed094a858d0769dc2cc78,
+        type: 3}
+      propertyPath: m_Carve
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 286760049906175465, guid: 884fe6c3208ed094a858d0769dc2cc78,
         type: 3}
       propertyPath: m_RootOrder

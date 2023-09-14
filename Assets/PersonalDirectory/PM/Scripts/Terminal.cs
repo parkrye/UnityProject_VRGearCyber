@@ -11,7 +11,11 @@ namespace PM
         [SerializeField] GameData.HackProgressState state;
         public GuardEnemy[] guards;
         [SerializeField] int hp;
-
+        MaterialChange materialChange;
+        private void Start()
+        {
+            materialChange = GetComponent<MaterialChange>();
+        }
         public virtual void Hack()
         {
             StartCoroutine(WaitingHackResultRoutine());
@@ -37,7 +41,9 @@ namespace PM
         {
             yield return null;
             state = GameData.HackProgressState.Progress;
+            materialChange.HackingStart();
             yield return new WaitUntil(() => state != GameData.HackProgressState.Progress);
+            materialChange.HackingStop();
             switch (state)
             {
                 case GameData.HackProgressState.Failure:

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PM
 {
-    public class material : MonoBehaviour
+    public class MaterialChange : MonoBehaviour
     {
         Material mat;
         public Material[] hackingMat;
