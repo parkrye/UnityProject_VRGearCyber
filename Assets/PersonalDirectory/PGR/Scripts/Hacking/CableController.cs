@@ -11,6 +11,7 @@ namespace PGR
 
         [SerializeField] bool isCableLoaded, isSelectClicked;
         [SerializeField] float cableShotPower;
+        [SerializeField] AudioSource shotAudio;
 
         protected override void Start()
         {
@@ -64,6 +65,9 @@ namespace PGR
             if (cableObject.State)
             {
                 cableObject.ExitPuzzle();
+                cableObject.FixExit();
+                cableObject.transform.position = transform.position;
+                return;
             }
 
             if (!isCableLoaded)
@@ -77,6 +81,7 @@ namespace PGR
 
             isSelectClicked = false;
             isCableLoaded = false;
+            shotAudio.Play();
             cableObject.ShotCable(transform.forward, cableShotPower);
         }
     }
