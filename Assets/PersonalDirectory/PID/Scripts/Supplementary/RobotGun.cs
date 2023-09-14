@@ -13,6 +13,8 @@ namespace PID
         [SerializeField] TrailRenderer bulletTrail;
         int currentAmmo;
         public int CurrentAmmo => currentAmmo;
+        bool outofAmmo;
+        public bool OutOfAmmo => outofAmmo;
         int maxAmmo;
         bool reloading;
         float nextFire = 0f;
@@ -29,16 +31,15 @@ namespace PID
         GuardEnemy gunOwner;
 
         //Debug 
-        LineRenderer debugLine;
 
         public bool Reloading { get => reloading; set => reloading = value; }
 
         private void Awake()
         {
             reloading = false;
+            outofAmmo = false; 
             gunOwner = GetComponentInParent<GuardEnemy>();
             reloadWaitInterval = new WaitForSeconds(reloadInterval);
-            debugLine = GetComponent<LineRenderer>();
         }
         public void UponFire(Vector3 fireDir, float distance)
         {
@@ -46,14 +47,17 @@ namespace PID
             currentAmmo--;
         }
         Coroutine reloadCoroutine;
-        bool tookHit; 
-        public bool TookHit { get => tookHit; set => tookHit = value; }
+        
         public void AttemptFire(Transform target)
         {
-            if (Time.time < nextFire || reloading || tookHit)
+            if (Time.time < nextFire || reloading || outofAmmo)
                 return;
             if (currentAmmo <= 0)
-                reloadCoroutine = StartCoroutine(ReloadRoutine());
+            {
+                outofAmmo = true;
+                //reloadCoroutine = StartCoroutine(ReloadRoutine());
+                return; 
+            }
             //Reload; 
             nextFire = Time.time + fireInterval;
             Fire(target);
@@ -62,58 +66,55 @@ namespace PID
         Vector3 shotAttempt;
         RaycastHit hitAttempt;
         GameObject appropriateObj;
+        const float trailDestroyTime = 1.5f; 
         public void Fire(Transform target)
         {
             
             gunOwner.anim.SetTrigger("GunFire");
             currentAmmo--;
-            debugLine.SetPosition(0, muzzlePoint.position);
+            muzzleFlash.Play(); 
+            //debugLine.SetPosition(0, muzzlePoint.position);
             shotAttempt = RobotHelper.FinalShotPoint(target.position, attackRange, missChance);
             shotAttempt = (shotAttempt - muzzlePoint.position).normalized;
             //RaycastHit[] queries;
             //queries = Physics.RaycastAll(muzzlePoint.position, shotAttempt, attackRange);
-
             //if (queries.Length > 0)
             //    return;
+            TrailRenderer trail = GameManager.Resource.Instantiate(bulletTrail, muzzlePoint.position, Quaternion.identity, true);
+            GameManager.Resource.Destroy(trail, trailDestroyTime); 
             if (Physics.Raycast(muzzlePoint.position, shotAttempt, out hitAttempt, attackRange))
             {
                 if (hitAttempt.collider.gameObject.tag != targetTag)
                 {
                     //obstacle should take damage; 
+                    //debugLine.SetPosition(1, hitAttempt.point);
                     IHitable hitable = hitAttempt.collider.GetComponent<IHitable>();
                     hitable?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal);
+                    StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point));
+                    return; 
                 }
                 else
                 {
-                    IHitable hitable = hitAttempt.collider.GetComponent<IHitable>();
-                    if (hitable != null)
-                    {
-                        hitable?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal);
-                        debugLine.SetPosition(1, hitAttempt.point);
-                        return;
-                    }
-
-                    appropriateObj = SearchForComponentInParent(hitAttempt.collider.gameObject);
-                    if (appropriateObj != null)
-                    {
-                        GiveDamage(appropriateObj);
-                        debugLine.SetPosition(1, hitAttempt.point);
-                        appropriateObj = null;
-                        return;
-                    }
-                    else
-                    {
-                        appropriateObj = SearchForComponentInChildren(hitAttempt.collider.gameObject);
-                        if (appropriateObj != null)
-                        {
-                            GiveDamage(appropriateObj);
-                            debugLine.SetPosition(1, hitAttempt.point);
-                            appropriateObj = null;
-                            return;
-                        }
-                    }
+                    IHitable playerDirect = GameManager.Data.Player.Data.GetComponent<IHitable>();
+                    Debug.Log(GameManager.Data.Player.Data.gameObject.name); 
+                    playerDirect?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal);
+                    StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point));
+                    return; 
                 }
             }
+            else 
+            {
+                //Trail Renderer effect for the nonHits 
+                StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, shotAttempt * attackRange)); 
+                return; 
+            }
+        }
+
+        public void Reload()
+        {
+            if (reloading || !outofAmmo)
+                return; 
+            reloadCoroutine = StartCoroutine(ReloadRoutine());
         }
 
         public void GiveDamage(GameObject obj)
@@ -121,54 +122,30 @@ namespace PID
             IHitable hitable = hitAttempt.collider.GetComponent<IHitable>();
             hitable?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal);
         }
-        public GameObject SearchForComponentInParent(GameObject gameObject)
-        {
-            if (gameObject == null)
-            {
-                return null;
-            }
-            // Check if the current GameObject has the desired component
-            IHitable hitable = gameObject.GetComponent<IHitable>();
-            if (hitable != null)
-            {
-                return gameObject;
-            }
-            // Recursively search through the parent
-            if (gameObject.transform.parent != null)
-            {
-                return SearchForComponentInParent(gameObject.transform.parent.gameObject);
-            }
-            else
-            {
-                return null;
-            }
-        }
-        public GameObject SearchForComponentInChildren(GameObject gameObject)
-        {
-            GameObject target = null;
-            foreach (Transform child in gameObject.transform)
-            {
-                IHitable hitable = child.GetComponent<IHitable>();
-                if (hitable != null)
-                {
-                    target = child.gameObject;
-                    break;
-                }
-            }
-            return target;
-        }
+       
         IEnumerator ReloadRoutine()
         {
             reloading = true;
             yield return new WaitForEndOfFrame(); 
             gunOwner.anim.SetTrigger("Reload"); 
             yield return reloadWaitInterval;
-            currentAmmo = maxAmmo; 
+            currentAmmo = maxAmmo;
+            outofAmmo = false; 
             reloading = false;
         }
-        IEnumerator TrailRendererRoutine()
+        const float deltaDistThreshold = 1f; 
+        IEnumerator TrailRendererRoutine(TrailRenderer trail, Vector3 startPos, Vector3 endPos)
         {
-            yield return null;
+            float deltaDist = Vector3.SqrMagnitude(endPos - startPos);
+            trail.Clear();
+            while (deltaDist > deltaDistThreshold)
+            {
+                trail.transform.position = Vector3.Lerp(trail.transform.position, endPos, .275f);
+                deltaDist = Vector3.SqrMagnitude(endPos - startPos);
+                yield return null;
+            }
+            trail.Clear();
+
         }
         public void SyncStatData(EnemyStat stat)
         {
@@ -180,3 +157,71 @@ namespace PID
         }
     }
 }
+#region DEPRECATED 
+//IHitable hitable = hitAttempt.collider.GetComponent<IHitable>();
+//if (hitable != null)
+//{
+//    hitable?.TakeDamage(attackDamage, hitAttempt.point, hitAttempt.normal);
+//    StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point));
+//    //debugLine.SetPosition(1, hitAttempt.point);
+//    return;
+//}
+
+//appropriateObj = SearchForComponentInParent(hitAttempt.collider.gameObject);
+//if (appropriateObj != null)
+//{
+//    GiveDamage(appropriateObj);
+//    StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point));
+//    //debugLine.SetPosition(1, hitAttempt.point);
+//    appropriateObj = null;
+//    return;
+//}
+//else
+//{
+//    appropriateObj = SearchForComponentInChildren(hitAttempt.collider.gameObject);
+//    if (appropriateObj != null)
+//    {
+//        GiveDamage(appropriateObj);
+//        StartCoroutine(TrailRendererRoutine(trail, muzzlePoint.position, hitAttempt.point));
+//        //debugLine.SetPosition(1, hitAttempt.point);
+//        appropriateObj = null;
+//        return;
+//    }
+//}
+//public GameObject SearchForComponentInParent(GameObject gameObject)
+//{
+//    if (gameObject == null)
+//    {
+//        return null;
+//    }
+//    // Check if the current GameObject has the desired component
+//    IHitable hitable = gameObject.GetComponent<IHitable>();
+//    if (hitable != null)
+//    {
+//        return gameObject;
+//    }
+//    // Recursively search through the parent
+//    if (gameObject.transform.parent != null)
+//    {
+//        return SearchForComponentInParent(gameObject.transform.parent.gameObject);
+//    }
+//    else
+//    {
+//        return null;
+//    }
+//}
+//public GameObject SearchForComponentInChildren(GameObject gameObject)
+//{
+//    GameObject target = null;
+//    foreach (Transform child in gameObject.transform)
+//    {
+//        IHitable hitable = child.GetComponent<IHitable>();
+//        if (hitable != null)
+//        {
+//            target = child.gameObject;
+//            break;
+//        }
+//    }
+//    return target;
+//}
+#endregion

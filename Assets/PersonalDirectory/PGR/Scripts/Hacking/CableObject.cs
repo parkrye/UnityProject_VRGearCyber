@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace PGR
 {
@@ -10,17 +11,29 @@ namespace PGR
         [SerializeField] Light pointLight;
         [SerializeField] IHackable hackingTarget;
         [SerializeField] bool state;
-        public bool State { get { return state; } }
+        public bool State { get { return state; } set { state = value; } }
         [SerializeField] HackingPuzzle puzzle;
+        public UnityEvent<bool> cableStateEvent;
+        [SerializeField] TrailRenderer trailRenderer;
 
-        protected override void Awake()
+        void Start()
         {
-            base.Awake();
-            pointLight = GetComponent<Light>();
+            StartCoroutine(AwakeWaitRoutine());
+        }
 
+        IEnumerator AwakeWaitRoutine()
+        {
+            yield return new WaitUntil(() => GameManager.Data != null);
+            yield return new WaitUntil(() => GameManager.Data.Player != null);
+            yield return new WaitUntil(() => GameManager.Data.Player.Display != null);
+
+            pointLight = GetComponent<Light>();
+            trailRenderer = GetComponent<TrailRenderer>();
             Priority = 10;
             pointLight.enabled = false;
-            state = false;
+            trailRenderer.enabled = false;
+            cableStateEvent.AddListener(GameManager.Data.Player.Display.ModifyCable);
+            State = false;
         }
 
         public void FixExit()
@@ -28,7 +41,9 @@ namespace PGR
             gameObject.SetActive(false);
             gameObject.SetActive(true);
             pointLight.enabled = false;
-            state = false;
+            trailRenderer.enabled = false;
+            cableStateEvent?.Invoke(false);
+            State = false;
             hackingTarget = null;
             puzzle = null;
         }
@@ -44,6 +59,8 @@ namespace PGR
         public void ReadyToShot()
         {
             pointLight.enabled = true;
+            trailRenderer.enabled = true;
+            cableStateEvent?.Invoke(true);
         }
 
         public void ShotCable(Vector3 shotDirection, float shotPower)
@@ -55,7 +72,7 @@ namespace PGR
 
         void OnTriggerEnter(Collider other)
         {
-            if (state)
+            if (State)
                 return;
 
             hackingTarget = other.GetComponent<IHackable>();
@@ -66,10 +83,11 @@ namespace PGR
             if (socketInteractor == null)
                 return;
 
-            state = true;
+            State = true;
             hackingTarget.Hack();
+            (int, int) difficulty = hackingTarget.GetDifficulty();
             puzzle = GameManager.Resource.Instantiate<HackingPuzzle>("Hacking/HackingPuzzle", playerTransform.position, Quaternion.identity);
-            puzzle.InitialPuzzle(hackingTarget, socketInteractor, this, 2, 3);
+            puzzle.InitialPuzzle(hackingTarget, socketInteractor, this, difficulty.Item1, difficulty.Item2);
         }
     }
 }

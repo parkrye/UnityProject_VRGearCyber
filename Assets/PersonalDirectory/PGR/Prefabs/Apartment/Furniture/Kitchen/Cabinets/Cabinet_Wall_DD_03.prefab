@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6944318391086889997}
   - component: {fileID: 4223349886256430403}
   - component: {fileID: 7078924584959304614}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Door_L.010
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ Rigidbody:
   m_Mass: 3
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -129,7 +129,7 @@ HingeJoint:
   m_UseLimits: 0
   m_Limits:
     min: -100
-    max: 100
+    max: 0
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -1075,7 +1075,7 @@ GameObject:
   - component: {fileID: 9016316919868308874}
   - component: {fileID: 1121101274813676860}
   - component: {fileID: 998474338364221724}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Door_R.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1159,7 +1159,7 @@ Rigidbody:
   m_Mass: 3
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -1190,7 +1190,7 @@ HingeJoint:
   m_UseLimits: 0
   m_Limits:
     min: -100
-    max: 100
+    max: 0
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0

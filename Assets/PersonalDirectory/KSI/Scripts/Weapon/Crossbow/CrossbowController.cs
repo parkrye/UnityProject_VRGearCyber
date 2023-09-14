@@ -1,3 +1,4 @@
+using PGR;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 namespace KSI
 {
-    public class CrossbowController : MonoBehaviour
+	[RequireComponent(typeof(AudioSource))]
+	public class CrossbowController : MonoBehaviour
     {
 		public float shotPower = 100f;
 
@@ -14,6 +16,7 @@ namespace KSI
 		[SerializeField] private GameObject arrow;
 		[SerializeField] private Transform muzzlePoint;
 		[SerializeField] private int damage;
+		[SerializeField] private float maxDistance = 10;
 
 		[Header("ArrowLocation")]
 		public ArrowLocation arrowLocation;
@@ -26,13 +29,10 @@ namespace KSI
 		[SerializeField] private AudioClip noAmmo;
 
 		private Animator animator;
+		private PlayerHandMotion playerHandMotion;
+		private bool isRightHanded;
 		private MeshRenderer muzzleFlash;
 		private bool hasArrow = false;
-
-		//private RaycastHit hit;
-		//private int layerMask;
-		//private Hitable hitable;
-
 
 		private void Start()
 		{
@@ -42,19 +42,6 @@ namespace KSI
 			// muzzlePoint 하위에 있는 muzzleFlashdml 컴포넌트 추출
 			muzzleFlash = muzzlePoint.GetComponentInChildren<MeshRenderer>();
 			muzzleFlash.enabled = false;
-
-			// Enemy 레이어 마스크
-			//layerMask = (1 << 11) | (1 << 12);  
-
-			//if (socketInteractor != null)
-			//{
-			//	socketInteractor.selectEntered.AddListener(AddMagazine);
-			//	socketInteractor.selectExited.AddListener(RemoveMagazine);
-			//}
-			//else
-			//{
-			//	Debug.LogError($"{gameObject.name} : socketInteractor is not set.");
-			//}
 		}
 
 		public void AddArrow(SelectEnterEventArgs args)
@@ -95,28 +82,32 @@ namespace KSI
 			}
 		}
 
-
 		public void PullTheTrigger()
 		{
 			if (hasArrow && arrow && arrowLocation.numberOfArrow > 0)
 			{
-				// Ray 표시
-				//Debug.DrawRay(muzzlePoint.position, muzzlePoint.forward * 10.0f, Color.red);
+				if (playerHandMotion == null)
+					playerHandMotion = GameManager.Data.Player.HandMotion;
+
+				if (isRightHanded)
+				{
+					playerHandMotion.TriggerGunRight(true);
+				}
+				else
+				{
+					playerHandMotion.TriggerGunLeft(true);
+				}
 
 				animator.SetTrigger("Fire");
 				Shoot();
 
-				// Ray 쏘기 
-				//if (Physics.Raycast(muzzlePoint.position, muzzlePoint.forward, out hit, 10.0f, layerMask))
-				//{
-				//	Debug.Log($"Hit={hit.transform.name}");
+				if (Physics.Raycast(muzzlePoint.position, muzzlePoint.forward, out RaycastHit hit, maxDistance))
+				{
+					Debug.Log($"Hit={hit.transform.name}");
 
-				//	hitable = hit.transform.GetComponent<Hitable>();
-				//	if (hitable != null)
-				//	{
-				//		StartCoroutine(hitable.Hit(damage));
-				//	}
-				//}
+					IHitable hitable = hit.transform.GetComponent<IHitable>();
+					hitable?.TakeDamage(damage, hit.point, hit.normal);
+				}
 			}
 			else
 			{
@@ -130,7 +121,15 @@ namespace KSI
 		{
 			arrowLocation.numberOfArrow--;
 
-			Instantiate(arrow, muzzlePoint.position, muzzlePoint.rotation);
+			GameObject newArrow = Instantiate(arrow, muzzlePoint.position, muzzlePoint.rotation);
+
+			ArrowController arrowController = newArrow.GetComponent<ArrowController>();
+
+			if (arrowController != null)
+			{
+				arrowController.FireArrow();
+			}
+
 			audioSource.PlayOneShot(shootSound, 1.0f);
 			StartCoroutine(MuzzleFlashRoutine());
 		}

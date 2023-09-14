@@ -8,8 +8,32 @@ namespace PID
 {
     public static class RobotHelper
     {
+        public enum RobotType
+        {
+            Guard, 
+            Tackler, 
+            Scouter
+        }
+        public enum State
+        {
+            Idle,
+            Infiltrated,
+            Patrol,
+            LookAround,
+            Alarm,
+            Alert,
+            Assault,
+            Trace,
+            SoundReact,
+            Hide,
+            Retrieve,
+            Neutralized,
+            Size
+            //Possibly extending beyond for Gathering Abilities. 
+        }
         const float nearIntersectThreshold = .985f;
         const float validSoundRegion = 2f;
+        public const float untoDestThreshold = 1.41f; 
 
         public static Vector3 ShotCentrePoint(Vector3 muzzlePoint, Vector3 targetPoint, float distance)
         {
@@ -56,6 +80,12 @@ namespace PID
             return checkSlip = new ValidSoundCheckSlip(false, Vector3.zero);
         }
 
+        public static void LookDirToPlayer(Vector3 playerLoc, Transform robot, out Vector3 lookDir)
+        {
+            lookDir = (playerLoc - robot.position).normalized;
+            lookDir.y = 0; 
+        }
+
         //public static bool TraversableSound()
         //{
         //    Vector3 prev = startingPoint.transform.position;
@@ -73,6 +103,8 @@ namespace PID
 
         public static Rigidbody NearestHitPart(Rigidbody[] parts, Vector3 hitPoint)
         {
+            if (hitPoint == Vector3.zero)
+                return null; 
             float shortest = 9999999999999999f;  
             float deltaDist;
             Rigidbody closest = null;
@@ -128,4 +160,3 @@ namespace PID
         }
     }
 }
-

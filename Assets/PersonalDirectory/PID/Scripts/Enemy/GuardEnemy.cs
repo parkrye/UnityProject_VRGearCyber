@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
-using UnityEngine.SocialPlatforms;
+using static PID.RobotHelper;
 
 namespace PID
 {
@@ -13,29 +13,11 @@ namespace PID
         /// <summary>
         /// Hide and Clash should be sub-state driven by the Assault state. 
         /// </summary>
-        public enum State
-        {
-            Idle,
-            Infiltrated,
-            Patrol,
-            LookAround, 
-            Alert,
-            Assault,
-            Trace,
-            SoundReact,
-            HideAndShoot, 
-            Clash,
-            Neutralized,
-            Size
-            //Possibly extending beyond for Gathering Abilities. 
-        }
         #region MACHINE PROPERTIES 
         //Base Properties 
-        public Animator anim;
         Rigidbody rigid;
         NavMeshObstacle obstacle; 
-        SightFunction guardSight;
-        AuditoryFunction guardEars; 
+         
         StateMachine<State, GuardEnemy> stateMachine;
         [SerializeField] Transform[] patrolPoints; 
 
@@ -51,57 +33,56 @@ namespace PID
         public State curState => stateMachine.curStateName; 
         //Debugging 
         public TMP_Text debugText;
-        protected void Awake()
+        protected override void Awake()
         {
             //DEBUGGING 
             enemyStat = GameManager.Resource.Load<EnemyStat>("Data/Guard");
             base.SetUp(enemyStat);
-
-            guardEars = GetComponent<AuditoryFunction>();
-            guardSight = GetComponent<SightFunction>();
+            base.Awake(); 
+            
             obstacle = GetComponent<NavMeshObstacle>();
-            agent = GetComponent<NavMeshAgent>();
             rigid = GetComponent<Rigidbody>();
             anim = GetComponent<Animator>();
             robotGun = GetComponentInChildren<RobotGun>();
             debugText = GetComponentInChildren<TMP_Text>();
 
-            base.SetUp(enemyStat);
             stateMachine = new StateMachine<State, GuardEnemy>(this);
             stateMachine.AddState(State.Idle, new IdleState(this, stateMachine));
             stateMachine.AddState(State.Infiltrated, new InfiltratedState(this, stateMachine));
             stateMachine.AddState(State.Patrol, new PatrolState(this, stateMachine));
             stateMachine.AddState(State.Alert, new AlertState(this, stateMachine));
             stateMachine.AddState(State.Assault, new AssaultState(this, stateMachine));
+            stateMachine.AddState(State.Hide, new HideState(this, stateMachine));
             stateMachine.AddState(State.Trace, new TraceState(this, stateMachine));
             stateMachine.AddState(State.LookAround, new LookAroundState(this, stateMachine));
             stateMachine.AddState(State.SoundReact, new SoundReactState(this, stateMachine));
             stateMachine.AddState(State.Neutralized, new NeutralizedState(this, stateMachine));
         }
-        private void Start()
+        protected override void Start()
         {
+            base.Start(); 
             AgentSetUp(enemyStat);
             robotGun.SyncStatData(enemyStat);
-            guardSight.SyncSightStat(enemyStat);
-            guardSight.PlayerFound += DetectPlayer;
-            guardSight.PlayerLost += TempPlayerLost;
-            guardEars.trackSound += DetectSound; 
+            robotSight.SyncSightStat(enemyStat);
+            robotSight.PlayerFound += DetectPlayer;
+            robotSight.PlayerLost += TempPlayerLost;
+            robotEars.trackSound += DetectSound;
+            cctvNotified += Notified; 
             stateMachine.SetUp(State.Idle);
-            GameManager.Data.timeScaleEvent?.AddListener(TimeScale);
         }
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            robotSight.PlayerFound -= DetectPlayer;
+            robotSight.PlayerLost -= TempPlayerLost;
+            robotEars.trackSound -= DetectSound;
+            cctvNotified -= Notified;
+        }
+
         #endregion
         #region MACHINE UPDATES 
-        public void AgentSetUp(EnemyStat robotStat)
-        {
-            agent.speed = moveSpeed;
-            //Takes the General stat values, implement it on the nav_agent level. 
-        }
-        public void AgentStop()
-        {
-
-        }
         Vector3 localVel;
-        Vector3 worldVel; 
+        Vector3 worldVel;
         public void UpdateAnim()
         {
             localVel = agent.velocity.normalized;
@@ -119,39 +100,31 @@ namespace PID
                 anim.SetFloat("XSpeed", worldVel.x);
             }
         }
-        private void OnDisable()
-        {
-            guardSight.PlayerFound -= DetectPlayer;
-            guardSight.PlayerLost -= TempPlayerLost;
-            guardEars.trackSound -= DetectSound;
-            GameManager.Data.timeScaleEvent?.RemoveListener(TimeScale);
-        }
         private void Update()
         {
-            UpdateAnim(); 
+            UpdateAnim();
             stateMachine.Update();
         }
-        protected override void Die()
+        public void AgentSetUp(EnemyStat robotStat)
         {
-            NeutralizedState neutralizeReason;
-            if (stateMachine.CheckState(State.Neutralized))
-            {
-                neutralizeReason = stateMachine.RetrieveState(State.Neutralized) as NeutralizedState;
-            }
-            stateMachine.ChangeState(State.Neutralized);
+            agent.speed = moveSpeed;
+            //Takes the General stat values, implement it on the nav_agent level. 
         }
+        public void AgentStop()
+        {
+
+        }
+
+
         #endregion
         #region  COMBAT INTERACTIONS 
-        public void TimeScale()
-        {
-            anim.speed = GameManager.Data.TimeScale; 
-            agent.speed = GameManager.Data.TimeScale;
-        }
+        
         public void DetectPlayer(Transform player)
         {
             //should Enemy be under hide and shoot, ignore further calls. 
             if (stateMachine.curStateName == State.Neutralized || 
-                stateMachine.curStateName == State.Infiltrated)
+                stateMachine.curStateName == State.Infiltrated ||
+                stateMachine.curStateName == State.Hide)
                 return; 
             playerBody = player;
             stateMachine.ChangeState(State.Assault); 
@@ -161,7 +134,8 @@ namespace PID
             if (stateMachine.curStateName == State.Infiltrated ||
                 stateMachine.curStateName == State.Neutralized ||
                 stateMachine.curStateName == State.Assault ||
-                stateMachine.curStateName == State.Trace)
+                stateMachine.curStateName == State.Trace ||
+                stateMachine.curStateName == State.Hide)
                 return; 
             SoundReactState soundReactState;
             if (stateMachine.CheckState(State.SoundReact))
@@ -178,42 +152,8 @@ namespace PID
                 stateMachine.ChangeState(State.Trace); 
         }
         int incomingDamage;
-        public override void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
-        {
-            if (stateMachine.curStateName == State.Neutralized)
-                return;
-            //GameManager.Resource.Instantiate<ParticleSystem>("Enemy/TakeDamage", hitPoint, Quaternion.LookRotation(hitNormal), true);
-            base.TakeDamage(damage, hitPoint, hitNormal);
-            anim.SetTrigger("TakeHit");
-            if (currentHealth <= 0)
-            {
-                NeutralizedState neutralizeReason;
-                if (stateMachine.CheckState(State.Neutralized))
-                {
-                    neutralizeReason = stateMachine.RetrieveState(State.Neutralized) as NeutralizedState;
-                    neutralizeReason.SetDeathReason(NeutralizedState.DeathType.Health);
-                }
-                stateMachine.ChangeState(State.Neutralized);
-                onDeath?.Invoke(hitNormal, hitPoint);
-                StartCoroutine(DeathCycle(false)); 
-            }
-        }
-        public override void Notified(Vector3 centrePoint, int size, int index)
-        {
-            if (stateMachine.curStateName == State.Neutralized 
-                || stateMachine.curStateName == State.Alert)
-            {
-                return;
-            }
-            AlertState alertState;
-            if (stateMachine.CheckState(State.Alert))
-            {
-                alertState = stateMachine.RetrieveState(State.Alert) as AlertState;
-                Vector3 gatherPos = RobotHelper.GroupPositionAllocator(centrePoint, size, index); 
-                alertState.SetGatherPoint(gatherPos);
-                stateMachine.ChangeState(State.Alert); 
-            }
-        }
+        
+        
         public void Reactivate()
         {
             NeutralizedState.DeathType deathState; 
@@ -236,11 +176,32 @@ namespace PID
         public void OnPointerClick(PointerEventData eventData)
         {
             TakeDamage(50, eventData.pointerPressRaycast.worldPosition, eventData.pointerPressRaycast.worldNormal);
-            Debug.Log(currentHealth); 
+            Debug.Log(CurrentHealth); 
         }
         #endregion
-        //Hackable Component. 
-        public void Hacked()
+        #endregion
+        #region OVERRIDE FUNCTIONS 
+        public override void Notified(Vector3 centrePoint, int size, int index)
+        {
+            if (stateMachine.curStateName == State.Neutralized
+                || stateMachine.curStateName == State.Alert)
+            {
+                return;
+            }
+            AlertState alertState;
+            if (stateMachine.CheckState(State.Alert))
+            {
+                alertState = stateMachine.RetrieveState(State.Alert) as AlertState;
+                Vector3 gatherPos = RobotHelper.GroupPositionAllocator(centrePoint, size, index);
+                alertState.SetGatherPoint(gatherPos);
+                stateMachine.ChangeState(State.Alert);
+            }
+        }
+        public override State CurState()
+        {
+            return curState;
+        }
+        public override void Hacked()
         {
             NeutralizedState neutralizeReason;
             if (stateMachine.CheckState(State.Neutralized))
@@ -249,13 +210,64 @@ namespace PID
                 neutralizeReason.SetDeathReason(NeutralizedState.DeathType.Hacked);
             }
             stateMachine.ChangeState(State.Neutralized);
+            onDeath?.Invoke(Vector3.zero, Vector3.zero);
+            StartCoroutine(DeathCycle(false));
         }
-
-        public void HackFailed(State prevState)
+        public override void HackFailed(State prevState)
         {
             if (stateMachine.curStateName != State.Neutralized)
-                stateMachine.ChangeState(prevState); 
+                stateMachine.ChangeState(prevState);
         }
+        public override void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
+        {
+            if (stateMachine.curStateName == State.Neutralized)
+                return;
+            //GameManager.Resource.Instantiate<ParticleSystem>("Enemy/TakeDamage", hitPoint, Quaternion.LookRotation(hitNormal), true);
+            base.TakeDamage(damage, hitPoint, hitNormal);
+            anim.SetTrigger("TakeHit");
+            if (CurrentHealth <= 0)
+            {
+                NeutralizedState neutralizeReason;
+                if (stateMachine.CheckState(State.Neutralized))
+                {
+                    neutralizeReason = stateMachine.RetrieveState(State.Neutralized) as NeutralizedState;
+                    neutralizeReason.SetDeathReason(NeutralizedState.DeathType.Health);
+                }
+                stateMachine.ChangeState(State.Neutralized);
+                onDeath?.Invoke(hitNormal, hitPoint);
+                StartCoroutine(DeathCycle(false));
+            }
+        }
+
+        public override void TakeStrike(Transform hitter, float damage, Vector3 hitPoint, Vector3 hitNormal)
+        {
+            if (stateMachine.curStateName == State.Neutralized)
+                return;
+            base.TakeStrike(hitter, damage, hitPoint, hitNormal);
+            anim.SetTrigger("TakeHit");
+            if (CurrentHealth <= 0)
+            {
+                NeutralizedState neutralizeReason;
+                if (stateMachine.CheckState(State.Neutralized))
+                {
+                    neutralizeReason = stateMachine.RetrieveState(State.Neutralized) as NeutralizedState;
+                    neutralizeReason.SetDeathReason(NeutralizedState.DeathType.Health);
+                }
+                stateMachine.ChangeState(State.Neutralized);
+                onDeath?.Invoke(hitNormal, hitPoint);
+                StartCoroutine(DeathCycle(false));
+            }
+        }
+        protected override void Die()
+        {
+            NeutralizedState neutralizeReason;
+            if (stateMachine.CheckState(State.Neutralized))
+            {
+                neutralizeReason = stateMachine.RetrieveState(State.Neutralized) as NeutralizedState;
+            }
+            stateMachine.ChangeState(State.Neutralized);
+        }
+
         #endregion
         public abstract class GuardState : StateBase<State, GuardEnemy>
         {
@@ -483,12 +495,11 @@ namespace PID
         // Main Function being, Each assigned Guard should head back to the designated CCTV regions. 
         public class AlertState : GuardState
         {
-            SightFunction guardSight;
             Vector3 destPoint = Vector3.zero;
             bool abortGather; 
             float distDelta;
             const float holdPeriod = 5f; 
-            const float distThreshold = 3.5f;
+            const float distThreshold = 2.5f;
             public AlertState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
             {
             }
@@ -497,6 +508,7 @@ namespace PID
             {
                 owner.debugText.text = "Alert";
                 owner.agent.isStopped = false;
+                owner.agent.updateRotation = true; 
                 if (destPoint != Vector3.zero)
                     owner.agent.SetDestination(destPoint);
                 else
@@ -510,7 +522,6 @@ namespace PID
             public override void Setup()
             {
                 abortGather = false;
-                guardSight = owner.guardSight;
             }
 
             public void SetGatherPoint(Vector3 location)
@@ -538,7 +549,8 @@ namespace PID
         /// </summary>
         public class AssaultState : GuardState
         {
-            RobotGun robotGun; 
+            RobotGun robotGun;
+            Vector3 lookDir;
             public AssaultState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
             {
             }
@@ -558,32 +570,226 @@ namespace PID
                 //owner.focusDir = Vector3.zero;
                 ////Perhaps for now, but should consider reasons for movement 
                 //owner.StopFire(); 
-                owner.agent.updateRotation = true; 
+                owner.agent.updateRotation = true;
+                owner.agent.isStopped = false;
             }
 
             public override void Setup()
             {
                 robotGun = owner.robotGun;
+                lookDir = Vector3.zero;
             }
 
             public override void Transition()
             {
-
+                if (robotGun.OutOfAmmo)
+                {
+                    stateMachine.ChangeState(State.Hide); 
+                }
             }
 
             public override void Update()
             {
                 //owner.focusDir = (owner.playerBody.transform.position - owner.transform.position).normalized;
                 RotateTowardPlayer();
+                Debug.Log(owner.playerBody); 
                 robotGun.AttemptFire(owner.playerBody);
             }
 
             public void RotateTowardPlayer()
             {
-                Vector3 lookDir = (owner.playerBody.transform.position - owner.transform.position).normalized; 
-                lookDir.y = 0;
+                LookDirToPlayer(owner.playerBody.transform.position, owner.transform, out lookDir); 
                 owner.transform.rotation = Quaternion.LookRotation(lookDir);
             }
+        }
+        #endregion
+        #region Hide State 
+        /// <summary>
+        /// Upon a Combat or where Enemy is run out of the ammo, 
+        /// Enemy 
+        /// </summary>
+        public class HideState : GuardState
+        {
+            Transform player;
+            //Sake of providing buffers for overlapsphere search. 
+            //Smaller the buffer size, quicker the search shall be. 
+            Collider[] Colliders;
+            const int colliderSize = 10; 
+            const int checkRadius = 8; 
+            const float hideFrequency = .25f; 
+            const float hideSensitivity = -.1f;
+            const float minimumDistFromPlayer = 10f;
+            Vector3 hidePosition; 
+            Vector3 playerLookDir; 
+            Vector3 initialPosition; 
+            WaitForSeconds hideInterval;
+            LayerMask hideableLayer;
+
+            float timeOut;
+            bool searchLocFound; 
+            bool stopCounting; 
+
+            public HideState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
+            {
+            }
+
+            public override void Enter()
+            {
+                if (player == null)
+                    player = owner.playerBody;
+                owner.debugText.text = "Hide";
+                initialPosition = owner.transform.position; 
+                owner.agent.updateRotation = false; 
+                owner.StartCoroutine(HideRoutine(player)); 
+            }
+
+            public override void Exit()
+            {
+                owner.StopCoroutine(HideRoutine(player));
+                owner.StopAllCoroutines(); 
+                timeOut = 0f;
+                stopCounting = false; 
+            }
+
+            public override void Setup()
+            {
+                playerLookDir = Vector3.zero; 
+                hideInterval = new WaitForSeconds(hideFrequency);
+                hideableLayer = LayerMask.GetMask("Wall"); 
+                Colliders = new Collider[colliderSize];
+                hidePosition = Vector3.zero;
+                searchLocFound = false; 
+                stopCounting = false; 
+            }
+            public override void Transition()
+            {
+                // If Enemy has finished reloading 
+                // If Enemy has returned to the initial positions. 
+                if (hidePosition != Vector3.zero)
+                {
+                    timeOut = 0f; 
+                    stopCounting = true;
+                    owner.StopAllCoroutines(); 
+                    owner.StopCoroutine(HideRoutine(player));
+                    owner.robotGun.Reload();
+                }
+                else if (!stopCounting && timeOut > 3f)
+                {
+                    owner.StopAllCoroutines();
+                    owner.StopCoroutine(HideRoutine(player));
+                    owner.robotGun.Reload(); 
+                }
+                if (!owner.robotGun.Reloading)
+                {
+                    owner.StopAllCoroutines();
+                    owner.StopCoroutine(HideRoutine(player));
+                    stateMachine.ChangeState(State.Trace);
+                }
+            }
+            public override void Update()
+            {
+                LookDirToPlayer(player.position, owner.transform, out playerLookDir); 
+                owner.transform.rotation = Quaternion.Lerp(owner.transform.rotation, 
+                    Quaternion.LookRotation(playerLookDir), .3f);
+                if (searchLocFound)
+                    owner.StopAllCoroutines(); 
+                if (stopCounting)
+                    return;
+                timeOut += Time.deltaTime;
+            }
+            IEnumerator HideRoutine(Transform Target)
+            {
+                while (true)
+                {
+                    for (int i = 0; i < Colliders.Length; i++)
+                    {
+                        Colliders[i] = null;
+                    }
+                    int hits = Physics.OverlapSphereNonAlloc(owner.transform.position, 
+                        checkRadius, Colliders, hideableLayer);
+
+                    int hitReduction = 0;
+                    for (int i = 0; i < hits; i++)
+                    {
+                        if (Vector3.SqrMagnitude(Colliders[i].transform.position - Target.position) < minimumDistFromPlayer)
+                        {
+                            Colliders[i] = null;
+                            hitReduction++;
+                        }
+                    }
+                    hits -= hitReduction;
+
+                    System.Array.Sort(Colliders, ColliderArraySortComparer);
+
+                    for (int i = 0; i < hits; i++)
+                    {
+                        if (NavMesh.SamplePosition(Colliders[i].transform.position, out NavMeshHit hit, 2f, owner.agent.areaMask))
+                        {
+                            if (!NavMesh.FindClosestEdge(hit.position, out hit, owner.agent.areaMask))
+                            {
+                                Debug.LogError($"Unable to find edge close to {hit.position}");
+                                continue; 
+                            }
+
+                            if (Vector3.Dot(hit.normal, (Target.position - hit.position).normalized) < hideSensitivity)
+                            {
+                                owner.agent.SetDestination(hit.position);
+                                searchLocFound = true;
+                                hidePosition = hit.position;
+                                yield break;
+                            }
+                            else
+                            {
+                                // Since the previous spot wasn't facing "away" enough from teh target, we'll try on the other side of the object
+                                if (NavMesh.SamplePosition(Colliders[i].transform.position - 
+                                    (Target.position - hit.position).normalized * 2, 
+                                    out NavMeshHit hit2, 2f, owner.agent.areaMask))
+                                {
+                                    if (!NavMesh.FindClosestEdge(hit2.position, out hit2, owner.agent.areaMask))
+                                    {
+                                        Debug.LogError($"Unable to find edge close to {hit2.position} (second attempt)");
+                                        continue; 
+                                    }
+
+                                    if (Vector3.Dot(hit2.normal, (Target.position - hit2.position).normalized) < hideSensitivity)
+                                    {
+                                        owner.agent.SetDestination(hit2.position);
+                                        hidePosition = hit.position;
+                                        searchLocFound = true; 
+                                        yield break;
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogError($"Unable to find NavMesh near object {Colliders[i].name} at {Colliders[i].transform.position}");
+                        }
+                        yield return hideInterval;
+                    }
+                }
+            }
+            public int ColliderArraySortComparer(Collider A, Collider B)
+            {
+                if (A == null && B != null)
+                {
+                    return 1;
+                }
+                else if (A != null && B == null)
+                {
+                    return -1;
+                }
+                else if (A == null && B == null)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return Vector3.SqrMagnitude(owner.agent.transform.position- A.transform.position).
+                        CompareTo(Vector3.SqrMagnitude(owner.agent.transform.position - B.transform.position));
+                }
+            }
+
         }
         #endregion
         #region Trace State 

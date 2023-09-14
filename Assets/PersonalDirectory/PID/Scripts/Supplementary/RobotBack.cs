@@ -5,23 +5,18 @@ using PID;
 
 namespace PID
 {
-    public class RobotBack : MonoBehaviour, IHitable, IStrikable
+    public class RobotBack : RobotParts
     {
-        GuardEnemy enemy;
-        public void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
+        [TextArea]
+        string description;
+        public override void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
         {
             enemy.TakeDamage(damage, hitPoint, hitNormal);
         }
 
-        public void TakeStrike(Transform hitter, float damage, Vector3 hitPoint, Vector3 hitNormal)
+        public override void TakeStrike(Transform hitter, float damage, Vector3 hitPoint, Vector3 hitNormal)
         {
             enemy.TakeStrike(hitter, damage, hitPoint, hitNormal);
-        }
-
-        // Start is called before the first frame update
-        void Awake()
-        {
-            enemy = GetComponentInParent<GuardEnemy>();
         }
     }
 }

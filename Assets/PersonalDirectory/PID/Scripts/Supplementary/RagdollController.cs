@@ -29,7 +29,7 @@ namespace PID
         private void Awake()
         {
             anim = GetComponent<Animator>();
-            bodyOwner = GetComponent<GuardEnemy>();
+            bodyOwner = GetComponent<BaseEnemy>();
             SearchComponentInChildren();
             DisableRagdollProperties();
             aliveLayer = LayerMask.GetMask("Enemy");
@@ -80,6 +80,8 @@ namespace PID
         {
             for (int i = 0; i < ragdollBodies.Length; i++)
             {
+                if (ragdollBodies[i].gameObject.layer == LayerMask.GetMask("Wearable"))
+                    return; 
                 ragdollBodies[i].isKinematic = false;
             }
             for (int i = 0; i < ragdollColliders.Length; i++)
@@ -100,7 +102,10 @@ namespace PID
         {
             //Find 
             Rigidbody hitPart = RobotHelper.NearestHitPart(ragdollBodies, hitPoint);
-            StartCoroutine(DeathSimulation(hitDir, hitPoint, hitPart));
+            if (hitPart != null)
+                StartCoroutine(DeathSimulation(hitDir, hitPoint, hitPart));
+            else
+                StartCoroutine(DeathSimulationDefault());
         }
 
         IEnumerator DeathSimulation(Vector3 hitDir, Vector3 hitPoint, Rigidbody impactPoint)
@@ -112,6 +117,12 @@ namespace PID
             //Find the nearest rigidbody with hitpoint 
         }
 
+        IEnumerator DeathSimulationDefault()
+        {
+            EnableRagDollProperties();
+            yield return new WaitForEndOfFrame();
+            anim.enabled = false;
+        }
 
         public void OnAndOff(bool switchOn)
         {
@@ -129,7 +140,8 @@ namespace PID
         }
         private void SetGameLayerRecursive(GameObject gameObject, int layer)
         {
-            gameObject.layer = layer;
+            if (gameObject.tag != "Wearable")
+                gameObject.layer = layer;
             foreach (Transform child in gameObject.transform)
             {
                 SetGameLayerRecursive(child.gameObject, layer);

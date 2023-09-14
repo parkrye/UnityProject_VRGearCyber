@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -10,6 +11,9 @@ namespace PGR
         [SerializeField] PlayerHandWallCheck playerLeftWallCheck, playerRightWallCheck;
         [SerializeField] Camera irisSystemCamera;
         [SerializeField] PlayerSight playerSight;
+        [SerializeField] IrisSystemDisplay irisSystemDisplay;
+        [SerializeField] Transform xROriginTransform;
+        [SerializeField] PlayerExtraInput playerExtraInput;
 
         public PlayerDataModel Data { get { return playerDataModel; } }
         public PlayerHandMotion HandMotion { get { return playerHandMotion; } }
@@ -17,19 +21,39 @@ namespace PGR
         public PlayerHandWallCheck RightWall {  get { return playerRightWallCheck; } }
         public Camera IrisSystem { get { return irisSystemCamera; } }
         public PlayerSight Sight { get { return playerSight; } }
-
-        [SerializeField] bool turnType;
-        public bool TurnType { get { return turnType; } set { ChangeTurnType(value); } }
+        public IrisSystemDisplay Display { get { return irisSystemDisplay; } }
+        public PlayerExtraInput ExtraInput { get {  return playerExtraInput; } }
 
         [SerializeField] ActionBasedContinuousTurnProvider continuousTurnProvider;
         [SerializeField] ActionBasedSnapTurnProvider snapTurnProvider;
 
-        void ChangeTurnType(bool isSmooth)
+        void Start()
         {
-            turnType = isSmooth;
+            if (GameManager.Data.Player != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            StartCoroutine(AwakeWaitingRoutine());
+        }
 
+        IEnumerator AwakeWaitingRoutine()
+        {
+            yield return new WaitForSeconds(1f);
+            Data.HPModifyEvent.AddListener(Display.ModifyHP);
+            Display.ModifyText("");
+            DontDestroyOnLoad(gameObject);
+        }
+
+        public void ChangeTurnType(bool isSmooth)
+        {
             continuousTurnProvider.gameObject.SetActive(isSmooth);
             snapTurnProvider.gameObject.SetActive(!isSmooth);
+        }
+
+        public void MoveTransform(Vector3 position)
+        {
+            xROriginTransform.position = position;
         }
     }
 

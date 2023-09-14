@@ -8,16 +8,24 @@ namespace PFR
         [SerializeField] Transform handleOriginTransform;
         [SerializeField] Rigidbody handleRb;
         [SerializeField] GameObject grabableHandle;
+        [SerializeField] bool isGrabbed;
 
         void FixedUpdate()
         {
             if (handleRb == null)
                 return;
-            handleRb.AddForce(grabableHandle.transform.position - handleRb.transform.position, ForceMode.Force);
+            if(isGrabbed)
+                handleRb.AddForce((grabableHandle.transform.position - handleRb.transform.position) * 10f, ForceMode.Force);
         }
 
-        public void EndGrabHandle(HoverExitEventArgs args)
+        public void StartGrabHandle(SelectEnterEventArgs args)
         {
+            isGrabbed = true;
+        }
+
+        public void EndGrabHandle(SelectExitEventArgs args)
+        {
+            isGrabbed = false;
             grabableHandle.transform.position = handleOriginTransform.position;
             grabableHandle.transform.localEulerAngles = Vector3.zero;
         }

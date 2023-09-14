@@ -31,11 +31,13 @@ namespace PGR
             if (controller == null)
                 return;
 
-            isHandOnArea = false;
             if (controller.IsRight)
                 isRight = false;
             else
                 isLeft = false;
+
+            if(!isRight && !isLeft)
+                isHandOnArea = false;
         }
 
         public void OnTriggerEnterEvent(bool _isRight)
@@ -47,7 +49,12 @@ namespace PGR
                 return;
 
             isOn = !isOn;
-            irisSystemCamera.SetActive(isOn);
+            TurnIrisSystem(isOn);
+        }
+
+        public void TurnIrisSystem(bool value)
+        {
+            irisSystemCamera.SetActive(value);
         }
     }
 }

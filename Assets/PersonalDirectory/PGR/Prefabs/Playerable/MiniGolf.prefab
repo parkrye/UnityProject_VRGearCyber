@@ -427,6 +427,7 @@ GameObject:
   - component: {fileID: 8354113848160336024}
   - component: {fileID: 3434643757570408108}
   - component: {fileID: 1575632510502979946}
+  - component: {fileID: 636170253805091922}
   m_Layer: 0
   m_Name: Club
   m_TagString: Untagged
@@ -712,6 +713,21 @@ MonoBehaviour:
   interactableType: 2
   defaultLayer: 0
   ignoreColliderLayer: 0
+--- !u!114 &636170253805091922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5408500304834608581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce3c1c8456ea22c4bbdc74f9f880d80a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targets:
+  - {fileID: 8897174088791801739}
+  power: 2
 --- !u!1 &5408786309684587704
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,25 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using PID;
+using static PID.RobotHelper;
 using static GameData; 
 
 namespace PID
 {
     public class RobotCNS : MonoBehaviour, IHackable
     {
-        HackProgressState state;
-        GuardEnemy enemy;
-        GuardEnemy.State prevState;
+        [SerializeField] HackProgressState state;
+        BaseEnemy enemy;
+        State prevState;
 
+        [SerializeField] int pairCount;
+        [SerializeField] int fixedPointPerPairCount; 
         #region Hacking Region 
         private void Awake()
         {
-            enemy = GetComponentInParent<GuardEnemy>();
+            enemy = GetComponentInParent<BaseEnemy>();
+            if (enemy.robotType == RobotType.Guard)
+            {
+                enemy = enemy as GuardEnemy;
+            }
+            else if (enemy.robotType == RobotType.Tackler)
+                enemy = enemy as TackleEnemy;
+            else
+                Debug.Log("Enemy Not Defined"); 
         }
         public virtual void Hack()
         {
             StopAllCoroutines();
-            prevState = enemy.curState;
+            prevState = enemy.CurState();
             StartCoroutine(WaitingHackResultRoutine());
         }
 
@@ -64,6 +75,12 @@ namespace PID
                     Success();
                     break;
             }
+        }
+
+        public (int, int) GetDifficulty()
+        {
+            //return (2, 3);
+            return (pairCount, fixedPointPerPairCount);
         }
         #endregion
     }

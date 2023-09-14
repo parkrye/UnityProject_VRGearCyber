@@ -112,19 +112,7 @@ MonoBehaviour:
       m_Calls: []
   m_LastHoverExited:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8562254253454910365}
-        m_TargetAssemblyTypeName: PFR.Door, Assembly-CSharp
-        m_MethodName: EndGrabHandle
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_HoverEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -139,10 +127,34 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8562254253454910365}
+        m_TargetAssemblyTypeName: PFR.GrabDoor, Assembly-CSharp
+        m_MethodName: StartGrabHandle
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8562254253454910365}
+        m_TargetAssemblyTypeName: PFR.GrabDoor, Assembly-CSharp
+        m_MethodName: EndGrabHandle
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_FirstFocusEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -216,7 +228,7 @@ MonoBehaviour:
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
   m_TightenScale: 0.1
-  m_ThrowOnDetach: 1
+  m_ThrowOnDetach: 0
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
     serializedVersion: 2
@@ -478,7 +490,7 @@ GameObject:
   - component: {fileID: 6317843700437786032}
   - component: {fileID: 2478307181847431376}
   - component: {fileID: 8562254253454910365}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -573,9 +585,9 @@ Rigidbody:
   m_GameObject: {fileID: 7296751938604968509}
   serializedVersion: 2
   m_Mass: 5
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_Drag: 1
+  m_AngularDrag: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -595,7 +607,7 @@ HingeJoint:
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   m_UseSpring: 0
   m_Spring:
-    spring: 0
+    spring: 10
     damper: 0
     targetPosition: 0
   m_UseMotor: 0
@@ -631,6 +643,7 @@ MonoBehaviour:
   handleOriginTransform: {fileID: 9059582288669361202}
   handleRb: {fileID: 9040277384393643145}
   grabableHandle: {fileID: 933809448363572299}
+  isGrabbed: 0
 --- !u!1 &7899754045433405053
 GameObject:
   m_ObjectHideFlags: 0

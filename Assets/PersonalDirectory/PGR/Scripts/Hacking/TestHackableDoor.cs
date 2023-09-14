@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace PGR
 {
@@ -7,7 +8,8 @@ namespace PGR
     public class TestHackableDoor : XRExclusiveSocketInteractor, IHackable
     {
         [SerializeField] GameData.HackProgressState state;
-        [SerializeField] AudioSource successAudio, failAudio;
+        [SerializeField] UnityEvent SuccessEvent, FailEvent;
+        [SerializeField] int pairCount, fixedPointPerPairCount;
 
         /// <summary>
         /// Call by Hacking Cable
@@ -27,8 +29,8 @@ namespace PGR
         /// </summary>
         public virtual void Failure()
         {
-            failAudio.Play();
-            StartCoroutine(OpenRoutine());
+            FailEvent?.Invoke();
+            StartCoroutine(DoneRoutine());
         }
 
         /// <summary>
@@ -36,8 +38,8 @@ namespace PGR
         /// </summary>
         public virtual void Success()
         {
-            successAudio.Play();
-            StartCoroutine (OpenRoutine());
+            SuccessEvent?.Invoke();
+            StartCoroutine (DoneRoutine());
         }
 
         /// <summary>
@@ -59,10 +61,16 @@ namespace PGR
             }
         }
 
-        IEnumerator OpenRoutine()
+        IEnumerator DoneRoutine()
         {
+            acceptedType = GameData.InteractableType.None;
             yield return new WaitForSeconds(3f);
             acceptedType = GameData.InteractableType.Cable;
+        }
+
+        public (int, int) GetDifficulty()
+        {
+            return (pairCount, fixedPointPerPairCount);
         }
     }
 

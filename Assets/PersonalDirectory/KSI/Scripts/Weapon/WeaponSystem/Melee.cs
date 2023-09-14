@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PID;
+using PGR;
 
 namespace KSI
 {
@@ -14,16 +16,18 @@ namespace KSI
 		[SerializeField] private float minDistanceForMaxDamage = 1.0f; // 최대 데미지를 주기 위한 최소 거리
 		[SerializeField] private float minDistanceForMinDamage = 0.2f; // 최소 데미지를 주기 위한 최소 거리
 		
-
 		[Header("Runtime Data")]
 		[SerializeField] private Collider coll; // 무기의 콜라이더
+
+		private bool isRightHanded; 		
 		private bool isSwinging = false; // 무기가 휘두르고 있는지 여부
-		private Queue<Vector3> positionQueue = new Queue<Vector3>(); // 위치를 저장할 큐
+		private Queue<Vector3> positionQueue = new Queue<Vector3>(); // 위치를 저장할 큐		
+		private PlayerHandMotion playerHandMotion;
 
 		void Start()
 		{
-			// 초기에는 콜라이더를 비활성화
-			//coll.enabled = false;
+			if (playerHandMotion == null)
+				playerHandMotion = GetComponent<PlayerHandMotion>();
 		}
 
 		// 위치를 추적하는 코루틴
@@ -48,25 +52,41 @@ namespace KSI
 		}
 
 		public void StartSwing()
-		{
-			StartCoroutine(TrackPositionRoutine());
+        {
+			Debug.Log("StartSwing");
 
+			if (playerHandMotion == null)
+                playerHandMotion = GameManager.Data.Player.HandMotion;
+
+            if (isRightHanded == true)
+			{
+				playerHandMotion.GrabOnCloseWeaponRight(true);
+			}
+			else
+			{
+				playerHandMotion.GrabOnCloseWeaponLeft(true);
+			}
+
+			StartCoroutine(TrackPositionRoutine());
 			isSwinging = true;
 		}
 
 		public void EndSwing()
 		{
-			StopAllCoroutines();
+			Debug.Log("EndSwing");
 
+			StopAllCoroutines();
 			isSwinging = false;
 		}
 
 		private void OnTriggerEnter(Collider other)
 		{
+			Debug.Log("OnTriggerEnter" + other.gameObject.name);
+
 			if (isSwinging && positionQueue.Count > 0)
 			{
-				IHitable hitable = other.GetComponent<IHitable>(); 
-				if (hitable != null)
+				IStrikable iStrikable = other.GetComponent<IStrikable>();
+				if (iStrikable != null)
 				{
 					// 가장 오래된 위치 가져오기
 					Vector3 oldestPosition = positionQueue.Peek();
@@ -80,8 +100,9 @@ namespace KSI
 					// 실제 데미지 값 계산
 					int calculateDamage = Mathf.RoundToInt(Mathf.Lerp(minDamage, maxDamage, calculateDamageRatio));
 
-					// 계신된 데미지 적용
-					hitable.TakeDamage(calculateDamage, Vector3.zero, Vector3.zero);
+					// 계산된 데미지 적용
+					iStrikable?.TakeStrike(transform, calculateDamage, Vector3.zero, Vector3.zero);
+					Debug.Log("Calculated damage: " + calculateDamage);
 				}
 			}
 		}
