@@ -114,6 +114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddb10d5e18fe7de4cb8c3e9334a4e406, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pairCount: 3
+  fixedPointPerPairCount: 3
   state: 0
   guards: []
   hp: 0

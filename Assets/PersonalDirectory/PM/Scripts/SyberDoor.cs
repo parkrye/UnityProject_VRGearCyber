@@ -32,14 +32,12 @@ namespace PM
                 test = false;
                 StartCoroutine(OpenDoor());
             }
-            Debug.DrawRay(transform.position + transform.forward * 2.5f + transform.up, -transform.right * 20f, Color.blue);
         }
         IEnumerator DoorConnet()
         {
             Ray ray = new Ray(transform.position + transform.forward * 2.5f + transform.up, -transform.right * 20f );
             RaycastHit hit;
             Physics.Raycast(ray, out hit);
-            Debug.Log(hit.transform.name);
             connetingDoor = hit.transform.GetComponent<SyberDoor>();
             yield return null;
         }

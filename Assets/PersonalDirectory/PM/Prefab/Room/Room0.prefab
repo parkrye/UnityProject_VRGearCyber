@@ -80,6 +80,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2569845810200156607}
   - component: {fileID: 2814951156286346800}
+  - component: {fileID: 7603968952667911666}
   m_Layer: 0
   m_Name: Room0
   m_TagString: Untagged
@@ -125,6 +126,20 @@ MonoBehaviour:
   left: 0
   up: 0
   down: 0
+--- !u!114 &7603968952667911666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2569845810200156604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c580eea3de6fd2b489867080646f46f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPositions:
+  - {fileID: 0}
 --- !u!1 &4306965743966163087
 GameObject:
   m_ObjectHideFlags: 0

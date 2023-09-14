@@ -57,7 +57,7 @@ namespace PM
         // 프리팹을 생성할 위치를 지정
         private void PositionSetting()
         {
-            position = new Vector3[maxXSize, maxYSize];
+            position = new Vector3[maxYSize, maxXSize];
             for (int j = 0; j < maxYSize; j++)
             {
                 for (int i = 0; i < maxXSize; i++)
@@ -79,6 +79,12 @@ namespace PM
                 {
                     int x = Random.Range(3, RoomMaxSize + 1);
                     int z = Random.Range(3, RoomMaxSize + 1);
+                    // 첫번째 방은 시작방으로 설정
+                    if( j==0 && i==0)
+                    {
+                        x = 2;
+                        z = 2;
+                    }
                     // 마지막 배열방에는 보스룸을 생성
                     if (j == maxYSize - 1 && i == maxXSize - 1)
                     {
@@ -130,7 +136,7 @@ namespace PM
             for (int i = 0; i < maxXSize - 1; i++)
             {
                 // j가 roomData의 마지막 행이 아닐때
-                if (j != roomData.GetLength(1) - 1)
+                if (j != roomData.GetLength(0) - 1)
                 {
                     // 옆칸을 전염시킬 확률 지금은 2분의 1
                     if (Random.Range(0, 2) == 0)
@@ -149,11 +155,11 @@ namespace PM
                 {
                     // 보스방에 만약 이미 위로 연결 되어있으면 위로 연결된 방중 왼쪽으로 연결된지 확인 후 연결 안되어 있으면
                     // 위로 연결된 방중 하나를 왼쪽으로 연결
-                    if (i == roomData.GetLength(0) - 2)
+                    if (i == roomData.GetLength(1) - 2)
                     {
                         if (roomData[j, i + 1].up)
                         {
-                            for (int m = 1; m <= roomData.GetLength(1); m++)
+                            for (int m = 1; m <= roomData.GetLength(0); m++)
                             {
                                 if (roomData[j - m, i + 1].left)
                                 {
@@ -188,13 +194,13 @@ namespace PM
         }
         private void DownAggregater(int j)
         {
-            if (j == roomData.GetLength(1) - 1)
+            if (j == roomData.GetLength(0) - 1)
                 return;
 
             for (int i = 0; i < maxXSize; i++)
             {
                 // i가 roomData 열의 마지막이 아닐때
-                if (i != roomData.GetLength(0) - 1)
+                if (i != roomData.GetLength(1) - 1)
                 {
                     if (Random.Range(0, 2) == 0 || roomData[j, i].aggregate != roomData[j, i + 1].aggregate)
                     {
@@ -220,7 +226,9 @@ namespace PM
                     sum++;
                 // 마지막 열의 값이 이전 값과 같고 같은 값의 아래통로가 없거나 룸값이 다음 배열의 값과 다르고 아래통로의 합이 0이면
                 // 새로 아래로 통로 생성
-                if (i == roomData.GetLength(0) - 1 || roomData[j, i].aggregate != roomData[j, i + 1].aggregate)
+                Debug.Log(j + "" + (i + 1));
+                Debug.Log(roomData.GetLength(0));
+                if (i == roomData.GetLength(1) - 1 || roomData[j, i].aggregate != roomData[j, i + 1].aggregate)
                 {
                     if (sum == 0)
                     {

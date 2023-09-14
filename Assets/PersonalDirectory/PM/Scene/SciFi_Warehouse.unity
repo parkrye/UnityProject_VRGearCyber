@@ -20626,6 +20626,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &911263041
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 911263043}
+  - component: {fileID: 911263042}
+  m_Layer: 0
+  m_Name: StartPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &911263042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911263041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c580eea3de6fd2b489867080646f46f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPositions:
+  - {fileID: 911263043}
+--- !u!4 &911263043
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911263041}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &915576438
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -53983,7 +54029,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1321133042275595302, guid: 84accf4c940d9d143b5e35c2eaa8d297,
         type: 3}
+      propertyPath: maxXSize
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321133042275595302, guid: 84accf4c940d9d143b5e35c2eaa8d297,
+        type: 3}
+      propertyPath: maxYSize
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321133042275595302, guid: 84accf4c940d9d143b5e35c2eaa8d297,
+        type: 3}
       propertyPath: room3.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321133042275595302, guid: 84accf4c940d9d143b5e35c2eaa8d297,
+        type: 3}
+      propertyPath: room6.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1321133042275595302, guid: 84accf4c940d9d143b5e35c2eaa8d297,
@@ -53991,6 +54052,12 @@ PrefabInstance:
       propertyPath: room3.Array.data[1]
       value: 
       objectReference: {fileID: 2576237619375200320, guid: 19c64c6f149883140aeb1a10bb9969cc,
+        type: 3}
+    - target: {fileID: 1321133042275595302, guid: 84accf4c940d9d143b5e35c2eaa8d297,
+        type: 3}
+      propertyPath: room6.Array.data[1]
+      value: 
+      objectReference: {fileID: 7135912416702166578, guid: 4cb114557d14af34ba7721d8bc034a68,
         type: 3}
     - target: {fileID: 1321133042275595303, guid: 84accf4c940d9d143b5e35c2eaa8d297,
         type: 3}

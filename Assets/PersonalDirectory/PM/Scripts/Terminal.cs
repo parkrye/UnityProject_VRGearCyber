@@ -8,6 +8,8 @@ namespace PM
 {
     public class Terminal : MonoBehaviour, IHackable, IHitable
     {
+        [SerializeField] int pairCount;
+        [SerializeField] int fixedPointPerPairCount;
         [SerializeField] GameData.HackProgressState state;
         public GuardEnemy[] guards;
         [SerializeField] int hp;
@@ -78,6 +80,10 @@ namespace PM
         {
             Destroy(this.gameObject);
             yield return null;
+        }
+        public (int, int) GetDifficulty()
+        {
+            return (pairCount, fixedPointPerPairCount);
         }
     }
 }
