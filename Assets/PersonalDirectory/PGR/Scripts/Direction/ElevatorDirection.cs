@@ -24,8 +24,8 @@ namespace PGR
 
             yield return new WaitForSeconds(1f);
             ringAudio.Play();
-            yield return new WaitUntil(() => GameManager.Data.Player.IrisSystem.enabled);
             GameManager.Data.Player.Display.ModifyText("Good Luck");
+            yield return new WaitUntil(() => GameManager.Data.Player.IrisSystem.isActiveAndEnabled);
             yield return new WaitForSeconds(3f);
             GameManager.Data.Player.Display.ModifyText("");
 
