@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using PID;
 using static PID.RobotHelper;
-using static GameData; 
+using static GameData;
+using UnityEditor.AI;
 
 namespace PID
 {
@@ -12,7 +13,6 @@ namespace PID
         [SerializeField] HackProgressState state;
         BaseEnemy enemy;
         State prevState;
-
         [SerializeField] int pairCount;
         [SerializeField] int fixedPointPerPairCount; 
         #region Hacking Region 

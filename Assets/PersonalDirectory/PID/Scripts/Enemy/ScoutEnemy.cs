@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using static PID.RobotHelper;
 using UnityEngine.AI;
+using System.Threading;
 
 namespace PID
 {
@@ -110,6 +111,7 @@ namespace PID
             //should Enemy be under hide and shoot, ignore further calls. 
             if (stateMachine.curStateName == State.Neutralized ||
                 stateMachine.curStateName == State.Infiltrated ||
+                stateMachine.curStateName == State.Alarm||
                 stateMachine.curStateName == State.Hide)
                 return;
             playerBody = player;
@@ -468,15 +470,21 @@ namespace PID
         public class AlarmState : ScouterState
         {
             Vector3 lookDir;
+            Color alertColor = Color.red; 
+            SkinnedMeshRenderer renderer; 
             const float attackDistance = 2.5f;
+            const int waitTimer = 3; 
             float deltaDist;
+            float timer;
+            bool timesUp; 
+
             public AlarmState(ScoutEnemy owner, StateMachine<State, ScoutEnemy> stateMachine) : base(owner, stateMachine)
             {
             }
 
             public override void Enter()
             {
-                owner.agent.isStopped = true;
+                owner.agent.SetDestination(owner.playerBody.position); 
                 //if (owner.playerBody != null)
                 //    owner.focusDir = (owner.playerBody.transform.position - owner.transform.position).normalized; 
                 owner.soundMaker.Scream(owner.playerBody.position); 
@@ -487,12 +495,18 @@ namespace PID
                 //owner.focusDir = Vector3.zero;
                 ////Perhaps for now, but should consider reasons for movement 
                 //owner.StopFire(); 
+                timer = 0f;
+                timesUp = false; 
                 owner.agent.isStopped = false;
+                owner.agent.updateRotation = true; 
                 owner.soundMaker.FinishedAlarm = false; 
             }
 
             public override void Setup()
             {
+                timesUp = false; 
+                timer = 0f; 
+                renderer = owner.GetComponentInChildren<SkinnedMeshRenderer>();
                 lookDir = Vector3.zero;
             }
 
@@ -506,19 +520,17 @@ namespace PID
 
             public override void Update()
             {
-                owner.focusDir = (owner.playerBody.transform.position - owner.transform.position).normalized;
-                RotateTowardPlayer();
-                //If distance is close enough, 
-                deltaDist = Vector3.SqrMagnitude(owner.playerBody.transform.position - owner.transform.position);
-                if (deltaDist <= attackDistance)
+                timer += Time.deltaTime; 
+                if (timer > waitTimer && !timesUp)
                 {
+                    timesUp = true;
+                    owner.agent.updateRotation = false;
                     owner.agent.isStopped = true;
+                    owner.soundMaker.Scream(owner.playerBody.position);
                 }
-                else
-                {
-                    owner.agent.isStopped = false;
-                    owner.agent.SetDestination(owner.playerBody.position);
-                }
+                if (!owner.agent.updateRotation)
+                    RotateTowardPlayer();
+                //If distance is close enough, 
             }
 
             public void RotateTowardPlayer()

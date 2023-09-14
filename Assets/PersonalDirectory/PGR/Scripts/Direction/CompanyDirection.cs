@@ -16,8 +16,8 @@ namespace PGR
         {
             yield return new WaitForSeconds(1f);
             ringAudio.Play();
-            yield return new WaitUntil(() => GameManager.Data.Player.IrisSystem.enabled);
             GameManager.Data.Player.Display.ModifyText("There is Secret Entrance in Storage Room on 3rd");
+            yield return new WaitUntil(() => GameManager.Data.Player.IrisSystem.isActiveAndEnabled);
             yield return new WaitForSeconds(5f);
             GameManager.Data.Player.Display.ModifyText("");
             Destroy(this);
