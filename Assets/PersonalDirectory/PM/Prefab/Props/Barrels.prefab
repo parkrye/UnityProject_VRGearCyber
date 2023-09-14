@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5943880517350677884}
+  - component: {fileID: 8813302388751337914}
   m_Layer: 0
   m_Name: Barrels
   m_TagString: Untagged
@@ -36,6 +37,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &8813302388751337914
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526350067464352577}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &792110309443382391
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43,6 +60,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5943880517350677884}
     m_Modifications:
+    - target: {fileID: -605529439236591939, guid: 164ebf2ea36cbae46b69fa913858f41d,
+        type: 3}
+      propertyPath: m_Carve
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5756802963825828194, guid: 164ebf2ea36cbae46b69fa913858f41d,
         type: 3}
       propertyPath: m_Name
@@ -118,6 +140,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5943880517350677884}
     m_Modifications:
+    - target: {fileID: -605529439236591939, guid: 164ebf2ea36cbae46b69fa913858f41d,
+        type: 3}
+      propertyPath: m_Carve
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5756802963825828194, guid: 164ebf2ea36cbae46b69fa913858f41d,
         type: 3}
       propertyPath: m_Name
@@ -193,6 +220,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5943880517350677884}
     m_Modifications:
+    - target: {fileID: -605529439236591939, guid: 164ebf2ea36cbae46b69fa913858f41d,
+        type: 3}
+      propertyPath: m_Carve
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5756802963825828194, guid: 164ebf2ea36cbae46b69fa913858f41d,
         type: 3}
       propertyPath: m_Name
@@ -268,6 +300,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5943880517350677884}
     m_Modifications:
+    - target: {fileID: -605529439236591939, guid: 164ebf2ea36cbae46b69fa913858f41d,
+        type: 3}
+      propertyPath: m_Carve
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5756802963825828194, guid: 164ebf2ea36cbae46b69fa913858f41d,
         type: 3}
       propertyPath: m_Name
@@ -343,6 +380,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5943880517350677884}
     m_Modifications:
+    - target: {fileID: -605529439236591939, guid: 164ebf2ea36cbae46b69fa913858f41d,
+        type: 3}
+      propertyPath: m_Carve
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5756802963825828194, guid: 164ebf2ea36cbae46b69fa913858f41d,
         type: 3}
       propertyPath: m_Name

@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 4296696177793469865}
   - component: {fileID: 8481815467215713768}
   - component: {fileID: 6251027382111979023}
+  - component: {fileID: -964919095890324729}
+  - component: {fileID: -8625681189842729909}
   m_Layer: 0
   m_Name: ATM_Green
   m_TagString: Untagged
@@ -190,5 +192,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hackingMat:
-  - {fileID: 2100000, guid: d3f139023cb4911499b7c10a0929e591, type: 2}
-  - {fileID: 2100000, guid: f357ecea382f94148889179a43317bf1, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!208 &-964919095890324729
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000011470600780}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.9250001, z: 0.44300002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.9250001, z: -0.007}
+  m_TimeToStationary: 0.5
+--- !u!114 &-8625681189842729909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000011470600780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49aafd62a71262b49bf2482ecf6af29b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hackingMat: []

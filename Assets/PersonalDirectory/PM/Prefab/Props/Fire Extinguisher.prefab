@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4438562793477920974}
   - component: {fileID: 7972629402239345719}
   - component: {fileID: 5598055705008767931}
+  - component: {fileID: -870884366657831142}
   m_Layer: 0
   m_Name: Fire Extinguisher
   m_TagString: Untagged
@@ -98,3 +99,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 9c785a87f662c974db9241207a156048, type: 3}
+--- !u!208 &-870884366657831142
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8545771882364637419}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.12100001, y: 0.568, z: 0.18400002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.273, y: 0.568, z: 0}
+  m_TimeToStationary: 0.5

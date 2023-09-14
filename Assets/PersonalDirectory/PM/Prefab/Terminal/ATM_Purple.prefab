@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: -3283182232431969883}
   - component: {fileID: -7727801343886378154}
   - component: {fileID: 4547342827696815884}
+  - component: {fileID: -3970457531861125571}
+  - component: {fileID: 30671757933501383}
   m_Layer: 0
   m_Name: ATM_Purple
   m_TagString: Untagged
@@ -190,5 +192,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hackingMat:
-  - {fileID: 2100000, guid: b1f9ee7634a9a0340bc6abd5a1fca1a5, type: 2}
-  - {fileID: 2100000, guid: f357ecea382f94148889179a43317bf1, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!208 &-3970457531861125571
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013928085590}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.9250001, z: 0.44300002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.9250001, z: -0.007}
+  m_TimeToStationary: 0.5
+--- !u!114 &30671757933501383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000013928085590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49aafd62a71262b49bf2482ecf6af29b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hackingMat: []

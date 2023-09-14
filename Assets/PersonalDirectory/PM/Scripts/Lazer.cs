@@ -15,14 +15,7 @@ namespace PM
         }
         private void GetTerminal()
         {
-            foreach (Transform trans in transform.parent)
-            {
-                if (trans.GetComponent<Terminal>() != null)
-                {
-                    terminal = trans.GetComponent<Terminal>();
-                    break;
-                }
-            }
+            terminal = transform.parent.GetComponentInChildren<Terminal>();
         }
 
         private void OnTriggerEnter(Collider other)

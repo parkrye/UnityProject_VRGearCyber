@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6641193633644137474}
   - component: {fileID: 1273271364895604184}
   - component: {fileID: 3869412846410737720}
+  - component: {fileID: -2678689729656046858}
   m_Layer: 0
   m_Name: Cart (1)
   m_TagString: Untagged
@@ -115,3 +116,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!208 &-2678689729656046858
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4906271988070480094}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.69900006, y: 0.5, z: 0.48700002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.085, y: 0.499, z: 0}
+  m_TimeToStationary: 0.5

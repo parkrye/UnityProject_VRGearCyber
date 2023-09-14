@@ -7,14 +7,15 @@ namespace PM
     // 해킹에 성공하면 연결된 문을 열고 실패하면 로봇들을 호출
     public class DoorController : MonoBehaviour, IHackable
     {
+        [SerializeField] int pairCount;
+        [SerializeField] int fixedPointPerPairCount;
         [SerializeField] int hp;
         [SerializeField] GameData.HackProgressState state;
-        Animator animator;
         Terminal terminal;
 
         private void Start()
         {
-            terminal = transform.parent.GetComponentInChildren<Terminal>();
+            terminal = transform.parent.parent.parent.GetComponentInChildren<Terminal>();
         }
         public virtual void Hack()
         {
@@ -67,7 +68,10 @@ namespace PM
             if (hp <= 0)
                 StartCoroutine(Break());
         }
-
+        public (int, int) GetDifficulty()
+        {
+            return (pairCount, fixedPointPerPairCount);
+        }
     }
 }
 

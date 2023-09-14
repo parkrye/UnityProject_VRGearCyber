@@ -8,10 +8,16 @@ namespace PM
 {
     public class Terminal : MonoBehaviour, IHackable, IHitable
     {
+        [SerializeField] int pairCount;
+        [SerializeField] int fixedPointPerPairCount;
         [SerializeField] GameData.HackProgressState state;
         public GuardEnemy[] guards;
         [SerializeField] int hp;
-
+        MaterialChange materialChange;
+        private void Start()
+        {
+            materialChange = GetComponent<MaterialChange>();
+        }
         public virtual void Hack()
         {
             StartCoroutine(WaitingHackResultRoutine());
@@ -37,7 +43,9 @@ namespace PM
         {
             yield return null;
             state = GameData.HackProgressState.Progress;
+            materialChange.HackingStart();
             yield return new WaitUntil(() => state != GameData.HackProgressState.Progress);
+            materialChange.HackingStop();
             switch (state)
             {
                 case GameData.HackProgressState.Failure:
@@ -72,6 +80,10 @@ namespace PM
         {
             Destroy(this.gameObject);
             yield return null;
+        }
+        public (int, int) GetDifficulty()
+        {
+            return (pairCount, fixedPointPerPairCount);
         }
     }
 }
