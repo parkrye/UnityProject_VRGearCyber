@@ -201,6 +201,7 @@ MonoBehaviour:
   maxHP: 0
   nowHP: 0
   audioSource: {fileID: 5622163068222487156}
+  volume: 0
 --- !u!33 &33736552353390380
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -290,7 +291,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: db05e4b4c0a364a4ab52e56017ef20c9, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -301,9 +302,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 0
-  MaxDistance: 5
+  MaxDistance: 10
   Pan2D: 0
-  rolloffMode: 1
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0

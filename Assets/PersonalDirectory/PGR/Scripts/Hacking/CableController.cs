@@ -64,7 +64,6 @@ namespace PGR
             if (cableObject.State)
             {
                 cableObject.ExitPuzzle();
-                return;
             }
 
             if (!isCableLoaded)
