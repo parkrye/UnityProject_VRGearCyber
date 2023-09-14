@@ -349,7 +349,7 @@ MonoBehaviour:
   m_AddDefaultGrabTransformers: 1
   grabPriority: 1
   rb: {fileID: 0}
-  interactableType: 4
+  interactableType: 5
   defaultLayer: 0
   ignoreColliderLayer: 0
 --- !u!114 &5483528048061002489

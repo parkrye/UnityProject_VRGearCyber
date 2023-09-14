@@ -140,8 +140,8 @@ namespace PID
         }
         private void SetGameLayerRecursive(GameObject gameObject, int layer)
         {
-            if (gameObject.tag != "Wearable")
-                gameObject.layer = layer;
+            //if (gameObject.tag != "Wearable")
+            //    gameObject.layer = layer;
             foreach (Transform child in gameObject.transform)
             {
                 SetGameLayerRecursive(child.gameObject, layer);

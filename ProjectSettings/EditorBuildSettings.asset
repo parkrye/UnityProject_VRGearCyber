@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/PersonalDirectory/PGR/Scenes/PGR_CompanyScene.unity
     guid: b83916c431313d649b7e2927dcdd8f20
+  - enabled: 1
+    path: Assets/PersonalDirectory/PM/Scene/SciFi_Warehouse.unity
+    guid: e46fcb4ea0412b74e94840c38a206733
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 7094158c5fe2cab4a96613a6c9849514,
       type: 2}
