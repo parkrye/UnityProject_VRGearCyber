@@ -9,6 +9,8 @@ namespace PGR
         [SerializeField] bool isInvisible;
         public void OnSelectEnterEvent(SelectEnterEventArgs args)
         {
+            args.interactableObject.transform.SetParent(transform);
+
             if (!isInvisible)
                 return;
 
@@ -24,6 +26,8 @@ namespace PGR
 
         public void OnSelectExitEvent(SelectExitEventArgs args)
         {
+            args.interactableObject.transform.SetParent(null);
+
             if (!isInvisible)
                 return;
 
