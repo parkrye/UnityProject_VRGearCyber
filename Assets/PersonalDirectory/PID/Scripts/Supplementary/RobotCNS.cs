@@ -12,7 +12,6 @@ namespace PID
         [SerializeField] HackProgressState state;
         BaseEnemy enemy;
         State prevState;
-
         [SerializeField] int pairCount;
         [SerializeField] int fixedPointPerPairCount; 
         #region Hacking Region 
