@@ -29,5 +29,38 @@ namespace PID
         //{
 
         //}
+
+        public static float[,] GenerateSqrMgDistGraph(Vector3[] patrolPoints, Vector3 startPoint)
+        {
+            int size = patrolPoints.Length + 1;
+            float[,] travelGraph = new float[size,size];
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    if (i == j)
+                    {
+                        travelGraph[i, j] = 0; // Distance to itself is 0
+                    }
+                    else if (i == 0)
+                    {
+                        // Distance from the starting point to patrol points
+                        travelGraph[i, j] = Vector3.SqrMagnitude(startPoint - patrolPoints[j - 1]);
+                    }
+                    else if (j == 0)
+                    {
+                        // Distance from patrol points to the starting point
+                        travelGraph[i, j] = Vector3.SqrMagnitude(patrolPoints[i - 1] - startPoint);
+                    }
+                    else
+                    {
+                        // Distance between two patrol points
+                        travelGraph[i, j] = Vector3.SqrMagnitude(patrolPoints[i - 1] - patrolPoints[j - 1]);
+                    }
+                }
+            }
+            return travelGraph;
+        }
+
     }
 }

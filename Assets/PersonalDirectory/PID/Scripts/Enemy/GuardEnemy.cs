@@ -8,7 +8,7 @@ using static PID.RobotHelper;
 namespace PID
 {
     [RequireComponent(typeof(NavMeshAgent), typeof(SightFunction))]
-    public class GuardEnemy : BaseEnemy, IPointerClickHandler, IHitable
+    public class GuardEnemy : BaseEnemy, IHitable
     {
         /// <summary>
         /// Hide and Clash should be sub-state driven by the Assault state. 
@@ -168,11 +168,11 @@ namespace PID
             }
         }
         #region DEBUGGING ISSUES 
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            TakeDamage(50, eventData.pointerPressRaycast.worldPosition, eventData.pointerPressRaycast.worldNormal);
-            Debug.Log(CurrentHealth); 
-        }
+        //public void OnPointerClick(PointerEventData eventData)
+        //{
+        //    TakeDamage(50, eventData.pointerPressRaycast.worldPosition, eventData.pointerPressRaycast.worldNormal);
+        //    Debug.Log(CurrentHealth); 
+        //}
         #endregion
         #endregion
         #region OVERRIDE FUNCTIONS 

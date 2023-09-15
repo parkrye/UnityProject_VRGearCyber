@@ -1237,7 +1237,7 @@ GameObject:
   - component: {fileID: 4810853655808423173}
   - component: {fileID: 1868409495}
   m_Layer: 11
-  m_Name: Rifle_Alpha_ragdoll
+  m_Name: Rifle_V2_ragdoll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1383,7 +1383,7 @@ MonoBehaviour:
   ragdollJoints: []
   ragdollBox: []
   ragdollHead: {fileID: 4810853655640780058}
-  impactIntensity: 0.05
+  impactIntensity: 0.01
 --- !u!114 &1868409495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1531,7 +1531,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muzzleFlash: {fileID: 198234347406488609}
-  bulletTrail: {fileID: 0}
+  bulletTrail: {fileID: 8833905543594827459, guid: 0b67fbb1d1f648643b93c7d82779d634,
+    type: 3}
   fireInterval: 0.3
   missChance: 1.5
   reloadInterval: 3.2

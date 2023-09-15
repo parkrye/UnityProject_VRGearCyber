@@ -24,11 +24,18 @@ namespace PID
             if (enemy.robotType == RobotType.Guard)
                 enemy = enemy as GuardEnemy;
             else if (enemy.robotType == RobotType.Tackler)
-                enemy = enemy as TackleEnemy; 
+                enemy = enemy as TackleEnemy;
+            else
+                enemy = enemy as ScoutEnemy; 
         }
         public virtual void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
         {
-            if (armorAvailable && wearable.IsWearing)
+            if (!armorAvailable)
+            {
+                enemy.TakeDamage(damage, hitPoint, hitNormal);
+                return; 
+            }
+            if (wearable.IsWearing)
             {
                 wearable.TakeDamage(damage, hitPoint, hitNormal);
                 return; 
@@ -38,7 +45,12 @@ namespace PID
 
         public virtual void TakeStrike(Transform hitter, float damage, Vector3 hitPoint, Vector3 hitNormal)
         {
-            if (armorAvailable && wearable.IsWearing)
+            if (!armorAvailable)
+            {
+                enemy.TakeStrike(hitter, damage, hitPoint, hitNormal);
+                return;
+            }
+            if (wearable.IsWearing)
             {
                 wearable.TakeStrike(hitter, damage, hitPoint, hitNormal);
                 return; 

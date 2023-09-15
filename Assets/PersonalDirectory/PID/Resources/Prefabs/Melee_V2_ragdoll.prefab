@@ -3041,7 +3041,7 @@ MonoBehaviour:
   ragdollJoints: []
   ragdollBox: []
   ragdollHead: {fileID: 3934624678512557022}
-  impactIntensity: 0.05
+  impactIntensity: 0.01
 --- !u!114 &8383747184364878931
 MonoBehaviour:
   m_ObjectHideFlags: 0
