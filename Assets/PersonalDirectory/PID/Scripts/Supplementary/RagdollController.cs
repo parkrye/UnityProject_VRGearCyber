@@ -114,6 +114,8 @@ namespace PID
             yield return new WaitForEndOfFrame();
             anim.enabled = false;
             impactPoint.AddForceAtPosition(-1 * impactIntensity * hitDir, hitPoint, ForceMode.Impulse);
+            yield return new WaitForSeconds(1.5f);
+            RigidbodySettle(); 
             //Find the nearest rigidbody with hitpoint 
         }
 
@@ -122,7 +124,8 @@ namespace PID
             EnableRagDollProperties();
             yield return new WaitForEndOfFrame();
             anim.enabled = false;
-            Invoke("RigidbodySettle", 1.5f); 
+            yield return new WaitForSeconds(1.5f);
+            RigidbodySettle();
         }
 
         public void OnAndOff(bool switchOn)

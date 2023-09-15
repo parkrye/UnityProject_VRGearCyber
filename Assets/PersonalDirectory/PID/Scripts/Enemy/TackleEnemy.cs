@@ -3,6 +3,7 @@ using UnityEngine;
 using static PID.RobotHelper;
 using UnityEngine.AI;
 using static PID.GuardEnemy;
+using System.Collections.Generic;
 
 namespace PID
 {
@@ -302,7 +303,7 @@ namespace PID
             Vector3 lastLeavingPlace;
             Vector3 patrolDestination;
             LayerMask patrolPointer;
-            Collider[] patrolPoints;
+            List<Collider> patrolPoints;
             PriorityQueue<DestinationPoint> patrolQueue;
             public PatrolState(TackleEnemy owner, StateMachine<State, TackleEnemy> stateMachine) : base(owner, stateMachine)
             {
@@ -325,6 +326,7 @@ namespace PID
                 }
                 else
                 {
+                    Debug.Log(patrolPoints.Count);
                     ProcessPatrolPoints();
                     return;
                 }
@@ -341,6 +343,7 @@ namespace PID
 
             public override void Setup()
             {
+                patrolPoints = new List<Collider>(); 
                 patrolPointer = LayerMask.NameToLayer("Point");
                 CollectPatrolPoints(out hasPatrolPath);
                 if (!hasPatrolPath)
@@ -389,13 +392,23 @@ namespace PID
             }
             public void CollectPatrolPoints(out bool hasPatrolPoints)
             {
-                Collider[] colliders = Physics.OverlapSphere(owner.transform.position, collectDist, patrolPointer);
+                Collider[] colliders = Physics.OverlapSphere(owner.transform.position, collectDist, 1 << 16);
+                if (colliders.Length > 0)
+                {
+                    patrolPoints.Clear();
+                    Debug.Log(colliders.Length);
+                    foreach (Collider collider in colliders)
+                    {
+                        Debug.Log(collider.transform.position);
+                        patrolPoints.Add(collider);
+                    }
+                }
                 hasPatrolPoints = colliders.Length > 0;
             }
 
             public void ProcessPatrolPoints()
             {
-                for (int i = 0; i < patrolPoints.Length; i++)
+                for (int i = 0; i < patrolPoints.Count; i++)
                 {
                     float tempDist = Vector3.SqrMagnitude(patrolPoints[i].transform.position - owner.transform.position);
                     DestinationPoint tempPoint = new DestinationPoint(patrolPoints[i].transform.position, tempDist);
