@@ -366,7 +366,7 @@ namespace PID
             }
             public void CollectPatrolPoints(out bool hasPatrolPoints)
             {
-                Collider[] colliders = Physics.OverlapSphere(owner.transform.position, collectDist, 1<<16);
+                Collider[] colliders = Physics.OverlapSphere(owner.transform.position, collectDist, 1<<14);
                 if (colliders.Length > 0)
                 {
                     patrolPoints.Clear();
