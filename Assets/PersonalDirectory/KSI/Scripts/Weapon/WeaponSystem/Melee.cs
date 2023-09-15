@@ -20,7 +20,8 @@ namespace KSI
 		[SerializeField] private Collider coll; // 무기의 콜라이더
 
 		private bool isRightHanded; 		
-		private bool isSwinging = false; // 무기가 휘두르고 있는지 여부
+		[SerializeField] private bool isSwinging = false; // 무기가 휘두르고 있는지 여부
+		bool IsSwinging{ get{ return isSwinging; } set { isSwinging = value; Debug.Log($"{name} is {value}"); } }
 		private Queue<Vector3> positionQueue = new Queue<Vector3>(); // 위치를 저장할 큐		
 		private PlayerHandMotion playerHandMotion;
 
@@ -68,24 +69,40 @@ namespace KSI
 			}
 
 			StartCoroutine(TrackPositionRoutine());
-			isSwinging = true;
+			IsSwinging = true;
 		}
 
 		public void EndSwing()
 		{
 			Debug.Log("EndSwing");
 
+			if (playerHandMotion == null)
+				playerHandMotion = GameManager.Data.Player.HandMotion;
+
+			if (isRightHanded == true)
+			{
+				playerHandMotion.GrabOnCloseWeaponRight(false);
+			}
+			else
+			{
+				playerHandMotion.GrabOnCloseWeaponLeft(false);
+			}
+
 			StopAllCoroutines();
-			isSwinging = false;
+			IsSwinging = false;
 		}
 
-		private void OnTriggerEnter(Collider other)
+		private void OnCollisionEnter(Collision other)
 		{
-			Debug.Log("OnTriggerEnter" + other.gameObject.name);
+			Debug.Log("OnColliderEnter" + other.gameObject.name);
 
+			Debug.Log($"{isSwinging}, {positionQueue.Count}");
+			
 			if (isSwinging && positionQueue.Count > 0)
+
 			{
-				IStrikable iStrikable = other.GetComponent<IStrikable>();
+				IStrikable iStrikable = other.gameObject.GetComponent<IStrikable>();
+				Debug.Log($"{iStrikable}");
 				if (iStrikable != null)
 				{
 					// 가장 오래된 위치 가져오기

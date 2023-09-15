@@ -14,7 +14,7 @@ namespace KSI
 		[SerializeField] private float fireRate;
 		[SerializeField] private GameObject bullet;
 		[SerializeField] private Transform muzzlePoint;
-		[SerializeField] private ParticleSystem bulletShell;
+		//[SerializeField] private ParticleSystem bulletShell;
 		[SerializeField] private int damage;
 		[SerializeField] private float maxDistance = 10;
 
@@ -44,7 +44,6 @@ namespace KSI
 			if (animator == null)
 				animator = GetComponentInChildren<Animator>();
 
-			// muzzlePoint ?òÏúÑ???àÎäî muzzleFlashdml Ïª¥Ìè¨?åÌä∏ Ï∂îÏ∂ú
 			muzzleFlash = muzzlePoint.GetComponentInChildren<MeshRenderer>();
 			muzzleFlash.enabled = false;
 
@@ -69,15 +68,17 @@ namespace KSI
 				hasMagazine = true;
 				//hasSlide = false;
 
+				audioSource.PlayOneShot(reload);
+
 				magazine = args.interactableObject.transform.GetComponent<Magazine>();
 				CustomGrabInteractable magazineGrabInteractable = magazine.GetComponent<CustomGrabInteractable>();
-				XRGrabInteractable pistolGrabInteractable = GetComponent<XRGrabInteractable>();
+				XRGrabInteractable gunGrabInteractable = GetComponent<XRGrabInteractable>();
 
-				foreach (Collider pistolCollider in pistolGrabInteractable.colliders)
+				foreach (Collider gunCollider in gunGrabInteractable.colliders)
 				{
 					foreach (Collider magaznineCollider in magazineGrabInteractable.colliders)
 					{
-						Physics.IgnoreCollision(pistolCollider, magaznineCollider, true);
+						Physics.IgnoreCollision(gunCollider, magaznineCollider, true);
 					}
 				}
 
@@ -86,7 +87,7 @@ namespace KSI
 				else
 				{
                     GameManager.Data.Player.ExtraInput.LeftHandPrimaryButtonEvent.AddListener(EjectMagazine);
-                    magazineGrabInteractable.InteractableType = GameData.InteractableType.None;
+                   // magazineGrabInteractable.InteractableType = GameData.InteractableType.None;
                 }
 			}
 		}
@@ -98,12 +99,12 @@ namespace KSI
 			audioSource.PlayOneShot(reload);
 
 			XRGrabInteractable magazineGrabInteractable = args.interactableObject.transform.GetComponent<XRGrabInteractable>();
-			XRGrabInteractable pistolGrabInteractable = GetComponent<XRGrabInteractable>();
-			foreach (Collider pistolCollider in pistolGrabInteractable.colliders)
+			XRGrabInteractable gunGrabInteractable = GetComponent<XRGrabInteractable>();
+			foreach (Collider gunCollider in gunGrabInteractable.colliders)
 			{
 				foreach (Collider magaznineCollider in magazineGrabInteractable.colliders)
 				{
-					Physics.IgnoreCollision(pistolCollider, magaznineCollider, false);
+					Physics.IgnoreCollision(gunCollider, magaznineCollider, false);
 				}
 			}
 		}
@@ -112,6 +113,8 @@ namespace KSI
 		{
 			if (magazine != null && isPressed)
 			{
+				magazine.GetComponent<CustomGrabInteractable>().InteractableType = GameData.InteractableType.None;
+				Debug.Log("EjectMagazine");
 				magazine.transform.SetParent(null);
 				magazine = null;
 			}
@@ -123,22 +126,11 @@ namespace KSI
 		//	hasSlide = true;
 		//	//audioSource.PlayOneShot(reload);
 		//}
-		
-		public void MakeSound(Vector3 soundPos, Vector3 hitPoint) 
-		{
-			Collider[] soundPoints = Physics.OverlapSphere(soundPos, soundIntensity); 
-			if (soundPoints.Length <= 0 ) {
-				return; 
-			}
-			foreach (Collider soundPoint in soundPoints) 
-			{
-				PID.IHearable soundhearer = soundPoint.gameObject.GetComponent<PID.IHearable>();
-				soundhearer?.Heard(soundPos, GameManager.traceSound.WallIntersect(soundPos, hitPoint));
-			}
-		}
 
 		public void GrabGun(SelectEnterEventArgs args)
 		{
+			if (args.interactorObject.transform.GetComponent<XRSocketInteractor>())
+				return;
 			hand = args.interactorObject.transform.GetComponent<CustomDirectInteractor>();
 			if (hand == null)
 				return;
@@ -158,6 +150,8 @@ namespace KSI
 
 		public void PutDownGun(SelectExitEventArgs args)
 		{
+			if (args.interactorObject.transform.GetComponent<XRSocketInteractor>())
+				return;
 			hand = args.interactorObject.transform.GetComponent<CustomDirectInteractor>();
 			if (hand == null)
 				return;
@@ -177,6 +171,8 @@ namespace KSI
 
 		public void PullTheTrigger(ActivateEventArgs args)
 		{
+			if (hand == null)
+				return;
 			StartCoroutine(TriggerGunRoutine());
 
 			if (hasMagazine && magazine && magazine.numberOfBullet > 0) //&& hasSlide)
@@ -187,7 +183,7 @@ namespace KSI
 
 				if (Physics.Raycast(muzzlePoint.position, muzzlePoint.forward, out RaycastHit hit, maxDistance))
 				{
-					Debug.Log($"Hit={hit.transform.name}");
+					Debug.Log($"Hit={hit.transform.name}");	
 
 					//IHitable hitable = hit.transform.GetComponent<IHitable>();
 					//hitable?.TakeDamage(damage, hit.point, hit.normal);
@@ -223,17 +219,7 @@ namespace KSI
 				audioSource.PlayOneShot(noAmmo);
 			}
 		}
-		public void MakeSound(Vector3 pos)
-		{
-			Collider[] soundHits = Physics.OverlapSphere(pos, soundIntensity);
-			if (soundHits.Length <= 0)
-				return;
-			foreach (Collider collider in soundHits)
-			{
-				IHearable hearable = collider.gameObject.GetComponent<IHearable>();
-				hearable?.Heard(pos, GameManager.traceSound.WallIntersect(pos, collider.transform.position));
-			}
-		}
+
 
 		IEnumerator TriggerGunRoutine()
 		{
@@ -264,12 +250,10 @@ namespace KSI
 		private void Shoot()
 		{
 			magazine.numberOfBullet--;
-			Debug.Log("Bullet used. Remaining bullets: " + magazine.numberOfBullet);
-
+			Debug.Log("Bullet used. Remaining bullets : " + magazine.numberOfBullet);
 			Instantiate(bullet, muzzlePoint.position, muzzlePoint.rotation);
 			audioSource.PlayOneShot(shootSound, 1.0f);
-			bulletShell.Play();
-
+			//bulletShell.Play();
 			StartCoroutine(MuzzleFlashRoutine());
 
 			//if (magazine.numberOfBullet > 0 && magazine.bullets.Count > 0)
@@ -296,24 +280,27 @@ namespace KSI
 
 		IEnumerator MuzzleFlashRoutine()
 		{
-			// ?§ÌîÑ??Ï¢åÌëØÍ∞íÏùÑ ?úÎç§ ?®ÏàòÎ°??ùÏÑ±
 			Vector2 offset = new Vector2(Random.Range(0, 2), Random.Range(0, 2)) * 0.5f;
-			// ?çÏä§Ï≤òÏùò ?§ÌîÑ??Í∞??§Ï†ï
 			muzzleFlash.material.mainTextureOffset = offset;
-
-			// MuzzleFlash???åÏ†Ñ Î≥ÄÍ≤?
 			float angle = Random.Range(0, 360);
 			muzzleFlash.transform.localRotation = Quaternion.Euler(0, 0, angle);
-
-			// MuzzleFlash???¨Í∏∞ Ï°∞Ï†à
 			float scale = Random.Range(1.0f, 2.0f);
 			muzzleFlash.transform.localScale = Vector3.one * scale;
-
 			muzzleFlash.enabled = true;
-
 			yield return new WaitForSeconds(0.2f);
-
 			muzzleFlash.enabled = false;
 		}
+
+		public void MakeSound(Vector3 pos)
+		{
+			Collider[] soundHits = Physics.OverlapSphere(pos, soundIntensity);
+			if (soundHits.Length <= 0)
+				return;
+			foreach (Collider collider in soundHits)
+			{
+				IHearable hearable = collider.gameObject.GetComponent<IHearable>();
+				hearable?.Heard(pos, GameManager.traceSound.WallIntersect(pos, collider.transform.position));
+			}
+		}
 	}
-} 
+}

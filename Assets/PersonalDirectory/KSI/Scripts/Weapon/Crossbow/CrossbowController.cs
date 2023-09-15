@@ -1,16 +1,14 @@
-using PGR;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using PGR;
 
 namespace KSI
 {
 	[RequireComponent(typeof(AudioSource))]
 	public class CrossbowController : MonoBehaviour
     {
-		public float shotPower = 100f;
-
 		[Header("Arrow")]
 		[SerializeField] private float fireRate;
 		[SerializeField] private GameObject arrow;
@@ -30,7 +28,7 @@ namespace KSI
 
 		private Animator animator;
 		private PlayerHandMotion playerHandMotion;
-		private bool isRightHanded;
+		private CustomDirectInteractor hand;
 		private MeshRenderer muzzleFlash;
 		private bool hasArrow = false;
 
@@ -39,19 +37,23 @@ namespace KSI
 			if (animator == null)
 				animator = GetComponentInChildren<Animator>();
 
-			// muzzlePoint 하위에 있는 muzzleFlashdml 컴포넌트 추출
 			muzzleFlash = muzzlePoint.GetComponentInChildren<MeshRenderer>();
 			muzzleFlash.enabled = false;
 		}
 
 		public void AddArrow(SelectEnterEventArgs args)
 		{
+			if (hand == null)
+				return;
+
 			if (!hasArrow)
 			{
 				hasArrow = true;
 
+				audioSource.PlayOneShot(reload);
+
 				arrowLocation = args.interactableObject.transform.GetComponent<ArrowLocation>();
-				XRGrabInteractable arrowLocationGrabInteractable = arrowLocation.GetComponent<XRGrabInteractable>();
+				CustomGrabInteractable arrowLocationGrabInteractable = arrowLocation.GetComponent<CustomGrabInteractable>();
 				XRGrabInteractable crossbowGrabInteractable = GetComponent<XRGrabInteractable>();
 
 				foreach (Collider crossbowCollider in crossbowGrabInteractable.colliders)
@@ -82,22 +84,48 @@ namespace KSI
 			}
 		}
 
+		public void GrabCrossbow(SelectEnterEventArgs args)
+		{
+			hand = args.interactorObject.transform.GetComponent<CustomDirectInteractor>();
+			if (hand == null)
+				return;
+
+			if (playerHandMotion == null)
+				playerHandMotion = GameManager.Data.Player.HandMotion;
+
+			if (hand.IsRightHand)
+			{
+				playerHandMotion.GrabOnGunRight(true);
+			}
+			else
+			{
+				playerHandMotion.GrabOnGunLeft(true);
+			}
+		}
+
+		public void PutDownCrossbow(SelectExitEventArgs args)
+		{
+			hand = args.interactorObject.transform.GetComponent<CustomDirectInteractor>();
+			if (hand == null)
+				return;
+
+			if (playerHandMotion == null)
+				playerHandMotion = GameManager.Data.Player.HandMotion;
+
+			if (hand.IsRightHand)
+			{
+				playerHandMotion.GrabOnGunRight(false);
+			}
+			else
+			{
+				playerHandMotion.GrabOnGunLeft(false);
+			}
+		}
+
 		public void PullTheTrigger()
 		{
 			if (hasArrow && arrow && arrowLocation.numberOfArrow > 0)
 			{
-				if (playerHandMotion == null)
-					playerHandMotion = GameManager.Data.Player.HandMotion;
-
-				if (isRightHanded)
-				{
-					playerHandMotion.TriggerGunRight(true);
-				}
-				else
-				{
-					playerHandMotion.TriggerGunLeft(true);
-				}
-
 				animator.SetTrigger("Fire");
 				Shoot();
 
@@ -117,42 +145,51 @@ namespace KSI
 			}
 		}
 
+		IEnumerator TriggerGunRoutine()
+		{
+			if (playerHandMotion == null)
+				playerHandMotion = GameManager.Data.Player.HandMotion;
+
+			if (hand.IsRightHand)
+			{
+				playerHandMotion.TriggerGunRight(true);
+			}
+			else
+			{
+				playerHandMotion.TriggerGunLeft(true);
+			}
+
+			yield return new WaitForSeconds(0.2f);
+
+			if (hand.IsRightHand)
+			{
+				playerHandMotion.TriggerGunRight(false);
+			}
+			else
+			{
+				playerHandMotion.TriggerGunLeft(false);
+			}
+		}
+
 		private void Shoot()
 		{
 			arrowLocation.numberOfArrow--;
-
-			GameObject newArrow = Instantiate(arrow, muzzlePoint.position, muzzlePoint.rotation);
-
-			ArrowController arrowController = newArrow.GetComponent<ArrowController>();
-
-			if (arrowController != null)
-			{
-				arrowController.FireArrow();
-			}
-
+			Debug.Log("Arrow used. Remaining bullets : " + arrowLocation.numberOfArrow);
+			Instantiate(arrow, muzzlePoint.position, muzzlePoint.rotation);
 			audioSource.PlayOneShot(shootSound, 1.0f);
 			StartCoroutine(MuzzleFlashRoutine());
 		}
 
 		IEnumerator MuzzleFlashRoutine()
 		{
-			// 오프셋 좌푯값을 랜덤 함수로 생성
 			Vector2 offset = new Vector2(Random.Range(0, 2), Random.Range(0, 2)) * 0.5f;
-			// 텍스처의 오프셋 값 설정
 			muzzleFlash.material.mainTextureOffset = offset;
-
-			// MuzzleFlash의 회전 변경
 			float angle = Random.Range(0, 360);
 			muzzleFlash.transform.localRotation = Quaternion.Euler(0, 0, angle);
-
-			// MuzzleFlash의 크기 조절
 			float scale = Random.Range(1.0f, 2.0f);
 			muzzleFlash.transform.localScale = Vector3.one * scale;
-
 			muzzleFlash.enabled = true;
-
 			yield return new WaitForSeconds(0.2f);
-
 			muzzleFlash.enabled = false;
 		}	
 	}
