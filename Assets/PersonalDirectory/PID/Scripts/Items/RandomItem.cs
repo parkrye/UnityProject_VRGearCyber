@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomItem : MonoBehaviour
+[CreateAssetMenu (fileName = "RandomItemList", menuName = "Register/Item")]
+public class RandomItem : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] GameObject[] itemList; 
+    public GameObject GetRandomItem()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        int seed = Random.Range(0, itemList.Length); 
+        return itemList[seed];
     }
 }

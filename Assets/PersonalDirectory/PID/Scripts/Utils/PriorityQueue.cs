@@ -44,6 +44,10 @@ namespace PID
             return true;
         }
 
+        public void Clear()
+        {
+            nodes.Clear();
+        }
         public bool Contains(TElement element)
         {
             return nodes.Contains(element);
