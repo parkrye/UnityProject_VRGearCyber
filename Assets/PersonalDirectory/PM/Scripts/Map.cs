@@ -110,8 +110,8 @@ namespace PM
                             array[j, i] = Instantiate(room6[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                         else if (x == 4 && z == 3)
                             array[j, i] = Instantiate(room7[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
-                            else if (x == 4 && z == 4)
-                                array[j, i] = Instantiate(room8[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
+                        else if (x == 4 && z == 4)
+                            array[j, i] = Instantiate(room8[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                     }
                     roomData[j, i] = array[j, i].GetComponent<RoomData>();
                     roomData[j, i].x = x;
