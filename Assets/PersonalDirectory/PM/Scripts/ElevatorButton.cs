@@ -10,7 +10,6 @@ namespace PM
     {
         public enum Button {up, down}
         public Elevator elevator;
-        public int floor;
         public Button button; 
 
         public void Click()

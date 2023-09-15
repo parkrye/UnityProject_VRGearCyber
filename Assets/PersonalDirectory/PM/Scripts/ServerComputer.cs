@@ -8,22 +8,22 @@ public class ServerComputer : MonoBehaviour, IHackable
     [SerializeField] GameData.HackProgressState state;
     [SerializeField] int pairCount;
     [SerializeField] int fixedPointPerPairCount;
-    LightOn[] lights;
+    LightBrightness[] lightBrightnesses;
     MaterialChange[] materials;
     public Transform Robots;
     float timeLimit;
     private void Start()
     {
-        lights = GameObject.Find("Map").GetComponentsInChildren<LightOn>();
+        lightBrightnesses = GameObject.Find("Map").GetComponentsInChildren<LightBrightness>();
         materials = transform.GetComponentsInChildren<MaterialChange>();
         timeLimit = 60f;
     }
 
-    private void LightOn()
+    private void LedLight()
     {
-        foreach (LightOn light in lights)
+        foreach(LightBrightness lightBrightness in lightBrightnesses)
         {
-            light.LightSet();
+            lightBrightness.LedLight();
         }
     }
 
@@ -68,7 +68,7 @@ public class ServerComputer : MonoBehaviour, IHackable
     /// </summary>
     public virtual void Success()
     {
-        LightOn();
+        LedLight();
         StartCoroutine(CountDown());
     }
 
