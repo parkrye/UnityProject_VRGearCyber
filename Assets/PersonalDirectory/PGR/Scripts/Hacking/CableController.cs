@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using static PGR.CableObject;
 
 namespace PGR
 {
@@ -9,7 +10,6 @@ namespace PGR
         [Header("Cable Controller Parameters")]
         [SerializeField] CableObject cableObject;
 
-        [SerializeField] bool isCableLoaded, isSelectClicked;
         [SerializeField] float cableShotPower;
         [SerializeField] AudioSource shotAudio;
 
@@ -39,53 +39,30 @@ namespace PGR
             cableObject.transform.position = transform.position;
         }
 
-        public void OnSelectEnteredEvent(SelectEnterEventArgs args)
-        {
-            isSelectClicked = true;
-
-            GameObject target = args.interactableObject.transform.gameObject;
-            if (!target || !target.GetComponent<CableObject>() || isCableLoaded)
-                return;
-
-            isCableLoaded = true;
-            cableObject.ReadyToShot();
-        }
-
-        public void OnSelectExitedEvent(SelectExitEventArgs args)
-        {
-            isSelectClicked = false;
-            isCableLoaded = false;
-        }
-
         public void CableAction(bool isPressed)
         {
             if (!isPressed)
                 return;
 
-            if (cableObject.State)
+            switch (cableObject.State)
             {
-                cableObject.ExitPuzzle();
-                cableObject.FixExit();
-                cableObject.transform.position = transform.position;
-                return;
+                case CableState.Hide:
+                    cableObject.ReadyToShot();
+                    break;
+                case CableState.Ready:
+                    StartCoroutine(ShotRoutine());
+                    break;
+                case CableState.Shot:
+                    cableObject.ReturnToHand();
+                    break;
+                case CableState.Hack:
+                    cableObject.ExitPuzzle();
+                    break;
             }
-
-            if (!isCableLoaded)
-            {
-                cableObject.FixExit();
-                cableObject.transform.position = transform.position;
-                return;
-            }
-            if (!isSelectClicked)
-                return;
-
-            StartCoroutine(ShotRoutine());
         }
 
         IEnumerator ShotRoutine()
         {
-            isSelectClicked = false;
-            isCableLoaded = false;
             ChangeSocketType();
 
             shotAudio.Play();
