@@ -421,13 +421,15 @@ MonoBehaviour:
   defaultLayer: 0
   ignoreColliderLayer: 0
   playerTransform: {fileID: 2205595612187098200}
+  socketTransform: {fileID: 54626233835228710}
   pointLight: {fileID: 785334372}
-  state: 0
   puzzle: {fileID: 0}
   cableStateEvent:
     m_PersistentCalls:
       m_Calls: []
-  trailRenderer: {fileID: 0}
+  trailRenderer: {fileID: 8953705109940804872}
+  coll: {fileID: 785334363}
+  state: 0
 --- !u!108 &785334372
 Light:
   m_ObjectHideFlags: 0
@@ -8061,6 +8063,16 @@ PrefabInstance:
       propertyPath: cableObject
       value: 
       objectReference: {fileID: 785334369}
+    - target: {fileID: 5674446548845650805, guid: 8a90b67b548121c418bbb8cfa417e586,
+        type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5674446548845650805, guid: 8a90b67b548121c418bbb8cfa417e586,
+        type: 3}
+      propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5778367669558153282, guid: 8a90b67b548121c418bbb8cfa417e586,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8128,6 +8140,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a90b67b548121c418bbb8cfa417e586, type: 3}
+--- !u!4 &54626233835228710 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5674446548845650697, guid: 8a90b67b548121c418bbb8cfa417e586,
+    type: 3}
+  m_PrefabInstance: {fileID: 5655884890416639279}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &54626233835228762 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5674446548845650805, guid: 8a90b67b548121c418bbb8cfa417e586,
