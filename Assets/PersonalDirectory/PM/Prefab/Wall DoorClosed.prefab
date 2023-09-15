@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4abbecaa4194e014882a03906ad2199f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
+  hp: 500
   connetingDoor: {fileID: 0}
   arrow: 0
   position: {x: 0, y: 0, z: 0}
