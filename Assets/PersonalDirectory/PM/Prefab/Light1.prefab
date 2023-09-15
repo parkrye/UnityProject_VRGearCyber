@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5791481129915694371}
   - component: {fileID: 5797021224429431849}
   - component: {fileID: 5818813676495392175}
+  - component: {fileID: 2771037730793749895}
   m_Layer: 0
   m_Name: Light1
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5774046839165383433}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 8.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -98,6 +99,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.050000012, z: 0.19999997}
   m_Center: {x: 0, y: -0.024999999, z: 0}
+--- !u!114 &2771037730793749895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5774046839165383433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bebc7c2a3d3941448049e47ca4a1fa5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5774474850456182389
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,6 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5776294735772597211}
   - component: {fileID: 5883202232883239735}
+  - component: {fileID: 8038087490226213765}
   m_Layer: 0
   m_Name: Spot Light
   m_TagString: Untagged
@@ -141,9 +155,9 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 10
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Intensity: 1000
+  m_Range: 0
   m_SpotAngle: 150
   m_InnerSpotAngle: 139.10919
   m_CookieSize: 10
@@ -192,3 +206,23 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &8038087490226213765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5774474850456182389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}

@@ -40,7 +40,7 @@ namespace PM
         
         IEnumerator RangeSetting()
         {
-            angle = SpotLight.GetComponent<Light>().spotAngle;
+            //angle = SpotLight.GetComponent<Light>().spotAngle;
             cos = Mathf.Cos(angle * 0.5f * Mathf.Deg2Rad);
             sin = Mathf.Sin(angle * 0.5f * Mathf.Deg2Rad);
             Ray ray = new Ray(lightPosition, (SpotLight.forward * cos + SpotLight.up * sin));
