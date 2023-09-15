@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 388517376}
   m_Layer: 0
   m_Name: CasingSpawnPoint
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 667692177}
   m_Layer: 0
   m_Name: MuzzleFlash
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 1188181492}
   m_Layer: 0
   m_Name: Particle System
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5041,7 +5041,7 @@ GameObject:
   - component: {fileID: 4196672179752048456}
   m_Layer: 0
   m_Name: SliderTarget
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5074,7 +5074,7 @@ GameObject:
   - component: {fileID: 7615551603053674782}
   m_Layer: 0
   m_Name: Cube.003
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5157,7 +5157,7 @@ GameObject:
   - component: {fileID: 3897283833579898918}
   m_Layer: 0
   m_Name: Cube.004
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5244,7 +5244,7 @@ GameObject:
   - component: {fileID: 3699612563404501049}
   m_Layer: 0
   m_Name: Pistol
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5258,7 +5258,7 @@ Transform:
   m_GameObject: {fileID: 1277811586022921521}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.97, y: 2, z: -0.69}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2124251035130922118}
@@ -5533,16 +5533,16 @@ MonoBehaviour:
   fireRate: 0.1
   bullet: {fileID: 1561455455814107037, guid: 1397184aae7a2664d99c82877c3283c7, type: 3}
   muzzlePoint: {fileID: 3001588079524655082}
-  bulletShell: {fileID: 1188181493}
   damage: 50
   maxDistance: 10
-  soundIntensity: 0
+  soundIntensity: 5
   magazine: {fileID: 0}
-  socketInteractor: {fileID: 3252051743757865681}
+  socketInteractor: {fileID: 4957582990665084063}
   audioSource: {fileID: 3699612563404501049}
   shootSound: {fileID: 8300000, guid: 4dab368b46fb4a5478bf458680101ae3, type: 3}
   reload: {fileID: 8300000, guid: 10cf50f2ff5009e4793a78592e3c3526, type: 3}
   noAmmo: {fileID: 8300000, guid: b7a29b32e5b43024b9ff6b1530b75e94, type: 3}
+  hand: {fileID: 0}
 --- !u!82 &3699612563404501049
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5652,7 +5652,7 @@ GameObject:
   - component: {fileID: 2484465939451100847}
   m_Layer: 0
   m_Name: Etc
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5743,7 +5743,7 @@ GameObject:
   - component: {fileID: 2124251034384096942}
   m_Layer: 0
   m_Name: MagazineLocation
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5775,7 +5775,7 @@ GameObject:
   - component: {fileID: 2124251035130922118}
   m_Layer: 0
   m_Name: Trigger
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5813,7 +5813,7 @@ GameObject:
   - component: {fileID: 7978058193999761077}
   m_Layer: 0
   m_Name: Slider
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6256,7 +6256,7 @@ GameObject:
   - component: {fileID: 3001588079524655082}
   m_Layer: 0
   m_Name: MuzzlePoint
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6287,10 +6287,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3001588079659011631}
   - component: {fileID: 3001588079659011617}
-  - component: {fileID: 3252051743757865681}
+  - component: {fileID: 4957582990665084063}
   m_Layer: 0
   m_Name: SocketAttachPoint
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6303,7 +6303,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3001588079659011630}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.07, y: 0.1927, z: -0.0506}
+  m_LocalPosition: {x: -0.0261, y: 0.1927, z: -0.0506}
   m_LocalScale: {x: 3.4983, y: 1, z: 1.2939}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6324,7 +6324,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.1004082
   m_Center: {x: 0, y: -0.02, z: 0.03213823}
---- !u!114 &3252051743757865681
+--- !u!114 &4957582990665084063
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6333,7 +6333,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3001588079659011630}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6651631be86e474995d5fd6c5b71fa2, type: 3}
+  m_Script: {fileID: 11500000, guid: 93a8e15abd5902e418b5bd56f4da03df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -6368,12 +6368,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4957582990665084063}
+        m_TargetAssemblyTypeName: PGR.InvisibleSocket, Assembly-CSharp
+        m_MethodName: OnSelectEnterEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6879758548582890656}
         m_TargetAssemblyTypeName: KSI.Ranged, Assembly-CSharp
         m_MethodName: RemoveMagazine
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4957582990665084063}
+        m_TargetAssemblyTypeName: PGR.InvisibleSocket, Assembly-CSharp
+        m_MethodName: OnSelectExitEvent
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6409,6 +6433,7 @@ MonoBehaviour:
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
   acceptedType: 4
+  isInvisible: 0
 --- !u!1 &3001588080314021334
 GameObject:
   m_ObjectHideFlags: 0
@@ -6420,7 +6445,7 @@ GameObject:
   - component: {fileID: 3001588080314021335}
   m_Layer: 0
   m_Name: SocketAttachTransform
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6432,14 +6457,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3001588080314021334}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.191, z: 0.006}
+  m_LocalRotation: {x: 0, y: -0, z: 0.7225452, w: -0.6913237}
+  m_LocalPosition: {x: -0.031, y: -0.407, z: -0.011}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3001588079659011631}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 267.47}
 --- !u!1 &3001588081347520701
 GameObject:
   m_ObjectHideFlags: 0
@@ -6451,7 +6476,7 @@ GameObject:
   - component: {fileID: 3001588081347520674}
   m_Layer: 0
   m_Name: AttachTransform
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6463,14 +6488,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3001588081347520701}
-  m_LocalRotation: {x: 0, y: -0, z: 0.7071068, w: -0.7071068}
-  m_LocalPosition: {x: 0, y: -0.06, z: -0.06}
+  m_LocalRotation: {x: 0.026440127, y: 0.02644012, z: 0.7066123, w: -0.7066123}
+  m_LocalPosition: {x: -0.016, y: -0.059, z: -0.008}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1941159683586133899}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 270}
+  m_LocalEulerAnglesHint: {x: -4.286, y: 0, z: 270}
 --- !u!1 &3641566195752185122
 GameObject:
   m_ObjectHideFlags: 0
@@ -6484,7 +6509,7 @@ GameObject:
   - component: {fileID: 1055496596547994052}
   m_Layer: 0
   m_Name: Cube.025
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6567,7 +6592,7 @@ GameObject:
   - component: {fileID: 7754211437763723010}
   m_Layer: 0
   m_Name: Cube.010
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6648,7 +6673,7 @@ GameObject:
   - component: {fileID: 1303005469755427261}
   m_Layer: 0
   m_Name: Colliders
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6681,7 +6706,7 @@ GameObject:
   - component: {fileID: 6404126034887807669}
   m_Layer: 0
   m_Name: AttachTransform
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6714,7 +6739,7 @@ GameObject:
   - component: {fileID: 7857560168779528155}
   m_Layer: 0
   m_Name: Cube.007
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6797,7 +6822,7 @@ GameObject:
   - component: {fileID: 4676702183123660719}
   m_Layer: 0
   m_Name: Cube.006
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6880,7 +6905,7 @@ GameObject:
   - component: {fileID: 8557610970535774833}
   m_Layer: 0
   m_Name: Cube.001
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6963,7 +6988,7 @@ GameObject:
   - component: {fileID: 7777699318945386413}
   m_Layer: 0
   m_Name: Cube.002
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7046,7 +7071,7 @@ GameObject:
   - component: {fileID: 2775274692061175013}
   m_Layer: 0
   m_Name: Cube.011
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7129,7 +7154,7 @@ GameObject:
   - component: {fileID: 8905792030406205907}
   m_Layer: 0
   m_Name: Cube.005
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7212,7 +7237,7 @@ GameObject:
   - component: {fileID: 638300349316244301}
   m_Layer: 0
   m_Name: Cube.009
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

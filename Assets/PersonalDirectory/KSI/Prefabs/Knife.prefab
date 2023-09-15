@@ -69,7 +69,7 @@ Transform:
   - {fileID: 6063973883601010682}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: -90}
 --- !u!33 &8711373711061151143
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -200,10 +200,34 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3730477439972713554}
+        m_TargetAssemblyTypeName: KSI.Melee, Assembly-CSharp
+        m_MethodName: StartSwing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3730477439972713554}
+        m_TargetAssemblyTypeName: KSI.Melee, Assembly-CSharp
+        m_MethodName: EndSwing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_FirstFocusEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -334,7 +358,8 @@ MonoBehaviour:
   checkRate: 0.1
   maxPositions: 10
   maxDamage: 100
-  minDamage: 10
-  minDistanceForMaxDamage: 0.5
-  minDistanceForMinDamage: 0.1
+  minDamage: 50
+  minDistanceForMaxDamage: 0.3
+  minDistanceForMinDamage: 0.05
   coll: {fileID: 3065004601189054912}
+  isSwinging: 0

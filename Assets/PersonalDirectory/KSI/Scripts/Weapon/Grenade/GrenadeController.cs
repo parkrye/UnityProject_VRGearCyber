@@ -21,9 +21,6 @@ namespace KSI
 		[SerializeField] private AudioSource audioSource;
 		[SerializeField] private AudioClip boomSound;
 
-		private PlayerHandMotion playerHandMotion;
-		private bool isRightHanded;
-
 		public void TriggerBoom()
 		{
 			StartCoroutine(ExplosionWaitCouRoutine());
@@ -32,18 +29,14 @@ namespace KSI
 		private IEnumerator ExplosionWaitCouRoutine()
 		{ 
 			yield return new WaitForSeconds(delay);
-
 			GrenadeExplode();
-
 			yield return new WaitForSeconds(destoryDelay);
-
 			Destroy(gameObject);
 		}
 
 		public void GrenadeExplode()
 		{
 			audioSource.PlayOneShot(boomSound, 1.0f);
-
 			Instantiate(grenadeEffect, transform.position, transform.rotation);
 
 			Collider[] colliders = Physics.OverlapSphere(transform.position, ExplosionRadius);

@@ -16,7 +16,6 @@ namespace KSI
 		private void Start()
 		{
 			bullets = new List<GameObject>(numberOfBullet);
-			//bullets = new List<GameObject>(GameObject.FindGameObjectsWithTag("Bullet"));
 		}
 	}
 }
