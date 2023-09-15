@@ -35,7 +35,7 @@ namespace PID
             stateMachine.AddState(State.Patrol, new PatrolState(this, stateMachine));
             stateMachine.AddState(State.Alert, new AlertState(this, stateMachine));
             stateMachine.AddState(State.Alarm, new AlarmState(this, stateMachine));
-            stateMachine.AddState(State.Retrieve, new RetrieveState(this, stateMachine));
+            stateMachine.AddState(State.Hide, new HideState(this, stateMachine));
             stateMachine.AddState(State.Trace, new TraceState(this, stateMachine));
             stateMachine.AddState(State.LookAround, new LookAroundState(this, stateMachine));
             stateMachine.AddState(State.Neutralized, new NeutralizedState(this, stateMachine));

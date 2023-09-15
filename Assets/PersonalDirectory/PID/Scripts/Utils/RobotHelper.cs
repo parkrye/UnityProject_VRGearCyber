@@ -129,7 +129,7 @@ namespace PID
     public struct DestinationPoint : IComparable<DestinationPoint>
     {
         public Vector3 destinationVectorPoint;
-        public float distanceToPoint; 
+        public float distanceToPoint;
 
         public DestinationPoint (Vector3 dVP, float dTP)
         {
@@ -143,8 +143,11 @@ namespace PID
                 return -1;
             else if (this.distanceToPoint > other.distanceToPoint)
                 return 1;
-            else 
-                return 0;
+            else //If they are the same, 
+            {
+                return 0; 
+            }
+                
         }
     }
 
