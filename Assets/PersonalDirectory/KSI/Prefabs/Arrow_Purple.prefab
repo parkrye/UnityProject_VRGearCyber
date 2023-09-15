@@ -336,9 +336,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dafc10c3ee477824b98877322f07d44e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
-  force: 0
   arrowRenderer: {fileID: 1139584956817224630}
+  damage: 20
 --- !u!96 &1139584956817224630
 TrailRenderer:
   serializedVersion: 2

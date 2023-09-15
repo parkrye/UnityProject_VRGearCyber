@@ -2,16 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PID;
+using PGR;
 
 namespace KSI
 {
 	public class BarrelController : MonoBehaviour
 	{
-		[SerializeField] private GameObject barrelEffect; // 폭발 효과 파티클
+		[SerializeField] private GameObject barrelEffect;
 
 		private Transform tr;
 		private Rigidbody rb;
-		private int shootCount = 0; // 총에 맞은 횟수
+		private int shootCount = 0;
 
 		private void Start() 
 		{ 
@@ -36,7 +38,6 @@ namespace KSI
 
 			Destroy(barrelHP, 5.0f);
 
-			// Barrel의 무게를 가볍게 해서 위로 날려버림
 			rb.mass = 1.0f;
 			rb.AddForce(Vector3.up * 1500.0f);
 

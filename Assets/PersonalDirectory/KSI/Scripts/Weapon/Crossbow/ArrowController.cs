@@ -8,9 +8,8 @@ namespace KSI
 	public class ArrowController : MonoBehaviour
 	{
 		[Header("Arrow")]
-		[SerializeField] private int damage;
-		[SerializeField] private int force;
 		[SerializeField] private Renderer arrowRenderer;
+		[SerializeField] int damage;
 
 		private Rigidbody rb;
 
@@ -24,14 +23,23 @@ namespace KSI
 			}
 		}
 
-		public void FireArrow()
+		public void FireArrow(float force, int _damage)
 		{
+			gameObject.SetActive(false);
+			gameObject.SetActive(true);
 			if (arrowRenderer != null)
 			{
 				arrowRenderer.enabled = true;
 			}
+			
+			damage = _damage;
+			rb.AddForce(transform.forward * force, ForceMode.VelocityChange);
+		}
 
-			rb.AddForce(transform.forward * force);
+		void OnCollisionEnter(Collision collision)
+		{
+			IHitable hitable = collision.transform.GetComponent<IHitable>();
+			hitable?.TakeDamage(damage, collision.contacts[0].point, collision.contacts[0].normal);
 		}
 	}
 }

@@ -20,16 +20,10 @@ namespace KSI
 			audioSource = GetComponent<AudioSource>();
 		}
 
-		public void LightOn()
+		public void LightOnOff()
 		{
 			audioSource.PlayOneShot(onOffSound, 1.0f);
-			spotLight.enabled = true;
-		}
-
-		public void LightOff()
-		{
-			audioSource.PlayOneShot(onOffSound, 1.0f);
-			spotLight.enabled = false;
+			spotLight.enabled = !spotLight.enabled;
 		}
 	}
 }

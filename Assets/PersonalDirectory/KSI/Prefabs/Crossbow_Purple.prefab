@@ -306,9 +306,10 @@ MonoBehaviour:
   muzzlePoint: {fileID: 3413878071994511359}
   damage: 50
   maxDistance: 10
+  force: 50
   arrowLocation: {fileID: -94541517090424317, guid: 725cd10c9f58c614cb60812c2f335aa8,
     type: 3}
-  socketInteractor: {fileID: 0}
+  socketInteractor: {fileID: 8585145270638214048}
   audioSource: {fileID: 4226759138050743}
   shootSound: {fileID: 8300000, guid: c2ae233f3848c5f4180dea649015c24e, type: 3}
   reload: {fileID: 8300000, guid: 10cf50f2ff5009e4793a78592e3c3526, type: 3}
@@ -632,7 +633,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.03681525
+  m_Radius: 0.2
   m_Center: {x: 0, y: 0.008386411, z: 0}
 --- !u!114 &8585145270638214048
 MonoBehaviour:

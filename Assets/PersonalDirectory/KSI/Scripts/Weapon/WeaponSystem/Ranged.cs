@@ -34,28 +34,12 @@ namespace KSI
 		private Animator animator;
 		private PlayerHandMotion playerHandMotion;
 		private CustomDirectInteractor hand;
-		private MeshRenderer muzzleFlash;
 		private bool hasMagazine = false;
-		//private bool hasSlide = false;
-
 
 		private void Start()
 		{
 			if (animator == null)
 				animator = GetComponentInChildren<Animator>();
-
-			muzzleFlash = muzzlePoint.GetComponentInChildren<MeshRenderer>();
-			muzzleFlash.enabled = false;
-
-			//if (socketInteractor != null)
-			//{
-			//	socketInteractor.selectEntered.AddListener(AddMagazine);
-			//	socketInteractor.selectExited.AddListener(RemoveMagazine);
-			//}
-			//else
-			//{
-			//	Debug.LogError($"{gameObject.name} : socketInteractor is not set.");
-			//}
 		}
 
 		public void AddMagazine(SelectEnterEventArgs args)
@@ -66,7 +50,6 @@ namespace KSI
 			if (!hasMagazine)
 			{
 				hasMagazine = true;
-				//hasSlide = false;
 
 				audioSource.PlayOneShot(reload);
 
@@ -86,8 +69,7 @@ namespace KSI
 					GameManager.Data.Player.ExtraInput.RightHandPrimaryButtonEvent.AddListener(EjectMagazine);
 				else
 				{
-                    GameManager.Data.Player.ExtraInput.LeftHandPrimaryButtonEvent.AddListener(EjectMagazine);
-                   // magazineGrabInteractable.InteractableType = GameData.InteractableType.None;
+                    GameManager.Data.Player.ExtraInput.LeftHandPrimaryButtonEvent.AddListener(EjectMagazine);                
                 }
 			}
 		}
@@ -119,13 +101,6 @@ namespace KSI
 				magazine = null;
 			}
 		}
-
-		//public void Slide()
-		//{
-		//	Debug.Log("Slided");
-		//	hasSlide = true;
-		//	//audioSource.PlayOneShot(reload);
-		//}
 
 		public void GrabGun(SelectEnterEventArgs args)
 		{
@@ -208,10 +183,6 @@ namespace KSI
 					}
 				}
 			}			
-			//else if (!hasSlide)
-			//{
-			//	Debug.Log("No Slide");
-			//}
 			else
 			{
 				Debug.Log($"{gameObject.name} : No Ammo");
@@ -254,41 +225,6 @@ namespace KSI
 			Instantiate(bullet, muzzlePoint.position, muzzlePoint.rotation);
 			audioSource.PlayOneShot(shootSound, 1.0f);
 			//bulletShell.Play();
-			StartCoroutine(MuzzleFlashRoutine());
-
-			//if (magazine.numberOfBullet > 0 && magazine.bullets.Count > 0)
-			//{
-			//	magazine.numberOfBullet--;
-
-			//	GameObject bulletToRemove = magazine.bullets[0];
-			//	magazine.bullets.RemoveAt(0);
-			//	Destroy(bulletToRemove);
-
-			//	Instantiate(bullet, muzzlePoint.position, muzzlePoint.rotation);
-			//	audioSource.PlayOneShot(shootSound, 1.0f);
-			//	bulletShell.Play();
-			//	StartCoroutine(MuzzleFlashRoutine());
-
-			//	Debug.Log("Bullet used. Remaining bullets: " + magazine.numberOfBullet);
-			//}
-			//else
-			//{
-			//	Debug.Log($"{gameObject.name} : No Ammo");
-			//	audioSource.PlayOneShot(noAmmo);
-			//}
-		}
-
-		IEnumerator MuzzleFlashRoutine()
-		{
-			Vector2 offset = new Vector2(Random.Range(0, 2), Random.Range(0, 2)) * 0.5f;
-			muzzleFlash.material.mainTextureOffset = offset;
-			float angle = Random.Range(0, 360);
-			muzzleFlash.transform.localRotation = Quaternion.Euler(0, 0, angle);
-			float scale = Random.Range(1.0f, 2.0f);
-			muzzleFlash.transform.localScale = Vector3.one * scale;
-			muzzleFlash.enabled = true;
-			yield return new WaitForSeconds(0.2f);
-			muzzleFlash.enabled = false;
 		}
 
 		public void MakeSound(Vector3 pos)
