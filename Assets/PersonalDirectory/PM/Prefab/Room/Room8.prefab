@@ -238,6 +238,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6883763813752398902}
+  - component: {fileID: 1654067945675346500}
   m_Layer: 14
   m_Name: point (3)
   m_TagString: Untagged
@@ -260,6 +261,19 @@ Transform:
   m_Father: {fileID: 6556449473674617137}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1654067945675346500
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3660258467499712248}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3787774824639330102
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,6 +314,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4012897203683082416}
+  - component: {fileID: 2611186125847204761}
   m_Layer: 14
   m_Name: point (2)
   m_TagString: Untagged
@@ -322,6 +337,19 @@ Transform:
   m_Father: {fileID: 6556449473674617137}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2611186125847204761
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4685224354717270693}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5093373612526585545
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,6 +359,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2898308296412027289}
+  - component: {fileID: 8300283509370731240}
   m_Layer: 14
   m_Name: point (1)
   m_TagString: Untagged
@@ -353,6 +382,19 @@ Transform:
   m_Father: {fileID: 6556449473674617137}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8300283509370731240
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5093373612526585545}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6791596827263872467
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,6 +439,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7405993939443384069}
+  - component: {fileID: 3636626905910683883}
   m_Layer: 14
   m_Name: point (4)
   m_TagString: Untagged
@@ -419,6 +462,19 @@ Transform:
   m_Father: {fileID: 6556449473674617137}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3636626905910683883
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7533637885665546250}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8232145039954694670
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,6 +484,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9037914511574187050}
+  - component: {fileID: 7433061865484589140}
   m_Layer: 14
   m_Name: point
   m_TagString: Untagged
@@ -450,6 +507,19 @@ Transform:
   m_Father: {fileID: 6556449473674617137}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7433061865484589140
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8232145039954694670}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &84501285926599569
 PrefabInstance:
   m_ObjectHideFlags: 0
