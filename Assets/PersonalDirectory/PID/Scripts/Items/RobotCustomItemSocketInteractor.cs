@@ -8,42 +8,53 @@ namespace PID
 {
     public class RobotCustomItemSocketInteractor : XRSocketInteractor
     {
-        [SerializeField] GameObject hoveringItem;
+        MeshRenderer _renderer;
+        CustomGrabInteractable itemInteractable;
+        [SerializeField] Color exertedColor; 
+        [SerializeField] Transform hoveringItem;
+        [SerializeField] Transform hoveringLoc;
+        [SerializeField] Vector3 hoveringItemScale; 
+        RandomItem item; 
 
-        public override bool CanSelect(IXRSelectInteractable interactable)
+        protected override void Awake()
         {
-            CustomGrabInteractable socketTarget = interactable.transform.GetComponent<CustomGrabInteractable>();
-
-            if (socketTarget == null)
-                return false;
-
-            return base.CanSelect(interactable); 
+            base.Awake();
+            _renderer = GetComponent<MeshRenderer>();
+            item = GameManager.Resource.Load<RandomItem>("Data/ItemList");
+            GameManager.Resource.Instantiate(item.GetRandomItem(), hoveringLoc.position, hoveringLoc.rotation, transform);
+            RegisterInteractableItem(); 
         }
 
-        public override bool CanHover(IXRHoverInteractable interactable)
+        public void RegisterInteractableItem()
         {
-            return CanSelect(interactable as IXRSelectInteractable);
+            itemInteractable = GetComponentInChildren<CustomGrabInteractable>();
+            itemInteractable.selectEntered.AddListener(SelectEnterResponse);
+            hoveringItem = itemInteractable.gameObject.transform;
+            hoveringItem.localScale = hoveringItemScale; 
         }
 
         protected override void OnHoverEntered(HoverEnterEventArgs args)
         {
+            hoveringItem.localScale = Vector3.one;
             base.OnHoverEntered(args);
         }
         protected override void OnHoverExited(HoverExitEventArgs args)
         {
+            hoveringItem.localScale = hoveringItemScale;
             base.OnHoverExited(args);
         }
-        protected override void OnSelectEntered(SelectEnterEventArgs args)
+        public void SelectEnterResponse(SelectEnterEventArgs args)
         {
-            base.OnSelectEntered(args);
+            StartCoroutine(ItemExert()); 
         }
-        protected override void OnSelectExited(SelectExitEventArgs args)
+        public void SelectExitResponse(SelectExitEventArgs args)
         {
-            base.OnSelectExited(args);
+            
         }
-
-        IEnumerator Enlarge()
+        IEnumerator ItemExert()
         {
+            _renderer.material.SetColor("_EmissionColor", exertedColor);
+            hoveringItem.localScale = Vector3.one; 
             yield return null; 
         }
     }

@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using static PID.RobotHelper;
 using UnityEngine.AI;
+using static PID.GuardEnemy;
 
 namespace PID
 {
@@ -291,14 +292,17 @@ namespace PID
         #region Patrol State 
         public class PatrolState : TacklerState
         {
-            int lastPatrolPoint;
-            int nextPatrolPoint;
             int patrolCount;
             float distDelta;
             bool patrolFinished;
             bool hasPatrolPath;
             const float distThreshold = 2.5f;
+            const float collectDist = 10f;
+            const float newRegionThreshold = 90f;
+            Vector3 lastLeavingPlace;
             Vector3 patrolDestination;
+            LayerMask patrolPointer;
+            Collider[] patrolPoints;
             PriorityQueue<DestinationPoint> patrolQueue;
             public PatrolState(TackleEnemy owner, StateMachine<State, TackleEnemy> stateMachine) : base(owner, stateMachine)
             {
@@ -306,16 +310,25 @@ namespace PID
 
             public override void Enter()
             {
-                if (patrolDestination != Vector3.zero || !hasPatrolPath)
+                if (patrolFinished)
                     return;
-                //Compute to find nearest patrol starting point based on robot's current position, get the nearest 
-                for (int i = 0; i < owner.patrolPoints.Length; i++)
+                //Compute to find nearest patrol starting point based on robot's current position, get the nearest
+                //
+                if (UnderDifferentRegion())
                 {
-                    float tempDist = Vector3.SqrMagnitude(owner.patrolPoints[i].position - owner.transform.position);
-                    DestinationPoint tempPoint = new DestinationPoint(owner.patrolPoints[i].position, tempDist);
-                    patrolQueue.Enqueue(tempPoint);
+                    CollectPatrolPoints(out hasPatrolPath);
+                    if (hasPatrolPath)
+                        ProcessPatrolPoints();
+                    else
+                        patrolFinished = true;
+                    return;
                 }
-                patrolDestination = patrolQueue.Dequeue().destinationVectorPoint;
+                else
+                {
+                    ProcessPatrolPoints();
+                    return;
+                }
+
             }
 
             public override void Exit()
@@ -323,29 +336,24 @@ namespace PID
                 patrolCount = 0;
                 patrolFinished = false;
                 patrolDestination = Vector3.zero;
+                lastLeavingPlace = owner.transform.position;
             }
 
             public override void Setup()
             {
-                if (owner.patrolPoints == null || owner.patrolPoints.Length <= 0)
+                patrolPointer = LayerMask.NameToLayer("Point");
+                CollectPatrolPoints(out hasPatrolPath);
+                if (!hasPatrolPath)
                 {
-                    hasPatrolPath = false;
                     patrolFinished = true;
                     return;
                 }
-                hasPatrolPath = true;
                 patrolFinished = false;
                 patrolCount = 0;
+                lastLeavingPlace = Vector3.zero;
                 distDelta = 0f;
-                lastPatrolPoint = 0;
                 patrolQueue = new PriorityQueue<DestinationPoint>();
-                for (int i = 0; i < owner.patrolPoints.Length; i++)
-                {
-                    float tempDist = Vector3.SqrMagnitude(owner.patrolPoints[i].position - owner.transform.position);
-                    DestinationPoint tempPoint = new DestinationPoint(owner.patrolPoints[i].position, tempDist);
-                    patrolQueue.Enqueue(tempPoint);
-                }
-                patrolDestination = patrolQueue.Dequeue().destinationVectorPoint;
+                ProcessPatrolPoints();
             }
 
             public override void Transition()
@@ -371,6 +379,29 @@ namespace PID
                 {
                     patrolFinished = true;
                 }
+            }
+            public bool UnderDifferentRegion()
+            {
+                if (lastLeavingPlace == Vector3.zero)
+                    return false;
+                float distance = Vector3.SqrMagnitude(owner.transform.position - lastLeavingPlace);
+                return distance >= newRegionThreshold;
+            }
+            public void CollectPatrolPoints(out bool hasPatrolPoints)
+            {
+                Collider[] colliders = Physics.OverlapSphere(owner.transform.position, collectDist, patrolPointer);
+                hasPatrolPoints = colliders.Length > 0;
+            }
+
+            public void ProcessPatrolPoints()
+            {
+                for (int i = 0; i < patrolPoints.Length; i++)
+                {
+                    float tempDist = Vector3.SqrMagnitude(patrolPoints[i].transform.position - owner.transform.position);
+                    DestinationPoint tempPoint = new DestinationPoint(patrolPoints[i].transform.position, tempDist);
+                    patrolQueue.Enqueue(tempPoint);
+                }
+                patrolDestination = patrolQueue.Dequeue().destinationVectorPoint;
             }
         }
         #endregion
