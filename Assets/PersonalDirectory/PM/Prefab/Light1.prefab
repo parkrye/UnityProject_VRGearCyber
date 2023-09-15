@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5791481129915694371}
   - component: {fileID: 5797021224429431849}
   - component: {fileID: 5818813676495392175}
-  - component: {fileID: 2771037730793749895}
+  - component: {fileID: -6602045728865574750}
   m_Layer: 0
   m_Name: Light1
   m_TagString: Untagged
@@ -99,7 +99,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.050000012, z: 0.19999997}
   m_Center: {x: 0, y: -0.024999999, z: 0}
---- !u!114 &2771037730793749895
+--- !u!114 &-6602045728865574750
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,9 +108,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5774046839165383433}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bebc7c2a3d3941448049e47ca4a1fa5, type: 3}
+  m_Script: {fileID: 11500000, guid: 7048ac480e2967244940cf53f9975930, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: {r: 0.34901962, g: 0.34901962, b: 0.30980393, a: 0}
 --- !u!1 &5774474850456182389
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,9 +156,9 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.34901962, g: 0.34901962, b: 0.30980393, a: 1}
   m_Intensity: 1000
-  m_Range: 0
+  m_Range: 10
   m_SpotAngle: 150
   m_InnerSpotAngle: 139.10919
   m_CookieSize: 10

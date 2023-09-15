@@ -17,7 +17,7 @@ namespace PM
             transform.parent = null;
         }
 
-        private void Open()
+        public void Open()
         {
             if(!open) 
             {

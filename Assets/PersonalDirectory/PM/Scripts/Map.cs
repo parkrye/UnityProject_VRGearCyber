@@ -17,6 +17,7 @@ namespace PM
         /// </summary>
         [SerializeField] int maxXSize;
         [SerializeField] int maxYSize;
+        [SerializeField] int RoomMinSize;
         [SerializeField] int RoomMaxSize;
         enum arrow { up, down, left, right };
 
@@ -77,8 +78,8 @@ namespace PM
             {
                 for (int i = 0; i < maxXSize; i++)
                 {
-                    int x = Random.Range(3, RoomMaxSize + 1);
-                    int z = Random.Range(3, RoomMaxSize + 1);
+                    int x = Random.Range(RoomMinSize, RoomMaxSize + 1);
+                    int z = Random.Range(RoomMinSize, RoomMaxSize + 1);
                     // 첫번째 방은 시작방으로 설정
                     if( j==0 && i==0)
                     {
@@ -95,23 +96,23 @@ namespace PM
                     else
                     {
                         if (x == 2 && z == 2)
-                            array[j, i] = Instantiate(room0[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
+                            array[j, i] = Instantiate(room0[Random.Range(0, room0.Length)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                         else if (x == 2 && z == 3)
-                            array[j, i] = Instantiate(room1[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
+                            array[j, i] = Instantiate(room1[Random.Range(0, room1.Length)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                         else if (x == 3 && z == 2)
-                            array[j, i] = Instantiate(room2[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
+                            array[j, i] = Instantiate(room2[Random.Range(0, room2.Length)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                         else if (x == 3 && z == 3)
-                            array[j, i] = Instantiate(room3[Random.Range(0, 2)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
+                            array[j, i] = Instantiate(room3[Random.Range(0, room3.Length)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                         else if (x == 2 && z == 4)
-                            array[j, i] = Instantiate(room4[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
+                            array[j, i] = Instantiate(room4[Random.Range(0, room4.Length)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                         else if (x == 4 && z == 2)
-                            array[j, i] = Instantiate(room5[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
+                            array[j, i] = Instantiate(room5[Random.Range(0, room5.Length)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                         else if (x == 3 && z == 4)
-                            array[j, i] = Instantiate(room6[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
+                            array[j, i] = Instantiate(room6[Random.Range(0, room6.Length)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                         else if (x == 4 && z == 3)
-                            array[j, i] = Instantiate(room7[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
+                            array[j, i] = Instantiate(room7[Random.Range(0, room7.Length)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                         else if (x == 4 && z == 4)
-                            array[j, i] = Instantiate(room8[Random.Range(0, 1)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
+                            array[j, i] = Instantiate(room8[Random.Range(0, room8.Length)], position[j, i] + new Vector3(0, 0.1f, 0), Quaternion.identity, rooms);
                     }
                     roomData[j, i] = array[j, i].GetComponent<RoomData>();
                     roomData[j, i].x = x;
@@ -127,6 +128,7 @@ namespace PM
             {
                 RightAggregater(j);
                 DownAggregater(j);
+                LastAggregather();
             }
         }
 
@@ -155,10 +157,14 @@ namespace PM
                 {
                     // 보스방에 만약 이미 위로 연결 되어있으면 위로 연결된 방중 왼쪽으로 연결된지 확인 후 연결 안되어 있으면
                     // 위로 연결된 방중 하나를 왼쪽으로 연결
+
+                    // 해야할 작업 왼쪽으로 연결한 방에서 만약 연결된 왼쪽으로 연결된 방이 없으면 확인하여 연결
                     if (i == roomData.GetLength(1) - 2)
                     {
                         if (roomData[j, i + 1].up)
                         {
+                            PassageDownCreate(j - 1, i);
+
                             for (int m = 1; m <= roomData.GetLength(0); m++)
                             {
                                 if (roomData[j - m, i + 1].left)
@@ -236,6 +242,17 @@ namespace PM
                         PassageDownCreate(j, i);
                     }
                     sum = 0;
+                }
+            }
+        }
+
+        private void LastAggregather()
+        {
+            for(int i = 0; i< maxXSize-2;i++)
+            {
+                if (roomData[0,i].aggregate != roomData[0, i + 1].aggregate)
+                {
+                    PassageRightCreate(0, i);
                 }
             }
         }
