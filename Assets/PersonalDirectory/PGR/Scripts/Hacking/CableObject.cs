@@ -7,14 +7,47 @@ namespace PGR
     public class CableObject : CustomGrabInteractable
     {
         [Header("Cable Object Parameters")]
-        [SerializeField] Transform playerTransform;
+        [SerializeField] Transform playerTransform, socketTransform;
         [SerializeField] Light pointLight;
         [SerializeField] IHackable hackingTarget;
-        [SerializeField] bool state;
-        public bool State { get { return state; } set { state = value; } }
         [SerializeField] HackingPuzzle puzzle;
         public UnityEvent<bool> cableStateEvent;
         [SerializeField] TrailRenderer trailRenderer;
+        [SerializeField] Collider coll;
+
+        public enum CableState { Hide, Ready, Shot, Hack }
+        [SerializeField] CableState state;
+        public CableState State 
+        { 
+            get { return state; } 
+            set 
+            { 
+                state = value;
+                switch (state)
+                {
+                    case CableState.Hide:
+                        StartCoroutine(HideRoutine());
+                        pointLight.enabled = false;
+                        trailRenderer.enabled = false;
+                        break;
+                    case CableState.Ready:
+                        coll.enabled = true;
+                        pointLight.enabled = true;
+                        trailRenderer.enabled = true;
+                        break;
+                    case CableState.Shot:
+                        coll.enabled = true;
+                        pointLight.enabled = true;
+                        trailRenderer.enabled = true;
+                        break;
+                    case CableState.Hack:
+                        coll.enabled = false;
+                        pointLight.enabled = true;
+                        trailRenderer.enabled = true;
+                        break;
+                }
+            } 
+        }
 
         void Start()
         {
@@ -30,20 +63,19 @@ namespace PGR
             pointLight = GetComponent<Light>();
             trailRenderer = GetComponent<TrailRenderer>();
             Priority = 10;
-            pointLight.enabled = false;
-            trailRenderer.enabled = false;
             cableStateEvent.AddListener(GameManager.Data.Player.Display.ModifyCable);
-            State = false;
+
+            yield return new WaitForSeconds(1f);
+            State = CableState.Hide;
         }
 
-        public void FixExit()
+        public void ReturnToHand()
         {
             gameObject.SetActive(false);
             gameObject.SetActive(true);
-            pointLight.enabled = false;
-            trailRenderer.enabled = false;
             cableStateEvent?.Invoke(false);
-            State = false;
+            State = CableState.Hide;
+
             hackingTarget = null;
             puzzle = null;
         }
@@ -58,13 +90,13 @@ namespace PGR
 
         public void ReadyToShot()
         {
-            pointLight.enabled = true;
-            trailRenderer.enabled = true;
+            State = CableState.Ready;
             cableStateEvent?.Invoke(true);
         }
 
         public void ShotCable(Vector3 shotDirection, float shotPower)
         {
+            State = CableState.Shot;
             gameObject.SetActive(false);
             gameObject.SetActive(true);
             rb.AddForce(shotDirection * shotPower, ForceMode.Impulse);
@@ -72,7 +104,7 @@ namespace PGR
 
         void OnTriggerEnter(Collider other)
         {
-            if (State)
+            if (State != CableState.Shot)
                 return;
 
             hackingTarget = other.GetComponent<IHackable>();
@@ -83,11 +115,18 @@ namespace PGR
             if (socketInteractor == null)
                 return;
 
-            State = true;
+            State = CableState.Hack;
             hackingTarget.Hack();
             (int, int) difficulty = hackingTarget.GetDifficulty();
             puzzle = GameManager.Resource.Instantiate<HackingPuzzle>("Hacking/HackingPuzzle", playerTransform.position, Quaternion.identity);
             puzzle.InitialPuzzle(hackingTarget, socketInteractor, this, difficulty.Item1, difficulty.Item2);
+        }
+
+        IEnumerator HideRoutine()
+        {
+            transform.position = socketTransform.position;
+            yield return new WaitUntil(() => rb.isKinematic);
+            coll.enabled = false;
         }
     }
 }

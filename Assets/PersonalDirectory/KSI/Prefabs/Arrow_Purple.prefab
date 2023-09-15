@@ -293,9 +293,9 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
-  grabPriority: 0
+  grabPriority: 1
   rb: {fileID: 0}
-  interactableType: 5
+  interactableType: 6
   defaultLayer: 0
   ignoreColliderLayer: 0
   onlyOneHandGrab: 0

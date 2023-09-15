@@ -1,8 +1,7 @@
 using System.Collections;
-using TMPro;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.EventSystems;
 using static PID.RobotHelper;
 
 namespace PID
@@ -32,7 +31,6 @@ namespace PID
         //Hack Properties 
         public State curState => stateMachine.curStateName; 
         //Debugging 
-        public TMP_Text debugText;
         protected override void Awake()
         {
             //DEBUGGING 
@@ -44,7 +42,6 @@ namespace PID
             rigid = GetComponent<Rigidbody>();
             anim = GetComponent<Animator>();
             robotGun = GetComponentInChildren<RobotGun>();
-            debugText = GetComponentInChildren<TMP_Text>();
 
             stateMachine = new StateMachine<State, GuardEnemy>(this);
             stateMachine.AddState(State.Idle, new IdleState(this, stateMachine));
@@ -281,8 +278,6 @@ namespace PID
             {
                 //Game Started, Robots are Initialized. 
                 // Depending on the Start Up notion, this should determine type of States this should switch to. 
-                owner.debugText.text = "Idle";
-
                 stateMachine.ChangeState(State.Patrol);
             }
 
@@ -339,14 +334,17 @@ namespace PID
         #region Patrol State 
         public class PatrolState : GuardState
         {
-            int lastPatrolPoint;
-            int nextPatrolPoint;
             int patrolCount;
             float distDelta;
             bool patrolFinished;
             bool hasPatrolPath;
-            const float distThreshold = 2.5f; 
-            Vector3 patrolDestination; 
+            const float distThreshold = 2.5f;
+            const float collectDist = 10f;
+            const float newRegionThreshold = 90f; 
+            Vector3 lastLeavingPlace; 
+            Vector3 patrolDestination;
+            LayerMask patrolPointer; 
+            List<Collider> patrolPoints; 
             PriorityQueue<DestinationPoint> patrolQueue; 
             public PatrolState(GuardEnemy owner, StateMachine<State, GuardEnemy> stateMachine) : base(owner, stateMachine)
             {
@@ -354,47 +352,51 @@ namespace PID
 
             public override void Enter()
             {
-                owner.debugText.text = "Patrol";
-                if (patrolDestination != Vector3.zero || !hasPatrolPath)
+                if (patrolFinished)
                     return;
-                //Compute to find nearest patrol starting point based on robot's current position, get the nearest 
-                for (int i = 0; i < owner.patrolPoints.Length; i++)
+                //Compute to find nearest patrol starting point based on robot's current position, get the nearest
+                //
+                if (UnderDifferentRegion())
                 {
-                    float tempDist = Vector3.SqrMagnitude(owner.patrolPoints[i].position - owner.transform.position);
-                    DestinationPoint tempPoint = new DestinationPoint(owner.patrolPoints[i].position, tempDist);
-                    patrolQueue.Enqueue(tempPoint);
+                    CollectPatrolPoints(out hasPatrolPath);
+                    if (hasPatrolPath)
+                        ProcessPatrolPoints();
+                    else
+                        patrolFinished = true;
+                    return; 
                 }
-                patrolDestination = patrolQueue.Dequeue().destinationVectorPoint;
+                else
+                {
+                    ProcessPatrolPoints();
+                    return;
+                }
+                
             }
 
             public override void Exit()
             {
                 patrolCount = 0;
-                patrolFinished = false; 
-                patrolDestination = Vector3.zero; 
+                patrolFinished = false;
+                patrolDestination = Vector3.zero;
+                lastLeavingPlace = owner.transform.position; 
             }
 
             public override void Setup()
             {
-                if (owner.patrolPoints == null || owner.patrolPoints.Length <= 0)
+                patrolPoints = new List<Collider>(); 
+                patrolPointer = LayerMask.NameToLayer("Point"); 
+                CollectPatrolPoints(out hasPatrolPath);
+                if (!hasPatrolPath)
                 {
-                    hasPatrolPath = false;
                     patrolFinished = true;
                     return;
                 }
-                hasPatrolPath = true;
                 patrolFinished = false; 
-                patrolCount = 0; 
+                patrolCount = 0;
+                lastLeavingPlace = Vector3.zero; 
                 distDelta = 0f; 
-                lastPatrolPoint = 0;
                 patrolQueue = new PriorityQueue<DestinationPoint> ();
-                for (int i = 0; i < owner.patrolPoints.Length; i++)
-                {
-                    float tempDist = Vector3.SqrMagnitude(owner.patrolPoints[i].position - owner.transform.position);
-                    DestinationPoint tempPoint = new DestinationPoint(owner.patrolPoints[i].position, tempDist); 
-                    patrolQueue.Enqueue(tempPoint);
-                }
-                patrolDestination = patrolQueue.Dequeue().destinationVectorPoint; 
+                ProcessPatrolPoints();  
             }
 
             public override void Transition()
@@ -421,6 +423,39 @@ namespace PID
                     patrolFinished = true; 
                 }
             }
+            public bool UnderDifferentRegion()
+            {
+                if (lastLeavingPlace == Vector3.zero) 
+                    return false;
+                float distance = Vector3.SqrMagnitude(owner.transform.position - lastLeavingPlace);
+                return distance >= newRegionThreshold; 
+            }
+            public void CollectPatrolPoints(out bool hasPatrolPoints)
+            {
+                Collider[] colliders = Physics.OverlapSphere(owner.transform.position, collectDist, 1<<16);
+                if (colliders.Length > 0)
+                {
+                    patrolPoints.Clear();
+                    Debug.Log(colliders.Length);
+                    foreach (Collider collider in colliders)
+                    {
+                        Debug.Log(collider.transform.position);
+                        patrolPoints.Add(collider);
+                    }
+                }
+                hasPatrolPoints = colliders.Length > 0;
+            }
+
+            public void ProcessPatrolPoints()
+            {
+                for (int i = 0; i < patrolPoints.Count; i++)
+                {
+                    float tempDist = Vector3.SqrMagnitude(patrolPoints[i].transform.position - owner.transform.position);
+                    DestinationPoint tempPoint = new DestinationPoint(patrolPoints[i].transform.position, tempDist);
+                    patrolQueue.Enqueue(tempPoint);
+                }
+                patrolDestination = patrolQueue.Dequeue().destinationVectorPoint;
+            }
         }
         #endregion
         #region LookAround State 
@@ -439,7 +474,6 @@ namespace PID
 
             public override void Enter()
             {
-                owner.debugText.text = "LookAround";
                 owner.agent.isStopped = true;
                 NextLookDir(); 
                 //previousRotation = owner.transform.rotation;
@@ -501,7 +535,6 @@ namespace PID
 
             public override void Enter()
             {
-                owner.debugText.text = "Alert";
                 owner.agent.isStopped = false;
                 owner.agent.updateRotation = true; 
                 if (destPoint != Vector3.zero)
@@ -552,7 +585,6 @@ namespace PID
 
             public override void Enter()
             {
-                owner.debugText.text = "Assault";
                 //owner.agent.updateRotation = false;
                 owner.agent.isStopped = true;
                 owner.agent.updateRotation = false; 
@@ -631,7 +663,6 @@ namespace PID
             {
                 if (player == null)
                     player = owner.playerBody;
-                owner.debugText.text = "Hide";
                 initialPosition = owner.transform.position; 
                 owner.agent.updateRotation = false; 
                 owner.StartCoroutine(HideRoutine(player)); 
@@ -802,7 +833,6 @@ namespace PID
             public override void Enter()
             {
                 owner.agent.isStopped = false;
-                owner.debugText.text = "Trace";
                 trackTimer = 0f;
                 if (owner.playerBody == null)
                     return;
@@ -913,7 +943,6 @@ namespace PID
             public override void Enter()
             {
                 owner.agent.isStopped = true;
-                owner.debugText.text = "Neutralized";
                 //Should Notify CCTV to erase from the list 
                 //if (deathReason == DeathType.Health)
                 //    owner.anim.SetBool("Destroyed", true);

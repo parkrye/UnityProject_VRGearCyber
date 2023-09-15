@@ -152,7 +152,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 208031105290607737}
   m_LocalRotation: {x: 0, y: -0, z: 0.7071068, w: -0.7071068}
-  m_LocalPosition: {x: -0, y: -0.001, z: -0.011}
+  m_LocalPosition: {x: -0.0063, y: 0.002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -335,7 +335,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7438368196311072964}
   - component: {fileID: 8817982378772505136}
-  - component: {fileID: 7361970181645325257}
+  - component: {fileID: 7313514872344394353}
   m_Layer: 0
   m_Name: SocketAttachPoint
   m_TagString: Untagged
@@ -351,7 +351,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1473208426230425070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.0048, y: 0.0026, z: -0.0036}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -372,7 +372,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.022260318
   m_Center: {x: 0, y: 0, z: 0.002260318}
---- !u!114 &7361970181645325257
+--- !u!114 &7313514872344394353
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -381,7 +381,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1473208426230425070}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6651631be86e474995d5fd6c5b71fa2, type: 3}
+  m_Script: {fileID: 11500000, guid: 93a8e15abd5902e418b5bd56f4da03df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -416,12 +416,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7313514872344394353}
+        m_TargetAssemblyTypeName: PGR.InvisibleSocket, Assembly-CSharp
+        m_MethodName: OnSelectEnterEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 510532527483199679}
         m_TargetAssemblyTypeName: KSI.Ranged, Assembly-CSharp
         m_MethodName: RemoveMagazine
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7313514872344394353}
+        m_TargetAssemblyTypeName: PGR.InvisibleSocket, Assembly-CSharp
+        m_MethodName: OnSelectExitEvent
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -457,6 +481,7 @@ MonoBehaviour:
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
   acceptedType: 5
+  isInvisible: 0
 --- !u!1 &1635811537196507645
 GameObject:
   m_ObjectHideFlags: 0
@@ -907,14 +932,12 @@ MonoBehaviour:
   fireRate: 0.1
   bullet: {fileID: 1561455455814107037, guid: 1397184aae7a2664d99c82877c3283c7, type: 3}
   muzzlePoint: {fileID: 4644085394924681716}
-  bulletShell: {fileID: 198000012368742472, guid: ac159911ba2d21646883c60bd29878ac,
-    type: 3}
   damage: 50
   maxDistance: 10
   soundIntensity: 5
   magazine: {fileID: 5483528048061002489, guid: d070f3bf3d6f6e041870105aa9cf4c31,
     type: 3}
-  socketInteractor: {fileID: 7361970181645325257}
+  socketInteractor: {fileID: 7313514872344394353}
   audioSource: {fileID: 2207928583679052345}
   shootSound: {fileID: 8300000, guid: 4dab368b46fb4a5478bf458680101ae3, type: 3}
   reload: {fileID: 8300000, guid: 10cf50f2ff5009e4793a78592e3c3526, type: 3}
@@ -1042,7 +1065,7 @@ Transform:
   m_GameObject: {fileID: 5321370202775593122}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.005, y: -0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.001, y: 0.001, z: 0.001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4644085394924681716}
@@ -1325,14 +1348,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5874122833437678010}
-  m_LocalRotation: {x: 0.3248135, y: -0.31056386, z: 0.65904826, w: 0.603077}
-  m_LocalPosition: {x: 0.011, y: -0.084, z: 0.02}
+  m_LocalRotation: {x: 0.122201174, y: -0.13810436, z: 0.7201388, w: -0.66887534}
+  m_LocalPosition: {x: -0.0058, y: -0.0686, z: 0.0245}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7438368196311072964}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 53.238, y: 5.133, z: 97.652}
+  m_LocalEulerAnglesHint: {x: 2.031, y: 21.16, z: 266.152}
 --- !u!1 &5964559475737362901
 GameObject:
   m_ObjectHideFlags: 0
