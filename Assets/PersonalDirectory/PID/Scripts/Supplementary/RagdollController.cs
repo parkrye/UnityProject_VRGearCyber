@@ -80,7 +80,7 @@ namespace PID
         {
             for (int i = 0; i < ragdollBodies.Length; i++)
             {
-                if (ragdollBodies[i].gameObject.layer == LayerMask.GetMask("Wearable"))
+                if (ragdollBodies[i].gameObject.tag == "Wearable")
                     return; 
                 ragdollBodies[i].isKinematic = false;
             }
@@ -140,8 +140,8 @@ namespace PID
         }
         private void SetGameLayerRecursive(GameObject gameObject, int layer)
         {
-            if (gameObject.tag != "Wearable")
-                gameObject.layer = layer;
+            //if (gameObject.tag != "Wearable")
+            //    gameObject.layer = layer;
             foreach (Transform child in gameObject.transform)
             {
                 SetGameLayerRecursive(child.gameObject, layer);

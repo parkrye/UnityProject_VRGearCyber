@@ -44,7 +44,7 @@ namespace KSI
 			if (animator == null)
 				animator = GetComponentInChildren<Animator>();
 
-			// muzzlePoint 하위에 있는 muzzleFlashdml 컴포넌트 추출
+			// muzzlePoint ?�위???�는 muzzleFlashdml 컴포?�트 추출
 			muzzleFlash = muzzlePoint.GetComponentInChildren<MeshRenderer>();
 			muzzleFlash.enabled = false;
 
@@ -84,8 +84,10 @@ namespace KSI
 				if(hand.IsRightHand)
 					GameManager.Data.Player.ExtraInput.RightHandPrimaryButtonEvent.AddListener(EjectMagazine);
 				else
-					GameManager.Data.Player.ExtraInput.LeftHandPrimaryButtonEvent.AddListener(EjectMagazine);
-					magazineGrabInteractable.InteractableType = GameData.InteractableType.None;
+				{
+                    GameManager.Data.Player.ExtraInput.LeftHandPrimaryButtonEvent.AddListener(EjectMagazine);
+                    magazineGrabInteractable.InteractableType = GameData.InteractableType.None;
+                }
 			}
 		}
 
@@ -294,16 +296,16 @@ namespace KSI
 
 		IEnumerator MuzzleFlashRoutine()
 		{
-			// 오프셋 좌푯값을 랜덤 함수로 생성
+			// ?�프??좌푯값을 ?�덤 ?�수�??�성
 			Vector2 offset = new Vector2(Random.Range(0, 2), Random.Range(0, 2)) * 0.5f;
-			// 텍스처의 오프셋 값 설정
+			// ?�스처의 ?�프??�??�정
 			muzzleFlash.material.mainTextureOffset = offset;
 
-			// MuzzleFlash의 회전 변경
+			// MuzzleFlash???�전 변�?
 			float angle = Random.Range(0, 360);
 			muzzleFlash.transform.localRotation = Quaternion.Euler(0, 0, angle);
 
-			// MuzzleFlash의 크기 조절
+			// MuzzleFlash???�기 조절
 			float scale = Random.Range(1.0f, 2.0f);
 			muzzleFlash.transform.localScale = Vector3.one * scale;
 

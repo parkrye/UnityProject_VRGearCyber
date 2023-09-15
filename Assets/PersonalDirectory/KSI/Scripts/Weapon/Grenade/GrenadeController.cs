@@ -26,18 +26,6 @@ namespace KSI
 
 		public void TriggerBoom()
 		{
-			if (playerHandMotion == null)
-				playerHandMotion = GameManager.Data.Player.HandMotion;
-
-			if (isRightHanded)
-			{
-				playerHandMotion.CatchObjectRight(true);
-			}
-			else
-			{
-				playerHandMotion.CatchObjectLeft(true);
-			}
-
 			StartCoroutine(ExplosionWaitCouRoutine());
 		}
 

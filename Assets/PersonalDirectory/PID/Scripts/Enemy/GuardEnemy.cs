@@ -8,7 +8,7 @@ using static PID.RobotHelper;
 namespace PID
 {
     [RequireComponent(typeof(NavMeshAgent), typeof(SightFunction))]
-    public class GuardEnemy : BaseEnemy, IPointerClickHandler, IHitable
+    public class GuardEnemy : BaseEnemy, IHitable
     {
         /// <summary>
         /// Hide and Clash should be sub-state driven by the Assault state. 
@@ -168,11 +168,11 @@ namespace PID
             }
         }
         #region DEBUGGING ISSUES 
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            TakeDamage(50, eventData.pointerPressRaycast.worldPosition, eventData.pointerPressRaycast.worldNormal);
-            Debug.Log(CurrentHealth); 
-        }
+        //public void OnPointerClick(PointerEventData eventData)
+        //{
+        //    TakeDamage(50, eventData.pointerPressRaycast.worldPosition, eventData.pointerPressRaycast.worldNormal);
+        //    Debug.Log(CurrentHealth); 
+        //}
         #endregion
         #endregion
         #region OVERRIDE FUNCTIONS 
@@ -721,7 +721,7 @@ namespace PID
                         {
                             if (!NavMesh.FindClosestEdge(hit.position, out hit, owner.agent.areaMask))
                             {
-                                Debug.LogError($"Unable to find edge close to {hit.position}");
+                                Debug.Log($"Unable to find edge close to {hit.position}");
                                 continue; 
                             }
 
@@ -741,7 +741,7 @@ namespace PID
                                 {
                                     if (!NavMesh.FindClosestEdge(hit2.position, out hit2, owner.agent.areaMask))
                                     {
-                                        Debug.LogError($"Unable to find edge close to {hit2.position} (second attempt)");
+                                        Debug.Log($"Unable to find edge close to {hit2.position} (second attempt)");
                                         continue; 
                                     }
 
@@ -757,7 +757,7 @@ namespace PID
                         }
                         else
                         {
-                            Debug.LogError($"Unable to find NavMesh near object {Colliders[i].name} at {Colliders[i].transform.position}");
+                            Debug.Log($"Unable to find NavMesh near object {Colliders[i].name} at {Colliders[i].transform.position}");
                         }
                         yield return hideInterval;
                     }

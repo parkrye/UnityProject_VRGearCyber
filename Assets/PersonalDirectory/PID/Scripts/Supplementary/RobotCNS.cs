@@ -26,7 +26,7 @@ namespace PID
             else if (enemy.robotType == RobotType.Tackler)
                 enemy = enemy as TackleEnemy;
             else
-                Debug.Log("Enemy Not Defined"); 
+                enemy = enemy as ScoutEnemy;
         }
         public virtual void Hack()
         {
