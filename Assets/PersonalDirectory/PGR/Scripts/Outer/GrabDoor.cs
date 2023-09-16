@@ -9,6 +9,12 @@ namespace PFR
         [SerializeField] Rigidbody handleRb;
         [SerializeField] GameObject grabableHandle;
         [SerializeField] bool isGrabbed;
+        [SerializeField] AudioSource doorAudio;
+
+        void OnEnable()
+        {
+            doorAudio = GameManager.Resource.Instantiate<AudioSource>("Audio/DoorClip", transform);
+        }
 
         void FixedUpdate()
         {
@@ -21,6 +27,7 @@ namespace PFR
         public void StartGrabHandle(SelectEnterEventArgs args)
         {
             isGrabbed = true;
+            doorAudio.Play();
         }
 
         public void EndGrabHandle(SelectExitEventArgs args)
