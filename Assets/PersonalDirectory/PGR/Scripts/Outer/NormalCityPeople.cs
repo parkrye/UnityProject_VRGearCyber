@@ -54,6 +54,7 @@ namespace PGR
             }
             else
             {
+                endTransform = startTransform;
                 agent.SetDestination(startTransform.position);
                 agent.speed *= 2f;
             }

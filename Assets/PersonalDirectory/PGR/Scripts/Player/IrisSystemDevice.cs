@@ -46,7 +46,7 @@ namespace PGR
             if (!isHandOnArea)
                 return;
 
-            if (isRight != _isRight && isLeft != _isRight)
+            if (isRight != _isRight && isLeft != !_isRight)
                 return;
 
             isOn = !isOn;
