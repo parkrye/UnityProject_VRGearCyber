@@ -30,9 +30,10 @@ namespace PGR
 
         public void OnSelectEnterEvent(SelectEnterEventArgs args)
         {
+            args.interactableObject.transform.SetParent(transform);
+
             if (!isInvisible)
                 return;
-            args.interactableObject.transform.SetParent(transform);
 
             if (!isStored)
             {
@@ -52,9 +53,10 @@ namespace PGR
 
         public void OnSelectExitEvent(SelectExitEventArgs args)
         {
+            args.interactableObject.transform.SetParent(null);
+
             if (!isInvisible)
                 return;
-            args.interactableObject.transform.SetParent(null);
 
             if (isStored)
             {
