@@ -35,6 +35,12 @@ namespace PID
 
         protected override void OnHoverEntered(HoverEnterEventArgs args)
         {
+            //CustomDirectInteractor testForPlayer = args.interactorObject.transform.gameObject.GetComponent<CustomDirectInteractor>();
+            //if (!testForPlayer)
+            //{
+            //    return; 
+            //}
+            Debug.Log("Hands Detected"); 
             hoveringItem.localScale = Vector3.one;
             base.OnHoverEntered(args);
         }
@@ -43,8 +49,27 @@ namespace PID
             hoveringItem.localScale = hoveringItemScale;
             base.OnHoverExited(args);
         }
+        protected override void OnSelectEntered(SelectEnterEventArgs args)
+        {
+            CustomGrabInteractable testForSocket = args.interactableObject.transform.gameObject.GetComponent<CustomGrabInteractable>();
+            if (!testForSocket)
+            {
+                return;
+            }
+            base.OnSelectEntered(args);
+        }
+        protected override void OnSelectExited(SelectExitEventArgs args)
+        {
+            base.OnSelectExited(args);
+        }
         public void SelectEnterResponse(SelectEnterEventArgs args)
         {
+            CustomGrabInteractable testForSocket = args.interactableObject.transform.gameObject.GetComponent<CustomGrabInteractable>();
+            if (!testForSocket)
+            {
+                return; 
+            }
+
             StartCoroutine(ItemExert()); 
         }
         public void SelectExitResponse(SelectExitEventArgs args)
