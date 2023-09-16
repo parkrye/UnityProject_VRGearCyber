@@ -2,7 +2,6 @@ using PGR;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SocialPlatforms;
 
 public class DataManager : MonoBehaviour
 {
@@ -28,5 +27,11 @@ public class DataManager : MonoBehaviour
             if (playerObj != null)
                 playerController = playerObj.GetComponent<PlayerController>();
         }
+    }
+
+    public void DestroyPlayer()
+    {
+        GameManager.Resource.Destroy(Player);
+        playerController = null;
     }
 }
