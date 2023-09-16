@@ -8,6 +8,7 @@ namespace PGR
         [SerializeField] Transform handTransform, spineTransform;
         [SerializeField] LayerMask wallLayer;
         [SerializeField] bool isStop, isRight;
+        [SerializeField] float distanceLimit;
 
         [SerializeField] Vector3 wallNormalVector, handLookPosition;
         [SerializeField] GameObject handPrefab;
@@ -16,6 +17,12 @@ namespace PGR
         {
             if (!isStop)
                 return;
+
+            if(Vector3.SqrMagnitude(handTransform.position - transform.position) > distanceLimit)
+            {
+                ResetHand();
+                return;
+            }
 
             handLookPosition = Vector3.ProjectOnPlane((transform.position - handTransform.position), wallNormalVector);
 
@@ -33,7 +40,7 @@ namespace PGR
 
         void OnTriggerEnter(Collider other)
         {
-            if(!isStop && 1 << other.gameObject.layer == wallLayer)
+            if(!isStop && !other.isTrigger && 1 << other.gameObject.layer == wallLayer)
             {
                 if (Physics.Raycast(transform.position, other.transform.position - transform.position, out RaycastHit hit))
                 {
@@ -46,13 +53,18 @@ namespace PGR
 
         void OnTriggerExit(Collider other)
         {
-            if (1 << other.gameObject.layer == wallLayer)
+            if (!other.isTrigger && 1 << other.gameObject.layer == wallLayer)
             {
-                isStop = false;
-                playerController.HandMotion.WallCheck(isRight, isStop);
-                handTransform.localPosition = handPrefab.transform.localPosition;
-                handTransform.localRotation = handPrefab.transform.localRotation;
+                ResetHand();
             }
+        }
+
+        void ResetHand()
+        {
+            isStop = false;
+            playerController.HandMotion.WallCheck(isRight, isStop);
+            handTransform.localPosition = handPrefab.transform.localPosition;
+            handTransform.localRotation = handPrefab.transform.localRotation;
         }
     }
 
