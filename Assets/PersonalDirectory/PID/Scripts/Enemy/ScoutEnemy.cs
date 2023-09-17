@@ -637,7 +637,7 @@ namespace PID
             {
                 playerLookDir = Vector3.zero;
                 hideInterval = new WaitForSeconds(hideFrequency);
-                hideableLayer = LayerMask.GetMask("Wall");
+                hideableLayer = 1 << 7; 
                 Colliders = new Collider[colliderSize];
                 hidePosition = Vector3.zero;
                 searchLocFound = false;

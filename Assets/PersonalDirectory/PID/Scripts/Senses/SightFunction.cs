@@ -12,7 +12,7 @@ namespace PID
         [SerializeField] LayerMask obstacleMask; 
         [SerializeField] Transform targetEye;
         [Range(0f, 1f)]
-        float scanFrequency;
+        float scanFrequency = .25f; 
         WaitForSeconds scanInterval; 
         Transform playerInSight;
         //Should Be Declared by using Robot
@@ -35,6 +35,8 @@ namespace PID
         [SerializeField] bool debug;
         private void Start()
         {
+            obstacleMask = 1 << 7;
+            targetMask = 1 << 3; 
             scanInterval = new WaitForSeconds(scanFrequency); 
             targetEye.transform.forward = transform.forward; 
         }
@@ -96,10 +98,10 @@ namespace PID
                     continue;
                 }
                 //Vector3 distToTarget = collider.transform.position - transform.position;
-                float distance = Vector3.Distance(collider.transform.position, transform.position);//Vector2.SqrMagnitude(distToTarget);
-                if (Physics.Raycast(transform.position, dirTarget, out obstacleHit, distance, obstacleMask))
+                if (Physics.Raycast(transform.position, dirTarget, out obstacleHit))
                 {
-                    PlayerLost?.Invoke();
+                    if (obstacleMask.Contain(obstacleHit.collider.gameObject.layer))
+                        PlayerLost?.Invoke();
                     break; 
                 }
                 else
@@ -140,7 +142,7 @@ namespace PID
         {
             while (true)
             {
-                yield return null; 
+                yield return scanInterval; 
             }
         }
         private void OnDrawGizmos()
