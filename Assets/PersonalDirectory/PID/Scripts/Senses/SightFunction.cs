@@ -133,8 +133,9 @@ namespace PID
                 StopCoroutine(scanVariable); 
         }
         Coroutine scanVariable; 
-        public void StartScanning()
+        public void UpdateScanning(bool robotAlive)
         {
+            if (robotAlive)
             scanVariable = StartCoroutine(SightScanning());
         }
 
