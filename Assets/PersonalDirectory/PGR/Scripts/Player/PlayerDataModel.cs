@@ -29,7 +29,7 @@ namespace PGR
 
         void Die()
         {
-            Debug.Log("Die");
+            //Debug.Log("Die");
         }
     }
 }

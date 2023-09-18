@@ -72,7 +72,7 @@ namespace PM
                 foreach (Collider collider in colliders)
                 {
                     // 만약 콜라이더가 플레이어면 실행
-                    if (collider.tag == "Player")
+                    if (collider?.tag == "Player")
                     {
                         Vector3 dirTarget = (collider.transform.position - lightPosition).normalized;
                         if (Vector3.Dot(transform.forward, dirTarget) < Mathf.Cos(angle * 0.5f * Mathf.Deg2Rad))

@@ -232,8 +232,6 @@ namespace PM
                     sum++;
                 // 마지막 열의 값이 이전 값과 같고 같은 값의 아래통로가 없거나 룸값이 다음 배열의 값과 다르고 아래통로의 합이 0이면
                 // 새로 아래로 통로 생성
-                Debug.Log(j + "" + (i + 1));
-                Debug.Log(roomData.GetLength(0));
                 if (i == roomData.GetLength(1) - 1 || roomData[j, i].aggregate != roomData[j, i + 1].aggregate)
                 {
                     if (sum == 0)

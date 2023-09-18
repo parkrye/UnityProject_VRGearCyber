@@ -37,7 +37,7 @@ namespace PM
 
         public virtual void Success()
         {
-            StartCoroutine(transform.parent.GetComponentInChildren<SyberDoor>().OpenDoor());
+            StartCoroutine(transform.parent.GetComponentInChildren<SyberDoor>()?.OpenDoor());
         }
 
         public virtual IEnumerator WaitingHackResultRoutine()

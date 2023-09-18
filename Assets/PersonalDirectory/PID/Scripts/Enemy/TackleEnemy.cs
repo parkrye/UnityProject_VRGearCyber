@@ -326,7 +326,6 @@ namespace PID
                 }
                 else
                 {
-                    Debug.Log(patrolPoints.Count);
                     ProcessPatrolPoints();
                     return;
                 }
@@ -396,10 +395,8 @@ namespace PID
                 if (colliders.Length > 0)
                 {
                     patrolPoints.Clear();
-                    Debug.Log(colliders.Length);
                     foreach (Collider collider in colliders)
                     {
-                        Debug.Log(collider.transform.position);
                         patrolPoints.Add(collider);
                     }
                 }
