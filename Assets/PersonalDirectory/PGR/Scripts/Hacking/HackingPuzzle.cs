@@ -73,6 +73,7 @@ namespace PGR
 
             GameManager.Data.TimeScale = 0.01f;
             StartCoroutine(TimeRoutine());
+            GameManager.Data.Player.IrisDevice.ForceOn(true);
         }
 
         public void TurnOn(FixedPoint fixedPoint)
@@ -132,6 +133,7 @@ namespace PGR
             }
             yield return new WaitForSeconds(1f);
             GameManager.Data.Player.Display.ModifyText("");
+            GameManager.Data.Player.IrisDevice.ForceOn(false);
             GameManager.Resource.Destroy(gameObject);
         }
     }

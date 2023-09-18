@@ -4,7 +4,7 @@ namespace PGR
 {
     public class IrisSystemDevice : MonoBehaviour
     {
-        [SerializeField] bool isHandOnArea, isRight, isLeft, isOn;
+        [SerializeField] bool isHandOnArea, isRight, isLeft, isOn, forcedOn;
         [SerializeField] GameObject irisSystemCamera;
         [SerializeField] AudioSource onAudio, offAudio;
 
@@ -15,6 +15,9 @@ namespace PGR
 
         void OnTriggerEnter(Collider other)
         {
+            if (forcedOn)
+                return;
+
             IrisSystemController controller = other.GetComponent<IrisSystemController>();
             if (controller == null)
                 return;
@@ -28,6 +31,9 @@ namespace PGR
 
         void OnTriggerExit(Collider other)
         {
+            if (forcedOn)
+                return;
+
             IrisSystemController controller = other.GetComponent<IrisSystemController>();
             if (controller == null)
                 return;
@@ -60,6 +66,23 @@ namespace PGR
             else
                 offAudio.Play();
             irisSystemCamera.SetActive(value);
+        }
+
+        public void ForceOn(bool value)
+        {
+            forcedOn = value;
+            if (forcedOn)
+            {
+                onAudio.Play();
+                irisSystemCamera.SetActive(true);
+                isOn = true;
+            }
+            else
+            {
+                offAudio.Play();
+                irisSystemCamera.SetActive(false);
+                isOn = false;
+            }
         }
     }
 }
