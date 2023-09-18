@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 namespace PGR
 {
@@ -15,6 +16,7 @@ namespace PGR
         [SerializeField] Transform xROriginTransform;
         [SerializeField] PlayerExtraInput playerExtraInput;
         [SerializeField] LoadingUI loadingUI;
+        [SerializeField] IrisSystemDevice irisSystemDevice;
 
         public PlayerDataModel Data { get { return playerDataModel; } }
         public PlayerHandMotion HandMotion { get { return playerHandMotion; } }
@@ -25,9 +27,11 @@ namespace PGR
         public IrisSystemDisplay Display { get { return irisSystemDisplay; } }
         public PlayerExtraInput ExtraInput { get {  return playerExtraInput; } }
         public LoadingUI LoadingUI { get { return loadingUI; } }
+        public IrisSystemDevice IrisDevice { get { return irisSystemDevice; } }
 
         [SerializeField] ActionBasedContinuousTurnProvider continuousTurnProvider;
         [SerializeField] ActionBasedSnapTurnProvider snapTurnProvider;
+        [SerializeField] DynamicMoveProvider dynamicMoveProvider;
 
         void Start()
         {
@@ -56,6 +60,18 @@ namespace PGR
         public void MoveTransform(Vector3 position)
         {
             xROriginTransform.position = position;
+        }
+
+        public void MoveSpeedModify(bool isRun)
+        {
+            if (isRun)
+            {
+                dynamicMoveProvider.moveSpeed = 2.5f;
+            }
+            else
+            {
+                dynamicMoveProvider.moveSpeed = 1.5f;
+            }
         }
     }
 
