@@ -1921,8 +1921,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  pairCount: 0
-  fixedPointPerPairCount: 0
+  pairCount: 2
+  fixedPointPerPairCount: 2
 --- !u!114 &3934624677790949034
 MonoBehaviour:
   m_ObjectHideFlags: 0
