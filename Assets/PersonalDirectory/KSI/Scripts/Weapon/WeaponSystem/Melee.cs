@@ -113,6 +113,7 @@ namespace KSI
 					int calculateDamage = Mathf.RoundToInt(Mathf.Lerp(minDamage, maxDamage, calculateDamageRatio));
 
 					iStrikable?.TakeStrike(transform, calculateDamage, Vector3.zero, Vector3.zero);
+					Debug.Log($"{calculateDamage}");
 				}
 			}
 		}
