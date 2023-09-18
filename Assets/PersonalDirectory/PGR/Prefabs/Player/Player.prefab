@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &356092475
 RectTransform:
   m_ObjectHideFlags: 0
@@ -127,6 +127,7 @@ MonoBehaviour:
   isRight: 0
   isLeft: 0
   isOn: 0
+  forcedOn: 0
   irisSystemCamera: {fileID: 7062499697804643036}
   onAudio: {fileID: 2240513147615973273}
   offAudio: {fileID: 7169365429185694425}
@@ -649,7 +650,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1133495962}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0, z: -0.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -768,7 +769,7 @@ MonoBehaviour:
   m_OnSelectExited:
     m_PersistentCalls:
       m_Calls: []
-  m_ShowInteractableHoverMeshes: 1
+  m_ShowInteractableHoverMeshes: 0
   m_InteractableHoverMeshMaterial: {fileID: 0}
   m_InteractableCantHoverMeshMaterial: {fileID: 0}
   m_SocketActive: 1
@@ -1150,8 +1151,10 @@ MonoBehaviour:
   xROriginTransform: {fileID: 670120537221899524}
   playerExtraInput: {fileID: 1015129548464004693}
   loadingUI: {fileID: 3209769638511469435}
+  irisSystemDevice: {fileID: 52180178152731941}
   continuousTurnProvider: {fileID: 3763292446324776208}
   snapTurnProvider: {fileID: 5069962009611534593}
+  dynamicMoveProvider: {fileID: 2069637501492121323}
 --- !u!114 &503361725078272705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1728,7 +1731,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5895442968337224659
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5270,7 +5273,7 @@ MonoBehaviour:
   m_OnSelectExited:
     m_PersistentCalls:
       m_Calls: []
-  m_ShowInteractableHoverMeshes: 1
+  m_ShowInteractableHoverMeshes: 0
   m_InteractableHoverMeshMaterial: {fileID: 0}
   m_InteractableCantHoverMeshMaterial: {fileID: 0}
   m_SocketActive: 1
@@ -8818,7 +8821,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8764397011068360633}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 0, z: 0}
+  m_LocalPosition: {x: -0.5, y: 0, z: -0.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8937,7 +8940,7 @@ MonoBehaviour:
   m_OnSelectExited:
     m_PersistentCalls:
       m_Calls: []
-  m_ShowInteractableHoverMeshes: 1
+  m_ShowInteractableHoverMeshes: 0
   m_InteractableHoverMeshMaterial: {fileID: 0}
   m_InteractableCantHoverMeshMaterial: {fileID: 0}
   m_SocketActive: 1
@@ -9249,7 +9252,19 @@ MonoBehaviour:
       m_Calls: []
   LeftHandSecondaryButtonEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 503361725078272706}
+        m_TargetAssemblyTypeName: PGR.PlayerController, Assembly-CSharp
+        m_MethodName: MoveSpeedModify
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   LeftHandTriggerGrabEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -9258,7 +9273,19 @@ MonoBehaviour:
       m_Calls: []
   RightHandSecondaryButtonEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 503361725078272706}
+        m_TargetAssemblyTypeName: PGR.PlayerController, Assembly-CSharp
+        m_MethodName: MoveSpeedModify
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   RightHandTriggerGrabEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -9492,42 +9519,47 @@ PrefabInstance:
     - target: {fileID: 2057681299967709393, guid: 7ac3489945bc44e4ca315f726c2cd94b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0023
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 2057681299967709393, guid: 7ac3489945bc44e4ca315f726c2cd94b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.01
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 2057681299967709393, guid: 7ac3489945bc44e4ca315f726c2cd94b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.094
+      value: 0.095
       objectReference: {fileID: 0}
     - target: {fileID: 2057681299967709393, guid: 7ac3489945bc44e4ca315f726c2cd94b,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9986365
       objectReference: {fileID: 0}
     - target: {fileID: 2057681299967709393, guid: 7ac3489945bc44e4ca315f726c2cd94b,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.02752138
       objectReference: {fileID: 0}
     - target: {fileID: 2057681299967709393, guid: 7ac3489945bc44e4ca315f726c2cd94b,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.0012220517
       objectReference: {fileID: 0}
     - target: {fileID: 2057681299967709393, guid: 7ac3489945bc44e4ca315f726c2cd94b,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.04434297
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057681299967709393, guid: 7ac3489945bc44e4ca315f726c2cd94b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -3.157
       objectReference: {fileID: 0}
     - target: {fileID: 2057681299967709393, guid: 7ac3489945bc44e4ca315f726c2cd94b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -5.085
       objectReference: {fileID: 0}
     - target: {fileID: 8200921522354844763, guid: 7ac3489945bc44e4ca315f726c2cd94b,
         type: 3}
@@ -9955,6 +9987,11 @@ PrefabInstance:
       objectReference: {fileID: 785334369}
     - target: {fileID: 5674446548845650805, guid: 8a90b67b548121c418bbb8cfa417e586,
         type: 3}
+      propertyPath: m_ShowInteractableHoverMeshes
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5674446548845650805, guid: 8a90b67b548121c418bbb8cfa417e586,
+        type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -9977,6 +10014,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.21647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6017134531595253724, guid: 8a90b67b548121c418bbb8cfa417e586,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6017134531595253724, guid: 8a90b67b548121c418bbb8cfa417e586,
         type: 3}

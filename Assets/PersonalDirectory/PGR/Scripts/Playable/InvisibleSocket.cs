@@ -32,7 +32,7 @@ namespace PGR
 
         public void OnSelectEnterEvent(SelectEnterEventArgs args)
         {
-            args.interactableObject.transform.SetParent(transform);
+            DontDestroyOnLoad(args.interactableObject.transform.gameObject);
 
             if (!isInvisible)
                 return;

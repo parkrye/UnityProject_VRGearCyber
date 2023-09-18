@@ -13,8 +13,8 @@ namespace PGR
             if (life > 0)
                 return;
 
-            GameManager.Scene.LoadScene(SceneName);
             PlayerPrefs.SetInt("Load Location", locationNum);
+            GameManager.Scene.LoadScene(SceneName);
         }
 
         public void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)

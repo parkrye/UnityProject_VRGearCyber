@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5638865034277454344}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.00000016584644, y: 0.5334667, z: 0.0000000021268818}
+  m_LocalPosition: {x: 0, y: 0.5334667, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -181,6 +181,7 @@ GameObject:
   - component: {fileID: -7015811469513673532}
   - component: {fileID: 2047683184159056312}
   - component: {fileID: 2776862482665964009}
+  - component: {fileID: 4576553703098957700}
   m_Layer: 0
   m_Name: wine bottle 04_Low Poly
   m_TagString: Untagged
@@ -202,6 +203,7 @@ Transform:
   m_Children:
   - {fileID: 5638865034277625388}
   - {fileID: 5638865034277625384}
+  - {fileID: 922063904428696461}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -346,19 +348,7 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5638865034277454344}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_SelectExited:
     m_PersistentCalls:
       m_Calls: []
@@ -376,7 +366,31 @@ MonoBehaviour:
       m_Calls: []
   m_Activated:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5638865034277454344}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4576553703098957700}
+        m_TargetAssemblyTypeName: PGR.Wine, Assembly-CSharp
+        m_MethodName: CoverOff
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_Deactivated:
     m_PersistentCalls:
       m_Calls: []
@@ -435,7 +449,7 @@ MonoBehaviour:
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
   m_TightenScale: 0.1
-  m_ThrowOnDetach: 1
+  m_ThrowOnDetach: 0
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
     serializedVersion: 2
@@ -465,3 +479,130 @@ MonoBehaviour:
   interactableType: 2
   defaultLayer: 0
   ignoreColliderLayer: 0
+--- !u!114 &4576553703098957700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5638865034277454350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7826a1d1ac96a845a7356baa4b5950b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  liquid: {fileID: 0}
+  drop: {fileID: 922063904409360047}
+  content: 10
+  isCovered: 1
+--- !u!1001 &9036934237386115683
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5638865034277625390}
+    m_Modifications:
+    - target: {fileID: 8188238960193546734, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188238960193546734, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188238960193546734, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188238960193546734, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188238960193546734, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188238960193546734, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.585
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188238960193546734, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188238960193546734, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188238960193546734, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188238960193546734, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188238960193546734, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188238960193546734, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188238960193546734, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188238960193546734, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188238960193755046, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+        type: 3}
+      propertyPath: m_Name
+      value: Water_Drop
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188238960211827916, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+        type: 3}
+      propertyPath: autoRandomSeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188238960211827916, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8188238960211827916, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+        type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
+      value: 0.1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0190fd9893a578d4499e5d7ea643c9ba, type: 3}
+--- !u!198 &922063904409360047 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8188238960211827916, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+    type: 3}
+  m_PrefabInstance: {fileID: 9036934237386115683}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &922063904428696461 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8188238960193546734, guid: 0190fd9893a578d4499e5d7ea643c9ba,
+    type: 3}
+  m_PrefabInstance: {fileID: 9036934237386115683}
+  m_PrefabAsset: {fileID: 0}

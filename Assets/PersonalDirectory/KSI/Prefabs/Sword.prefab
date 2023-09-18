@@ -76,7 +76,6 @@ GameObject:
   - component: {fileID: 5273110232104347438}
   - component: {fileID: 7107987942838628603}
   - component: {fileID: 3250643919417751304}
-  - component: {fileID: 5252247923169649918}
   - component: {fileID: 2879957295717000628}
   - component: {fileID: 2091254889}
   m_Layer: 0
@@ -359,36 +358,13 @@ MonoBehaviour:
   m_AttachPointCompatibilityMode: 0
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers:
-  - {fileID: 5252247923169649918}
+  - {fileID: 0}
   m_AddDefaultGrabTransformers: 1
   grabPriority: 1
   rb: {fileID: 0}
   interactableType: 1
   defaultLayer: 0
   ignoreColliderLayer: 0
---- !u!114 &5252247923169649918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8830605000855248786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0a1302d0d134fa8a2a5b3bf4aec3c20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PermittedDisplacementAxes: 7
-  m_ConstrainedAxisDisplacementMode: 1
-  m_TwoHandedRotationMode: 1
-  m_AllowOneHandedScaling: 1
-  m_AllowTwoHandedScaling: 0
-  m_OneHandedScaleSpeed: 0.5
-  m_ThresholdMoveRatioForScale: 0.05
-  m_ClampScaling: 1
-  m_MinimumScaleRatio: 0.25
-  m_MaximumScaleRatio: 2
-  m_ScaleMultiplier: 0.25
 --- !u!114 &2879957295717000628
 MonoBehaviour:
   m_ObjectHideFlags: 0
