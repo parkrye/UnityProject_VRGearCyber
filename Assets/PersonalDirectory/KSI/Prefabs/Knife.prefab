@@ -359,7 +359,7 @@ MonoBehaviour:
   maxPositions: 10
   maxDamage: 100
   minDamage: 50
-  minDistanceForMaxDamage: 0.3
-  minDistanceForMinDamage: 0.05
+  minDistanceForMaxDamage: 0.5
+  minDistanceForMinDamage: 0.1
   coll: {fileID: 3065004601189054912}
   isSwinging: 0

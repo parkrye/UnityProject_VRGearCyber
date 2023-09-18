@@ -306,7 +306,7 @@ MonoBehaviour:
   muzzlePoint: {fileID: 3413878071994511359}
   damage: 50
   maxDistance: 10
-  force: 100
+  force: 1000
   arrowLocation: {fileID: -94541517090424317, guid: 725cd10c9f58c614cb60812c2f335aa8,
     type: 3}
   socketInteractor: {fileID: 5891402249911024883}
@@ -550,7 +550,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1256100414049545814}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.001, y: 0.078, z: 0.552}
+  m_LocalPosition: {x: -0.0265, y: -0.102, z: 0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -582,7 +582,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1446482124862089078}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.014, y: 0.287, z: 0.023}
+  m_LocalPosition: {x: -0.019, y: -0.329, z: 0.203}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -615,7 +615,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1497904119776347469}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.012, y: -0.004, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
