@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 1561455455814107037}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.586557, y: 1.0063, z: -4.045973}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -128,7 +128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd25c8014a03d32469677c366f0ca11b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
   force: 1000
   bulletSparkEffect: {fileID: 1000011945391522, guid: ac159911ba2d21646883c60bd29878ac,
     type: 3}

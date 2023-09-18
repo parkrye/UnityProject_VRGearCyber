@@ -337,7 +337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrowRenderer: {fileID: 1139584956817224630}
-  damage: 20
+  damage: 30
 --- !u!96 &1139584956817224630
 TrailRenderer:
   serializedVersion: 2
@@ -593,10 +593,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.016316805
-  m_Height: 1.6549071
+  m_Radius: 0.036070816
+  m_Height: 1.5795219
   m_Direction: 1
-  m_Center: {x: -0.03478425, y: 0.023346443, z: 0.03848621}
+  m_Center: {x: -0.03478425, y: -0.014346142, z: 0.058240213}
 --- !u!1 &3876173962941401128
 GameObject:
   m_ObjectHideFlags: 0
