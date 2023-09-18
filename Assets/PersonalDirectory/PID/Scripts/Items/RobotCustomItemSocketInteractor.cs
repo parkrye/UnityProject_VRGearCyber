@@ -10,32 +10,30 @@ namespace PID
     {
         MeshRenderer _renderer;
         CustomGrabInteractable itemInteractable;
-        [SerializeField] Color exertedColor;
-        [SerializeField] Color insertedColor; 
+        [SerializeField] Color exertedColor, insertedColor, originalColor; 
         [SerializeField] Transform hoveringItem;
         [SerializeField] Transform hoveringLoc;
         [SerializeField] Vector3 hoveringItemScale, itemOriginalScale; 
-        [SerializeField] SocketHelper socketHelper;
         bool itemTaken; 
-        RandomItem item; 
+        RandomItem item;
+        const string playerTag = "Player"; 
 
         protected override void Awake()
         {
             base.Awake();
             itemTaken = false;
             _renderer = GetComponent<MeshRenderer>();
+            originalColor = _renderer.material.GetColor("_EmissionColor"); 
             item = GameManager.Resource.Load<RandomItem>("Data/ItemList");
             int seed = item.GetSeed();
             itemOriginalScale = item.itemRandomScale(seed); 
             GameObject spawningItem = GameManager.Resource.Instantiate(item.GetItem(seed), hoveringLoc.position, hoveringLoc.rotation, transform);
             RegisterInteractableItem(); 
-
         }
 
         public void RegisterInteractableItem()
         {
             itemInteractable = GetComponentInChildren<CustomGrabInteractable>();
-            itemInteractable.selectEntered.AddListener(SelectEnterResponse);
             hoveringItem = itemInteractable.gameObject.transform;
             hoveringItem.transform.parent = null; 
             if (hoveringItemScale.sqrMagnitude > itemOriginalScale.sqrMagnitude)
@@ -47,31 +45,27 @@ namespace PID
 
         protected override void OnHoverEntered(HoverEnterEventArgs args)
         {
-            //CustomDirectInteractor testForPlayer = args.interactorObject.transform.gameObject.GetComponent<CustomDirectInteractor>();
-            //if (!testForPlayer)
-            //{
-            //    return; 
-            //}
-            //if (args.interactableObject is CustomDirectInteractor)
-            //{
-            //    Debug.Log("Hands Detected");
-
-            //}
-            Debug.Log("Hands Detected");
-            hoveringItem.localScale = Vector3.one;
+            if (args.interactableObject.transform.gameObject.tag == playerTag)
+            {
+                if (!itemTaken && hoveringItem != null)
+                    HandInteraction(true); 
+            }
             base.OnHoverEntered(args);
         }
         protected override void OnHoverExited(HoverExitEventArgs args)
         {
-            hoveringItem.localScale = hoveringItemScale;
+            if (args.interactableObject.transform.gameObject.tag == playerTag)
+            {
+                if (!itemTaken && hoveringItem != null)
+                    HandInteraction(false); 
+            }
             base.OnHoverExited(args);
         }
         protected override void OnSelectEntered(SelectEnterEventArgs args)
         {
-            CustomGrabInteractable testForSocket = args.interactableObject.transform.gameObject.GetComponent<CustomGrabInteractable>();
-            if (!testForSocket)
+            if (args.interactableObject is CustomGrabInteractable)
             {
-                return;
+                itemTaken = false; 
             }
             base.OnSelectEntered(args);
         }
@@ -83,39 +77,54 @@ namespace PID
         }
         protected override void OnSelectExited(SelectExitEventArgs args)
         {
-            Debug.Log("Check Socket Exit"); 
+            if (itemTaken && hoveringItem != null && gameObject.activeSelf)
+            {
+                StartCoroutine(ItemExert());
+            }
             base.OnSelectExited(args);
         }
-        public void SelectEnterResponse(SelectEnterEventArgs args)
-        {
-            CustomGrabInteractable testForSocket = args.interactableObject.transform.gameObject.GetComponent<CustomGrabInteractable>();
-            if (!testForSocket)
-            {
-                return; 
-            }
 
-            StartCoroutine(ItemExert()); 
-        }
-        public void SelectExitResponse(SelectExitEventArgs args)
-        {
-            
-        }
-        private void HandEntered()
+        private void HandInteraction(bool entered)
         {
             if (itemTaken)
                 return;
-            ReScaleItem(); 
+
+            hoveringItem.parent = null; 
+            if (entered)
+            {
+                HandInsert(); 
+                hoveringItem.localScale = itemOriginalScale;
+            }
+            else
+            {
+                HandExert(); 
+                hoveringItem.localScale = hoveringItemScale;
+            }
         }
 
         private void ReScaleItem()
         {
-            hoveringItem.localScale = hoveringItemScale; 
+            hoveringItem.localScale = itemOriginalScale; 
+        }
+
+        private void HandInsert()
+        {
+            _renderer.material.SetColor("_EmissionColor", insertedColor);
+        }
+        private void HandExert()
+        {
+            _renderer.material.SetColor("_EmissionColor", originalColor);
         }
         IEnumerator ItemExert()
         {
             _renderer.material.SetColor("_EmissionColor", exertedColor);
-            hoveringItem.localScale = Vector3.one;
-            hoveringItem = null; 
+            if (hoveringItem != null)
+            {
+                hoveringItem.parent = null;
+                hoveringItem.localScale = itemOriginalScale;
+                itemTaken = true;
+                hoveringItem = null;
+            }
             yield return null; 
         }
     }

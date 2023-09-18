@@ -83,6 +83,8 @@ namespace PID
                 if (ragdollBodies[i].gameObject.tag == "Wearable")
                     return; 
                 ragdollBodies[i].isKinematic = false;
+                ragdollBodies[i].velocity = Vector3.zero;
+                ragdollBodies[i].angularVelocity = Vector3.zero;
             }
             for (int i = 0; i < ragdollColliders.Length; i++)
             {
