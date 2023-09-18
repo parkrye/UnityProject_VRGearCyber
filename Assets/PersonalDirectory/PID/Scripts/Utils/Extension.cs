@@ -8,6 +8,12 @@ namespace PID
 {
     public static class Extension
     {
+        public enum HeldType
+        {
+            LeftHand, 
+            RightHand, 
+            None
+        }
         public static bool Contain(this LayerMask layerMask, int layer)
         {
             return ((1 << layer) & layerMask) != 0;

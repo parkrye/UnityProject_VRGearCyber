@@ -6,15 +6,25 @@ using UnityEngine.Events;
 
 namespace PID
 {
-    public class SocketHelper : MonoBehaviour
+    public class SocketSupplement : MonoBehaviour
     {
-        UnityAction customTriggerCheck;
+        public UnityAction<bool> customTrigger;
         Renderer _renderer; 
         const string playerTag = "Player";
 
         private void Awake()
         {
-            _renderer = GetComponent<Renderer>();
+            //_renderer = GetComponent<Renderer>();
+        }
+
+        public void HandEnter()
+        {
+
+        }
+
+        public void HandExit()
+        {
+
         }
 
         private void OnTriggerEnter(Collider other)
@@ -23,9 +33,11 @@ namespace PID
             {
                 //Turn on MeshRenderer, 
                 //Invoke a event 
-                _renderer.enabled = true;
-                customTriggerCheck?.Invoke(); 
+                // _renderer.enabled = true;
+                customTrigger?.Invoke(true); 
             }
+
+
         }
 
         private void OnTriggerExit(Collider other)
@@ -34,7 +46,8 @@ namespace PID
             {
                 //Turn on MeshRenderer, 
                 //Invoke a event 
-                _renderer.enabled = false;
+                // _renderer.enabled = false;
+                customTrigger?.Invoke(false);
             }
         }
     }
