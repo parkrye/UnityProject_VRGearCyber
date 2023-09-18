@@ -29,7 +29,8 @@ public class SceneManager : MonoBehaviour
         ReadyToPlay = false;
         Time.timeScale = 1f;
         yield return new WaitForSeconds(1f);
-
+        if(GameManager.Data.Player)
+            GameManager.Data.Player.LoadingUI.Loading(true);
         AsyncOperation oper = UnitySceneManager.LoadSceneAsync(sceneName);
         while (!oper.isDone)
         {

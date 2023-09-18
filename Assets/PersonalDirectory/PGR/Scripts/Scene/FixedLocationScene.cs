@@ -9,10 +9,11 @@ namespace PGR
 
         protected override IEnumerator LoadingRoutine()
         {
-            yield return null;
+            GameManager.Data.Player.LoadingUI.Loading(true);
             GameManager.Data.Player.MoveTransform(startPositions[PlayerPrefs.GetInt("Load Location")].position);
+            yield return new WaitForSeconds(3f);
+            GameManager.Data.Player.LoadingUI.Loading(false);
             Progress = 1f;
         }
     }
-
 }

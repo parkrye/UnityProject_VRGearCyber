@@ -44,6 +44,9 @@ namespace PGR
             if (!isPressed)
                 return;
 
+            if (GameManager.Data.Player.HandMotion.IsAnyHandMotion(false))
+                return;
+
             switch (cableObject.State)
             {
                 case CableState.Hide:

@@ -29,7 +29,7 @@ namespace PGR
 
         void Die()
         {
-            //Debug.Log("Die");
+            GameManager.Scene.LoadScene("PGR_DeadScene");
         }
     }
 }

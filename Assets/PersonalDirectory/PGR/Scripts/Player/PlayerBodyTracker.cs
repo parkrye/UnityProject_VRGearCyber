@@ -9,7 +9,7 @@ namespace PGR
 
         void LateUpdate()
         {
-            spineCollider.position = (headTransform.position + feetTransform.position) * 0.5f;
+            spineCollider.position = (headTransform.position * 4f + feetTransform.position) * 0.2f;
             leftArmCollider.position = (spineCollider.transform.position + leftHandTransform.position) * 0.5f;
             rightArmCollider.position = (spineCollider.transform.position + rightHandTransform.position) * 0.5f;
         }

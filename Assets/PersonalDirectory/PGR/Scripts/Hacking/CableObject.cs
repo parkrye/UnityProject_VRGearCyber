@@ -124,6 +124,7 @@ namespace PGR
 
         IEnumerator HideRoutine()
         {
+            coll.enabled = true;
             transform.position = socketTransform.position;
             yield return new WaitUntil(() => rb.isKinematic);
             coll.enabled = false;

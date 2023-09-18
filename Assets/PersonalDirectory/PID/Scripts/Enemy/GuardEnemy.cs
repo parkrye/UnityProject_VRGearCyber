@@ -120,6 +120,7 @@ namespace PID
             //should Enemy be under hide and shoot, ignore further calls. 
             if (stateMachine.curStateName == State.Neutralized || 
                 stateMachine.curStateName == State.Infiltrated ||
+                stateMachine.curStateName == State.Assault ||
                 stateMachine.curStateName == State.Hide)
                 return; 
             playerBody = player;
@@ -376,9 +377,11 @@ namespace PID
             public override void Exit()
             {
                 patrolCount = 0;
-                patrolFinished = false;
                 patrolDestination = Vector3.zero;
-                lastLeavingPlace = owner.transform.position; 
+                lastLeavingPlace = owner.transform.position;
+                if (patrolPoints.Count == 0)
+                    return; 
+                patrolFinished = false;
             }
 
             public override void Setup()

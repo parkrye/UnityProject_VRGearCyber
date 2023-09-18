@@ -310,9 +310,11 @@ namespace PID
             public override void Exit()
             {
                 patrolCount = 0;
-                patrolFinished = false;
                 patrolDestination = Vector3.zero;
                 lastLeavingPlace = owner.transform.position;
+                if (patrolPoints.Count == 0)
+                    return;
+                patrolFinished = false;
             }
 
             public override void Setup()
@@ -635,7 +637,7 @@ namespace PID
             {
                 playerLookDir = Vector3.zero;
                 hideInterval = new WaitForSeconds(hideFrequency);
-                hideableLayer = LayerMask.GetMask("Wall");
+                hideableLayer = 1 << 7; 
                 Colliders = new Collider[colliderSize];
                 hidePosition = Vector3.zero;
                 searchLocFound = false;

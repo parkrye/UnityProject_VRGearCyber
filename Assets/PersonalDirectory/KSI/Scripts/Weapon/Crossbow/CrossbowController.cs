@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using PGR;
+using System.Net.Sockets;
 
 namespace KSI
 {
@@ -15,6 +16,7 @@ namespace KSI
 		[SerializeField] private Transform muzzlePoint;
 		[SerializeField] private int damage;
 		[SerializeField] private float maxDistance = 10;
+		[SerializeField] float force;
 
 		[Header("ArrowLocation")]
 		public ArrowLocation arrowLocation;
@@ -32,6 +34,8 @@ namespace KSI
 		private MeshRenderer muzzleFlash;
 		private bool hasArrow = false;
 
+		[SerializeField] XRExclusiveSocketInteractor socket;
+
 		private void Start()
 		{
 			if (animator == null)
@@ -43,9 +47,6 @@ namespace KSI
 
 		public void AddArrow(SelectEnterEventArgs args)
 		{
-			if (hand == null)
-				return;
-
 			if (!hasArrow)
 			{
 				hasArrow = true;
@@ -63,6 +64,8 @@ namespace KSI
 						Physics.IgnoreCollision(crossbowCollider, arrowLocationCollider, true);
 					}
 				}
+
+				arrow = args.interactableObject.transform.gameObject;
 			}
 		}
 
@@ -82,6 +85,8 @@ namespace KSI
 					Physics.IgnoreCollision(crossbowCollider, arrowLocationCollider, false);
 				}
 			}
+
+			arrow = null;
 		}
 
 		public void GrabCrossbow(SelectEnterEventArgs args)
@@ -128,14 +133,6 @@ namespace KSI
 			{
 				animator.SetTrigger("Fire");
 				Shoot();
-
-				if (Physics.Raycast(muzzlePoint.position, muzzlePoint.forward, out RaycastHit hit, maxDistance))
-				{
-					Debug.Log($"Hit={hit.transform.name}");
-
-					IHitable hitable = hit.transform.GetComponent<IHitable>();
-					hitable?.TakeDamage(damage, hit.point, hit.normal);
-				}
 			}
 			else
 			{
@@ -173,24 +170,25 @@ namespace KSI
 
 		private void Shoot()
 		{
+			if (arrow == null)
+				return;
+		
 			arrowLocation.numberOfArrow--;
 			Debug.Log("Arrow used. Remaining bullets : " + arrowLocation.numberOfArrow);
-			Instantiate(arrow, muzzlePoint.position, muzzlePoint.rotation);
-			audioSource.PlayOneShot(shootSound, 1.0f);
-			StartCoroutine(MuzzleFlashRoutine());
+			socket.ChangeSocketType();
+
+			StartCoroutine(FireRoutine());			
 		}
 
-		IEnumerator MuzzleFlashRoutine()
+		private IEnumerator FireRoutine()
 		{
-			Vector2 offset = new Vector2(Random.Range(0, 2), Random.Range(0, 2)) * 0.5f;
-			muzzleFlash.material.mainTextureOffset = offset;
-			float angle = Random.Range(0, 360);
-			muzzleFlash.transform.localRotation = Quaternion.Euler(0, 0, angle);
-			float scale = Random.Range(1.0f, 2.0f);
-			muzzleFlash.transform.localScale = Vector3.one * scale;
-			muzzleFlash.enabled = true;
-			yield return new WaitForSeconds(0.2f);
-			muzzleFlash.enabled = false;
-		}	
+
+			arrow.GetComponent<ArrowController>().FireArrow(force, damage);
+			audioSource.PlayOneShot(shootSound, 1.0f);
+
+			yield return new WaitForSeconds(1f);
+
+			socket.ChangeSocketType(GameData.InteractableType.ArrowHole);
+		}
 	}
 } 

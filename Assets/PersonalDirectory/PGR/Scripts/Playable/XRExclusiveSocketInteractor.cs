@@ -19,11 +19,6 @@ namespace PGR
             return base.CanSelect(interactable) && (socketTarget.InteractableType == AcceptedType);
         }
 
-        public override bool CanHover(IXRHoverInteractable interactable)
-        {
-            return CanSelect(interactable as IXRSelectInteractable);
-        }
-
         public void ChangeSocketType(GameData.InteractableType type = GameData.InteractableType.None)
         {
             acceptedType = type;

@@ -84,5 +84,13 @@ namespace PGR
         {
             lAnim.SetBool("Catch", isGrab);
         }
+
+        public bool IsAnyHandMotion(bool isRight)
+        {
+            if (isRight)
+                return rAnim.GetBool("Gun") || rAnim.GetBool("CloseWeapon") || rAnim.GetBool("Wall") || rAnim.GetBool("Catch");
+            else
+                return lAnim.GetBool("Gun") || lAnim.GetBool("CloseWeapon") || lAnim.GetBool("Wall") || lAnim.GetBool("Catch");
+        }
     }
 }

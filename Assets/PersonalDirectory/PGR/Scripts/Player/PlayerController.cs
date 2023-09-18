@@ -14,6 +14,7 @@ namespace PGR
         [SerializeField] IrisSystemDisplay irisSystemDisplay;
         [SerializeField] Transform xROriginTransform;
         [SerializeField] PlayerExtraInput playerExtraInput;
+        [SerializeField] LoadingUI loadingUI;
 
         public PlayerDataModel Data { get { return playerDataModel; } }
         public PlayerHandMotion HandMotion { get { return playerHandMotion; } }
@@ -23,6 +24,7 @@ namespace PGR
         public PlayerSight Sight { get { return playerSight; } }
         public IrisSystemDisplay Display { get { return irisSystemDisplay; } }
         public PlayerExtraInput ExtraInput { get {  return playerExtraInput; } }
+        public LoadingUI LoadingUI { get { return loadingUI; } }
 
         [SerializeField] ActionBasedContinuousTurnProvider continuousTurnProvider;
         [SerializeField] ActionBasedSnapTurnProvider snapTurnProvider;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,7 +12,9 @@ namespace PGR
         [SerializeField] int pairCount, fixedPointPerPairCount;
         [SerializeField] int[] passowrd;
         [SerializeField] Queue<int> inputQueue;
+        [SerializeField] bool isOpen;
         public UnityEvent ResetEvent;
+        [SerializeField] TMP_Text hintText;
 
         [SerializeField] GameObject doorOBject;
 
@@ -21,12 +24,15 @@ namespace PGR
             for(int i = 0; i < passowrd.Length; i++)
             {
                 passowrd[i] = Random.Range(1, 10);
+                hintText.text += passowrd[i].ToString();
             }
             inputQueue = new Queue<int>();
         }
 
         public void InputPassword(int keyNum)
         {
+            if (isOpen)
+                return;
             inputQueue.Enqueue(keyNum);
             if (inputQueue.Count >= 4)
                 CheckInput();
@@ -34,7 +40,7 @@ namespace PGR
 
         void CheckInput()
         {
-            for(int i = 0; i > 4; i++)
+            for(int i = 0; i < 4; i++)
             {
                 if (passowrd[i] != inputQueue.Dequeue())
                 {
@@ -51,6 +57,8 @@ namespace PGR
         IEnumerator OpenSecretDoorRoutine()
         {
             yield return null;
+            Debug.Log("Open");
+            isOpen = true;
             doorOBject.SetActive(true);
         }
 
