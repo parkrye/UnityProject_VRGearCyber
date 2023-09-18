@@ -1,3 +1,4 @@
+using PID;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 
 namespace PM
 {
-    public class SyberDoor : MonoBehaviour, IHitable
+    public class SyberDoor : MonoBehaviour, IHitable, IStrikable
     {
         [SerializeField] int hp;
         Animator animator;
@@ -51,6 +52,7 @@ namespace PM
 
         public void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
         {
+            Debug.Log("hit");
             hp -= damage;
             if (hp <= 0)
                 StartCoroutine(Break());
@@ -71,6 +73,12 @@ namespace PM
         public void TimeScale()
         {
             animator.speed = GameManager.Data.TimeScale;
+        }
+
+        public void TakeStrike(Transform hitter, float damage, Vector3 hitPoint, Vector3 hitNormal)
+        {
+            Debug.Log("strike");
+            TakeDamage((int)damage, hitPoint, hitNormal);
         }
     }
 }

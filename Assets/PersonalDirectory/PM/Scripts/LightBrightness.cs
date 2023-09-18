@@ -9,7 +9,7 @@ public class LightBrightness : MonoBehaviour
     private void Start()
     {
         light = GetComponentInChildren<Light>();
-        LightSet();
+        //LightSet();
     }
     void LightSet()
     {

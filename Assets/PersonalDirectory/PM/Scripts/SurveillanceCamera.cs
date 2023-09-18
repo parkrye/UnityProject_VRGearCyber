@@ -16,18 +16,21 @@ namespace PM
         private float range;
         [SerializeField] int hp;
         [SerializeField] Transform SpotLight;
+        [SerializeField] LayerMask layer;
         Terminal terminal;
         Ray ray;
         private Vector3 lightPosition;
-        private float angle;
+        public float angle;
         private float cos;
         private float sin;
+
 
         private void Start()
         {
             GetTerminal();
             lightPosition = SpotLight.transform.position;
             ray = new Ray(lightPosition, SpotLight.forward);
+            angle = SpotLight.GetComponent<Light>().spotAngle;
             StartCoroutine(RangeSetting());
             StartCoroutine(Checking());
         }
@@ -49,34 +52,36 @@ namespace PM
             range = hitData.distance;
             yield return null;
         }
-        //private void Update()
-        //{
-        //    Debug.DrawRay(lightPosition, SpotLight.forward*10, Color.red);
-        //    Debug.DrawRay(lightPosition, (SpotLight.forward * cos + SpotLight.right*sin) * 10, Color.red);
-        //    Debug.DrawRay(lightPosition, (SpotLight.forward * cos - SpotLight.right * sin) * 10, Color.red);
-        //    Debug.DrawRay(lightPosition, (SpotLight.forward * cos + SpotLight.up * sin) * 10, Color.red);
-        //    Debug.DrawRay(lightPosition, (SpotLight.forward * cos - SpotLight.up * sin) * 10, Color.red);
-        //}
-        //void OnDrawGizmos()
-        //{
-        //    Gizmos.color = Color.yellow;
-        //    Gizmos.DrawWireSphere(lightPosition, range);
-        //    Gizmos.color = Color.blue;
-        //    //Gizmos.DrawRay(lightPosition, (player.transform.position - lightPosition));
-        //}
+        private void Update()
+        {
+            Debug.DrawRay(lightPosition, SpotLight.forward*10, Color.red);
+            Debug.DrawRay(lightPosition, (SpotLight.forward * cos + SpotLight.right*sin) * 10, Color.red);
+            Debug.DrawRay(lightPosition, (SpotLight.forward * cos - SpotLight.right * sin) * 10, Color.red);
+            Debug.DrawRay(lightPosition, (SpotLight.forward * cos + SpotLight.up * sin) * 10, Color.red);
+            Debug.DrawRay(lightPosition, (SpotLight.forward * cos - SpotLight.up * sin) * 10, Color.red);
+        }
+        void OnDrawGizmos()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(lightPosition, range);
+            Gizmos.color = Color.blue;
+            //Gizmos.DrawRay(lightPosition, (player.transform.position - lightPosition));
+        }
         IEnumerator Checking()
         {
             while (true)
             {
-                Collider[] colliders = Physics.OverlapSphere(lightPosition, range);
+                Collider[] colliders = Physics.OverlapSphere(lightPosition, range, layer);
                 foreach (Collider collider in colliders)
                 {
                     // 만약 콜라이더가 플레이어면 실행
-                    if (collider.tag == "Player")
+                    if (collider?.tag == "Player")
                     {
                         Vector3 dirTarget = (collider.transform.position - lightPosition).normalized;
-                        if (Vector3.Dot(transform.forward, dirTarget) < Mathf.Cos(angle * 0.5f * Mathf.Deg2Rad))
+                        if (Vector3.Dot(SpotLight.forward, dirTarget) < Mathf.Cos(angle * 0.5f * Mathf.Deg2Rad))
+                        {
                             continue;
+                        }
                         // 다시 레이를쏴 카메라와 플레이어 사이에 장애물이 없으면 실행
                         Ray ray = new Ray(lightPosition, (collider.transform.position - lightPosition));
                         RaycastHit hitData;
