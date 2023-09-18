@@ -9,6 +9,7 @@ public class ElevatorOpen : MonoBehaviour
 
     public void Open()
     {
+        Debug.Log("Open");
         elevator.Open();
     }
 }

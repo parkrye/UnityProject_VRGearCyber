@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3763598069229814069}
   - component: {fileID: 9028527009096287445}
   - component: {fileID: 488687015054024573}
+  - component: {fileID: 3883888726725439922}
   m_Layer: 0
   m_Name: Screen
   m_TagString: Untagged
@@ -165,6 +166,21 @@ MonoBehaviour:
   fixedPointPerPairCount: 2
   hp: 10
   state: 0
+--- !u!114 &3883888726725439922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3777501897747443625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49aafd62a71262b49bf2482ecf6af29b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hackingMat:
+  - {fileID: 2100000, guid: d132c8d971a9a3846b8852f830ddf368, type: 2}
+  - {fileID: 2100000, guid: f357ecea382f94148889179a43317bf1, type: 2}
 --- !u!1 &3777660975341705051
 GameObject:
   m_ObjectHideFlags: 0

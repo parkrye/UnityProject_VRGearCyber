@@ -64,7 +64,7 @@ namespace PM
             {
                 Debug.Log("call");
                 // 로봇의 위치를 추적하는 함수를 가져와서 플레이어의 위치를 변수로 값을 넘겨줌 guard.GetComponent<>
-                guard.cctvNotified?.Invoke(destination, guards.Length, index++);
+                guard?.cctvNotified.Invoke(destination, guards.Length, index++);
                 yield return null;
             }
             yield return null;
