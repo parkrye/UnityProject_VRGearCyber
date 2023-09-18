@@ -347,7 +347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 3
   destoryDelay: 3
-  damage: 50
+  damage: 400
   ExplosionRadius: 4
   ExplosionForce: 400
   grenadeEffect: {fileID: 1000011797152326, guid: a0f5a7a8fffbd904a816fc14b4c6fa82,

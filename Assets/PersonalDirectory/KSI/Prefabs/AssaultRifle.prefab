@@ -482,6 +482,11 @@ MonoBehaviour:
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
   acceptedType: 5
   isInvisible: 0
+  isStored: 0
+  isPlayerSocket: 0
+  playerSocketNum: 0
+  beforeVisible: {fileID: 0}
+  afterViksible: {fileID: 0}
 --- !u!1 &1635811537196507645
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,7 +934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 0.1
-  bullet: {fileID: 1561455455814107037, guid: 1397184aae7a2664d99c82877c3283c7, type: 3}
+  bullet: {fileID: 1561455455814107037, guid: 1f85c72d7d314f44383867b3f2ec7507, type: 3}
   muzzlePoint: {fileID: 4644085394924681716}
   damage: 50
   maxDistance: 10

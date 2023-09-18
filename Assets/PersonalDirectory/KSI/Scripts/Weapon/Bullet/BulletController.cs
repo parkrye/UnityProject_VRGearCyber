@@ -7,7 +7,6 @@ namespace KSI
 {
 	public class BulletController : MonoBehaviour
 	{
-		[SerializeField] private float damage;
 		[SerializeField] private float force;
 		[SerializeField] private GameObject bulletSparkEffect;
 
