@@ -111,8 +111,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  pairCount: 0
-  fixedPointPerPairCount: 0
+  pairCount: 2
+  fixedPointPerPairCount: 2
 --- !u!114 &4810853654952495214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1363,7 +1363,6 @@ MonoBehaviour:
     m_Bits: 0
   playerBody: {fileID: 0}
   focusDir: {x: 0, y: 0, z: 0}
-  debugText: {fileID: 4810853656317791887}
 --- !u!114 &4810853655808423173
 MonoBehaviour:
   m_ObjectHideFlags: 0
