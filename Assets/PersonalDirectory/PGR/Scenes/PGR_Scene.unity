@@ -1939,8 +1939,14 @@ MonoBehaviour:
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
   acceptedType: 0
   state: 0
-  successAudio: {fileID: 0}
-  failAudio: {fileID: 0}
+  SuccessEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  FailEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  pairCount: 0
+  fixedPointPerPairCount: 0
 --- !u!65 &2146274491
 BoxCollider:
   m_ObjectHideFlags: 0
