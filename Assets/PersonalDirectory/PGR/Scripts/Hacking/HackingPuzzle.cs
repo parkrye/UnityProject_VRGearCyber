@@ -71,7 +71,7 @@ namespace PGR
                 }
             }
 
-            GameManager.Data.TimeScale = 0.01f;
+            GameManager.Data.TimeScale = 0.1f;
             StartCoroutine(TimeRoutine());
             GameManager.Data.Player.IrisDevice.ForceOn(true);
         }
