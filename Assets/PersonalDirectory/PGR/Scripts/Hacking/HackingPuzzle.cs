@@ -104,8 +104,7 @@ namespace PGR
             cable.ReturnToHand();
             SelfDestroy?.Invoke();
             StopAllCoroutines();
-            GameManager.Data.Player.Display.ModifyText("");
-            GameManager.Resource.Destroy(gameObject);
+            StartCoroutine(ShowResultRoutine(result));
         }
 
         IEnumerator TimeRoutine()
@@ -116,8 +115,24 @@ namespace PGR
                 GameManager.Data.Player.Display.ModifyText($"{timeLimit:##.##}");
                 yield return null;
             }
-            GameManager.Data.Player.Display.ModifyText("");
+            StartCoroutine(ShowResultRoutine(GameData.HackProgressState.Failure));
             StopPuzzle(GameData.HackProgressState.Failure);
+        }
+
+        IEnumerator ShowResultRoutine(GameData.HackProgressState result)
+        {
+            switch (result)
+            {
+                case GameData.HackProgressState.Success:
+                    GameManager.Data.Player.Display.ModifyText("Success");
+                    break;
+                case GameData.HackProgressState.Failure:
+                    GameManager.Data.Player.Display.ModifyText("Failure");
+                    break;
+            }
+            yield return new WaitForSeconds(1f);
+            GameManager.Data.Player.Display.ModifyText("");
+            GameManager.Resource.Destroy(gameObject);
         }
     }
 
