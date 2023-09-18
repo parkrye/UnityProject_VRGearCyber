@@ -793,8 +793,9 @@ namespace PID
                         {
                             Debug.Log($"Unable to find NavMesh near object {Colliders[i].name} at {Colliders[i].transform.position}");
                         }
-                        yield return hideInterval;
+                        
                     }
+                    yield return hideInterval;
                 }
             }
             public int ColliderArraySortComparer(Collider A, Collider B)

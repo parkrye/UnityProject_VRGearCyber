@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   maxHealth: 200
-  maxSightRange: 10
+  maxSightRange: 7
   maxSightAngle: 70
   attackDamage: 5
   attackRange: 15
