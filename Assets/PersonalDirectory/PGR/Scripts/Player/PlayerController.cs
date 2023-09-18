@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 namespace PGR
 {
@@ -30,6 +31,7 @@ namespace PGR
 
         [SerializeField] ActionBasedContinuousTurnProvider continuousTurnProvider;
         [SerializeField] ActionBasedSnapTurnProvider snapTurnProvider;
+        [SerializeField] DynamicMoveProvider dynamicMoveProvider;
 
         void Start()
         {
@@ -58,6 +60,18 @@ namespace PGR
         public void MoveTransform(Vector3 position)
         {
             xROriginTransform.position = position;
+        }
+
+        public void MoveSpeedModify(bool isRun)
+        {
+            if (isRun)
+            {
+                dynamicMoveProvider.moveSpeed = 2.5f;
+            }
+            else
+            {
+                dynamicMoveProvider.moveSpeed = 1.5f;
+            }
         }
     }
 

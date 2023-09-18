@@ -1151,9 +1151,10 @@ MonoBehaviour:
   xROriginTransform: {fileID: 670120537221899524}
   playerExtraInput: {fileID: 1015129548464004693}
   loadingUI: {fileID: 3209769638511469435}
-  irisSystemDevice: {fileID: 0}
+  irisSystemDevice: {fileID: 52180178152731941}
   continuousTurnProvider: {fileID: 3763292446324776208}
   snapTurnProvider: {fileID: 5069962009611534593}
+  dynamicMoveProvider: {fileID: 2069637501492121323}
 --- !u!114 &503361725078272705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9251,7 +9252,19 @@ MonoBehaviour:
       m_Calls: []
   LeftHandSecondaryButtonEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 503361725078272706}
+        m_TargetAssemblyTypeName: PGR.PlayerController, Assembly-CSharp
+        m_MethodName: MoveSpeedModify
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   LeftHandTriggerGrabEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -9260,7 +9273,19 @@ MonoBehaviour:
       m_Calls: []
   RightHandSecondaryButtonEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 503361725078272706}
+        m_TargetAssemblyTypeName: PGR.PlayerController, Assembly-CSharp
+        m_MethodName: MoveSpeedModify
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   RightHandTriggerGrabEvent:
     m_PersistentCalls:
       m_Calls: []
