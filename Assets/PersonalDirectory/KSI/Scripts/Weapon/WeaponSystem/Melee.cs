@@ -1,30 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 using PID;
 using PGR;
-using UnityEngine.XR.Interaction.Toolkit;
 
 namespace KSI
 {
-    public class Melee : MonoBehaviour
-    {
-		[Header("Settings")]
+	public class Melee : MonoBehaviour
+	{
+		[Header("Melee")]
 		[SerializeField] private float checkRate = 0.1f;
 		[SerializeField] private int maxPositions = 10;
 		[SerializeField] private float maxDamage = 100;
 		[SerializeField] private float minDamage = 10;
 		[SerializeField] private float minDistanceForMaxDamage = 1.0f;
 		[SerializeField] private float minDistanceForMinDamage = 0.2f;
-		
-		[Header("Runtime Data")]
-		[SerializeField] private Collider coll;
 
-		private bool isRightHanded; 		
+		[Header("")]
+		[SerializeField] private Collider coll;
 		[SerializeField] private bool isSwinging = false;
-		bool IsSwinging{ get{ return isSwinging; } set { isSwinging = value; Debug.Log($"{name} is {value}"); } }
+
+		private bool IsSwinging { get { return isSwinging; } set { isSwinging = value; Debug.Log($"{name} is {value}"); } }
 		private Queue<Vector3> positionQueue = new Queue<Vector3>();
 		private PlayerHandMotion playerHandMotion;
+		private bool isRightHanded;
 
 		void Start()
 		{
@@ -32,34 +32,17 @@ namespace KSI
 				playerHandMotion = GetComponent<PlayerHandMotion>();
 		}
 
-		IEnumerator TrackPositionRoutine()
-		{
-			while (true)
-			{
-				if (isSwinging)
-				{
-					if (positionQueue.Count >= maxPositions)
-					{
-						positionQueue.Dequeue(); 
-					}
-					positionQueue.Enqueue(transform.position);
-				}
-
-				yield return new WaitForSeconds(checkRate); 
-			}
-		}
-
 		public void StartSwing(SelectEnterEventArgs args)
-        {
+		{
 			//Debug.Log("StartSwing");
 
 			if (args.interactorObject.transform.GetComponent<CustomDirectInteractor>() == null)
 				return;
 
 			if (playerHandMotion == null)
-                playerHandMotion = GameManager.Data.Player.HandMotion;
+				playerHandMotion = GameManager.Data.Player.HandMotion;
 
-            if (isRightHanded == true)
+			if (isRightHanded == true)
 			{
 				playerHandMotion.GrabOnCloseWeaponRight(true);
 			}
@@ -71,6 +54,23 @@ namespace KSI
 			StartCoroutine(TrackPositionRoutine());
 			IsSwinging = true;
 			coll.isTrigger = true;
+		}
+
+		private IEnumerator TrackPositionRoutine()
+		{
+			while (true)
+			{
+				if (isSwinging)
+				{
+					if (positionQueue.Count >= maxPositions)
+					{
+						positionQueue.Dequeue();
+					}
+					positionQueue.Enqueue(transform.position);
+				}
+
+				yield return new WaitForSeconds(checkRate);
+			}
 		}
 
 		public void EndSwing(SelectExitEventArgs args)

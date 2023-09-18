@@ -64,6 +64,8 @@ namespace KSI
 						Physics.IgnoreCollision(crossbowCollider, arrowLocationCollider, true);
 					}
 				}
+
+				arrow = args.interactableObject.transform.gameObject;
 			}
 		}
 
@@ -83,6 +85,8 @@ namespace KSI
 					Physics.IgnoreCollision(crossbowCollider, arrowLocationCollider, false);
 				}
 			}
+
+			arrow = null;
 		}
 
 		public void GrabCrossbow(SelectEnterEventArgs args)
@@ -166,14 +170,24 @@ namespace KSI
 
 		private void Shoot()
 		{
+			if (arrow == null)
+				return;
+		
 			arrowLocation.numberOfArrow--;
 			Debug.Log("Arrow used. Remaining bullets : " + arrowLocation.numberOfArrow);
-			GameObject _arrow = Instantiate(arrow, muzzlePoint.position, muzzlePoint.rotation);
 			socket.ChangeSocketType();
-			// 코루틴
-			_arrow.GetComponent<ArrowController>().FireArrow(force, damage);
+
+			StartCoroutine(FireRoutine());			
+		}
+
+		private IEnumerator FireRoutine()
+		{
+
+			arrow.GetComponent<ArrowController>().FireArrow(force, damage);
 			audioSource.PlayOneShot(shootSound, 1.0f);
-			// n초 후
+
+			yield return new WaitForSeconds(1f);
+
 			socket.ChangeSocketType(GameData.InteractableType.ArrowHole);
 		}
 	}

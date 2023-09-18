@@ -9,7 +9,7 @@ namespace KSI
 {
 	public class MagazineRemove : MonoBehaviour
 	{
-		public GameObject magazine; // 제거할 매거진 게임 오브젝트
+		public GameObject magazine;
 		public Transform ejectPosition;
 		public float ejectForce = 10.0f;
 
