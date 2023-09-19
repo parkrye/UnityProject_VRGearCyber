@@ -12,11 +12,13 @@ public class ServerComputer : MonoBehaviour, IHackable
     MaterialChange[] materials;
     public Transform Robots;
     float timeLimit;
+    bool exit;
     private void Start()
     {
         lightBrightnesses = GameObject.Find("Map").GetComponentsInChildren<LightBrightness>();
+        exit = GameObject.Find("ExitDoor").GetComponent<ExitDoor>().exit;
         materials = transform.GetComponentsInChildren<MaterialChange>();
-        timeLimit = 60f;
+        timeLimit = 100f;
     }
 
     private void LedLight()
@@ -69,6 +71,7 @@ public class ServerComputer : MonoBehaviour, IHackable
     public virtual void Success()
     {
         LedLight();
+        exit = true;
         StartCoroutine(CountDown());
     }
 
