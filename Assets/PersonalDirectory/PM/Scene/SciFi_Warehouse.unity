@@ -34417,7 +34417,7 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
@@ -54190,7 +54190,7 @@ PrefabInstance:
         type: 3}
       propertyPath: room0.Array.data[0]
       value: 
-      objectReference: {fileID: 2569845810200156604, guid: 46321c90d5e2d0c43b13c5fc095d842d,
+      objectReference: {fileID: 8710134100302828405, guid: 9d9011365981b9941a202866806bd9cf,
         type: 3}
     - target: {fileID: 1321133042275595302, guid: 84accf4c940d9d143b5e35c2eaa8d297,
         type: 3}

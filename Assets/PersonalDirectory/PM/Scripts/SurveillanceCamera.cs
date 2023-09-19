@@ -17,7 +17,7 @@ namespace PM
         [SerializeField] int hp;
         [SerializeField] Transform SpotLight;
         [SerializeField] LayerMask layer;
-        Terminal terminal;
+        public Terminal terminal;
         Ray ray;
         private Vector3 lightPosition;
         public float angle;
