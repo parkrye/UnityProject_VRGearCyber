@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 namespace PGR
 {
-    public class SecretDoorKeypad : MonoBehaviour, IHackable
+    public class SecretDoorKeypad : XRExclusiveSocketInteractor, IHackable
     {
         [SerializeField] GameData.HackProgressState state;
         [SerializeField] int pairCount, fixedPointPerPairCount;
