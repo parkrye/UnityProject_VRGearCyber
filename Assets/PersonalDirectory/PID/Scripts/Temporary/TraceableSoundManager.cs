@@ -29,7 +29,6 @@ namespace PID
                     return false;
                 return true;
             }
-            Debug.Log($"Something is Wrong with the map, {soundPoint} => {listenerPoint}");
             return false;
         }
 

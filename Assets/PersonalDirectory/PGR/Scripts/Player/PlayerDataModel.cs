@@ -24,18 +24,19 @@ namespace PGR
                 nowHP = 0;
                 Die();
             }
-            HPModifyEvent?.Invoke(nowHP * reverseMaxHP);
+            HPModifyEvent?.Invoke(nowHP / maxHP);
         }
 
         public void GiveHealth(int heal)
         {
             nowHP += heal;
             nowHP = Mathf.Clamp(nowHP, 0, maxHP);
-            HPModifyEvent?.Invoke(nowHP * reverseMaxHP);
+            HPModifyEvent?.Invoke(nowHP / maxHP);
         }
 
         void Die()
         {
+            GameManager.Data.Player.gameObject.SetActive(false);
             GameManager.Scene.LoadScene("PGR_DeadScene");
         }
     }

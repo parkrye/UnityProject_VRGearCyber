@@ -16,6 +16,7 @@ namespace KSI
 		[SerializeField] private float minDamage = 10;
 		[SerializeField] private float minDistanceForMaxDamage = 1.0f;
 		[SerializeField] private float minDistanceForMinDamage = 0.2f;
+		[SerializeField] private Transform attackPoint;
 
 		[Header("")]
 		[SerializeField] private Collider coll;
@@ -64,7 +65,7 @@ namespace KSI
 					{
 						positionQueue.Dequeue();
 					}
-					positionQueue.Enqueue(transform.position);
+					positionQueue.Enqueue(attackPoint.position);
 				}
 
 				yield return new WaitForSeconds(checkRate);
@@ -102,7 +103,7 @@ namespace KSI
 				if (iStrikable != null)
 				{
 					Vector3 oldestPosition = positionQueue.Peek();
-					Vector3 currentPosition = transform.position;
+					Vector3 currentPosition = attackPoint.position;
 					float distance = Vector3.Distance(oldestPosition, currentPosition);
 
 					float calculateDamageRatio = Mathf.InverseLerp(minDistanceForMinDamage, minDistanceForMaxDamage, distance);

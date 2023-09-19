@@ -943,6 +943,8 @@ MonoBehaviour:
   magazine: {fileID: 5483528048061002489, guid: d070f3bf3d6f6e041870105aa9cf4c31,
     type: 3}
   socketInteractor: {fileID: 7313514872344394353}
+  Image: {fileID: 0}
+  text: {fileID: 0}
   audioSource: {fileID: 2207928583679052345}
   shootSound: {fileID: 8300000, guid: 4dab368b46fb4a5478bf458680101ae3, type: 3}
   reload: {fileID: 8300000, guid: 10cf50f2ff5009e4793a78592e3c3526, type: 3}
@@ -1062,7 +1064,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5952642654197034737
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1071,7 +1073,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5031764465690230266}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0.318}
+  m_LocalPosition: {x: 0, y: 0, z: 0.1656}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1081,7 +1083,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.029, y: 0.099}
+  m_AnchoredPosition: {x: -0.0223, y: 0.1036}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8658912132035791271

@@ -9,6 +9,7 @@ namespace PID
     public class RobotCustomItemSocketInteractor : XRSocketInteractor
     {
         MeshRenderer _renderer;
+        BaseEnemy bodyOwner; 
         CustomGrabInteractable itemInteractable;
         [SerializeField] Color exertedColor, insertedColor, originalColor; 
         [SerializeField] Transform hoveringItem;
@@ -21,6 +22,8 @@ namespace PID
         protected override void Awake()
         {
             base.Awake();
+            bodyOwner = GetComponentInParent<BaseEnemy>();
+            bodyOwner.onDeath += SocketDrawDetach; 
             itemTaken = false;
             _renderer = GetComponent<MeshRenderer>();
             originalColor = _renderer.material.GetColor("_EmissionColor"); 
@@ -30,7 +33,11 @@ namespace PID
             GameObject spawningItem = GameManager.Resource.Instantiate(item.GetItem(seed), hoveringLoc.position, hoveringLoc.rotation, transform);
             RegisterInteractableItem(); 
         }
-
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            bodyOwner.onDeath -= SocketDrawDetach;
+        }
         public void RegisterInteractableItem()
         {
             itemInteractable = GetComponentInChildren<CustomGrabInteractable>();
@@ -77,13 +84,21 @@ namespace PID
         }
         protected override void OnSelectExited(SelectExitEventArgs args)
         {
-            if (itemTaken && hoveringItem != null && gameObject.activeSelf)
+            if (itemTaken && hoveringItem != null && gameObject.activeSelf == true)
             {
-                StartCoroutine(ItemExert());
+                ItemExert(); 
             }
             base.OnSelectExited(args);
         }
 
+        private void SocketDrawDetach(Vector3 hit, Vector3 hitp)
+        {
+            showInteractableHoverMeshes = false;
+            socketActive = false;
+            allowHover = false;
+            allowSelect = false; 
+            hoverSocketSnapping = false; 
+        }
         private void HandInteraction(bool entered)
         {
             if (itemTaken)
@@ -115,7 +130,7 @@ namespace PID
         {
             _renderer.material.SetColor("_EmissionColor", originalColor);
         }
-        IEnumerator ItemExert()
+        private void ItemExert()
         {
             _renderer.material.SetColor("_EmissionColor", exertedColor);
             if (hoveringItem != null)
@@ -124,8 +139,9 @@ namespace PID
                 hoveringItem.localScale = itemOriginalScale;
                 itemTaken = true;
                 hoveringItem = null;
+                return;
             }
-            yield return null; 
+            return;
         }
     }
 }

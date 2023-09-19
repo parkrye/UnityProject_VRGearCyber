@@ -16,7 +16,7 @@ MonoBehaviour:
   maxHealth: 300
   maxSightRange: 10
   maxSightAngle: 85
-  attackDamage: 7
+  attackDamage: 30
   attackRange: 3
   missChance: 0
   maxAmmo: 0

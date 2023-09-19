@@ -100,7 +100,7 @@ namespace PID
                 //Vector3 distToTarget = collider.transform.position - transform.position;
                 if (Physics.Raycast(transform.position, dirTarget, out obstacleHit))
                 {
-                    if (obstacleMask.Contain(obstacleHit.collider.gameObject.layer))
+                    if (obstacleHit.collider.gameObject.tag != targetTag)
                         PlayerLost?.Invoke();
                     break; 
                 }
@@ -171,7 +171,6 @@ namespace PID
         public void UnderPlayerPresence(Transform player)
         {
             presenceTimer += Time.deltaTime;
-            Debug.Log(presenceTimer);
             if (presenceTimer > maxTimer)
             {
                 TargetFound = true;
@@ -181,33 +180,6 @@ namespace PID
         }
     }
     #region DEPRECATED
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    //Massive error with this. 
-    //    if (!targetMask.Contain(other.gameObject.layer))
-    //    {
-    //        playerContact = false;
-    //        return;
-    //    }
-    //    else
-    //    {
-    //        playerContact = true;
-    //        presenceTimer += Time.deltaTime;
-    //        Debug.Log(presenceTimer);
-    //        if (presenceTimer > maxTimer)
-    //        {
-    //            TargetFound = true;
-    //            //Should be replaced by the state changing event; 
-    //            PlayerFound?.Invoke(other.transform);
-    //            PlayerInSight = other.transform;
-    //            presenceTimer = Mathf.Clamp(presenceTimer, 0, maxTimer);
-    //            return;
-    //        }
-    //        return;
-    //    }
-    //    presenceTimer -= Time.deltaTime;
-    //    presenceTimer = Mathf.Clamp(presenceTimer, 0, maxTimer);
-    //}
-
+    
     #endregion
 }

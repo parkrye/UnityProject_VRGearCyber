@@ -21,7 +21,7 @@ namespace PGR
                 if(nowPeople < maxPeople)
                 {
                     GameObject person = GameManager.Resource.Instantiate(peoples[Random.Range(0, peoples.Length)], transforms[nowPeople % 2].position, Quaternion.identity, transform);
-                    person.GetComponent<NormalCityPeople>()?.SetDest(this, transforms[nowPeople % 2], transforms[(nowPeople + 1) % 2]);
+                    person?.GetComponent<NormalCityPeople>()?.SetDest(this, transforms[nowPeople % 2], transforms[(nowPeople + 1) % 2]);
                     nowPeople++;
                 }
                 yield return new WaitForSeconds(5f);
