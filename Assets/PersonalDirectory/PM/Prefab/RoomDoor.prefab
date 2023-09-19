@@ -125,6 +125,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9028527009096287445, guid: 2ff1ea27a70f7d24a8ad6a4c8d036a85,
+        type: 3}
+      propertyPath: m_ShowInteractableHoverMeshes
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ff1ea27a70f7d24a8ad6a4c8d036a85, type: 3}
 --- !u!4 &1680566798729344417 stripped
