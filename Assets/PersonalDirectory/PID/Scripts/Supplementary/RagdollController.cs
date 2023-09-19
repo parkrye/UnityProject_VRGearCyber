@@ -115,7 +115,9 @@ namespace PID
             anim.enabled = false;
             impactPoint.AddForceAtPosition(-1 * impactIntensity * hitDir, hitPoint, ForceMode.Impulse);
             yield return new WaitForSeconds(2.5f);
-            RigidbodySettle(); 
+            RigidbodySettle();
+            yield return new WaitForSeconds(2.5f);
+            RigidbodyFreeze(); 
             //Find the nearest rigidbody with hitpoint 
         }
 
@@ -126,6 +128,8 @@ namespace PID
             anim.enabled = false;
             yield return new WaitForSeconds(2.5f);
             RigidbodySettle();
+            yield return new WaitForSeconds(2.5f);
+            RigidbodyFreeze();
         }
 
         public void OnAndOff(bool switchOn)
@@ -153,6 +157,17 @@ namespace PID
         }
 
         private void RigidbodySettle()
+        {
+            for (int i = 0; i < ragdollBodies.Length; i++)
+            {
+                if (ragdollBodies[i].gameObject.tag == "Wearable")
+                    return;
+                ragdollBodies[i].velocity = Vector3.zero;
+                ragdollBodies[i].angularVelocity = Vector3.zero;
+            }
+        }
+
+        private void RigidbodyFreeze()
         {
             for (int i = 0; i < ragdollBodies.Length; i++)
             {
