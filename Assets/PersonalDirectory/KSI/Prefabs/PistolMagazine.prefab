@@ -310,7 +310,7 @@ MonoBehaviour:
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
   m_TightenScale: 0.1
-  m_ThrowOnDetach: 0
+  m_ThrowOnDetach: 1
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
     serializedVersion: 2
@@ -364,4 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a147b1b29c31f4a8d569fe0abbd733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  magazineImage: {fileID: 0}
+  text: {fileID: 0}
   numberOfBullet: 13
+  remainBullet: 0
