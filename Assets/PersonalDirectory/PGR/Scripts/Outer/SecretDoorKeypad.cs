@@ -18,8 +18,9 @@ namespace PGR
 
         [SerializeField] GameObject doorOBject;
 
-        void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             passowrd = new int[4];
             for(int i = 0; i < passowrd.Length; i++)
             {
