@@ -127,7 +127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1053993184
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5653,6 +5653,8 @@ MonoBehaviour:
   soundIntensity: 5
   magazine: {fileID: 0}
   socketInteractor: {fileID: 4957582990665084063}
+  Image: {fileID: 0}
+  text: {fileID: 0}
   audioSource: {fileID: 3699612563404501049}
   shootSound: {fileID: 8300000, guid: 4dab368b46fb4a5478bf458680101ae3, type: 3}
   reload: {fileID: 8300000, guid: 10cf50f2ff5009e4793a78592e3c3526, type: 3}

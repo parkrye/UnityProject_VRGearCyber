@@ -25,6 +25,8 @@ namespace KSI
 		[Header("Magazine")]
 		public Magazine magazine;
 		public XRBaseInteractor socketInteractor;
+		public Image Image;
+		public TextMeshProUGUI text;
 
 		[Header("Audio")]
 		[SerializeField] private AudioSource audioSource;
@@ -33,8 +35,7 @@ namespace KSI
 		[SerializeField] private AudioClip noAmmo;
 
 		private Animator animator;
-		private Image Image;
-		private TextMeshProUGUI text;
+		
 		private PlayerHandMotion playerHandMotion;
 		private CustomDirectInteractor hand;
 		private bool hasMagazine = false;
