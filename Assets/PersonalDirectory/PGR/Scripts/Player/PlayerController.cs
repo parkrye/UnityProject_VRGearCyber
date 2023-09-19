@@ -1,7 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.XR.Content.Interaction;
-using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 namespace PGR
@@ -29,8 +27,7 @@ namespace PGR
         public PlayerExtraInput ExtraInput { get {  return playerExtraInput; } }
         public LoadingUI LoadingUI { get { return loadingUI; } }
         public IrisSystemDevice IrisDevice { get { return irisSystemDevice; } }
-
-        [SerializeField] LocomotionManager locomotionManager;
+        [SerializeField] DynamicMoveProvider dynamicMoveProvider;
 
         void Start()
         {
@@ -50,14 +47,6 @@ namespace PGR
             DontDestroyOnLoad(gameObject);
         }
 
-        public void ChangeTurnType(bool isSmooth)
-        {
-            if (isSmooth)
-                locomotionManager.rightHandTurnStyle = LocomotionManager.TurnStyle.Smooth;
-            else
-                locomotionManager.rightHandTurnStyle = LocomotionManager.TurnStyle.Snap;
-        }
-
         public void MoveTransform(Vector3 position)
         {
             xROriginTransform.position = position;
@@ -67,11 +56,11 @@ namespace PGR
         {
             if (isRun)
             {
-                locomotionManager.dynamicMoveProvider.moveSpeed = 2.5f;
+                dynamicMoveProvider.moveSpeed = 2.5f;
             }
             else
             {
-                locomotionManager.dynamicMoveProvider.moveSpeed = 1.5f;
+                dynamicMoveProvider.moveSpeed = 1.5f;
             }
         }
     }

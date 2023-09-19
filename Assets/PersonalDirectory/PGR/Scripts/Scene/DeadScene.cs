@@ -37,7 +37,6 @@ namespace PGR
             text.SetActive(true);
 
             yield return new WaitForSeconds(3f);
-            PlayerPrefs.SetInt("Load Location", 1);
             GameManager.Scene.LoadScene(sceneName);
         }
     }
