@@ -658,6 +658,7 @@ namespace PID
                 {
                     owner.StopAllCoroutines();
                     owner.StopCoroutine(HideRoutine(player));
+                    stateMachine.ChangeState(State.Trace);
                 }
                 if (searchLocFound && FinishedHiding(hidePosition))
                 {
