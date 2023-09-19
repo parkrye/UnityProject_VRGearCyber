@@ -100,7 +100,7 @@ namespace PID
                 //Vector3 distToTarget = collider.transform.position - transform.position;
                 if (Physics.Raycast(transform.position, dirTarget, out obstacleHit))
                 {
-                    if (obstacleMask.Contain(obstacleHit.collider.gameObject.layer))
+                    if (obstacleHit.collider.gameObject.tag != targetTag)
                         PlayerLost?.Invoke();
                     break; 
                 }
