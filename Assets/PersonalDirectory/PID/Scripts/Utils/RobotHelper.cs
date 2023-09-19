@@ -56,12 +56,32 @@ namespace PID
         public static Vector3 GroupPositionAllocator (Vector3 centrePoint, int size, int index)
         {
             float angularStart = (360.0f / size) * index; 
-            float x = 10.0f * Mathf.Sin(angularStart * Mathf.Deg2Rad);
-            float z = 10.0f * Mathf.Cos(angularStart * Mathf.Deg2Rad);
+            float x = 1 * Mathf.Sin(angularStart * Mathf.Deg2Rad);
+            float z = 1 * Mathf.Cos(angularStart * Mathf.Deg2Rad);
             Vector3 position = new Vector3(x, 0.0f, z);
             position.x += centrePoint.x; 
             position.z += centrePoint.z;
-            return position;
+            return CheckValidPoint(position);
+        }
+        const float minimumDist = .5f;
+        const float middleDist = 1;
+        const float maximumDist = 1.5f; 
+        public static Vector3 CheckValidPoint(Vector3 point)
+        {
+            if (NavMesh.SamplePosition(point, out NavMeshHit hit, minimumDist, NavMesh.AllAreas))
+            {
+                return hit.position; 
+            }
+            else if (NavMesh.SamplePosition(point, out NavMeshHit hit_2, middleDist, NavMesh.AllAreas)) 
+            {
+                return hit_2.position;  
+            }
+            else if (NavMesh.SamplePosition(point, out NavMeshHit hit_3, maximumDist, NavMesh.AllAreas))
+            {
+                return hit_3.position; 
+            }
+            else 
+                return Vector3.zero;
         }
         public static bool DirectionIntersect(Vector3 dir_1, Vector3 dir_2)
         {
@@ -85,22 +105,7 @@ namespace PID
             lookDir = (playerLoc - robot.position).normalized;
             lookDir.y = 0; 
         }
-
-        //public static bool TraversableSound()
-        //{
-        //    Vector3 prev = startingPoint.transform.position;
-        //    float threshHold = 2 * Vector3.SqrMagnitude(destinationPoint - startingPoint.transform.position);
-        //    float accumDist = 0f;
-        //    foreach (Vector3 point in soundPath.corners)
-        //    {
-        //        //Calculate distance between each points. 
-        //        float distance = Vector3.SqrMagnitude(point - prev);
-        //        accumDist += distance;
-        //        prev = point;
-        //    }
-        //    return (accumDist <= threshHold);
-        //}
-
+        
         public static Rigidbody NearestHitPart(Rigidbody[] parts, Vector3 hitPoint)
         {
             if (hitPoint == Vector3.zero)

@@ -86,7 +86,6 @@ namespace PID
 
         public virtual void Notified(Vector3 centrePoint, int size, int index)
         {
-            
         }
         public void TimeScale()
         {

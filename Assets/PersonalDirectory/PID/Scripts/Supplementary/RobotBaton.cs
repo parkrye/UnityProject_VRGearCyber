@@ -61,7 +61,6 @@ namespace PID
                 }
                 if (Vector3.Dot(attacker.forward, dirToTarget) < cosValue)
                 {
-                    Debug.Log($"{attacker.forward}: {dirToTarget}: {Vector3.Dot(attacker.forward, dirToTarget) < cosValue}");
                     continue;
                 }
                 //Access directly to Player's health data; 
@@ -76,7 +75,6 @@ namespace PID
                 {
                     IHitable playerDirect = GameManager.Data.Player.Data.GetComponent<IHitable>();
                     playerDirect?.TakeDamage(attackDamage, Vector3.zero, Vector3.zero);
-                    Debug.Log("TookHit"); 
                     break;
                 }
             }
