@@ -174,7 +174,7 @@ namespace KSI
 					IHitable hitable = hit.transform.GetComponent<IHitable>();
 					if (hitable != null)
 					{
-						Debug.Log($"Hitable Object: {hitable.ToString()}");
+						
 						MakeSound(hit.point);
 						hitable.TakeDamage(damage, hit.point, hit.normal);
 					}
@@ -193,8 +193,6 @@ namespace KSI
 			}			
 			else
 			{
-				Debug.Log($"{gameObject.name} : No Ammo");
-
 				audioSource.PlayOneShot(noAmmo);
 			}
 		}
@@ -231,14 +229,14 @@ namespace KSI
 			magazine.numberOfBullet--;
 			Image.fillAmount = (float)remainBullet / (float)magazine.numberOfBullet;
 			UpdateBulletText();
-			Debug.Log("Bullet used. Remaining bullets : " + magazine.numberOfBullet);
+		
 			Instantiate(bullet, muzzlePoint.position, muzzlePoint.rotation);
 			audioSource.PlayOneShot(shootSound, 1.0f);
 		}
 
 		private void UpdateBulletText()
 		{
-			text.text = $"{remainBullet} / {magazine.numberOfBullet}";
+			text.text = $" {magazine.numberOfBullet} /  {remainBullet}";
 		}
 
 		public void MakeSound(Vector3 pos)
