@@ -2014,7 +2014,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 248698356346926746}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8708495390592492762
+--- !u!114 &1912918080481406208
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2023,7 +2023,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2504252639009195885}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 859e3c78cc08e12428cc7117416c5206, type: 3}
+  m_Script: {fileID: 11500000, guid: acde65f5db6773e49ad668404cf55472, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -2032,7 +2032,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 1073741824
+    m_Bits: 1
   m_DistanceCalculationMode: 1
   m_SelectMode: 0
   m_FocusMode: 1
@@ -2117,16 +2117,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Button: {fileID: 2362770359769442316}
-  m_PressDistance: 0.03
-  m_PressBuffer: 0.01
-  m_ButtonOffset: 0.14
-  m_ButtonSize: 0.1
+  m_PressDistance: 0.1
   m_ToggleButton: 0
   m_OnPress:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4216219716791235656}
-        m_TargetAssemblyTypeName: ElevatorOpen, Assembly-CSharp
+      - m_Target: {fileID: 5702432766637403028}
+        m_TargetAssemblyTypeName: PM.Elevator, Assembly-CSharp
         m_MethodName: Open
         m_Mode: 1
         m_Arguments:
@@ -2138,9 +2135,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_OnRelease:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnValueChange:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &2783096525463722232 stripped
@@ -3414,7 +3408,7 @@ PrefabInstance:
     - target: {fileID: 2732566071443435106, guid: 9c0b8dd0cec473048b1e749c41e717ad,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.70299995
+      value: -0.589
       objectReference: {fileID: 0}
     - target: {fileID: 2732566071443435106, guid: 9c0b8dd0cec473048b1e749c41e717ad,
         type: 3}
@@ -3572,128 +3566,14 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
-  m_Button: {fileID: 0}
+  m_Button: {fileID: 80464688607059551}
   m_PressDistance: 0.1
   m_ToggleButton: 0
   m_OnPress:
     m_PersistentCalls:
-      m_Calls: []
-  m_OnRelease:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &7349956610969537850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 222652940076822846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 859e3c78cc08e12428cc7117416c5206, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_InteractionManager: {fileID: 0}
-  m_Colliders: []
-  m_InteractionLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_InteractionLayers:
-    m_Bits: 1073741824
-  m_DistanceCalculationMode: 1
-  m_SelectMode: 0
-  m_FocusMode: 1
-  m_CustomReticle: {fileID: 0}
-  m_AllowGazeInteraction: 0
-  m_AllowGazeSelect: 0
-  m_OverrideGazeTimeToSelect: 0
-  m_GazeTimeToSelect: 0.5
-  m_OverrideTimeToAutoDeselectGaze: 0
-  m_TimeToAutoDeselectGaze: 3
-  m_AllowGazeAssistance: 0
-  m_FirstHoverEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_LastHoverExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_HoverEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_HoverExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FirstSelectEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_LastSelectExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SelectEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SelectExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FirstFocusEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_LastFocusExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FocusEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FocusExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Activated:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Deactivated:
-    m_PersistentCalls:
-      m_Calls: []
-  m_StartingHoverFilters: []
-  m_StartingSelectFilters: []
-  m_StartingInteractionStrengthFilters: []
-  m_OnFirstHoverEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnLastHoverExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnHoverEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnHoverExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnSelectEntered:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnSelectExited:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnSelectCanceled:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnActivate:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnDeactivate:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Button: {fileID: 80464688607059551}
-  m_PressDistance: 0.03
-  m_PressBuffer: 0.01
-  m_ButtonOffset: 0.14
-  m_ButtonSize: 0.1
-  m_ToggleButton: 0
-  m_OnPress:
-    m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4216219716791235656}
-        m_TargetAssemblyTypeName: ElevatorOpen, Assembly-CSharp
+      - m_Target: {fileID: 5702432766637403028}
+        m_TargetAssemblyTypeName: PM.Elevator, Assembly-CSharp
         m_MethodName: Open
         m_Mode: 1
         m_Arguments:
@@ -3705,9 +3585,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_OnRelease:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnValueChange:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &524786599689481899 stripped
@@ -5285,20 +5162,6 @@ MonoBehaviour:
   m_OnRelease:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7709746574398162112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4933992212867381398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f6d335fe1e52b64f916e732bab921e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  elevator: {fileID: 5702432766637403028}
-  button: 1
 --- !u!114 &7565149790158869847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5428,6 +5291,20 @@ MonoBehaviour:
   m_OnValueChange:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7709746574398162112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4933992212867381398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6d335fe1e52b64f916e732bab921e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elevator: {fileID: 5702432766637403028}
+  button: 1
 --- !u!114 &5702432766637403028 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1132498562693500812, guid: a11fc8e8ade950c4ab2d5e1e77a85610,
