@@ -27,6 +27,7 @@ namespace KSI
 		public XRBaseInteractor socketInteractor;
 		public Image Image;
 		public TextMeshProUGUI text;
+	
 
 		[Header("Audio")]
 		[SerializeField] private AudioSource audioSource;
@@ -39,7 +40,8 @@ namespace KSI
 		private PlayerHandMotion playerHandMotion;
 		private CustomDirectInteractor hand;
 		private bool hasMagazine = false;
-		
+		private int remainBullet;
+
 
 		private void Start()
 		{
@@ -78,9 +80,9 @@ namespace KSI
                 }
 			}
 
-			magazine.magazineImage.fillAmount = 1.0f;
-			magazine.remainBullet = magazine.numberOfBullet;
-			magazine.UpdateBulletText();
+			Image.fillAmount = 1.0f;
+			remainBullet = magazine.numberOfBullet;
+			UpdateBulletText();
 		}
 
 		public void RemoveMagazine(SelectExitEventArgs args)
@@ -227,11 +229,16 @@ namespace KSI
 		private void Shoot()
 		{
 			magazine.numberOfBullet--;
-			magazine.magazineImage.fillAmount = (float)magazine.remainBullet / (float)magazine.numberOfBullet;
-			magazine.UpdateBulletText();
+			Image.fillAmount = (float)remainBullet / (float)magazine.numberOfBullet;
+			UpdateBulletText();
 			Debug.Log("Bullet used. Remaining bullets : " + magazine.numberOfBullet);
 			Instantiate(bullet, muzzlePoint.position, muzzlePoint.rotation);
 			audioSource.PlayOneShot(shootSound, 1.0f);
+		}
+
+		private void UpdateBulletText()
+		{
+			text.text = $"{remainBullet} / {magazine.numberOfBullet}";
 		}
 
 		public void MakeSound(Vector3 pos)
