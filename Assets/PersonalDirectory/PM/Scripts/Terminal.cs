@@ -78,6 +78,7 @@ namespace PM
 
         public IEnumerator Break()
         {
+
             Destroy(this.gameObject);
             yield return null;
         }
