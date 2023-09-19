@@ -232,6 +232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7415252051147565989}
   - component: {fileID: -2996774594560132085}
+  - component: {fileID: -370900872990177624}
   m_Layer: 7
   m_Name: Shelf Variation 03
   m_TagString: Untagged
@@ -320,6 +321,19 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: -3.09, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!65 &-370900872990177624
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5815024164195916214}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &2925110783610285118
 PrefabInstance:
   m_ObjectHideFlags: 0

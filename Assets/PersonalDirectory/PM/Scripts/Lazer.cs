@@ -7,7 +7,7 @@ namespace PM
 {
     public class Lazer : MonoBehaviour
     {
-        Terminal terminal;
+        public Terminal terminal;
 
         private void Start()
         {
@@ -22,6 +22,7 @@ namespace PM
         {
             if (other.tag == "Player")
             {
+                Debug.Log("Lazer");
                 if (terminal != null)
                     StartCoroutine(terminal.CallSecurity(other.transform.position));
             }
