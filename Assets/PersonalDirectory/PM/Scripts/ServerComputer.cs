@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ServerComputer : MonoBehaviour, IHackable
+public class ServerComputer : MonoBehaviour, IHackable, IHitable
 {
     [SerializeField] GameData.HackProgressState state;
     [SerializeField] int pairCount;
@@ -13,8 +13,10 @@ public class ServerComputer : MonoBehaviour, IHackable
     public Transform Robots;
     float timeLimit;
     bool exit;
+    int hp;
     private void Start()
     {
+        hp = 5;
         lightBrightnesses = GameObject.Find("Map").GetComponentsInChildren<LightBrightness>();
         exit = GameObject.Find("ExitDoor").GetComponent<ExitDoor>().exit;
         materials = transform.GetComponentsInChildren<MaterialChange>();
@@ -110,5 +112,21 @@ public class ServerComputer : MonoBehaviour, IHackable
     public (int, int) GetDifficulty()
     {
         return (pairCount, fixedPointPerPairCount);
+    }
+
+    public void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
+    {
+        hp -= damage;
+        if (hp <= 0)
+        {
+            Failure();
+            Success();
+            StartCoroutine(Break());
+        }
+    }
+    public IEnumerator Break()
+    {
+        Destroy(this.gameObject);
+        yield return null;
     }
 }

@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pairCount: 3
-  fixedPointPerPairCount: 3
+  fixedPointPerPairCount: 2
   state: 0
   guards: []
   hp: 0
