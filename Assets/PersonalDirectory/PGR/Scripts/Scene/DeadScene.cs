@@ -12,7 +12,7 @@ namespace PGR
 
         protected override IEnumerator LoadingRoutine()
         {
-            GameManager.Data.DestroyPlayer();
+            GameManager.Data.Player.gameObject.SetActive(false);
             yield return null;
             Progress = 1f;
             StartCoroutine(OpeningRoutine());
@@ -37,8 +37,9 @@ namespace PGR
             text.SetActive(true);
 
             yield return new WaitForSeconds(3f);
-            PlayerPrefs.SetInt("Load Location", 1);
+            GameManager.Data.Player.Data.GiveHealth(int.MaxValue);
             GameManager.Scene.LoadScene(sceneName);
+            GameManager.Data.Player.gameObject.SetActive(true);
         }
     }
 }

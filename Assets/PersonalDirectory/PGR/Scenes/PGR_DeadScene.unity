@@ -447,7 +447,7 @@ MonoBehaviour:
     type: 3}
   warningParent: {fileID: 1666956500}
   sfx: {fileID: 538884491}
-  sceneName: PGR_ApartmentScene
+  sceneName: SciFi_Warehouse
 --- !u!82 &538884493
 AudioSource:
   m_ObjectHideFlags: 0

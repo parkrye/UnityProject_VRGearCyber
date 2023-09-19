@@ -136,7 +136,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   liquid: {fileID: 4167646210237042551}
   drop: {fileID: 5443211288516370184}
-  content: 5
+  content: 1
+  isCovered: 0
 --- !u!65 &7333573651064249912
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -32,6 +32,7 @@ namespace PGR
         [SerializeField] ActionBasedContinuousTurnProvider continuousTurnProvider;
         [SerializeField] ActionBasedSnapTurnProvider snapTurnProvider;
         [SerializeField] DynamicMoveProvider dynamicMoveProvider;
+        [SerializeField] ActionBasedControllerManager controllerManager;
 
         void Start()
         {
@@ -53,8 +54,9 @@ namespace PGR
 
         public void ChangeTurnType(bool isSmooth)
         {
-            continuousTurnProvider.gameObject.SetActive(isSmooth);
-            snapTurnProvider.gameObject.SetActive(!isSmooth);
+            controllerManager.smoothTurnEnabled = isSmooth;
+            continuousTurnProvider.enabled = isSmooth;
+            snapTurnProvider.enabled = !isSmooth;
         }
 
         public void MoveTransform(Vector3 position)
