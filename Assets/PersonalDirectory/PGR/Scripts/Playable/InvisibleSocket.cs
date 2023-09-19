@@ -16,8 +16,6 @@ namespace PGR
         {
             if (isStored && 1 << args.interactableObject.transform.gameObject.layer == LayerMask.GetMask("Player Hand"))
             {
-                if (GameManager.Data.Player.HandMotion.IsAnyHandMotion(args.interactableObject.transform.GetComponent<CustomDirectInteractor>().IsRightHand))
-                    return;
                 foreach (Renderer r in rd)
                     r.enabled = true;
             }
@@ -59,14 +57,6 @@ namespace PGR
 
         public void OnSelectExitEvent(SelectExitEventArgs args)
         {
-            try
-            {
-                args.interactableObject.transform.SetParent(GameManager.Scene.CurScene.transform);
-            }
-            catch
-            {
-
-            }
             args.interactableObject.transform.SetParent(null);
 
             if (!isInvisible)

@@ -334,8 +334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   liquid: {fileID: 7578344379155021526}
   drop: {fileID: 8974115936461541118}
-  content: 1
-  isCovered: 0
+  content: 5
 --- !u!1 &7578344379155021526
 GameObject:
   m_ObjectHideFlags: 0
