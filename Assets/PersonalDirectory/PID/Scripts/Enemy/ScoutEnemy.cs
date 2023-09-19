@@ -91,22 +91,6 @@ namespace PID
             agent.speed = moveSpeed;
             //Takes the General stat values, implement it on the nav_agent level. 
         }
-        public override void Notified(Vector3 centrePoint, int size, int index)
-        {
-            if (stateMachine.curStateName == State.Neutralized
-                || stateMachine.curStateName == State.Alert)
-            {
-                return;
-            }
-            AlertState alertState;
-            if (stateMachine.CheckState(State.Alert))
-            {
-                alertState = stateMachine.RetrieveState(State.Alert) as AlertState;
-                Vector3 gatherPos = RobotHelper.GroupPositionAllocator(centrePoint, size, index);
-                alertState.SetGatherPoint(gatherPos);
-                stateMachine.ChangeState(State.Alert);
-            }
-        }
         #endregion
         #region SENSES INTERACTION 
         public void DetectPlayer(Transform player)
@@ -194,6 +178,25 @@ namespace PID
             }
             stateMachine.ChangeState(State.Neutralized);
         }
+        public override void Notified(Vector3 centrePoint, int size, int index)
+        {
+            if (stateMachine.curStateName == State.Neutralized ||
+                stateMachine.curStateName == State.Alert ||
+                stateMachine.curStateName == State.Alarm ||
+                stateMachine.curStateName == State.Trace)
+            {
+                return;
+            }
+            AlertState alertState;
+            if (stateMachine.CheckState(State.Alert))
+            {
+                alertState = stateMachine.RetrieveState(State.Alert) as AlertState;
+                Vector3 gatherPos = RobotHelper.GroupPositionAllocator(centrePoint, size, index);
+                alertState.SetGatherPoint(gatherPos);
+                stateMachine.ChangeState(State.Alert);
+            }
+        }
+
         #endregion
         #region CONFIGURING STATE MACHINE 
         public abstract class ScouterState : StateBase<State, ScoutEnemy>
@@ -373,10 +376,8 @@ namespace PID
                 if (colliders.Length > 0)
                 {
                     patrolPoints.Clear();
-                    Debug.Log(colliders.Length);
                     foreach (Collider collider in colliders)
                     {
-                        Debug.Log(collider.transform.position);
                         patrolPoints.Add(collider);
                     }
                 }
@@ -482,6 +483,7 @@ namespace PID
 
             public override void Exit()
             {
+                abortGather = false;
             }
 
             public override void Setup()
@@ -532,7 +534,6 @@ namespace PID
                 owner.agent.SetDestination(owner.playerBody.position); 
                 //if (owner.playerBody != null)
                 //    owner.focusDir = (owner.playerBody.transform.position - owner.transform.position).normalized; 
-                owner.soundMaker.Scream(owner.playerBody.position); 
             }
 
             public override void Exit()

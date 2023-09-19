@@ -178,7 +178,9 @@ namespace PID
         public override void Notified(Vector3 centrePoint, int size, int index)
         {
             if (stateMachine.curStateName == State.Neutralized
-                || stateMachine.curStateName == State.Alert)
+                || stateMachine.curStateName == State.Alert ||
+                stateMachine.curStateName == State.Assault || 
+                stateMachine.curStateName == State.Trace)
             {
                 return;
             }
@@ -440,10 +442,8 @@ namespace PID
                 if (colliders.Length > 0)
                 {
                     patrolPoints.Clear();
-                    Debug.Log(colliders.Length);
                     foreach (Collider collider in colliders)
                     {
-                        Debug.Log(collider.transform.position);
                         patrolPoints.Add(collider);
                     }
                 }
@@ -550,6 +550,7 @@ namespace PID
 
             public override void Exit()
             {
+                abortGather = false;
             }
 
             public override void Setup()

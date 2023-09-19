@@ -91,7 +91,6 @@ namespace PID
         }
         public void TryStrike()
         {
-            Debug.Log("AttackAttempted");
             attackStick.AttackTiming(); 
         }
         public void AgentSetUp(EnemyStat robotStat)
@@ -101,8 +100,10 @@ namespace PID
         }
         public override void Notified(Vector3 centrePoint, int size, int index)
         {
-            if (stateMachine.curStateName == State.Neutralized
-                || stateMachine.curStateName == State.Alert)
+            if (stateMachine.curStateName == State.Neutralized ||
+                stateMachine.curStateName == State.Alert ||
+                stateMachine.curStateName == State.Assault ||
+                stateMachine.curStateName == State.Trace)
             {
                 return;
             }
@@ -508,6 +509,7 @@ namespace PID
 
             public override void Exit()
             {
+                abortGather = false;
             }
 
             public override void Setup()
