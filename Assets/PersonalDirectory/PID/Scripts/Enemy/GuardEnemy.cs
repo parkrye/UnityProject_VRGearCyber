@@ -166,20 +166,14 @@ namespace PID
                 }
             }
         }
-        #region DEBUGGING ISSUES 
-        //public void OnPointerClick(PointerEventData eventData)
-        //{
-        //    TakeDamage(50, eventData.pointerPressRaycast.worldPosition, eventData.pointerPressRaycast.worldNormal);
-        //    Debug.Log(CurrentHealth); 
-        //}
-        #endregion
         #endregion
         #region OVERRIDE FUNCTIONS 
         public override void Notified(Vector3 centrePoint, int size, int index)
         {
-            if (stateMachine.curStateName == State.Neutralized
-                || stateMachine.curStateName == State.Alert ||
-                stateMachine.curStateName == State.Assault || 
+            if (stateMachine.curStateName == State.Neutralized|| 
+                stateMachine.curStateName == State.Alert ||
+                stateMachine.curStateName == State.Assault ||
+                stateMachine.curStateName == State.Hide ||
                 stateMachine.curStateName == State.Trace)
             {
                 return;
@@ -539,7 +533,6 @@ namespace PID
 
             public override void Enter()
             {
-                Debug.Log($"{owner.gameObject.name} has Entered AlertState"); 
                 owner.agent.isStopped = false;
                 owner.agent.updateRotation = true; 
                 if (destPoint != Vector3.zero)
@@ -568,7 +561,6 @@ namespace PID
                 if (distDelta <= distThreshold || abortGather)
                 {
                     stateMachine.ChangeState(State.LookAround);
-                    Debug.Log($"Entered to {State.LookAround}"); 
                 }
             }
 
@@ -660,6 +652,7 @@ namespace PID
             WaitForSeconds hideInterval;
             LayerMask hideableLayer;
 
+            NavMeshPath samplePath = new NavMeshPath();
             float timeOut;
             bool searchLocFound; 
             bool stopCounting; 
@@ -731,6 +724,8 @@ namespace PID
                     return;
                 timeOut += Time.deltaTime;
             }
+
+            
             IEnumerator HideRoutine(Transform Target)
             {
                 while (true)
@@ -761,16 +756,20 @@ namespace PID
                         {
                             if (!NavMesh.FindClosestEdge(hit.position, out hit, owner.agent.areaMask))
                             {
-                                Debug.Log($"Unable to find edge close to {hit.position}");
                                 continue; 
                             }
 
                             if (Vector3.Dot(hit.normal, (Target.position - hit.position).normalized) < hideSensitivity)
                             {
-                                owner.agent.SetDestination(hit.position);
-                                searchLocFound = true;
-                                hidePosition = hit.position;
-                                yield break;
+                                if (NavMesh.CalculatePath(owner.agent.transform.position, hit.position, 
+                                    owner.agent.areaMask, samplePath))
+                                {
+                                    owner.agent.SetDestination(hit.position);
+                                    searchLocFound = true;
+                                    hidePosition = hit.position;
+                                    yield break;
+                                }
+                                continue; 
                             }
                             else
                             {
@@ -781,23 +780,26 @@ namespace PID
                                 {
                                     if (!NavMesh.FindClosestEdge(hit2.position, out hit2, owner.agent.areaMask))
                                     {
-                                        Debug.Log($"Unable to find edge close to {hit2.position} (second attempt)");
                                         continue; 
                                     }
 
                                     if (Vector3.Dot(hit2.normal, (Target.position - hit2.position).normalized) < hideSensitivity)
                                     {
-                                        owner.agent.SetDestination(hit2.position);
-                                        hidePosition = hit.position;
-                                        searchLocFound = true; 
-                                        yield break;
+                                        if (NavMesh.CalculatePath(owner.agent.transform.position, hit2.position,
+                                    owner.agent.areaMask, samplePath))
+                                        {
+                                            owner.agent.SetDestination(hit2.position);
+                                            searchLocFound = true;
+                                            hidePosition = hit2.position;
+                                            yield break;
+                                        }
+                                        continue;
                                     }
                                 }
                             }
                         }
                         else
                         {
-                            Debug.Log($"Unable to find NavMesh near object {Colliders[i].name} at {Colliders[i].transform.position}");
                         }                 
                     }
                     yield return hideInterval;

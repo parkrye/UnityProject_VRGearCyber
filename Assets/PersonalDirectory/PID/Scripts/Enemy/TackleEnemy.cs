@@ -722,7 +722,6 @@ namespace PID
                         {
                             if (!NavMesh.FindClosestEdge(hit.position, out hit, owner.agent.areaMask))
                             {
-                                Debug.LogError($"Unable to find edge close to {hit.position}");
                                 continue;
                             }
 
@@ -742,7 +741,6 @@ namespace PID
                                 {
                                     if (!NavMesh.FindClosestEdge(hit2.position, out hit2, owner.agent.areaMask))
                                     {
-                                        Debug.LogError($"Unable to find edge close to {hit2.position} (second attempt)");
                                         continue;
                                     }
 
@@ -758,7 +756,6 @@ namespace PID
                         }
                         else
                         {
-                            Debug.LogError($"Unable to find NavMesh near object {Colliders[i].name} at {Colliders[i].transform.position}");
                         }
                         yield return hideInterval;
                     }
