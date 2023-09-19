@@ -92,5 +92,16 @@ namespace PGR
             else
                 return lAnim.GetBool("Gun") || lAnim.GetBool("CloseWeapon") || lAnim.GetBool("Wall") || lAnim.GetBool("Catch");
         }
+
+        public bool IsPokeHandMotion(bool isRight)
+        {
+            if (IsAnyHandMotion(isRight))
+                return false;
+
+            if (isRight)
+                return rAnim.GetBool("Grab") || !rAnim.GetBool("Trigger") || rAnim.GetBool("Thumb");
+            else
+                return lAnim.GetBool("Grab") || !lAnim.GetBool("Trigger") || lAnim.GetBool("Thumb");
+        }
     }
 }

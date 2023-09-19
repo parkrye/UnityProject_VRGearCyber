@@ -7,6 +7,7 @@ namespace PGR
     {
         [SerializeField] string SceneName;
         [SerializeField] int life;
+        [SerializeField] GameObject breakObj;
 
         public void MoveScene(int locationNum)
         {
@@ -20,11 +21,13 @@ namespace PGR
         public void TakeDamage(int damage, Vector3 hitPoint, Vector3 hitNormal)
         {
             life -= damage;
+            breakObj?.SetActive(false);
         }
 
         public void TakeStrike(Transform hitter, float damage, Vector3 hitPoint, Vector3 hitNormal)
         {
             life -= (int)damage;
+            breakObj?.SetActive(false);
         }
     }
 
