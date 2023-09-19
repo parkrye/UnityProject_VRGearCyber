@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 namespace PGR
 {
-    public class SecretDoorKeypad : MonoBehaviour, IHackable
+    public class SecretDoorKeypad : XRExclusiveSocketInteractor, IHackable
     {
         [SerializeField] GameData.HackProgressState state;
         [SerializeField] int pairCount, fixedPointPerPairCount;
@@ -18,8 +18,9 @@ namespace PGR
 
         [SerializeField] GameObject doorOBject;
 
-        void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             passowrd = new int[4];
             for(int i = 0; i < passowrd.Length; i++)
             {

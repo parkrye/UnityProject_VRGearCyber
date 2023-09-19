@@ -27,11 +27,11 @@ namespace PGR
             HPModifyEvent?.Invoke(nowHP * reverseMaxHP);
         }
 
-        public void GiveHealth(int amount)
+        public void GiveHealth(int heal)
         {
-            nowHP += amount;
+            nowHP += heal;
             nowHP = Mathf.Clamp(nowHP, 0, maxHP);
-            HPModifyEvent?.Invoke(nowHP * reverseMaxHP); 
+            HPModifyEvent?.Invoke(nowHP * reverseMaxHP);
         }
 
         void Die()

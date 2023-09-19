@@ -290,7 +290,7 @@ MonoBehaviour:
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
   m_TightenScale: 0.1
-  m_ThrowOnDetach: 0
+  m_ThrowOnDetach: 1
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
     serializedVersion: 2
@@ -334,7 +334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   liquid: {fileID: 7578344379155021526}
   drop: {fileID: 8974115936461541118}
-  content: 1
+  content: 5
   isCovered: 0
 --- !u!1 &7578344379155021526
 GameObject:

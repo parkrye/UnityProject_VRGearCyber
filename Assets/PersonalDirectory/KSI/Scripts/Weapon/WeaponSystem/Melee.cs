@@ -34,8 +34,6 @@ namespace KSI
 
 		public void StartSwing(SelectEnterEventArgs args)
 		{
-			//Debug.Log("StartSwing");
-
 			if (args.interactorObject.transform.GetComponent<CustomDirectInteractor>() == null)
 				return;
 
@@ -75,8 +73,6 @@ namespace KSI
 
 		public void EndSwing(SelectExitEventArgs args)
 		{
-			//Debug.Log("EndSwing");
-
 			if (args.interactorObject.transform.GetComponent<CustomDirectInteractor>() == null)
 				return;
 

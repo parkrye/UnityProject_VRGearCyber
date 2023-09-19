@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.OpenXR.Input;
 using static PID.Extension; 
 
 namespace PID
@@ -54,6 +55,9 @@ namespace PID
             base.OnActivated(args);
             if (!isUsed)
             {
+                XRBaseControllerInteractor controller = firstInteractorSelecting as XRBaseControllerInteractor;
+                Debug.Log(controller.gameObject.name); 
+                controller.SendHapticImpulse(.4f, .4f); 
                 playerHand = args.interactorObject.transform.GetComponentInParent<ActionBasedController>();
                 StartCoroutine(GiveHealth(playerHand));
                 return; 
@@ -86,7 +90,7 @@ namespace PID
             }
             isUsed = true;
             healthRender.material.SetColor("_EmissionColor", usingColor *  20);
-            controller?.SendHapticImpulse(5f, .3f);
+            controller?.SendHapticImpulse(.8f, .8f);
             GameManager.Data.Player.Data.GiveHealth(healthAmount); 
             healthRender.material.SetColor("_EmissionColor", usedColor * 20);
         }

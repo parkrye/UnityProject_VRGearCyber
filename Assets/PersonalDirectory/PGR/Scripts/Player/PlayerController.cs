@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 namespace PGR
@@ -28,11 +27,7 @@ namespace PGR
         public PlayerExtraInput ExtraInput { get {  return playerExtraInput; } }
         public LoadingUI LoadingUI { get { return loadingUI; } }
         public IrisSystemDevice IrisDevice { get { return irisSystemDevice; } }
-
-        [SerializeField] ActionBasedContinuousTurnProvider continuousTurnProvider;
-        [SerializeField] ActionBasedSnapTurnProvider snapTurnProvider;
         [SerializeField] DynamicMoveProvider dynamicMoveProvider;
-        [SerializeField] ActionBasedControllerManager controllerManager;
 
         void Start()
         {
@@ -50,13 +45,6 @@ namespace PGR
             Data.HPModifyEvent.AddListener(Display.ModifyHP);
             Display.ModifyText("");
             DontDestroyOnLoad(gameObject);
-        }
-
-        public void ChangeTurnType(bool isSmooth)
-        {
-            controllerManager.smoothTurnEnabled = isSmooth;
-            continuousTurnProvider.enabled = isSmooth;
-            snapTurnProvider.enabled = !isSmooth;
         }
 
         public void MoveTransform(Vector3 position)

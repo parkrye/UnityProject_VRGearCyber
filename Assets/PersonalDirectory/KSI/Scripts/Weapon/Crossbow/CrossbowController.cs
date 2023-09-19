@@ -35,8 +35,6 @@ namespace KSI
 		private MeshRenderer muzzleFlash;
 		private bool hasArrow = false;
 
-		
-
 		private void Start()
 		{
 			if (animator == null)
@@ -130,6 +128,8 @@ namespace KSI
 
 		public void PullTheTrigger()
 		{
+			StartCoroutine(TriggerGunRoutine());
+
 			if (hasArrow && arrow && arrowLocation.numberOfArrow > 0)
 			{
 				animator.SetTrigger("Fire");
@@ -183,7 +183,6 @@ namespace KSI
 
 		private IEnumerator FireRoutine()
 		{
-
 			arrow.GetComponent<ArrowController>().FireArrow(force, damage);
 			audioSource.PlayOneShot(shootSound, 1.0f);
 

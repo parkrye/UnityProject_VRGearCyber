@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using PGR;
 using PID;
+using TMPro;
+using UnityEngine.UI;
 
 namespace KSI
 {
@@ -14,7 +16,6 @@ namespace KSI
 		[SerializeField] private float fireRate;
 		[SerializeField] private GameObject bullet;
 		[SerializeField] private Transform muzzlePoint;
-		//[SerializeField] private ParticleSystem bulletShell;
 		[SerializeField] private int damage;
 		[SerializeField] private float maxDistance = 10;
 
@@ -32,9 +33,12 @@ namespace KSI
 		[SerializeField] private AudioClip noAmmo;
 
 		private Animator animator;
+		private Image Image;
+		private TextMeshProUGUI text;
 		private PlayerHandMotion playerHandMotion;
 		private CustomDirectInteractor hand;
 		private bool hasMagazine = false;
+		
 
 		private void Start()
 		{
@@ -72,6 +76,10 @@ namespace KSI
                     GameManager.Data.Player.ExtraInput.LeftHandPrimaryButtonEvent.AddListener(EjectMagazine);                
                 }
 			}
+
+			magazine.magazineImage.fillAmount = 1.0f;
+			magazine.remainBullet = magazine.numberOfBullet;
+			magazine.UpdateBulletText();
 		}
 
 		public void RemoveMagazine(SelectExitEventArgs args)
@@ -160,9 +168,6 @@ namespace KSI
 				{
 					Debug.Log($"Hit={hit.transform.name}");	
 
-					//IHitable hitable = hit.transform.GetComponent<IHitable>();
-					//hitable?.TakeDamage(damage, hit.point, hit.normal);
-
 					IHitable hitable = hit.transform.GetComponent<IHitable>();
 					if (hitable != null)
 					{
@@ -221,10 +226,11 @@ namespace KSI
 		private void Shoot()
 		{
 			magazine.numberOfBullet--;
+			magazine.magazineImage.fillAmount = (float)magazine.remainBullet / (float)magazine.numberOfBullet;
+			magazine.UpdateBulletText();
 			Debug.Log("Bullet used. Remaining bullets : " + magazine.numberOfBullet);
 			Instantiate(bullet, muzzlePoint.position, muzzlePoint.rotation);
 			audioSource.PlayOneShot(shootSound, 1.0f);
-			//bulletShell.Play();
 		}
 
 		public void MakeSound(Vector3 pos)
