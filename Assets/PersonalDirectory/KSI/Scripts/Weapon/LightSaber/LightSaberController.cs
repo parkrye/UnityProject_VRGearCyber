@@ -22,9 +22,8 @@ namespace KSI
 
 		public void LightOnOff()
 		{
-			animator.SetTrigger("On");
+			animator.SetBool("On", !animator.GetBool("On"));
 			audioSource.PlayOneShot(onOffSound, 1.0f);
-			animator.enabled = !animator.enabled;
 		}
 	}
 }
