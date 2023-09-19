@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db47539e3852a4342b02e1e58167defb, type: 3}
   m_Name: Guard
   m_EditorClassIdentifier: 
-  moveSpeed: 3.5
+  moveSpeed: 2
   maxHealth: 200
-  maxSightRange: 10
+  maxSightRange: 7
   maxSightAngle: 70
-  attackDamage: 10
+  attackDamage: 5
   attackRange: 15
-  missChance: 1.05
+  missChance: 0.45
   maxAmmo: 8

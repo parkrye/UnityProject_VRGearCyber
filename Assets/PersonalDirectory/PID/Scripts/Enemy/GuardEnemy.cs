@@ -683,7 +683,7 @@ namespace PID
             {
                 playerLookDir = Vector3.zero; 
                 hideInterval = new WaitForSeconds(hideFrequency);
-                hideableLayer = LayerMask.GetMask("Wall"); 
+                hideableLayer = 1 << 7;
                 Colliders = new Collider[colliderSize];
                 hidePosition = Vector3.zero;
                 searchLocFound = false; 
@@ -793,8 +793,9 @@ namespace PID
                         {
                             Debug.Log($"Unable to find NavMesh near object {Colliders[i].name} at {Colliders[i].transform.position}");
                         }
-                        yield return hideInterval;
+                        
                     }
+                    yield return hideInterval;
                 }
             }
             public int ColliderArraySortComparer(Collider A, Collider B)
