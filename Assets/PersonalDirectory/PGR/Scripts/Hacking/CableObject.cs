@@ -83,7 +83,9 @@ namespace PGR
         public void ExitPuzzle()
         {
             if (hackingTarget == null || puzzle == null)
+            {
                 return;
+            }
 
             puzzle.StopPuzzle(GameData.HackProgressState.Failure);
         }
@@ -124,6 +126,7 @@ namespace PGR
 
         IEnumerator HideRoutine()
         {
+            rb.isKinematic = false;
             coll.enabled = true;
             transform.position = socketTransform.position;
             yield return new WaitUntil(() => rb.isKinematic);
