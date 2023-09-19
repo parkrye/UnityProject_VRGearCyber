@@ -9,6 +9,7 @@ namespace PID
     public class RobotCustomItemSocketInteractor : XRSocketInteractor
     {
         MeshRenderer _renderer;
+        BaseEnemy bodyOwner; 
         CustomGrabInteractable itemInteractable;
         [SerializeField] Color exertedColor, insertedColor, originalColor; 
         [SerializeField] Transform hoveringItem;
@@ -21,6 +22,8 @@ namespace PID
         protected override void Awake()
         {
             base.Awake();
+            bodyOwner = GetComponentInParent<BaseEnemy>();
+            bodyOwner.onDeath += SocketDrawDetach; 
             itemTaken = false;
             _renderer = GetComponent<MeshRenderer>();
             originalColor = _renderer.material.GetColor("_EmissionColor"); 
@@ -30,7 +33,11 @@ namespace PID
             GameObject spawningItem = GameManager.Resource.Instantiate(item.GetItem(seed), hoveringLoc.position, hoveringLoc.rotation, transform);
             RegisterInteractableItem(); 
         }
-
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            bodyOwner.onDeath -= SocketDrawDetach;
+        }
         public void RegisterInteractableItem()
         {
             itemInteractable = GetComponentInChildren<CustomGrabInteractable>();
@@ -84,6 +91,10 @@ namespace PID
             base.OnSelectExited(args);
         }
 
+        private void SocketDrawDetach(Vector3 hit, Vector3 hitp)
+        {
+            showInteractableHoverMeshes = false; 
+        }
         private void HandInteraction(bool entered)
         {
             if (itemTaken)
