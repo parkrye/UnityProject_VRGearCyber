@@ -9,14 +9,11 @@ namespace KSI
 {
     public class Magazine : MonoBehaviour
     {
-        public Image magazineImage;
-        public TextMeshProUGUI text;
+        //public Image magazineImage;
+        //public TextMeshProUGUI text;
         public int numberOfBullet;
-        public int remainBullet;
+        //public int remainBullet;
 
-		public void UpdateBulletText()
-		{
-			text.text = $"{remainBullet} / {numberOfBullet}";
-		}
+		
 	}
 }
