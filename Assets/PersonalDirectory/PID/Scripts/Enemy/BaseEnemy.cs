@@ -15,6 +15,7 @@ namespace PID
         public UnityAction<Vector3, int, int> cctvNotified; 
         public UnityAction<bool> OnAndOff;
         public Animator anim;
+        [SerializeField] protected State curStateDebug; 
 
         //SetUp Base States 
         protected NavMeshAgent agent;

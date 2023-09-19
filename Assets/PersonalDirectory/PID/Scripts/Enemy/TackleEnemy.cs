@@ -87,6 +87,7 @@ namespace PID
         {
             UpdateAnim();
             stateMachine.Update();
+            curStateDebug = stateMachine.curStateName;
         }
         public void TryStrike()
         {

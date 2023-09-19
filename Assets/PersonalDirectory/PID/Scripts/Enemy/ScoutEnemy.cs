@@ -84,6 +84,7 @@ namespace PID
         {
             UpdateAnim();
             stateMachine.Update();
+            curStateDebug = stateMachine.curStateName;
         }
         public void AgentSetUp(EnemyStat robotStat)
         {
