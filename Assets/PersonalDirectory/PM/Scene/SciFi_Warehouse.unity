@@ -15074,6 +15074,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2135274802608822965, guid: d647cce6dc2e5704e912094854aad6aa,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6549267104392139614, guid: d647cce6dc2e5704e912094854aad6aa,
         type: 3}
       propertyPath: m_RootOrder
@@ -54190,7 +54195,7 @@ PrefabInstance:
         type: 3}
       propertyPath: room0.Array.data[0]
       value: 
-      objectReference: {fileID: 8710134100302828405, guid: 9d9011365981b9941a202866806bd9cf,
+      objectReference: {fileID: 2569845810200156604, guid: 46321c90d5e2d0c43b13c5fc095d842d,
         type: 3}
     - target: {fileID: 1321133042275595302, guid: 84accf4c940d9d143b5e35c2eaa8d297,
         type: 3}

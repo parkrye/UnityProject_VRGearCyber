@@ -9,7 +9,7 @@ using static UnityEditor.PlayerSettings;
 
 namespace PM
 {
-    public class SurveillanceCamera : MonoBehaviour, IHitable
+    public class SurveillanceCamera : MonoBehaviour, IHitable, IStrikable
     {
         
         [SerializeField]
@@ -30,7 +30,6 @@ namespace PM
             GetTerminal();
             lightPosition = SpotLight.transform.position;
             ray = new Ray(lightPosition, SpotLight.forward);
-            angle = SpotLight.GetComponent<Light>().spotAngle;
             StartCoroutine(RangeSetting());
             StartCoroutine(Checking());
         }
@@ -43,7 +42,7 @@ namespace PM
         
         IEnumerator RangeSetting()
         {
-            //angle = SpotLight.GetComponent<Light>().spotAngle;
+            angle = SpotLight.GetComponent<Light>().spotAngle;
             cos = Mathf.Cos(angle * 0.5f * Mathf.Deg2Rad);
             sin = Mathf.Sin(angle * 0.5f * Mathf.Deg2Rad);
             Ray ray = new Ray(lightPosition, (SpotLight.forward * cos + SpotLight.up * sin));
@@ -118,6 +117,11 @@ namespace PM
             hp -= damage;
             if (hp <= 0)
                 StartCoroutine(Break());
+        }
+
+        public void TakeStrike(Transform hitter, float damage, Vector3 hitPoint, Vector3 hitNormal)
+        {
+            TakeDamage((int)damage, hitPoint, hitNormal);
         }
     }
 }
