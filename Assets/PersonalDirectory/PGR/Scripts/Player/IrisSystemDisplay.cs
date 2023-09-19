@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace PGR
 {
     public class IrisSystemDisplay : SceneUI
@@ -13,6 +15,7 @@ namespace PGR
         public void ModifyHP(float hpRatio)
         {
             images["Life Image"].fillAmount = hpRatio;
+            Debug.Log(hpRatio);
         }
 
         public void ModifyCable(bool isOff)
