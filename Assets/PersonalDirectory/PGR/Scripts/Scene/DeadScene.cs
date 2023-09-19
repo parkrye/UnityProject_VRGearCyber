@@ -1,11 +1,12 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace PGR
 {
     public class DeadScene : BaseScene
     {
-        [SerializeField] GameObject title, text, warningPrefab;
+        [SerializeField] GameObject title, text, warning;
         [SerializeField] Transform warningParent;
         [SerializeField] AudioSource sfx;
         [SerializeField] string sceneName;
@@ -23,19 +24,17 @@ namespace PGR
             sfx.Play();
             title.SetActive(true);
 
-            for(int i = 0; i < 100; i++)
-            {
-                yield return new WaitForSeconds(0.1f / i);
-                sfx.Play();
-                GameObject warning = GameManager.Resource.Instantiate(warningPrefab, warningParent);
-                warning.GetComponent<RectTransform>().anchoredPosition = new Vector2(Random.Range(-23f, 23f), Random.Range(-23f, 23f));
-            }
+            yield return new WaitForSeconds(0.5f);
+            sfx.Play();
+            warning.SetActive(true);
 
             yield return new WaitForSeconds(2f);
             sfx.Play();
+            title.SetActive(false);
+            warning.SetActive(false);
             text.SetActive(true);
 
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(1f);
             GameManager.Data.Player.gameObject.SetActive(true);
             GameManager.Scene.LoadScene(sceneName);
         }
