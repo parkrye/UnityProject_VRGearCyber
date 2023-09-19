@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.XR.Content.Interaction;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
@@ -29,9 +30,7 @@ namespace PGR
         public LoadingUI LoadingUI { get { return loadingUI; } }
         public IrisSystemDevice IrisDevice { get { return irisSystemDevice; } }
 
-        [SerializeField] ActionBasedContinuousTurnProvider continuousTurnProvider;
-        [SerializeField] ActionBasedSnapTurnProvider snapTurnProvider;
-        [SerializeField] DynamicMoveProvider dynamicMoveProvider;
+        [SerializeField] LocomotionManager locomotionManager;
 
         void Start()
         {
@@ -53,8 +52,10 @@ namespace PGR
 
         public void ChangeTurnType(bool isSmooth)
         {
-            continuousTurnProvider.gameObject.SetActive(isSmooth);
-            snapTurnProvider.gameObject.SetActive(!isSmooth);
+            if (isSmooth)
+                locomotionManager.rightHandTurnStyle = LocomotionManager.TurnStyle.Smooth;
+            else
+                locomotionManager.rightHandTurnStyle = LocomotionManager.TurnStyle.Snap;
         }
 
         public void MoveTransform(Vector3 position)
@@ -66,11 +67,11 @@ namespace PGR
         {
             if (isRun)
             {
-                dynamicMoveProvider.moveSpeed = 2.5f;
+                locomotionManager.dynamicMoveProvider.moveSpeed = 2.5f;
             }
             else
             {
-                dynamicMoveProvider.moveSpeed = 1.5f;
+                locomotionManager.dynamicMoveProvider.moveSpeed = 1.5f;
             }
         }
     }
