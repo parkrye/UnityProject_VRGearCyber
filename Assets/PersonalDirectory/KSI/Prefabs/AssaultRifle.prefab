@@ -482,6 +482,11 @@ MonoBehaviour:
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
   acceptedType: 5
   isInvisible: 0
+  isStored: 0
+  isPlayerSocket: 0
+  playerSocketNum: 0
+  beforeVisible: {fileID: 0}
+  afterViksible: {fileID: 0}
 --- !u!1 &1635811537196507645
 GameObject:
   m_ObjectHideFlags: 0
@@ -856,7 +861,7 @@ MonoBehaviour:
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 1
+  m_MovementType: 2
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
@@ -873,7 +878,7 @@ MonoBehaviour:
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
   m_TightenScale: 0.1
-  m_ThrowOnDetach: 1
+  m_ThrowOnDetach: 0
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
     serializedVersion: 2
@@ -929,7 +934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 0.1
-  bullet: {fileID: 1561455455814107037, guid: 1397184aae7a2664d99c82877c3283c7, type: 3}
+  bullet: {fileID: 1561455455814107037, guid: 1f85c72d7d314f44383867b3f2ec7507, type: 3}
   muzzlePoint: {fileID: 4644085394924681716}
   damage: 50
   maxDistance: 10
@@ -1264,14 +1269,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5874122833437678010}
-  m_LocalRotation: {x: 0.122201174, y: -0.13810436, z: 0.7201388, w: -0.66887534}
-  m_LocalPosition: {x: -0.0058, y: -0.0686, z: 0.0245}
+  m_LocalRotation: {x: -0.13855499, y: 0.10825486, z: -0.6670051, w: 0.7240081}
+  m_LocalPosition: {x: 0.0051, y: -0.0906, z: 0.0289}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7438368196311072964}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 2.031, y: 21.16, z: 266.152}
+  m_LocalEulerAnglesHint: {x: -3.223, y: 20.007, z: -85.875}
 --- !u!1 &5964559475737362901
 GameObject:
   m_ObjectHideFlags: 0

@@ -150,7 +150,7 @@ namespace KSI
 				return;
 			StartCoroutine(TriggerGunRoutine());
 
-			if (hasMagazine && magazine && magazine.numberOfBullet > 0) //&& hasSlide)
+			if (hasMagazine && magazine && magazine.numberOfBullet > 0)
 			{
 
 				animator.SetTrigger("Fire");

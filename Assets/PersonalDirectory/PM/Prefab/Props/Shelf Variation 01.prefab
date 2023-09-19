@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 1483188695601127364}
   - component: {fileID: 5557968254735812359}
   - component: {fileID: -1549634451057707003}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shelf Variation 01
   m_TagString: Untagged
   m_Icon: {fileID: 0}

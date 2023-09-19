@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class TargetReached : MonoBehaviour
 {
-    [SerializeField] private float threshold = 0.02f; // 한계점
+    [SerializeField] private float threshold = 0.02f;
     [SerializeField] private Transform target;
 	[SerializeField] UnityEvent OnReached;
 	private bool reached = false;
@@ -17,7 +17,6 @@ public class TargetReached : MonoBehaviour
 
 		if (distance < threshold && !reached)
 		{
-			// 타겟이 한계점에 도달
 			OnReached.Invoke();
 			reached = true;
 		}

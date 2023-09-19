@@ -204,7 +204,7 @@ MonoBehaviour:
       - m_Target: {fileID: 3730477439972713554}
         m_TargetAssemblyTypeName: KSI.Melee, Assembly-CSharp
         m_MethodName: StartSwing
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -219,7 +219,7 @@ MonoBehaviour:
       - m_Target: {fileID: 3730477439972713554}
         m_TargetAssemblyTypeName: KSI.Melee, Assembly-CSharp
         m_MethodName: EndSwing
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -284,7 +284,7 @@ MonoBehaviour:
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 1
+  m_MovementType: 2
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
@@ -301,7 +301,7 @@ MonoBehaviour:
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
   m_TightenScale: 0.1
-  m_ThrowOnDetach: 1
+  m_ThrowOnDetach: 0
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
     serializedVersion: 2
@@ -359,7 +359,7 @@ MonoBehaviour:
   maxPositions: 10
   maxDamage: 100
   minDamage: 50
-  minDistanceForMaxDamage: 0.3
-  minDistanceForMinDamage: 0.05
+  minDistanceForMaxDamage: 0.5
+  minDistanceForMinDamage: 0.1
   coll: {fileID: 3065004601189054912}
   isSwinging: 0

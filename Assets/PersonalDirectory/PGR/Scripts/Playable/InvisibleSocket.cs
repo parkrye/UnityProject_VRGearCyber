@@ -10,6 +10,8 @@ namespace PGR
         [SerializeField] int playerSocketNum;
         Renderer[] rd;
 
+        [SerializeField] GameObject beforeVisible, afterViksible;
+
         public void OnHoverEnterEvent(HoverEnterEventArgs args)
         {
             if (isStored && 1 << args.interactableObject.transform.gameObject.layer == LayerMask.GetMask("Player Hand"))
@@ -30,7 +32,7 @@ namespace PGR
 
         public void OnSelectEnterEvent(SelectEnterEventArgs args)
         {
-            args.interactableObject.transform.SetParent(transform);
+            DontDestroyOnLoad(args.interactableObject.transform.gameObject);
 
             if (!isInvisible)
                 return;
@@ -48,6 +50,8 @@ namespace PGR
                 {
                     GameManager.Data.Player.Display.UseSocket(playerSocketNum, true);
                 }
+                beforeVisible?.SetActive(false);
+                afterViksible?.SetActive(true);
             }
         }
 
@@ -71,6 +75,8 @@ namespace PGR
                 {
                     GameManager.Data.Player.Display.UseSocket(playerSocketNum, false);
                 }
+                beforeVisible?.SetActive(true);
+                afterViksible?.SetActive(false);
             }
         }
     }

@@ -49,6 +49,9 @@ MonoBehaviour:
   range: 0
   hp: 10
   SpotLight: {fileID: 817146378628404370}
+  layer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &817146378628404365
 GameObject:
   m_ObjectHideFlags: 0

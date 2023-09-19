@@ -50,16 +50,16 @@ namespace PM
         IEnumerator UpMove()
         {
             map.transform.position += new Vector3(0, -9, 0);
-            yield return new WaitForSeconds(2);
             floor = 2;
+            yield return new WaitForSeconds(2);
             Open();
         }
 
         IEnumerator DownMove()
         {
             map.transform.position += new Vector3(0, 9, 0);
-            yield return new WaitForSeconds(2);
             floor = 1;
+            yield return new WaitForSeconds(2);
             Open();
         }
     }

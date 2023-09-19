@@ -28,6 +28,7 @@ namespace PGR
         void ResetInput()
         {
             m_Renderer.enabled = false;
+            clickAudio?.Play();
         }
     }
 }

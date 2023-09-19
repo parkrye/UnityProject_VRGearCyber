@@ -9,19 +9,21 @@ using static UnityEditor.PlayerSettings;
 
 namespace PM
 {
-    public class SurveillanceCamera : MonoBehaviour, IHitable
+    public class SurveillanceCamera : MonoBehaviour, IHitable, IStrikable
     {
         
         [SerializeField]
         private float range;
         [SerializeField] int hp;
         [SerializeField] Transform SpotLight;
-        Terminal terminal;
+        [SerializeField] LayerMask layer;
+        public Terminal terminal;
         Ray ray;
         private Vector3 lightPosition;
-        private float angle;
+        public float angle;
         private float cos;
         private float sin;
+
 
         private void Start()
         {
@@ -40,7 +42,7 @@ namespace PM
         
         IEnumerator RangeSetting()
         {
-            //angle = SpotLight.GetComponent<Light>().spotAngle;
+            angle = SpotLight.GetComponent<Light>().spotAngle;
             cos = Mathf.Cos(angle * 0.5f * Mathf.Deg2Rad);
             sin = Mathf.Sin(angle * 0.5f * Mathf.Deg2Rad);
             Ray ray = new Ray(lightPosition, (SpotLight.forward * cos + SpotLight.up * sin));
@@ -49,34 +51,36 @@ namespace PM
             range = hitData.distance;
             yield return null;
         }
-        //private void Update()
-        //{
-        //    Debug.DrawRay(lightPosition, SpotLight.forward*10, Color.red);
-        //    Debug.DrawRay(lightPosition, (SpotLight.forward * cos + SpotLight.right*sin) * 10, Color.red);
-        //    Debug.DrawRay(lightPosition, (SpotLight.forward * cos - SpotLight.right * sin) * 10, Color.red);
-        //    Debug.DrawRay(lightPosition, (SpotLight.forward * cos + SpotLight.up * sin) * 10, Color.red);
-        //    Debug.DrawRay(lightPosition, (SpotLight.forward * cos - SpotLight.up * sin) * 10, Color.red);
-        //}
-        //void OnDrawGizmos()
-        //{
-        //    Gizmos.color = Color.yellow;
-        //    Gizmos.DrawWireSphere(lightPosition, range);
-        //    Gizmos.color = Color.blue;
-        //    //Gizmos.DrawRay(lightPosition, (player.transform.position - lightPosition));
-        //}
+        private void Update()
+        {
+            Debug.DrawRay(lightPosition, SpotLight.forward*10, Color.red);
+            Debug.DrawRay(lightPosition, (SpotLight.forward * cos + SpotLight.right*sin) * 10, Color.red);
+            Debug.DrawRay(lightPosition, (SpotLight.forward * cos - SpotLight.right * sin) * 10, Color.red);
+            Debug.DrawRay(lightPosition, (SpotLight.forward * cos + SpotLight.up * sin) * 10, Color.red);
+            Debug.DrawRay(lightPosition, (SpotLight.forward * cos - SpotLight.up * sin) * 10, Color.red);
+        }
+        void OnDrawGizmos()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(lightPosition, range);
+            Gizmos.color = Color.blue;
+            //Gizmos.DrawRay(lightPosition, (player.transform.position - lightPosition));
+        }
         IEnumerator Checking()
         {
             while (true)
             {
-                Collider[] colliders = Physics.OverlapSphere(lightPosition, range);
+                Collider[] colliders = Physics.OverlapSphere(lightPosition, range, layer);
                 foreach (Collider collider in colliders)
                 {
                     // 만약 콜라이더가 플레이어면 실행
-                    if (collider.tag == "Player")
+                    if (collider?.tag == "Player")
                     {
                         Vector3 dirTarget = (collider.transform.position - lightPosition).normalized;
-                        if (Vector3.Dot(transform.forward, dirTarget) < Mathf.Cos(angle * 0.5f * Mathf.Deg2Rad))
+                        if (Vector3.Dot(SpotLight.forward, dirTarget) < Mathf.Cos(angle * 0.5f * Mathf.Deg2Rad))
+                        {
                             continue;
+                        }
                         // 다시 레이를쏴 카메라와 플레이어 사이에 장애물이 없으면 실행
                         Ray ray = new Ray(lightPosition, (collider.transform.position - lightPosition));
                         RaycastHit hitData;
@@ -113,6 +117,11 @@ namespace PM
             hp -= damage;
             if (hp <= 0)
                 StartCoroutine(Break());
+        }
+
+        public void TakeStrike(Transform hitter, float damage, Vector3 hitPoint, Vector3 hitNormal)
+        {
+            TakeDamage((int)damage, hitPoint, hitNormal);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace PGR
                     case CableState.Ready:
                         coll.enabled = true;
                         pointLight.enabled = true;
-                        trailRenderer.enabled = true;
+                        trailRenderer.enabled = false;
                         break;
                     case CableState.Shot:
                         coll.enabled = true;
