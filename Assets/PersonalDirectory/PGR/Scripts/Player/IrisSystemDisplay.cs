@@ -15,7 +15,7 @@ namespace PGR
         public void ModifyHP(float hpRatio)
         {
             images["Life Image"].fillAmount = hpRatio;
-            Debug.Log(hpRatio);
+            Debug.Log($"HP Debug : {hpRatio}");
         }
 
         public void ModifyCable(bool isOff)

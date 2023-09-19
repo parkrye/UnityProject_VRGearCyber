@@ -12,6 +12,6 @@ public class ExitDoor : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (exit)
-            Debug.Log("≈ª√‚");
+            GameManager.Scene.LoadScene("PGR_EndingScene");
     }
 }
