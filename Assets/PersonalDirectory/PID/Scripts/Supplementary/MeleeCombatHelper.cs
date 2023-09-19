@@ -18,7 +18,6 @@ namespace PID
             Vector3 enemyLookDir = target.transform.forward;
             if (Vector3.Dot(enemyLookDir, playerAttackDir) > flankThreshold)
             {
-                //Debug.Log($"Player has flanked {target.gameObject.name}");
                 flankAttempt(damage, hitPoint, hitNormal, true);
             }
             flankAttempt(damage, hitPoint, hitNormal, false);
