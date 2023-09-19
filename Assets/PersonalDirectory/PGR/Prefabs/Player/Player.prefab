@@ -374,7 +374,7 @@ MonoBehaviour:
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 0
+  m_MovementType: 2
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
@@ -9451,6 +9451,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 790486798643959596, guid: 7ac3489945bc44e4ca315f726c2cd94b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 893584149630804972, guid: 7ac3489945bc44e4ca315f726c2cd94b,
         type: 3}
       propertyPath: m_Layer
@@ -9521,7 +9526,13 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8760548920588307921, guid: 7ac3489945bc44e4ca315f726c2cd94b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5863959182718220299, guid: 7ac3489945bc44e4ca315f726c2cd94b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7ac3489945bc44e4ca315f726c2cd94b, type: 3}
 --- !u!95 &2201167483950593641 stripped
 Animator:
@@ -9659,6 +9670,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5272929943990728784, guid: 8a90b67b548121c418bbb8cfa417e586,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5612846141204155196, guid: 8a90b67b548121c418bbb8cfa417e586,
         type: 3}
@@ -10005,7 +10021,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -23.23
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8297199969003106194, guid: 8a90b67b548121c418bbb8cfa417e586,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7633610072899664546, guid: 8a90b67b548121c418bbb8cfa417e586, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8a90b67b548121c418bbb8cfa417e586, type: 3}
 --- !u!4 &54626233835228710 stripped
 Transform:
