@@ -375,7 +375,7 @@ MonoBehaviour:
   m_OnSelectExited:
     m_PersistentCalls:
       m_Calls: []
-  m_ShowInteractableHoverMeshes: 1
+  m_ShowInteractableHoverMeshes: 0
   m_InteractableHoverMeshMaterial: {fileID: 0}
   m_InteractableCantHoverMeshMaterial: {fileID: 0}
   m_SocketActive: 1
@@ -1734,6 +1734,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   robotType: 2
   anim: {fileID: 0}
+  curStateDebug: 0
   currentHealth: 0
   playerBody: {fileID: 0}
   focusDir: {x: 0, y: 0, z: 0}
