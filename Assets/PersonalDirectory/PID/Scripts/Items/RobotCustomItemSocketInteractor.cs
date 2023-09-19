@@ -93,7 +93,8 @@ namespace PID
 
         private void SocketDrawDetach(Vector3 hit, Vector3 hitp)
         {
-            showInteractableHoverMeshes = false; 
+            showInteractableHoverMeshes = false;
+            socketActive = false; 
         }
         private void HandInteraction(bool entered)
         {
