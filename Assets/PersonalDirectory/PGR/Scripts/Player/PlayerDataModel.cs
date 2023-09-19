@@ -27,6 +27,13 @@ namespace PGR
             HPModifyEvent?.Invoke(nowHP * reverseMaxHP);
         }
 
+        public void GiveHealth(int amount)
+        {
+            nowHP += amount;
+            nowHP = Mathf.Clamp(nowHP, 0, maxHP);
+            HPModifyEvent?.Invoke(nowHP * reverseMaxHP); 
+        }
+
         void Die()
         {
             GameManager.Scene.LoadScene("PGR_DeadScene");

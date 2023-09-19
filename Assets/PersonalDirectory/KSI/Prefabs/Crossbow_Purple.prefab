@@ -306,15 +306,15 @@ MonoBehaviour:
   muzzlePoint: {fileID: 3413878071994511359}
   damage: 50
   maxDistance: 10
-  force: 100
+  force: 1000
   arrowLocation: {fileID: -94541517090424317, guid: 725cd10c9f58c614cb60812c2f335aa8,
     type: 3}
   socketInteractor: {fileID: 5891402249911024883}
+  socket: {fileID: 5891402249911024883}
   audioSource: {fileID: 4226759138050743}
   shootSound: {fileID: 8300000, guid: c2ae233f3848c5f4180dea649015c24e, type: 3}
   reload: {fileID: 8300000, guid: 10cf50f2ff5009e4793a78592e3c3526, type: 3}
   noAmmo: {fileID: 8300000, guid: b7a29b32e5b43024b9ff6b1530b75e94, type: 3}
-  socket: {fileID: 0}
 --- !u!82 &4226759138050743
 AudioSource:
   m_ObjectHideFlags: 0
@@ -550,7 +550,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1256100414049545814}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.0776, z: 0.552}
+  m_LocalPosition: {x: -0.0265, y: -0.102, z: 0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -582,7 +582,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1446482124862089078}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.015, y: 0.234, z: 0.026}
+  m_LocalPosition: {x: -0.019, y: -0.329, z: 0.203}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -615,7 +615,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1497904119776347469}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.014, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -635,7 +635,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2
-  m_Center: {x: 0, y: 0.008386411, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5891402249911024883
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -84,6 +84,7 @@ namespace PID
         {
             UpdateAnim();
             stateMachine.Update();
+            curStateDebug = stateMachine.curStateName;
         }
         public void AgentSetUp(EnemyStat robotStat)
         {
@@ -658,6 +659,7 @@ namespace PID
                 {
                     owner.StopAllCoroutines();
                     owner.StopCoroutine(HideRoutine(player));
+                    stateMachine.ChangeState(State.Trace);
                 }
                 if (searchLocFound && FinishedHiding(hidePosition))
                 {

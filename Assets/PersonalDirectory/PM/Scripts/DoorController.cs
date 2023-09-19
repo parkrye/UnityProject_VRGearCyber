@@ -12,9 +12,11 @@ namespace PM
         [SerializeField] int hp;
         [SerializeField] GameData.HackProgressState state;
         Terminal terminal;
+        MaterialChange materialChange;
 
         private void Start()
         {
+            materialChange = GetComponent<MaterialChange>();
             terminal = transform.parent.parent.parent.GetComponentInChildren<Terminal>();
         }
         public virtual void Hack()
@@ -37,14 +39,16 @@ namespace PM
 
         public virtual void Success()
         {
-            StartCoroutine(transform.parent.GetComponentInChildren<SyberDoor>().OpenDoor());
+            StartCoroutine(transform.parent.GetComponentInChildren<SyberDoor>()?.OpenDoor());
         }
 
         public virtual IEnumerator WaitingHackResultRoutine()
         {
             yield return null;
             state = GameData.HackProgressState.Progress;
+            materialChange.HackingStart();
             yield return new WaitUntil(() => state != GameData.HackProgressState.Progress);
+            materialChange.HackingStop();
             switch (state)
             {
                 case GameData.HackProgressState.Failure:

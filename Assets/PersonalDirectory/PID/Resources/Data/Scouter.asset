@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db47539e3852a4342b02e1e58167defb, type: 3}
   m_Name: Scouter
   m_EditorClassIdentifier: 
-  moveSpeed: 3.5
+  moveSpeed: 2
   maxHealth: 100
-  maxSightRange: 8
+  maxSightRange: 7
   maxSightAngle: 80
   attackDamage: 0
   attackRange: 0

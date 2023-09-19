@@ -101,6 +101,7 @@ namespace PID
         {
             UpdateAnim();
             stateMachine.Update();
+            curStateDebug = stateMachine.curStateName;
         }
         public void AgentSetUp(EnemyStat robotStat)
         {
@@ -538,6 +539,7 @@ namespace PID
 
             public override void Enter()
             {
+                Debug.Log($"{owner.gameObject.name} has Entered AlertState"); 
                 owner.agent.isStopped = false;
                 owner.agent.updateRotation = true; 
                 if (destPoint != Vector3.zero)
@@ -563,7 +565,10 @@ namespace PID
             public override void Transition()
             {
                 if (distDelta <= distThreshold || abortGather)
-                    stateMachine.ChangeState(State.LookAround); 
+                {
+                    stateMachine.ChangeState(State.LookAround);
+                    Debug.Log($"Entered to {State.LookAround}"); 
+                }
             }
 
             public override void Update()
@@ -683,7 +688,7 @@ namespace PID
             {
                 playerLookDir = Vector3.zero; 
                 hideInterval = new WaitForSeconds(hideFrequency);
-                hideableLayer = LayerMask.GetMask("Wall"); 
+                hideableLayer = 1 << 7;
                 Colliders = new Collider[colliderSize];
                 hidePosition = Vector3.zero;
                 searchLocFound = false; 
@@ -792,9 +797,9 @@ namespace PID
                         else
                         {
                             Debug.Log($"Unable to find NavMesh near object {Colliders[i].name} at {Colliders[i].transform.position}");
-                        }
-                        yield return hideInterval;
+                        }                 
                     }
+                    yield return hideInterval;
                 }
             }
             public int ColliderArraySortComparer(Collider A, Collider B)

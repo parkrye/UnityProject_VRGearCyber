@@ -19,8 +19,9 @@ namespace KSI
 		[SerializeField] float force;
 
 		[Header("ArrowLocation")]
-		public ArrowLocation arrowLocation;
-		public XRBaseInteractor socketInteractor;
+		[SerializeField] private ArrowLocation arrowLocation;
+		[SerializeField] private XRBaseInteractor socketInteractor;
+		[SerializeField] private XRExclusiveSocketInteractor socket;
 
 		[Header("Audio")]
 		[SerializeField] private AudioSource audioSource;
@@ -34,7 +35,7 @@ namespace KSI
 		private MeshRenderer muzzleFlash;
 		private bool hasArrow = false;
 
-		[SerializeField] XRExclusiveSocketInteractor socket;
+		
 
 		private void Start()
 		{

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2351976739896007665}
   - component: {fileID: 911401589296054806}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shelf Variation 06
   m_TagString: Untagged
   m_Icon: {fileID: 0}
