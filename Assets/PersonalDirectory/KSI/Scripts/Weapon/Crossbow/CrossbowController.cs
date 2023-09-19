@@ -35,8 +35,6 @@ namespace KSI
 		private MeshRenderer muzzleFlash;
 		private bool hasArrow = false;
 
-		
-
 		private void Start()
 		{
 			if (animator == null)
