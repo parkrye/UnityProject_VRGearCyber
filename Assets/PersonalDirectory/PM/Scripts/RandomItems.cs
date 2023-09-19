@@ -8,13 +8,12 @@ public class RandomItems : MonoBehaviour
 
     private void Start()
     {
-        items = transform.GetComponentsInChildren<GameObject>();
 
         for(int i = 0; i<items.Length; i++)
         {
-            if (Random.Range(0, 3) == 0)
+            if (Random.Range(0, 3) != 0)
             {
-                items[i].gameObject.SetActive(true);
+                items[i].gameObject.SetActive(false);
             }
         }
     }

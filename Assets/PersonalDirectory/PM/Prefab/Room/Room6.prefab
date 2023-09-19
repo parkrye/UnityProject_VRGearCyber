@@ -3670,7 +3670,7 @@ PrefabInstance:
     - target: {fileID: 2541141592012539515, guid: e833097d5a202d041a8bdaa314424cb0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2546676254923371279, guid: e833097d5a202d041a8bdaa314424cb0,
         type: 3}
@@ -3755,7 +3755,7 @@ PrefabInstance:
     - target: {fileID: 3182277266935868631, guid: e833097d5a202d041a8bdaa314424cb0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3330488757133558227, guid: e833097d5a202d041a8bdaa314424cb0,
         type: 3}
@@ -3765,32 +3765,32 @@ PrefabInstance:
     - target: {fileID: 5117284200221572183, guid: e833097d5a202d041a8bdaa314424cb0,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5117284200221572183, guid: e833097d5a202d041a8bdaa314424cb0,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5117284200221572183, guid: e833097d5a202d041a8bdaa314424cb0,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5117284200221572183, guid: e833097d5a202d041a8bdaa314424cb0,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.05
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5117284200221572183, guid: e833097d5a202d041a8bdaa314424cb0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.01
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6151078385081798748, guid: e833097d5a202d041a8bdaa314424cb0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6151078385081798749, guid: e833097d5a202d041a8bdaa314424cb0,
         type: 3}
