@@ -20,11 +20,11 @@ namespace PGR
 
         IEnumerator OpeningRoutine()
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(3f);
             sfx.Play();
             title.SetActive(true);
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
             sfx.Play();
             warning.SetActive(true);
 
