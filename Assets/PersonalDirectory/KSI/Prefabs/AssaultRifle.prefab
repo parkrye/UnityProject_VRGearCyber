@@ -1154,8 +1154,8 @@ MonoBehaviour:
   magazine: {fileID: 5483528048061002489, guid: d070f3bf3d6f6e041870105aa9cf4c31,
     type: 3}
   socketInteractor: {fileID: 7313514872344394353}
-  Image: {fileID: 0}
-  text: {fileID: 0}
+  Image: {fileID: 8181618101966644680}
+  text: {fileID: 1964343696901854780}
   audioSource: {fileID: 2207928583679052345}
   shootSound: {fileID: 8300000, guid: 4dab368b46fb4a5478bf458680101ae3, type: 3}
   reload: {fileID: 8300000, guid: 10cf50f2ff5009e4793a78592e3c3526, type: 3}
