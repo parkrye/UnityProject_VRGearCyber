@@ -1152,10 +1152,9 @@ MonoBehaviour:
   playerExtraInput: {fileID: 1015129548464004693}
   loadingUI: {fileID: 3209769638511469435}
   irisSystemDevice: {fileID: 52180178152731941}
-  continuousTurnProvider: {fileID: 3763292446324776208}
-  snapTurnProvider: {fileID: 5069962009611534593}
-  dynamicMoveProvider: {fileID: 2069637501492121323}
-  controllerManager: {fileID: 0}
+  locomotionManager: {fileID: 567429200}
+  snapTurnProviderBase: {fileID: 0}
+  continuousTurnProviderBase: {fileID: 0}
 --- !u!114 &503361725078272705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1208,6 +1207,7 @@ GameObject:
   - component: {fileID: 5252588587960461237}
   - component: {fileID: 5638953288250130459}
   - component: {fileID: 6575393995735947595}
+  - component: {fileID: 567429200}
   m_Layer: 2
   m_Name: XR Origin (XR Rig)
   m_TagString: Player
@@ -1336,6 +1336,33 @@ MonoBehaviour:
   m_AimAssistRequiredSpeed: 0.25
   m_AimAssistPercent: 0.8
   m_AimAssistMaxSpeedPercent: 10
+--- !u!114 &567429200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670120537221899527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa74d384629b02340bc59709603b0771, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_DynamicMoveProvider: {fileID: 2069637501492121323}
+  m_SmoothTurnProvider: {fileID: 3763292446324776208}
+  m_SnapTurnProvider: {fileID: 5069962009611534593}
+  m_TwoHandedGrabMoveProvider: {fileID: 0}
+  m_LeftHandManager: {fileID: 6689050230669611083}
+  m_RightHandManager: {fileID: 5765144962483690592}
+  m_LeftHandLocomotionType: 0
+  m_RightHandLocomotionType: 1
+  m_LeftHandTurnStyle: 1
+  m_RightHandTurnStyle: 0
+  m_EnableComfortMode: 0
+  m_ComfortMode: {fileID: 0}
+  m_UseGravity: 1
+  m_EnableFly: 0
+  m_EnableGrabMovement: 0
 --- !u!1 &791686350332169034
 GameObject:
   m_ObjectHideFlags: 0
@@ -3913,7 +3940,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7660148325636883519
 Transform:
   m_ObjectHideFlags: 0
