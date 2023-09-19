@@ -56,8 +56,7 @@ namespace PID
             if (!isUsed)
             {
                 XRBaseControllerInteractor controller = firstInteractorSelecting as XRBaseControllerInteractor;
-                Debug.Log(controller.gameObject.name); 
-                controller.SendHapticImpulse(.4f, .4f); 
+                controller?.SendHapticImpulse(.4f, .4f); 
                 playerHand = args.interactorObject.transform.GetComponentInParent<ActionBasedController>();
                 StartCoroutine(GiveHealth(playerHand));
                 return; 

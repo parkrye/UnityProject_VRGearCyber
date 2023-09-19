@@ -77,9 +77,9 @@ namespace PID
         }
         protected override void OnSelectExited(SelectExitEventArgs args)
         {
-            if (itemTaken && hoveringItem != null && gameObject.activeSelf)
+            if (itemTaken && hoveringItem != null && gameObject.activeSelf == true)
             {
-                StartCoroutine(ItemExert());
+                ItemExert(); 
             }
             base.OnSelectExited(args);
         }
@@ -115,7 +115,7 @@ namespace PID
         {
             _renderer.material.SetColor("_EmissionColor", originalColor);
         }
-        IEnumerator ItemExert()
+        private void ItemExert()
         {
             _renderer.material.SetColor("_EmissionColor", exertedColor);
             if (hoveringItem != null)
@@ -124,8 +124,9 @@ namespace PID
                 hoveringItem.localScale = itemOriginalScale;
                 itemTaken = true;
                 hoveringItem = null;
+                return;
             }
-            yield return null; 
+            return;
         }
     }
 }
