@@ -36,7 +36,6 @@ namespace PGR
 
         void Die()
         {
-            GameManager.Data.Player.gameObject.SetActive(false);
             GameManager.Scene.LoadScene("PGR_DeadScene");
         }
     }
