@@ -8,6 +8,7 @@ namespace PGR
         [SerializeField] string SceneName;
         [SerializeField] int life;
         [SerializeField] GameObject breakObj;
+        [SerializeField] bool isDebug;
 
         public void MoveScene(int locationNum)
         {
@@ -28,6 +29,17 @@ namespace PGR
         {
             life -= (int)damage;
             breakObj?.SetActive(false);
+        }
+
+        void OnTriggerEnter(Collider other)
+        {
+            if (!isDebug)
+                return;
+
+            if (other.tag.Equals("Player"))
+            {
+                MoveScene(0);
+            }
         }
     }
 
