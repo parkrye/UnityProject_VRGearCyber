@@ -71,3 +71,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 /Assets/Imports
+/Assets/PersonalDirectory/PID/Animations
+/Assets/PersonalDirectory/PID/Animations.meta
+/Assets/PersonalDirectory/KSI/Scripts/Weapon/WeaponSystem
+/Assets/PersonalDirectory/PGR/Prefabs/Company/CCTV.prefab.meta

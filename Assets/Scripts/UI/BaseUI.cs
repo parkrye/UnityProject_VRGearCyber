@@ -12,12 +12,10 @@ public abstract class BaseUI : MonoBehaviour
     protected Dictionary<string, Image> images;
     protected Dictionary<string, ToggleGroup> toggleGroups;
     protected Dictionary<string, Toggle> toggles;
-    [SerializeField] protected AudioSource clickAudio;
 
     protected virtual void Awake()
     {
         BindingChildren();
-        AddClickAudio();
     }
 
     protected virtual void BindingChildren()
@@ -80,16 +78,6 @@ public abstract class BaseUI : MonoBehaviour
                         toggles[key] = tgl;
                 }
             }
-        }
-    }
-
-    protected virtual void AddClickAudio()
-    {
-        AudioSource audio = GameManager.Resource.Instantiate<AudioSource>("Audio/SFX/UI");
-        audio.transform.parent = transform;
-        foreach (KeyValuePair<string, Button> button in buttons)
-        {
-            button.Value.onClick.AddListener(() => { audio.Play(); });
         }
     }
 

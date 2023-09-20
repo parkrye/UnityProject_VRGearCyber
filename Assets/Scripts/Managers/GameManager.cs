@@ -1,3 +1,4 @@
+using PID;
 using System.Resources;
 using UnityEditor.EditorTools;
 using UnityEngine;
@@ -10,17 +11,17 @@ public class GameManager : MonoBehaviour
     static PoolManager poolManager;
     static ResourceManager resourceManager;
     static DataManager dataManager;
-    static UIManager uiManager;
     static SceneManager sceneManager;
     static AudioManager audioManager;
+    static TraceableSoundManager traceManager; 
 
     public static GameManager Instance { get { return instance; } }
     public static PoolManager Pool { get { return poolManager; } }
     public static ResourceManager Resource { get { return resourceManager; } }
     public static DataManager Data { get { return dataManager; } }
-    public static UIManager UI { get { return uiManager; } }
     public static SceneManager Scene { get { return sceneManager; } }
     public static AudioManager Audio { get { return audioManager; } }
+    public static TraceableSoundManager traceSound {  get { return traceManager; } }
 
     void Awake()
     {
@@ -58,11 +59,6 @@ public class GameManager : MonoBehaviour
         dataObj.transform.parent = transform;
         dataManager = dataObj.AddComponent<DataManager>();
 
-        GameObject uiObj = new GameObject();
-        uiObj.name = "UIManager";
-        uiObj.transform.parent = transform;
-        uiManager = uiObj.AddComponent<UIManager>();
-
         GameObject sceneObj = new GameObject();
         sceneObj.name = "SceneManager";
         sceneObj.transform.parent = transform;
@@ -72,5 +68,10 @@ public class GameManager : MonoBehaviour
         audioObj.name = "AudioManager";
         audioObj.transform.parent = transform;
         audioManager = audioObj.AddComponent<AudioManager>();
+
+        GameObject traceObj = new GameObject();
+        traceObj.name = "TraceableSoundManager";
+        traceObj.transform.parent = transform;
+        traceManager = traceObj.AddComponent<TraceableSoundManager>();
     }
 }

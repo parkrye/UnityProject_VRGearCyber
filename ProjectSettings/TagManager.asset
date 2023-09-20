@@ -3,23 +3,39 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Projectile
+  - Water
+  - Flame
+  - Destroyer
+  - Door
+  - Bullet
+  - Arrow
+  - AssaultRifleMagazine
+  - PistolMagazine
+  - door
+  - button f4
+  - button f5
+  - button f3
+  - button f2
+  - button f1
+  - button f6
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - DisplayUI
+  - Wall
+  - Ignore Collider
+  - Player Hand
+  - Door
+  - Enemy
+  - EnemyNeutralized
+  - ItemUsed
+  - Point
   - 
   - 
   - 
