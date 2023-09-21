@@ -14,6 +14,9 @@ namespace PGR
         protected override IEnumerator LoadingRoutine()
         {
             GameManager.Data.Player.gameObject.SetActive(false);
+            title.SetActive(false);
+            warning.SetActive(false);
+            text.SetActive(false);
             yield return null;
             Progress = 1f;
             StartCoroutine(OpeningRoutine());
